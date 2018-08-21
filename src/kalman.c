@@ -7,8 +7,8 @@
 //======================================================================
 //#include <math.h>
 #include <math.h>
-#include "kalman.h"
-#include "parametres.h"
+#include "../include/kalman.h"
+#include "../include/parametres.h"
 
 // ----------------------------------------------------------------------
 // Fonction d'élimination des outliers
