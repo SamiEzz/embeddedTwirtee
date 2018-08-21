@@ -3,7 +3,7 @@
 # *. Odometrie		({from device}---{Odo->x,Odo->y})
 # *. IMU			({from device}---{IMU->x,IMU->y})
 # *. DWM gps		({from device}---{dwm->x,dwm->y})
-# *. DWM gps		({from device}---{dwm->x,dwm->y})
+# *. Compass		({from device}---{compass->teta})
 # *. kalman			({dwm,Odo,IMU}---{})
 # *. mission_mgr	({Nodes,carto,source,destination,*path}---{*path})
 # *. Dijkstra
