@@ -156,8 +156,11 @@ int main(int argc, char const *argv[])
 */
 
 
-void countJson(int *a){
-	char *JSON_STRING = NULL;
+int expectNvalues=8000;
+
+
+void countJson(int a[]){
+	char *eJSON_STRING = NULL;
 	long length;
 
 	FILE *f = fopen(jsonFileName, "r");
@@ -166,25 +169,25 @@ void countJson(int *a){
 		fseek(f, 0, SEEK_END);
 		length = ftell(f);
 		fseek(f, 0, SEEK_SET);
-		JSON_STRING = malloc(length);
-		if (JSON_STRING)
+		eJSON_STRING = malloc(length);
+		if (eJSON_STRING)
 		{
-			fread(JSON_STRING, 1, length, f);
+			fread(eJSON_STRING, 1, length, f);
 		}
 		fclose(f);
 	};
 	initParser IP;
-	IP = getJsonToken(expectNvalues, JSON_STRING);
+	IP = getJsonToken(expectNvalues, eJSON_STRING);
 
 	int r = IP.r;
 	jsmntok_t *t = IP.t;
 	int i = 0;
 
-	int Boccur = objectOccurance(stBeaconid, JSON_STRING, IP); // verifier occurrence
-	int Wpoccur = objectOccurance(stwpid, JSON_STRING, IP);
-	int lgoccur = objectOccurance(stlegId, JSON_STRING, IP);
-	int ctoccur = objectOccurance(stCid, JSON_STRING, IP);
-	int ndoccur = objectOccurance(stNodeId, JSON_STRING, IP);
+	int Boccur = objectOccurance(stBeaconid, eJSON_STRING, IP); // verifier occurrence
+	int Wpoccur = objectOccurance(stwpid, eJSON_STRING, IP);
+	int lgoccur = objectOccurance(stlegId, eJSON_STRING, IP);
+	int ctoccur = objectOccurance(stCid, eJSON_STRING, IP);
+	int ndoccur = objectOccurance(stNodeId, eJSON_STRING, IP);
 
 	a[0]= Boccur;
 	a[1]= ndoccur;
@@ -704,7 +707,7 @@ struct initParser getJsonToken(int expectNvalues,char * JSON_STRING){
 	jsmntok_t  t[expectNvalues]; /* We expect no more than 128 tokens */
 
 	jsmn_init(&p);
-	r = jsmn_parse(&p, JSON_STRING, strlen(JSON_STRING), t, sizeof(t)/sizeof(t[0]));
+	r = jsmn_parse(&p, JSON_STRING, strlen(JSON_STRING), t, r);
     IP.r=r;
 	IP.p=p;
 	IP.t=t;
@@ -914,8 +917,7 @@ static int jsmn_parse_string(jsmn_parser *parser, const char *js,
 /**
  * Parse JSON string and fill tokens.
  */
-int jsmn_parse(jsmn_parser *parser, const char *js, size_t len,
-		jsmntok_t *tokens, unsigned int num_tokens) {
+int jsmn_parse(jsmn_parser *parser, const char *js, size_t len,jsmntok_t *tokens, unsigned int num_tokens) {
 	int r;
 	int i;
 	jsmntok_t *token;

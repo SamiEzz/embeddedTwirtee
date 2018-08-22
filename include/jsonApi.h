@@ -9,8 +9,7 @@
 #include <stdint.h>
 #include <math.h>
 
-char * jsonFileName="../res/base.json";
-int expectNvalues=8000;
+#define jsonFileName "../res/base.json"
 
 #define CARTO_NODE_NBR	653
 #define MAX_NODE_ARCS 4
@@ -276,6 +275,7 @@ typedef struct Legs
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 
+void countJson(int *a);
 struct Beacons beaconsExt(char *_JSON_STRING,initParser _IP,int _i,int objRank);
 struct Node nodesExt(char *_JSON_STRING,initParser _IP,int _i,int objRank);
 struct Waypoints waypointsExt(char *_JSON_STRING,initParser _IP,int _i,int objRank);
@@ -286,6 +286,9 @@ struct Constants CstExt(char *_JSON_STRING,initParser _IP,int _i);
 struct initParser getJsonToken(int expectNvalues,char * JSON_STRING);
 void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints *_ct,Constants _c);
 
+
+
+void countJson(int *a);
 int jsoneq(const char *json, jsmntok_t *tok, const char *s);
 int countNodes(Legs * l,int nlegs);
 int objectOccurance(char * objectName,char * JSON_STRING, initParser IP);

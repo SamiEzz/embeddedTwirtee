@@ -9,6 +9,7 @@ int main(int argc, char const *argv[])
 {
     /* json import */
     /** Counting structures */
+
     printf("%d\n", argc);
     int countlist[jsonTypes];
     countJson(countlist);
