@@ -1,6 +1,27 @@
-
-echo "#" Map extraction to json file
+echo "|------------------------------------------|"
+echo "|------" Extracting map to json file "-------|"
+echo "|                                          |"
 python3 ./map2json/main_extraction.py -i ./map2json/Map.dxf -o ./res/map.json
-echo "#" Compiling C files
 
-#make
+
+echo "|------------------------------------------|"
+echo "|------" Compiling C files "-----------------|"
+echo "|                                          |"
+make
+
+
+echo "|------------------------------------------|"
+echo "|------" Initiating devices "----------------|"
+echo "|                                          |"
+#./bin/init.exe
+
+
+echo "|------------------------------------------|"
+echo "|------" Launching main routine "------------|"
+echo "|                                          |"
+./bin/mainRoutine a b
+
+
+echo "|------------------------------------------|"
+echo "|------" End of the programme "--------------|"
+echo "|                                          |"

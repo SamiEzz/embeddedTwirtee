@@ -154,6 +154,129 @@ int main(int argc, char const *argv[])
 /****************************--[main.c end]--****************************
 
 */
+
+void jsonMainExtract(Beacons **_B,Node **_nd,Waypoints **_wp,Legs **_lg,Constraints **_ct,Constants *_c)
+{
+	char *JSON_STRING = NULL;
+	long length;
+
+	FILE *f = fopen(jsonFileName, "r");
+	if (f)
+	{
+		fseek(f, 0, SEEK_END);
+		length = ftell(f);
+		fseek(f, 0, SEEK_SET);
+		JSON_STRING = malloc(length);
+		if (JSON_STRING)
+		{
+			fread(JSON_STRING, 1, length, f);
+		}
+		fclose(f);
+	};
+	initParser IP;
+	IP = getJsonToken(expectNvalues, JSON_STRING);
+
+	int r = IP.r;
+	jsmntok_t *t = IP.t;
+	int i = 0;
+	// Loop over all keys of the root object
+	int Boccur = objectOccurance(stBeaconid, JSON_STRING, IP); // verifier occurrence
+	int Wpoccur = objectOccurance(stwpid, JSON_STRING, IP);
+	int lgoccur = objectOccurance(stlegId, JSON_STRING, IP);
+	int ctoccur = objectOccurance(stCid, JSON_STRING, IP);
+	int ndoccur = objectOccurance(stNodeId, JSON_STRING, IP);
+
+	int fstbrank = objectRank(stBeaconid, JSON_STRING, IP);
+
+	struct Beacons B[Boccur];
+	struct Node nd[ndoccur];
+	//struct Node *nodes[ndoccur];
+	struct Waypoints Wp[Wpoccur];
+	struct Legs lg[lgoccur];
+	struct Constraints ct[ctoccur];
+	struct Constants c;
+
+	for (i = 1; i < r; i++)
+	{
+		struct Node nodes[ndoccur];
+		if (jsoneq(JSON_STRING, &t[i], stLegs) == 0)
+		{
+			for (int in = 0; in < lgoccur; in++)
+			{
+				lg[in] = legsExt(JSON_STRING, IP, i, in);
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stBeacons) == 0)
+		{
+			for (int in = 0; in < Boccur; in++)
+			{
+				B[in] = beaconsExt(JSON_STRING, IP, i, in);
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stWaypoints) == 0)
+		{
+			for (int in = 0; in < Wpoccur; in++)
+			{
+				Wp[in] = waypointsExt(JSON_STRING, IP, i, in);
+				//printf("%f , %f\n",Wp[in].x,Wp[in].y);
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stConstraints) == 0)
+		{
+			for (int in = 0; in <= ctoccur; in++)
+			{
+				ct[in] = ConstrExt(JSON_STRING, IP, i, in);
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stnodes) == 0)
+		{
+			for (int in = 0; in <= ndoccur; in++)
+			{
+				nd[in] = nodesExt(JSON_STRING, IP, i, in);
+
+				//printf("%f , %f, %d\n",nd[in].x,nd[in].y,nd[in].id);
+
+				if (in == ndoccur)
+				{
+					for (int k = 0; k < ndoccur; k++)
+					{
+						for (int j = 0; j < nd[k].nb_a; j++)
+						{
+							Arc temparc;
+							temparc.dest = &nd[nd[k].ids[j]];
+							temparc.max_speed = -1;
+							temparc.max_speed_up = -1;
+							nd[k].arcs[j] = temparc;
+						}
+					}
+				}
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stConstants) == 0)
+		{
+			c = CstExt(JSON_STRING, IP, i);
+		}
+		else
+		{
+		}
+	} /*
+	Beacons **_B,
+	Node **_nd,
+	Waypoints **_wp,
+	Legs **_lg,
+	Constraints **_ct,
+	Constants *_c		
+*/
+	_B = &B;
+	_nd = &nd;
+	_wp = &Wp;
+	_ct = &ct;
+	_lg = &lg;
+	_c = &c;
+}
+
+
+
 struct Node * existNode(float x,float y,Node n[],int madeNodes){
 	for(int i=0;i<madeNodes;i++){
 		if(n[i].x==x && n[i].y==y){

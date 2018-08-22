@@ -1,35 +1,4 @@
-# *. Bandmaster
-# *. Localization	
-# *. Odometrie		({from device}---{Odo->x,Odo->y})
-# *. IMU			({from device}---{IMU->x,IMU->y})
-# *. DWM gps		({from device}---{dwm->x,dwm->y})
-# *. Compass		({from device}---{compass->teta})
-# *. kalman			({dwm,Odo,IMU}---{})
-# *. mission_mgr	({Nodes,carto,source,destination,*path}---{*path})
-# *. Dijkstra
-CC		:= gcc
-C_FLAGS := -Wall -Wextra
+all: mainRoutine
 
-BIN		:= bin
-SRC		:= src
-INCLUDE	:= include
-LIB		:= lib
-
-LIBRARIES	:=
-
-ifeq ($(OS),Windows_NT)
-EXECUTABLE	:= main.exe
-else
-EXECUTABLE	:= main
-endif
-
-all: $(BIN)/$(EXECUTABLE)
-
-clean:
-	-$(RM) $(BIN)/$(EXECUTABLE)
-
-run: all
-	./$(BIN)/$(EXECUTABLE)
-
-$(BIN)/$(EXECUTABLE): $(SRC)/*
-	$(CC) $(C_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)
+mainRoutine : src/main.c  src/jsonApi.c 
+	gcc -o ./bin/mainRoutine src/main.c
