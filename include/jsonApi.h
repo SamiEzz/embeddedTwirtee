@@ -284,7 +284,7 @@ struct Constraints ConstrExt(char *_JSON_STRING,initParser _IP,int _i,int objRan
 struct Constants CstExt(char *_JSON_STRING,initParser _IP,int _i);
 //struct Node * convertLegs(Legs legs[],int occurL);
 struct initParser getJsonToken(int expectNvalues,char * JSON_STRING);
-void jsonMainExtract(Beacons **_B,Node **_nd,Waypoints **_wp,Legs **_lg,Constraints **_ct,Constants *_c);
+void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints *_ct,Constants _c);
 
 int jsoneq(const char *json, jsmntok_t *tok, const char *s);
 int countNodes(Legs * l,int nlegs);

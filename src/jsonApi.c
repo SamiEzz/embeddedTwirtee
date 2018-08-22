@@ -155,7 +155,45 @@ int main(int argc, char const *argv[])
 
 */
 
-void jsonMainExtract(Beacons **_B,Node **_nd,Waypoints **_wp,Legs **_lg,Constraints **_ct,Constants *_c)
+
+void countJson(int *a){
+	char *JSON_STRING = NULL;
+	long length;
+
+	FILE *f = fopen(jsonFileName, "r");
+	if (f)
+	{
+		fseek(f, 0, SEEK_END);
+		length = ftell(f);
+		fseek(f, 0, SEEK_SET);
+		JSON_STRING = malloc(length);
+		if (JSON_STRING)
+		{
+			fread(JSON_STRING, 1, length, f);
+		}
+		fclose(f);
+	};
+	initParser IP;
+	IP = getJsonToken(expectNvalues, JSON_STRING);
+
+	int r = IP.r;
+	jsmntok_t *t = IP.t;
+	int i = 0;
+
+	int Boccur = objectOccurance(stBeaconid, JSON_STRING, IP); // verifier occurrence
+	int Wpoccur = objectOccurance(stwpid, JSON_STRING, IP);
+	int lgoccur = objectOccurance(stlegId, JSON_STRING, IP);
+	int ctoccur = objectOccurance(stCid, JSON_STRING, IP);
+	int ndoccur = objectOccurance(stNodeId, JSON_STRING, IP);
+
+	a[0]= Boccur;
+	a[1]= ndoccur;
+	a[2]= ctoccur;
+	a[3]= Wpoccur;
+	a[4]= lgoccur;
+
+}
+void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints *_ct,Constants _c)
 {
 	char *JSON_STRING = NULL;
 	long length;
@@ -267,12 +305,12 @@ void jsonMainExtract(Beacons **_B,Node **_nd,Waypoints **_wp,Legs **_lg,Constrai
 	Constraints **_ct,
 	Constants *_c		
 */
-	_B = &B;
-	_nd = &nd;
-	_wp = &Wp;
-	_ct = &ct;
-	_lg = &lg;
-	_c = &c;
+	_B = B;
+	_nd = nd;
+	_wp = Wp;
+	_ct = ct;
+	_lg = lg;
+	_c = c;
 }
 
 
