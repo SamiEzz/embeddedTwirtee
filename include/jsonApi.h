@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include <math.h>
 
-#define jsonFileName "../res/base.json"
+#define jsonFileName "./res/map.json"
 
 #define CARTO_NODE_NBR	653
 #define MAX_NODE_ARCS 4
@@ -189,6 +189,7 @@ typedef struct Arc {
 	Float32 max_speed_up;	///< Max linear speed-up,	-1.f if unset
 }Arc;
 
+
 typedef struct Node {
     int id;
 	Float32 x, y;
@@ -271,7 +272,14 @@ typedef struct Legs
     double    endy;
     double    endz;
 }Legs ;
-
+typedef struct Base {
+	Node	    *_nd;
+    Beacons     *_b;
+    Waypoints   *_wpt;
+    Legs        *_lg;
+    Constraints *_ct;
+    Constants   _c;
+}Base;
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 
@@ -284,8 +292,8 @@ struct Constraints ConstrExt(char *_JSON_STRING,initParser _IP,int _i,int objRan
 struct Constants CstExt(char *_JSON_STRING,initParser _IP,int _i);
 //struct Node * convertLegs(Legs legs[],int occurL);
 struct initParser getJsonToken(int expectNvalues,char * JSON_STRING);
-void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints *_ct,Constants _c);
-
+void jsonMainExtract(Base _base,char *jsonFile);
+struct Base initBase();
 
 
 void countJson(int *a);

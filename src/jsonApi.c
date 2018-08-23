@@ -158,8 +158,13 @@ int main(int argc, char const *argv[])
 
 int expectNvalues=8000;
 
+int len(char *t)
+{
+    return expectNvalues;
+}
 
-void countJson(int a[]){
+struct Base initBase()
+{
 	char *eJSON_STRING = NULL;
 	long length;
 
@@ -188,21 +193,41 @@ void countJson(int a[]){
 	int lgoccur = objectOccurance(stlegId, eJSON_STRING, IP);
 	int ctoccur = objectOccurance(stCid, eJSON_STRING, IP);
 	int ndoccur = objectOccurance(stNodeId, eJSON_STRING, IP);
+	struct Beacons B[Boccur];
+	struct Node nd[ndoccur];
+	//struct Node *nodes[ndoccur];
+	struct Waypoints Wp[Wpoccur];
+	struct Legs lg[lgoccur];
+	struct Constraints ct[ctoccur];
+	struct Constants c;
+	struct Base Bs = {
+        nd,
+        B,
+        Wp,
+        lg,
+        ct,
+		c       
+    };
+/*
+	Bs._b[]=malloc(Boccur*sizeof(Beacons));
+	Bs._nd=nd;
+	Bs._wpt=Wp;
+	Bs._lg=lg;
+	Bs._ct=ct;
+*/
+	return Bs;
 
-	a[0]= Boccur;
-	a[1]= ndoccur;
-	a[2]= ctoccur;
-	a[3]= Wpoccur;
-	a[4]= lgoccur;
 
 }
-void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints *_ct,Constants _c)
-{
+void jsonMainExtract(Base _base,char *jsonFile)
+{	
+	struct Base *base = &_base;
 	char *JSON_STRING = NULL;
 	long length;
-
-	FILE *f = fopen(jsonFileName, "r");
-	if (f)
+	FILE *f;
+	f = fopen(jsonFile, "r");
+	
+	if (f!=NULL)
 	{
 		fseek(f, 0, SEEK_END);
 		length = ftell(f);
@@ -235,8 +260,14 @@ void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints 
 	struct Waypoints Wp[Wpoccur];
 	struct Legs lg[lgoccur];
 	struct Constraints ct[ctoccur];
-	struct Constants c;
-
+	struct Constants c;/*
+	Base *base=malloc(sizeof(Base)*expectNvalues);
+	base->_b=malloc(Boccur*sizeof(Beacons));
+	base->_nd=malloc(ndoccur*sizeof(Node));
+	base->_wpt=malloc(Wpoccur*sizeof(Waypoints));
+	base->_lg=malloc(lgoccur*sizeof(Legs));
+	base->_ct=malloc(ctoccur*sizeof(Constraints));
+	*/
 	for (i = 1; i < r; i++)
 	{
 		struct Node nodes[ndoccur];
@@ -244,21 +275,21 @@ void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints 
 		{
 			for (int in = 0; in < lgoccur; in++)
 			{
-				lg[in] = legsExt(JSON_STRING, IP, i, in);
+				base->_lg[in] = legsExt(JSON_STRING, IP, i, in);
 			}
 		}
 		else if (jsoneq(JSON_STRING, &t[i], stBeacons) == 0)
 		{
 			for (int in = 0; in < Boccur; in++)
 			{
-				B[in] = beaconsExt(JSON_STRING, IP, i, in);
+				base->_b[in] = beaconsExt(JSON_STRING, IP, i, in);
 			}
 		}
 		else if (jsoneq(JSON_STRING, &t[i], stWaypoints) == 0)
 		{
 			for (int in = 0; in < Wpoccur; in++)
 			{
-				Wp[in] = waypointsExt(JSON_STRING, IP, i, in);
+				base->_wpt[in] = waypointsExt(JSON_STRING, IP, i, in);
 				//printf("%f , %f\n",Wp[in].x,Wp[in].y);
 			}
 		}
@@ -266,14 +297,14 @@ void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints 
 		{
 			for (int in = 0; in <= ctoccur; in++)
 			{
-				ct[in] = ConstrExt(JSON_STRING, IP, i, in);
+				base->_ct[in] = ConstrExt(JSON_STRING, IP, i, in);
 			}
 		}
 		else if (jsoneq(JSON_STRING, &t[i], stnodes) == 0)
 		{
 			for (int in = 0; in <= ndoccur; in++)
 			{
-				nd[in] = nodesExt(JSON_STRING, IP, i, in);
+				base->_nd[in] = nodesExt(JSON_STRING, IP, i, in);
 
 				//printf("%f , %f, %d\n",nd[in].x,nd[in].y,nd[in].id);
 
@@ -281,13 +312,13 @@ void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints 
 				{
 					for (int k = 0; k < ndoccur; k++)
 					{
-						for (int j = 0; j < nd[k].nb_a; j++)
+						for (int j = 0; j < base->_nd[k].nb_a; j++)
 						{
 							Arc temparc;
-							temparc.dest = &nd[nd[k].ids[j]];
+							temparc.dest = &base->_nd[nd[k].ids[j]];
 							temparc.max_speed = -1;
 							temparc.max_speed_up = -1;
-							nd[k].arcs[j] = temparc;
+							base->_nd[k].arcs[j] = temparc;
 						}
 					}
 				}
@@ -295,7 +326,7 @@ void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints 
 		}
 		else if (jsoneq(JSON_STRING, &t[i], stConstants) == 0)
 		{
-			c = CstExt(JSON_STRING, IP, i);
+			base->_c = CstExt(JSON_STRING, IP, i);
 		}
 		else
 		{
@@ -308,12 +339,8 @@ void jsonMainExtract(Beacons *_B,Node *_nd,Waypoints *_wp,Legs *_lg,Constraints 
 	Constraints **_ct,
 	Constants *_c		
 */
-	_B = B;
-	_nd = nd;
-	_wp = Wp;
-	_ct = ct;
-	_lg = lg;
-	_c = c;
+
+	//_base=base;
 }
 
 
