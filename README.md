@@ -4,11 +4,13 @@ This Repository contain the embedded code to run in the TwIRTee Robot.
 
 # Main programs
 The TwIRTee's program contain many scripts in Python, C and Shell code, **./launch.sh** is the band master wich run scripts and compile the project in the right order.
+
 |||||||
 | :--- | :--- | :--- | :--- | :--- | :--- |
 || Map2json | jsonApi | dijkstra | kalman ||
 || mission_mgr | localization | traking | motors ||
 |||||
+
 
 ## 1) ./Map2json 
 This folder contain a python script, to export information from a 3D map edited by Autocad (.dxf to .json). the json file is stored at **./res/map.json** and will be used by the C program to import these information.
