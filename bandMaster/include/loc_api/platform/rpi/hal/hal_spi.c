@@ -25,11 +25,8 @@
 #define HAL_SPI_SPEED                8000000
 #define HAL_SPI_DELAY                0
 
-//static const char *device0 = "/dev/spidev0.0";
-//static const char *device1 = "/dev/spidev0.1";
-static const char *device0 = "/dev/ttyACM0";
-static const char *device1 = "/dev/ttyACM0";
-
+static const char *device0 = "/dev/spidev0.0";
+static const char *device1 = "/dev/spidev0.1";
 static struct spi_ioc_transfer tr_data;
 static unsigned char spi_tx; 
 static unsigned char spi_rx;

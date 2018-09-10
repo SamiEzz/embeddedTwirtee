@@ -31,14 +31,28 @@ INTERFACE_NUMBER = 0
 #  1:    fprintf (log.txt)       
 #  2:    printf (terminal)  
 #  3:    printf + fprintf    
-PRINT_LVL = 3
+PRINT_LVL = 0
 
 
-PROGRAM = tag_cfg
-SOURCES = tag_cfg.c
+######################################################
+# PROJ_DIR stands for the directory of the dwm api
+#
 
-PROJ_DIR += ../../..
+PROJ_DIR += ./include/loc_api
 
-CFLAGS += -Wall
+CFLAGS += -lm -std=c99
+
+######################################################
+# SOURCES
+#
+
+PROGRAM = ./bin/bandMaster
+SOURCES = ./src/main.c 
+SOURCES += ./src/loc_thread.c
+SOURCES += ./src/spf_thread.c
+SOURCES += ./src/jsonApi.c 
+SOURCES += ./src/dijkstra.c 
+SOURCES += ./src/threads_mgr.c
+
 
 include $(PROJ_DIR)/include/dwm1001.mak

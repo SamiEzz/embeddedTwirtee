@@ -90,7 +90,7 @@ int main(int argc, char const *argv[])
         // end of thread
         
         for(int i=0;i<mission_se.path->size;i++){
-            printf("- %d\n",mission_se.path->dest[i]->id);    
+            printf("-> %d",mission_se.path->dest[i]->id);    
         }
         
     }
