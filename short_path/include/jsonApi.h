@@ -16,7 +16,9 @@ void * safe_alloc(int size);
 
 #define jsonFileName "./res/map.json"
 
-#define CARTO_NODE_NBR	653
+//#define CARTO_NODE_NBR	653
+#define CARTO_NODE_NBR	1000
+
 #define MAX_NODE_ARCS 4 // obsolete
 #define EPSILONodes 0.01
 

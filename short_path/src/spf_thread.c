@@ -21,6 +21,7 @@
 #include <math.h>
 #include <errno.h>
 #include <pthread.h>
+#include <sys/types.h>
 
 #define outputFile "output.nodes"
 
@@ -47,12 +48,15 @@ void* get_mission_thread (void * mission_se)
  
 void *spf_thread(void *mission_se){
     spf_mission * mission =  mission_se;
+    pthread_mutex_lock(&mission->mut);
+
+
     int src,dest;
     // printf("%s , %s , %d",argv[0],argv[1],argc);
     
     src=mission->start;
     dest=mission->end;
-    
+    pthread_mutex_unlock(&mission->mut);
     //=====================[ jSon IMPORT ]=====================
     struct jdata * data = safe_alloc(sizeof(jdata *));
     /* importData()
@@ -84,9 +88,10 @@ void *spf_thread(void *mission_se){
     * and arrive to.
     *     
     */
+    pthread_mutex_lock(&mission->mut);
     mission->path = safe_alloc(sizeof(Path));
     dijkstra(graphtest, src, dest, mission->path);
-
+    pthread_mutex_unlock(&mission->mut);
     //=================[ PRINT THE SHORTEST PATH ]=================
     /*
     for(int i=0;i<trajectorytest.size;i++){
