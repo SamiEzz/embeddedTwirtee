@@ -272,6 +272,7 @@ typedef struct Legs
     double    endy;
     double    endz;
 }Legs ;
+
 typedef struct Base {
 	Node	    *_nd;
     Beacons     *_b;
@@ -280,6 +281,24 @@ typedef struct Base {
     Constraints *_ct;
     Constants   _c;
 }Base;
+
+typedef struct occur
+{
+    int nodes;
+    int beacons;
+    int waypoints;
+    int legs;
+    int Constraints;
+
+}occur;
+
+	
+
+typedef struct jdata
+{
+    struct *Base;
+    struct *occur;
+}jdata;
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 

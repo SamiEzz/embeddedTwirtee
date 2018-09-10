@@ -155,7 +155,51 @@ int main(int argc, char const *argv[])
 
 */
 
+jdata importData(jdata *data){
+	data = malloc(sizeof(jdata));
+	data->base=malloc(sizeof(Base));
+	data->occur=malloc(sizeof(occur));
 
+	char *eJSON_STRING = NULL;
+	long length;
+	
+
+	FILE *f = fopen(jsonFileName, "r");
+	if (f)
+	{
+		fseek(f, 0, SEEK_END);
+		length = ftell(f);
+		fseek(f, 0, SEEK_SET);
+		eJSON_STRING = malloc(length);
+		if (eJSON_STRING)
+		{
+			fread(eJSON_STRING, 1, length, f);
+		}
+		fclose(f);
+	};
+	initParser IP;
+	IP = getJsonToken(expectNvalues, eJSON_STRING);
+
+	int r = IP.r;
+	jsmntok_t *t = IP.t;
+	int i = 0;
+
+	data->occur->beacons=objectOccurance(stBeaconid, eJSON_STRING, IP);
+	data->occur->nodes=objectOccurance(stNodeId, eJSON_STRING, IP);
+	data->occur->legs=objectOccurance(stlegId, eJSON_STRING, IP);
+	data->occur->Constraints=objectOccurance(stCid, eJSON_STRING, IP);
+	data->occur->waypoints=objectOccurance(stwpid, eJSON_STRING, IP);
+
+	data->base->_nd=malloc(sizeof(Node)*data->occur->nodes);
+	data->base->_b=malloc(sizeof(Node)*data->occur->beacons);
+	data->base->_lg=malloc(sizeof(Node)*data->occur->legs);
+	data->base->_ct=malloc(sizeof(Node)*data->occur->Constraints);
+	data->base->_wpt=malloc(sizeof(Node)*data->occur->waypoints);
+	
+
+
+	return data;
+}
 int expectNvalues=8000;
 
 int len(char *t)
@@ -167,6 +211,7 @@ struct Base initBase()
 {
 	char *eJSON_STRING = NULL;
 	long length;
+	
 
 	FILE *f = fopen(jsonFileName, "r");
 	if (f)
@@ -200,6 +245,7 @@ struct Base initBase()
 	struct Legs lg[lgoccur];
 	struct Constraints ct[ctoccur];
 	struct Constants c;
+	
 	struct Base Bs = {
         nd,
         B,
