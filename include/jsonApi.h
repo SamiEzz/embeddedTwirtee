@@ -292,8 +292,6 @@ typedef struct occur
 
 }occur;
 
-	
-
 typedef struct jdata
 {
     struct Base *base;
