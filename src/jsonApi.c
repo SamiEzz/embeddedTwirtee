@@ -155,7 +155,7 @@ int main(int argc, char const *argv[])
 
 */
 
-jdata importData(jdata *data){
+jdata * importData(jdata *data){
 	data = malloc(sizeof(jdata));
 	data->base=malloc(sizeof(Base));
 	data->occur=malloc(sizeof(occur));
