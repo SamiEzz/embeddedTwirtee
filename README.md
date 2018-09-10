@@ -54,7 +54,7 @@ Below the main functions that you will use :
 2. make sure that you fill this variables :
 * int **expectNvalues** 		: more than 6000
 * char * **jsonFileName** : can't be more clear 
-* char * **JSON_STRING** :  pointer to a memory bloc (Cf. Extra instructions [JSON_STRING](#JSON_STRING))
+* char * **JSON_STRING** :  pointer to a memory bloc (Cf. Extra instructions [JSON_STRING](#json_string-))
 * initParser **IP** = getJsonToken(expectNvalues,JSON_STRING)  
 * int **r**  = IP.r
 * jsmntok * **t** = IP.t
