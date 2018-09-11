@@ -16,7 +16,7 @@
                 "src/main.c",
                 "src/jsonApi.c",
                 "-o",
-                "bin/mainRoutine"
+                "bin/mainRoutine.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

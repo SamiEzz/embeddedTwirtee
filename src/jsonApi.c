@@ -164,7 +164,7 @@ jdata * importData(jdata *data){
 	data->base=malloc(sizeof(Base));
 	data->occur=malloc(sizeof(occur));
 
-	char *eJSON_STRING = NULL;
+	char *JSON_STRING = NULL;
 	long length;
 	
 
@@ -174,25 +174,25 @@ jdata * importData(jdata *data){
 		fseek(f, 0, SEEK_END);
 		length = ftell(f);
 		fseek(f, 0, SEEK_SET);
-		eJSON_STRING = malloc(length);
-		if (eJSON_STRING)
+		JSON_STRING = malloc(length);
+		if (JSON_STRING)
 		{
-			fread(eJSON_STRING, 1, length, f);
+			fread(JSON_STRING, 1, length, f);
 		}
 		fclose(f);
 	};
 	initParser IP;
-	IP = getJsonToken(expectNvalues, eJSON_STRING);
+	IP = getJsonToken(expectNvalues, JSON_STRING);
 
 	int r = IP.r;
 	jsmntok_t *t = IP.t;
 	int i = 0;
 
-	data->occur->beacons=objectOccurance(stBeaconid, eJSON_STRING, IP);
-	data->occur->nodes=objectOccurance(stNodeId, eJSON_STRING, IP);
-	data->occur->legs=objectOccurance(stlegId, eJSON_STRING, IP);
-	data->occur->Constraints=objectOccurance(stCid, eJSON_STRING, IP);
-	data->occur->waypoints=objectOccurance(stwpid, eJSON_STRING, IP);
+	data->occur->beacons=objectOccurance(stBeaconid, JSON_STRING, IP);
+	data->occur->nodes=objectOccurance(stNodeId, JSON_STRING, IP);
+	data->occur->legs=objectOccurance(stlegId, JSON_STRING, IP);
+	data->occur->Constraints=objectOccurance(stCid, JSON_STRING, IP);
+	data->occur->waypoints=objectOccurance(stwpid, JSON_STRING, IP);
 
 	data->base->_nd=malloc(sizeof(Node)*data->occur->nodes);
 	data->base->_b=malloc(sizeof(Node)*data->occur->beacons);
@@ -200,7 +200,70 @@ jdata * importData(jdata *data){
 	data->base->_ct=malloc(sizeof(Node)*data->occur->Constraints);
 	data->base->_wpt=malloc(sizeof(Node)*data->occur->waypoints);
 	
+	for (i = 1; i < r; i++)
+	{
+		//struct Node nodes[ndoccur];
+		if (jsoneq(JSON_STRING, &t[i], stLegs) == 0)
+		{
+			for (int in = 0; in < data->occur->legs; in++)
+			{
+				data->base->_lg[in] = legsExt(JSON_STRING, IP, i, in);
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stBeacons) == 0)
+		{
+			for (int in = 0; in < data->occur->beacons; in++)
+			{
+				data->base->_b[in] = beaconsExt(JSON_STRING, IP, i, in);
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stWaypoints) == 0)
+		{
+			for (int in = 0; in < data->occur->waypoints; in++)
+			{
+				data->base->_wpt[in] = waypointsExt(JSON_STRING, IP, i, in);
+				//printf("%f , %f\n",Wp[in].x,Wp[in].y);
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stConstraints) == 0)
+		{
+			for (int in = 0; in <= data->occur->Constraints; in++)
+			{
+				data->base->_ct[in] = ConstrExt(JSON_STRING, IP, i, in);
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stnodes) == 0)
+		{
+			for (int in = 0; in <= data->occur->nodes; in++)
+			{
+				data->base->_nd[in] = nodesExt(JSON_STRING, IP, i, in);
 
+				//printf("%f , %f, %d\n",nd[in].x,nd[in].y,nd[in].id);
+
+				if (in == data->occur->nodes)
+				{
+					for (int k = 0; k < data->occur->nodes; k++)
+					{
+						for (int j = 0; j < data->base->_nd[k].nb_a; j++)
+						{
+							Arc temparc;
+							temparc.dest = &data->base->_nd[data->base->_nd[k].ids[j]];
+							temparc.max_speed = -1;
+							temparc.max_speed_up = -1;
+							data->base->_nd[k].arcs[j] = temparc;
+						}
+					}
+				}
+			}
+		}
+		else if (jsoneq(JSON_STRING, &t[i], stConstants) == 0)
+		{
+			data->base->_c = CstExt(JSON_STRING, IP, i);
+		}
+		else
+		{
+		}
+	}
 
 	return data;
 }

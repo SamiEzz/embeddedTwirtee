@@ -311,6 +311,7 @@ struct Constants CstExt(char *_JSON_STRING,initParser _IP,int _i);
 struct initParser getJsonToken(int expectNvalues,char * JSON_STRING);
 void jsonMainExtract(Base _base,char *jsonFile);
 struct Base initBase();
+jdata * importData(jdata *data);
 
 
 void countJson(int *a);

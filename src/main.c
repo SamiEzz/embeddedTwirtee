@@ -5,12 +5,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// -----------------Variables Globaux----------------
+
+
+// --------------------------------------------------
+
+
 int main(int argc, char const *argv[])
 {
-    /* json import to Base */
-    struct Base base = initBase();
-    jsonMainExtract(base,jsonFileName);
-
+	struct jdata * data ;
+	data = importData(data);
+	for(int i=0;i<data->occur->beacons;i++){
+		printf("%f\n",(data->base->_b+i)->x);
+    }
     printf("DEBUG\n");
     
     return 0;
