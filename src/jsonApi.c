@@ -1,5 +1,9 @@
 #include "../include/jsonApi.h"
 
+
+
+int expectNvalues=8000;
+
 /****************************--[main.c file]--****************************
 
 #include <string.h>
@@ -200,8 +204,6 @@ jdata * importData(jdata *data){
 
 	return data;
 }
-int expectNvalues=8000;
-
 int len(char *t)
 {
     return expectNvalues;
