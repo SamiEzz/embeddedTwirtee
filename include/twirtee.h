@@ -28,7 +28,7 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846264338328
 #endif
-#define POINTDIST(A,B)  (float)(sqrt((((A).x-(B).x)*((A).x-(B).x)) + (((A).y-(B).y)*((A).y-(B).y))))
+#define POINTDIST(A,B)  (float)(sqrt((((A)->x-(B).x)*((A)->x-(B).x)) + (((A)->y-(B).y)*((A)->y-(B).y))))
 #define ABS(A)			((A) >= 0 ? (A) : -(A))
 #define SQR(x)			((x)*(x))
 #define _MAT_ (double (*)[])
@@ -129,14 +129,6 @@ struct Node {
 	Arc arcs[MAX_NODE_ARCS];
 };
 
-typedef struct Cartography { ///< used in COM/Tracking/[Mission_mgt, Tracking]
-	Float32 def_max_speed;
-	Float32 def_max_speed_up;
-	Int16 nb_arcs;
-	Int16 nb_nodes;
-	Node nodes[];
-} Cartography;
-
 typedef struct Vector { ///< used in COM/Tracking/Mission_mgt
 	Float32 x, y;
 } Vector;
@@ -149,17 +141,5 @@ typedef struct Segment { ///< used in COM/Tracking/Segment
 	Point p1, p2;
 } Segment;
 
-typedef struct Path
-{
-	Float32 def_max_speed;
-	Float32 def_max_speed_up;
-	UInt16 size;
-	Node *dest[MAX_CARTO_NODES];
-} Path;
-
-typedef struct Mission {
-	UInt16 size;
-	int ind[MAX_CARTO_NODES];
-} Mission;
 
 #endif /* TWIRTEE_H_ */

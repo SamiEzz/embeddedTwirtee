@@ -15,8 +15,10 @@
                 "-g",
                 "src/main.c",
                 "src/jsonApi.c",
+                "src/dijkstra.c",
                 "-o",
-                "bin/mainRoutine.exe"
+                "bin/mainRoutine",
+                "-lm"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

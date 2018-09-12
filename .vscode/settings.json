@@ -6,6 +6,7 @@
         "com.h": "c",
         "mission_mgr.h": "c",
         "stdlib.h": "c",
-        "dijkstra.h": "c"
+        "dijkstra.h": "c",
+        "type_traits": "c"
     }
 }

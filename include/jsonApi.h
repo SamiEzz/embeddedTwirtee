@@ -200,10 +200,6 @@ typedef struct Node {
 }Node;
 
 
-typedef struct Mission {
-	int ind[CARTO_NODE_NBR];
-	UInt16 size;
-} Mission;
 
 typedef struct initParser {
     int r;

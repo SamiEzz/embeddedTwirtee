@@ -17,7 +17,7 @@ typedef struct Cartography{
 	Float32 def_max_speed_up;
 	Int16 nb_arcs;
 	Int16 nb_nodes;
-	Node nodes[MAX_CARTO_NODES];
+	Node *nodes;
 } Cartography;
 
 typedef struct Path {
@@ -26,6 +26,12 @@ typedef struct Path {
 	UInt16 size;
 	Node *dest[MAX_CARTO_NODES];
 } Path;
+/*
+typedef struct Mission {
+	int ind[CARTO_NODE_NBR];
+	UInt16 size;
+} Mission;
+*/
 void dijkstra(Cartography *graph, int src, int dest, Path *trajectory);
 
 #endif /* DIJKSTRA_H_ */
