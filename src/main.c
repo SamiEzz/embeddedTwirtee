@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
     graphtest.nb_nodes=data->occur->nodes;
     
     for(int i=0;i<data->occur->nodes;i++){
-        graphtest.nodes[i]=(data->base->_nd+i);
+        graphtest.nodes[i]=&(data->base->_nd+i);
     }
     for(int k=0;k<data->occur->nodes;k++){
         graphtest.nb_arcs+=graphtest.nodes[k].nb_a;
@@ -48,14 +48,8 @@ int main(int argc, char const *argv[])
         printf("%d\n",trajectorytest.dest[i]->id);
     }
 
-
     printf("DEBUG\n");
-    
-
-
-
-
-    
+   
     return 0;
 }
 
