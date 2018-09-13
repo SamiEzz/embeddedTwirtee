@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
     Cartography * graphtest = malloc(sizeof(Cartography));
 
     int src=0;
-    int dest=69;
+    int dest=125;
     
     graphtest->def_max_speed=0.3;
     graphtest->def_max_speed_up=0.5;
@@ -51,7 +51,8 @@ int main(int argc, char const *argv[])
     dijkstra(graphtest, src, dest, &trajectorytest);
 
     for(int i=0;i<trajectorytest.size;i++){
-        printf("%d\n",trajectorytest.dest[i]->id);
+        Node n = getnodebyid(data,trajectorytest.dest[i]->id);
+        printnode(&n);
     }
 
     printf("DEBUG\n");

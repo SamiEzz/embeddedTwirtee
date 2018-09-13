@@ -1218,3 +1218,12 @@ void jsmn_init(jsmn_parser *parser) {
 	parser->toksuper = -1;
 }
 
+Node getnodebyid(jdata * data,int id){
+	return *(data->base->_nd+id);
+}
+
+void printnode(Node *n){
+	printf("\nid \t %d\nx,y \t %f,%f\nnb_a \t %d\n",n->id,n->x,n->y,n->nb_a);
+}
+
+

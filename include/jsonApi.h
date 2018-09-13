@@ -295,6 +295,8 @@ void jsonMainExtract(Base _base,char *jsonFile);
 struct Base initBase();
 jdata * importData(jdata *data);
 
+Node getnodebyid(jdata * data,int id);
+void printnode(Node *n);
 
 void countJson(int *a);
 int jsoneq(const char *json, jsmntok_t *tok, const char *s);
