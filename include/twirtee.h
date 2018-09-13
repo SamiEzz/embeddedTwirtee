@@ -28,7 +28,7 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846264338328
 #endif
-#define POINTDIST(A,B)  (float)(sqrt((((A)->x-(B).x)*((A)->x-(B).x)) + (((A)->y-(B).y)*((A)->y-(B).y))))
+#define POINTDIST(A,B)  (float)(sqrt((((A).x-(B).x)*((A).x-(B).x)) + (((A).y-(B).y)*((A).y-(B).y))))
 #define ABS(A)			((A) >= 0 ? (A) : -(A))
 #define SQR(x)			((x)*(x))
 #define _MAT_ (double (*)[])
@@ -114,20 +114,29 @@ typedef enum Node_type {
 
 typedef struct Arc Arc;
 
-typedef struct Node Node, *Node_p;
 
+typedef struct Node Node, *Node_p;
 struct Arc {
 	Node	*dest;
 	Float32 max_speed;		///< Max linear speed,		-1.f if unset
 	Float32 max_speed_up;	///< Max linear speed-up,	-1.f if unset
 };
 
+typedef struct Node {
+    int id;
+	Float32 x, y;
+	Node_type nt;
+	UInt8 nb_a;
+	Arc arcs[MAX_NODE_ARCS];
+    int ids[MAX_NODE_ARCS];
+}Node;
+/*
 struct Node {
 	Float32 x, y;
 	Node_type nt;
 	UInt8 nb_a;
 	Arc arcs[MAX_NODE_ARCS];
-};
+};*/
 
 typedef struct Vector { ///< used in COM/Tracking/Mission_mgt
 	Float32 x, y;

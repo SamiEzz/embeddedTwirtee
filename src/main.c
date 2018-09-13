@@ -27,24 +27,28 @@ int main(int argc, char const *argv[])
     }
     */
     
-    //---------------[TEST DIJKSTRA]---------------
-    Cartography graphtest;
+    //---------------[TEST DIJKSTRA]---------------Cartography graphtest;
     Path trajectorytest;
+    Cartography * graphtest = malloc(sizeof(Cartography));
+
     int src=0;
-    int dest=125;
-	
-    graphtest.def_max_speed=0.3;
-    graphtest.def_max_speed_up=0.5;
-    graphtest.nb_nodes=data->occur->nodes;
-    graphtest.nodes=malloc(data->occur->nodes*sizeof(Node));
-    memcpy(graphtest.nodes,data->base->_nd,data->occur->nodes*sizeof(Node));
+    int dest=69;
     
+    graphtest->def_max_speed=0.3;
+    graphtest->def_max_speed_up=0.5;
+    graphtest->nb_nodes=data->occur->nodes;
+    graphtest->nodes = malloc(sizeof(Node)*data->occur->nodes);
+
+    memcpy(graphtest->nodes,data->base->_nd,sizeof(Node)*data->occur->nodes);
+
     for(int k=0;k<data->occur->nodes;k++){
-        graphtest.nb_arcs+=(graphtest.nodes+k)->nb_a;
+        graphtest->nb_arcs+=(graphtest->nodes+k)->nb_a;
+        //printf("\nnb_arcs : %d\n",(graphtest->nodes+k)->nb_a);
     }
+    //printf("\nnb_arcs : %d\n",graphtest.nb_arcs);
     
 
-    dijkstra(&graphtest, src, dest, &trajectorytest);
+    dijkstra(graphtest, src, dest, &trajectorytest);
 
     for(int i=0;i<trajectorytest.size;i++){
         printf("%d\n",trajectorytest.dest[i]->id);
