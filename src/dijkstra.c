@@ -11,6 +11,7 @@
 #include "../include/dijkstra.h"
 
 
+
 /* A utility function to find the vertex with minimum distance value, from
  * the set of vertices not yet included in shortest path tree
  */
@@ -19,7 +20,7 @@
  */
 static int minDistance(float dist[], Bool8 sptSet[], UInt16 graph_size)
 {
-	// Initialize min value
+	// Initialize min value 
 	float min = (float) INT_MAX;
 	int min_index;
 	int v;
@@ -47,26 +48,21 @@ static Float32 get_speed(Arc *a, Cartography *c)
 	return a->max_speed == -1 ? c->def_max_speed : a->max_speed;
 }
 
-float ndistance(Node * n1,Node * n2){
-	return(sqrt((n1->x-n2->x)*(n1->x-n2->x)+(n1->y-n2->y)*(n1->y-n2->y)));
-}
-
-
 /* Funtion that implements Dijkstra's single source shortest path algorithm
  * for a graph represented using adjacency matrix representation.
  * trajectory contains the sequence of vertices between source and other sources: first element of each row is the path size
  */
 void dijkstra(Cartography *graph, int src, int dest, Path *trajectory)
 {
-	Bool8 sptSet[graph->nb_nodes];	// sptSet[i] will true if vertex i is included in path tree or shortest distance from src to i is finalized
+	Bool8 sptSet[MAX_CARTO_NODES];	// sptSet[i] will true if vertex i is included in path tree or shortest distance from src to i is finalized
 	int count,
 		pt_index,
 		node_index,
 		i, u, v, v_index;
-	float dist[graph->nb_nodes];
+	float dist[MAX_CARTO_NODES];
 	float dist_uv = 0.0;
-	int predecessor[graph->nb_nodes];
-	UInt16 size[graph->nb_nodes];
+	int predecessor[MAX_CARTO_NODES];
+	UInt16 size[MAX_CARTO_NODES];
 	UInt16 graph_size;
 
 	graph_size = graph->nb_nodes;
@@ -95,15 +91,12 @@ void dijkstra(Cartography *graph, int src, int dest, Path *trajectory)
 		sptSet[u] = true;
 
 		// Update dist value of the adjacent vertices of the picked vertex.
-		for (v = 0; v < (graph->nodes+u)->nb_a; ++v)
+		for (v = 0; v < graph->nodes[u].nb_a; ++v)
 		{
-			//dist_uv = POINTDIST((graph->nodes+u), *(graph->nodes+u)->arcs[v].dest) / get_speed(&(graph->nodes+u)->arcs[v], graph);
-			Node * n1,*n2;
-			n1 = (graph->nodes+u);
-			n2 = (graph->nodes+u)->arcs[v].dest;
-			dist_uv = ndistance(n1,n2)/get_speed(&(graph->nodes+u)->arcs[v], graph);
+			dist_uv = POINTDIST(*(graph->nodes+u), *(graph->nodes[u].arcs[v].dest)) / get_speed(&(graph->nodes[u].arcs[v]), graph);
 			/* the corresponding index in graph->nodes table is retrieved using pointer arithmetic */
-			v_index = (int) (((graph->nodes+u)->arcs[v].dest) - graph->nodes);
+			//v_index = (int) (graph->nodes[u].arcs[v].dest - graph->nodes);
+			v_index = (graph->nodes+u)->ids[v];
 			/* Update dist[v] only if is not in sptSet
 			 * and total weight of path from src to v through u
 			 * is smaller than current value of dist[v] */
@@ -127,7 +120,7 @@ void dijkstra(Cartography *graph, int src, int dest, Path *trajectory)
 		pt_index = trajectory->size - 1;
 		while (node_index != src)
 		{
-			trajectory->dest[pt_index] = (graph->nodes+node_index);
+			trajectory->dest[pt_index] = &(graph->nodes[node_index]);
 			--pt_index;
 			node_index = predecessor[node_index];
 			if (node_index == -1) //case of a BUG -> no path assumed
@@ -136,6 +129,6 @@ void dijkstra(Cartography *graph, int src, int dest, Path *trajectory)
 				return;
 			}
 		}
-		trajectory->dest[0] = (graph->nodes+src);
+		trajectory->dest[0] = &(graph->nodes[src]);
 	}
 }
