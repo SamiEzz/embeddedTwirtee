@@ -7,8 +7,13 @@
  */
 
 #include <math.h>
+#include <string.h>
+#include <stdlib.h>
+
+
 #include "../include/com.h"
 #include "../include/dijkstra.h"
+//#include "../include/jsonApi.h"
 
 
 
@@ -132,3 +137,15 @@ void dijkstra(Cartography *graph, int src, int dest, Path *trajectory)
 		trajectory->dest[0] = &(graph->nodes[src]);
 	}
 }
+
+void initCarto(Cartography * cart, Node *n,int nb_nodes){
+	cart->def_max_speed=MAX_SPEED;
+	cart->def_max_speed_up=MAX_SPEED_UP;
+	cart->nb_nodes=nb_nodes;
+	cart->nodes=malloc(sizeof(Node)*nb_nodes);
+	memcpy(cart->nodes,n,sizeof(Node)*nb_nodes);
+	for(int k=0;k<nb_nodes;k++){
+		cart->nb_arcs+=(cart->nodes+k)->nb_a;
+	}	
+}
+

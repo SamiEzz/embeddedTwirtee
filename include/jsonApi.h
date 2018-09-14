@@ -9,6 +9,8 @@
 #include <stdint.h>
 #include <math.h>
 
+
+
 #define jsonFileName "./res/map.json"
 
 #define CARTO_NODE_NBR	653
