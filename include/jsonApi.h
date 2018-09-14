@@ -15,6 +15,8 @@
 
 #define CARTO_NODE_NBR	653
 #define MAX_NODE_ARCS 4
+#define EPSILONodes 0.01
+
 
 #define stBeacons	        "Beacons"
     #define stBeaconid      "Beaconid"

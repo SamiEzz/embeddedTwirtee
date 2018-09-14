@@ -112,214 +112,16 @@ void importData(jdata *data){
 
 	
 }
-int len(char *t)
-{
-    return expectNvalues;
-}
-
-struct Base initBase()
-{
-	char *eJSON_STRING = NULL;
-	long length;
-	
-
-	FILE *f = fopen(jsonFileName, "r");
-	if (f)
-	{
-		fseek(f, 0, SEEK_END);
-		length = ftell(f);
-		fseek(f, 0, SEEK_SET);
-		eJSON_STRING = malloc(length);
-		if (eJSON_STRING)
-		{
-			fread(eJSON_STRING, 1, length, f);
-		}
-		fclose(f);
-	};
-	initParser IP;
-	IP = getJsonToken(expectNvalues, eJSON_STRING);
-
-	int r = IP.r;
-	jsmntok_t *t = IP.t;
-	int i = 0;
-
-	int Boccur = objectOccurance(stBeaconid, eJSON_STRING, IP); // verifier occurrence
-	int Wpoccur = objectOccurance(stwpid, eJSON_STRING, IP);
-	int lgoccur = objectOccurance(stlegId, eJSON_STRING, IP);
-	int ctoccur = objectOccurance(stCid, eJSON_STRING, IP);
-	int ndoccur = objectOccurance(stNodeId, eJSON_STRING, IP);
-	struct Beacons B[Boccur];
-	struct Node nd[ndoccur];
-	//struct Node *nodes[ndoccur];
-	struct Waypoints Wp[Wpoccur];
-	struct Legs lg[lgoccur];
-	struct Constraints ct[ctoccur];
-	struct Constants c;
-	
-	struct Base Bs = {
-        nd,
-        B,
-        Wp,
-        lg,
-        ct,
-		c       
-    };
-/*
-	Bs._b[]=malloc(Boccur*sizeof(Beacons));
-	Bs._nd=nd;
-	Bs._wpt=Wp;
-	Bs._lg=lg;
-	Bs._ct=ct;
-*/
-	return Bs;
-
-
-}
-void jsonMainExtract(Base _base,char *jsonFile)
-{	
-	struct Base *base = &_base;
-	char *JSON_STRING = NULL;
-	long length;
-	FILE *f;
-	f = fopen(jsonFile, "r");
-	
-	if (f!=NULL)
-	{
-		fseek(f, 0, SEEK_END);
-		length = ftell(f);
-		fseek(f, 0, SEEK_SET);
-		JSON_STRING = malloc(length);
-		if (JSON_STRING)
-		{
-			fread(JSON_STRING, 1, length, f);
-		}
-		fclose(f);
-	};
-	initParser IP;
-	IP = getJsonToken(expectNvalues, JSON_STRING);
-
-	int r = IP.r;
-	jsmntok_t *t = IP.t;
-	int i = 0;
-	// Loop over all keys of the root object
-	int Boccur = objectOccurance(stBeaconid, JSON_STRING, IP); // verifier occurrence
-	int Wpoccur = objectOccurance(stwpid, JSON_STRING, IP);
-	int lgoccur = objectOccurance(stlegId, JSON_STRING, IP);
-	int ctoccur = objectOccurance(stCid, JSON_STRING, IP);
-	int ndoccur = objectOccurance(stNodeId, JSON_STRING, IP);
-
-	int fstbrank = objectRank(stBeaconid, JSON_STRING, IP);
-
-	struct Beacons B[Boccur];
-	struct Node nd[ndoccur];
-	//struct Node *nodes[ndoccur];
-	struct Waypoints Wp[Wpoccur];
-	struct Legs lg[lgoccur];
-	struct Constraints ct[ctoccur];
-	struct Constants c;/*
-	Base *base=malloc(sizeof(Base)*expectNvalues);
-	base->_b=malloc(Boccur*sizeof(Beacons));
-	base->_nd=malloc(ndoccur*sizeof(Node));
-	base->_wpt=malloc(Wpoccur*sizeof(Waypoints));
-	base->_lg=malloc(lgoccur*sizeof(Legs));
-	base->_ct=malloc(ctoccur*sizeof(Constraints));
-	*/
-	for (i = 1; i < r; i++)
-	{
-		struct Node nodes[ndoccur];
-		if (jsoneq(JSON_STRING, &t[i], stLegs) == 0)
-		{
-			for (int in = 0; in < lgoccur; in++)
-			{
-				base->_lg[in] = legsExt(JSON_STRING, IP, i, in);
-			}
-		}
-		else if (jsoneq(JSON_STRING, &t[i], stBeacons) == 0)
-		{
-			for (int in = 0; in < Boccur; in++)
-			{
-				base->_b[in] = beaconsExt(JSON_STRING, IP, i, in);
-			}
-		}
-		else if (jsoneq(JSON_STRING, &t[i], stWaypoints) == 0)
-		{
-			for (int in = 0; in < Wpoccur; in++)
-			{
-				base->_wpt[in] = waypointsExt(JSON_STRING, IP, i, in);
-				//printf("%f , %f\n",Wp[in].x,Wp[in].y);
-			}
-		}
-		else if (jsoneq(JSON_STRING, &t[i], stConstraints) == 0)
-		{
-			for (int in = 0; in <= ctoccur; in++)
-			{
-				base->_ct[in] = ConstrExt(JSON_STRING, IP, i, in);
-			}
-		}
-		else if (jsoneq(JSON_STRING, &t[i], stnodes) == 0)
-		{
-			for (int in = 0; in <= ndoccur; in++)
-			{
-				base->_nd[in] = nodesExt(JSON_STRING, IP, i, in);
-
-				//printf("%f , %f, %d\n",nd[in].x,nd[in].y,nd[in].id);
-
-				if (in == ndoccur)
-				{
-					for (int k = 0; k < ndoccur; k++)
-					{
-						for (int j = 0; j < base->_nd[k].nb_a; j++)
-						{
-							Arc temparc;
-							temparc.dest = &base->_nd[nd[k].ids[j]];
-							temparc.max_speed = -1;
-							temparc.max_speed_up = -1;
-							base->_nd[k].arcs[j] = temparc;
-						}
-					}
-				}
-			}
-		}
-		else if (jsoneq(JSON_STRING, &t[i], stConstants) == 0)
-		{
-			base->_c = CstExt(JSON_STRING, IP, i);
-		}
-		else
-		{
-		}
-	} /*
-	Beacons **_B,
-	Node **_nd,
-	Waypoints **_wp,
-	Legs **_lg,
-	Constraints **_ct,
-	Constants *_c		
-*/
-
-	//_base=base;
-}
-
-
-
-struct Node * existNode(float x,float y,Node n[],int madeNodes){
-	for(int i=0;i<madeNodes;i++){
-		if(n[i].x==x && n[i].y==y){
-			return &n[i];
-		}
-	}
-	return NULL;
-}
-
-
 
 int isNewNode(float x,float y,int size,float **base){
 	for(int i=0;i<size+1;i++){
-		if(x==base[0][i] && y==base[1][i]){
+		if(x-base[0][i]<EPSILONodes && y-base[1][i]<EPSILONodes){
 			return 0;
 		}
 	}
 	return 1;
 }
+
 int countNodes(Legs * legs,int nlegs){
 	Legs lick;
 	int maxNodes=2*nlegs;
@@ -357,6 +159,7 @@ int countNodes(Legs * legs,int nlegs){
 	}
 	return madnodes;
 }
+
 int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
 	if (tok->type == JSMN_STRING && (int) strlen(s) == tok->end - tok->start &&
 			strncmp(json + tok->start, s, tok->end - tok->start) == 0) {
@@ -1068,7 +871,7 @@ Node getnodebyid(jdata * data,int id){
 }
 
 void printnode(Node *n){
-	printf("\nid \t %d\nx,y \t %f,%f\nnb_a \t %d\n",n->id,n->x,n->y,n->nb_a);
+	printf("|\n|\nid \t %d\nx \t %f\ny \t %f\n-------------\n",n->id,n->x,n->y);
 }
 
 Beacons getbeaconbyid(jdata * data,int id){

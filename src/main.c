@@ -12,7 +12,7 @@
 
 int main(int argc, char const *argv[])
 {
-    //=====================[ jSon import ]=====================
+    //=====================[ jSon IMPORT ]=====================
     struct jdata * data ;
     /* importData()
     *  this function import information from the json file in "jsonApi.h"->jsonFileName.
@@ -44,7 +44,7 @@ int main(int argc, char const *argv[])
     */
     dijkstra(graphtest, src, dest, &trajectorytest);
 
-    //=====================[ PRINT RESULT ]=====================
+    //=================[ PRINT THE SHORTEST PATH ]=================
     for(int i=0;i<trajectorytest.size;i++){
         Node n = getnodebyid(data,trajectorytest.dest[i]->id);
         printnode(&n);
