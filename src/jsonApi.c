@@ -5,8 +5,7 @@
 int expectNvalues=8000;
 
 
-jdata * importData(jdata *data){
-	data = malloc(sizeof(jdata));
+void importData(jdata *data){
 	data->base=malloc(sizeof(Base));
 	data->occur=malloc(sizeof(occur));
 
@@ -111,7 +110,7 @@ jdata * importData(jdata *data){
 		}
 	}
 
-	return data;
+	
 }
 int len(char *t)
 {
