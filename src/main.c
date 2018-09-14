@@ -54,7 +54,7 @@ int main(int argc, char const *argv[])
         Node n = getnodebyid(data,trajectorytest.dest[i]->id);
         printnode(&n);
     }
-
+    
     printf("DEBUG\n");
    
     return 0;

@@ -1226,4 +1226,18 @@ void printnode(Node *n){
 	printf("\nid \t %d\nx,y \t %f,%f\nnb_a \t %d\n",n->id,n->x,n->y,n->nb_a);
 }
 
+Beacons getbeaconbyid(jdata * data,int id){
+	return *(data->base->_b+id);
+}
 
+Waypoints getwaypointbyid(jdata * data,int id){
+	return *(data->base->_wpt+id);
+}
+
+Constraints getconstraintbyid(jdata * data, int id){
+	return *(data->base->_ct+id);
+}
+
+Constants getconstants(jdata * data){
+	return (data->base->_c);
+}
