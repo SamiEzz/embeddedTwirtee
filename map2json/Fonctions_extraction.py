@@ -8,7 +8,7 @@ from Arc_t import Arc_t
 from Contrainte import *
 from node import *
 import math
-import json
+import json, pdb
 import numpy as np
 
 
@@ -223,11 +223,11 @@ def refine_leg(mapping):
 #
 ===============================================================================================================
 """
-
-
+# todo : 
+#   
 def isnewnode(x,y,base):
     for obj in base:
-        if (round(obj[0],2)==round(x,2) and round(obj[1],2)==round(y,2)):
+        if (round(obj[0],4)==round(x,4) and round(obj[1],4)==round(y,4)):
             return obj[2]
         
     return -1
@@ -243,9 +243,21 @@ def createBase(legs):
         if(isnewnode(leg._point_end._x,leg._point_end._y,base)==-1):
             base.append([leg._point_end._x,leg._point_end._y,noderank])
             noderank+=1
-    print(str(base[0])+","+str(base[1]))
+    #print(str(base[0])+","+str(base[1]))
     return base
 
+def getAllNodes(legs):
+    nodes=[]
+    for leg in legs:
+        nodes.append(leg.get_point_start)
+    return nodes
+
+def constructArcsNodes2(mapping):
+    nodes=[]
+    legs=mapping["Legs"]
+    for lega in legs:
+        allnodes=getAllNodes(legs)
+    return nodes
 
         
 def constructArcsNodes(mapping):

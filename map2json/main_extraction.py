@@ -2,7 +2,7 @@ from Fonctions_extraction import *
 import numpy as np
 
 import sys, getopt
-
+import pdb
 
 
 def getWptId(x,y,Waypoints):
@@ -30,6 +30,7 @@ def serialiseMapping(mapp):
     data["Beacons"]=table
     # ----------------------------------------------------------------------   
     nodes = constructArcsNodes(mapp)
+    pdb.set_trace()
     data["nodes"] ={}
     table=[]
     for node in nodes:
@@ -101,9 +102,11 @@ def serialiseMapping(mapp):
         legid+=1
         table.append(temp)
     data["Legs"]=table
-    # ----------------------------------------------------------------------
 
-   
+    
+    # ----------------------------------------------------------------------
+    # Debugger
+    # pdb.set_trace()
 
     return data
 
@@ -114,13 +117,13 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "hi:o:", ["ifile=", "ofile="])
     except getopt.GetoptError:
-        print('main_extraction.py -i <inputfile.dxf> -o <outputfile.npz>')
+        print('main_extraction.py -i <inputfile.dxf> -o <outputfile.json>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('main_extraction.py -i <inputfile.dxf> -o <outputfile.npz>')
+            print('main_extraction.py -i <inputfile.dxf> -o <outputfile.json>')
             print('OR')
-            print('main_extraction.py --ifile=<inputfile.dxf> --ofile=<outputfile.npz>')
+            print('main_extraction.py --ifile=<inputfile.dxf> --ofile=<outputfile.json>')
             sys.exit()
         elif opt in ("-i", "--ifile"):
             nom_du_fichier_dxf = arg

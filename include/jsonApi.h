@@ -14,7 +14,7 @@
 #define jsonFileName "./res/map.json"
 
 #define CARTO_NODE_NBR	653
-#define MAX_NODE_ARCS 4
+#define MAX_NODE_ARCS 4 // obsolete
 #define EPSILONodes 0.01
 
 
