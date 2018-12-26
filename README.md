@@ -1,6 +1,6 @@
 
 # EmebeddedTwirtee
-This Repository contain the embedded code to run in the TwIRTee Robot.
+This Repository contain the localisation code of the TwIRTee Robot.
 
 # Main programs
 The TwIRTee's program contain many scripts in Python, C and Shell code, **./launch.sh** is the band master wich run scripts and compile the project in the right order.
