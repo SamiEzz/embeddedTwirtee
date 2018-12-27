@@ -873,6 +873,25 @@ Node getnodebyid(jdata * data,int id){
 void printnode(Node *n){
 	printf("\t|\n\t|\n--------------------\nid \t %d\nx \t %f\ny \t %f\n--------------------\n",n->id,n->x,n->y);
 }
+void traject_to_file(Node * n, int rank,int max){
+	char * mode="a";
+	char * string;
+	FILE * fp;
+
+	if(rank==0){
+		mode="w";
+		string = fprintf(fp, "{\"nodes\":");
+	}
+	
+	fp = fopen ("trajectory.json", mode);
+	fprintf(fp, "",n->id);
+	if(rank==max){
+		string = fprintf(fp, "]}");
+
+	}
+	fclose(fp);
+   
+}
 
 Beacons getbeaconbyid(jdata * data,int id){
 	return *(data->base->_b+id);
