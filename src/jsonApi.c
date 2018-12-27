@@ -871,7 +871,7 @@ Node getnodebyid(jdata * data,int id){
 }
 
 void printnode(Node *n){
-	printf("|\n|\nid \t %d\nx \t %f\ny \t %f\n-------------\n",n->id,n->x,n->y);
+	printf("\t|\n\t|\n--------------------\nid \t %d\nx \t %f\ny \t %f\n--------------------\n",n->id,n->x,n->y);
 }
 
 Beacons getbeaconbyid(jdata * data,int id){

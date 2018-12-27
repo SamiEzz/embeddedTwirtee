@@ -12,8 +12,19 @@
 
 int main(int argc, char const *argv[])
 {
+    int src,dest;
+    // printf("%s , %s , %d",argv[0],argv[1],argc);
+    
+    if(argc==3){
+        src = atoi(argv[1]);
+        dest= atoi(argv[2]);
+    }
+    else {
+        src=0;
+        dest=5;
+    };
     //=====================[ jSon IMPORT ]=====================
-    struct jdata * data ;
+    struct jdata * data = malloc(sizeof(jdata));
     /* importData()
     *  this function import information from the json file in "jsonApi.h"->jsonFileName.
     *  then store it in the variable "data"(1), wich contain tables in the subVariable data->base
@@ -26,7 +37,8 @@ int main(int argc, char const *argv[])
     Path trajectorytest;
     Cartography * graphtest = malloc(sizeof(Cartography));
 
-    int src=0,dest=125;
+    
+    
     /* initCarto()
     * this function use "jdata structure" to assign 
     * - the Cartography nodes, 

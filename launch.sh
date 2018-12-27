@@ -19,7 +19,7 @@ echo "|                                          |"
 echo "|------------------------------------------|"
 echo "|------" Launching main routine "------------|"
 echo "|                                          |"
-./bin/mainRoutine a b
+./bin/mainRoutine
 
 
 echo "|------------------------------------------|"
