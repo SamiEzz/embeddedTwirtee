@@ -1,3 +1,13 @@
+//////////////////////////////////////////////////////////
+//                                                      //
+//      (c)         : EZZEROUALI Sami 2018              //
+//      Tutor       : JENN Eric                         //
+//      Project     : CAPHCA                            //
+//      Program     : SPF - Shortest path first         //
+//                                                      //
+//////////////////////////////////////////////////////////
+
+
 #include "../include/header.h"
 #include "../include/config.h"
 #include "../include/jsonApi.h"
@@ -21,7 +31,13 @@ int main(int argc, char const *argv[])
         src = atoi(argv[1]);
         dest= atoi(argv[2]);
     }
+    else if(argc==2 && argv[2]=="--help"){
+        (void)fprintf(stderr,"Usage: main  \n");
+    }
     else {
+        errno = 0;
+        (void)fprintf(stderr,"TwIRTee: no start and end point specified\nTwIRTee: Use --help for more information \n");
+        return errno;
         src=0;
         dest=5;
     };
