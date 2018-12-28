@@ -9,7 +9,7 @@
 #include <math.h>
 #include <errno.h>
 
-#define outputFile "output.txt"
+#define outputFile "output.nodes"
 
 
 int main(int argc, char const *argv[])
