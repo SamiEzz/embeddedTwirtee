@@ -8,6 +8,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <math.h>
+#include <errno.h>
+
+void * safe_alloc(int size);
 
 
 

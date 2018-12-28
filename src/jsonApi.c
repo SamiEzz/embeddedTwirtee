@@ -4,10 +4,21 @@
 
 int expectNvalues=8000;
 
+void * safe_alloc(int size){
+    errno = 0;
+    void * memblock;
+    memblock = malloc(size);
+    if(memblock==NULL){
+        (void)fprintf(stderr,"Impossible d\'allouer l\'espace dans la mémoire. \n %s.",strerror(errno));
+    }
+    else{
+        return memblock;
+    }
+}
 
 void importData(jdata *data){
-	data->base=malloc(sizeof(Base));
-	data->occur=malloc(sizeof(occur));
+	data->base=safe_alloc(sizeof(Base));
+	data->occur=safe_alloc(sizeof(occur));
 
 	char *JSON_STRING = NULL;
 	long length;
@@ -19,7 +30,7 @@ void importData(jdata *data){
 		fseek(f, 0, SEEK_END);
 		length = ftell(f);
 		fseek(f, 0, SEEK_SET);
-		JSON_STRING = malloc(length);
+		JSON_STRING = safe_alloc(length);
 		if (JSON_STRING)
 		{
 			fread(JSON_STRING, 1, length, f);
@@ -39,11 +50,11 @@ void importData(jdata *data){
 	data->occur->Constraints=objectOccurance(stCid, JSON_STRING, IP);
 	data->occur->waypoints=objectOccurance(stwpid, JSON_STRING, IP);
 
-	data->base->_nd=malloc(sizeof(Node)*data->occur->nodes);
-	data->base->_b=malloc(sizeof(Node)*data->occur->beacons);
-	data->base->_lg=malloc(sizeof(Node)*data->occur->legs);
-	data->base->_ct=malloc(sizeof(Node)*data->occur->Constraints);
-	data->base->_wpt=malloc(sizeof(Node)*data->occur->waypoints);
+	data->base->_nd=safe_alloc(sizeof(Node)*data->occur->nodes);
+	data->base->_b=safe_alloc(sizeof(Node)*data->occur->beacons);
+	data->base->_lg=safe_alloc(sizeof(Node)*data->occur->legs);
+	data->base->_ct=safe_alloc(sizeof(Node)*data->occur->Constraints);
+	data->base->_wpt=safe_alloc(sizeof(Node)*data->occur->waypoints);
 	
 	for (i = 1; i < r; i++)
 	{
@@ -126,9 +137,9 @@ int countNodes(Legs * legs,int nlegs){
 	Legs lick;
 	int maxNodes=2*nlegs;
 	//float base[2][2*nlegs];
-	float **base = (float **)malloc(sizeof(float*)*2);
-	base[0]=(float*)malloc(sizeof(float)*maxNodes);
-	base[1]=(float*)malloc(sizeof(float)*maxNodes);
+	float **base = (float **)safe_alloc(sizeof(float*)*2);
+	base[0]=(float*)safe_alloc(sizeof(float)*maxNodes);
+	base[1]=(float*)safe_alloc(sizeof(float)*maxNodes);
 	 
 	float x[maxNodes],y[maxNodes];
 	/*
@@ -179,19 +190,19 @@ struct Constants CstExt(char *_JSON_STRING,initParser _IP,int _i){
 		int v1rank=objectRank(stv1,_JSON_STRING, _IP)-constantsrank;
 		int v2rank=objectRank(stv2,_JSON_STRING, _IP)-constantsrank;
 		//---
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ vdefrank].start, sizeof(double));
 		C.vdef=strtof(tempchar,NULL);
 		free(tempchar);
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ adefrank].start, sizeof(double));
 		C.adef=strtof(tempchar,NULL);
 		free(tempchar);
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ v1rank].start, sizeof(double));
 		C.v1=strtof(tempchar,NULL);
 		free(tempchar);
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ v2rank].start, sizeof(double));
 		C.v2=strtof(tempchar,NULL);
 		free(tempchar);
@@ -224,51 +235,51 @@ struct Node nodesExt(char *_JSON_STRING,initParser _IP,int _i,int objRank){
 		
 		
 		//---
-		tempchar = malloc(sizeof(int));
+		tempchar = safe_alloc(sizeof(int));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ idrank].start, sizeof(int));
 		nd.id=atoi(tempchar);
 		free(tempchar);
 		//---
-		//typechar = malloc(14*sizeof(char));
+		//typechar = safe_alloc(14*sizeof(char));
 		//strncpy(typechar,  _JSON_STRING + _t[_i+ typerank].start, 14*sizeof(char));
 		nd.nt=0;
 		//free(typechar);
 		//---
 		
 
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ xrank].start, sizeof(double));
 		nd.x=strtof(tempchar,NULL);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ yrank].start, sizeof(double));
 		nd.y=strtof(tempchar,NULL);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(int));
+		tempchar = safe_alloc(sizeof(int));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ nbarank].start, sizeof(int));
 		nd.nb_a=atoi(tempchar);
 		free(tempchar);
 
 
-		tempchar = malloc(sizeof(int));
+		tempchar = safe_alloc(sizeof(int));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ arc1rank].start, sizeof(int));
 		nd.ids[0]=atoi(tempchar);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(int));
+		tempchar = safe_alloc(sizeof(int));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ arc2rank].start, sizeof(int));
 		nd.ids[1]=atoi(tempchar);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(int));
+		tempchar = safe_alloc(sizeof(int));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ arc3rank].start, sizeof(int));
 		nd.ids[2]=atoi(tempchar);
 		free(tempchar);
 
 
-		tempchar = malloc(sizeof(int));
+		tempchar = safe_alloc(sizeof(int));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ arc4rank].start, sizeof(int));
 		nd.ids[3]=atoi(tempchar);
 		free(tempchar);
@@ -305,37 +316,37 @@ struct Constraints ConstrExt(char *_JSON_STRING,initParser _IP,int _i,int objRan
 		int zrank=objectRank(stCz,_JSON_STRING, _IP)-ctrank+objRank*tab;
 		
 		//---
-		tempchar = malloc(sizeof(int));
+		tempchar = safe_alloc(sizeof(int));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ idrank].start, sizeof(int));
 		ct.id=atoi(tempchar);
 		free(tempchar);
 		//---
-		typechar = malloc(14*sizeof(char));
+		typechar = safe_alloc(14*sizeof(char));
 		strncpy(typechar,  _JSON_STRING + _t[_i+ typerank].start, 14*sizeof(char));
 		ct.type=typechar;
 		//free(typechar);
 		//---
-		namechar = malloc(5*sizeof(char));
+		namechar = safe_alloc(5*sizeof(char));
 		strncpy(namechar,  _JSON_STRING + _t[_i+ namerank].start, 4*sizeof(char));
 		ct.name=namechar;
 		//free(namechar);
 
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ valuerank].start, sizeof(double));
 		ct.value=strtof(tempchar,NULL);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ xrank].start, sizeof(double));
 		ct.x=strtof(tempchar,NULL);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ yrank].start, sizeof(double));
 		ct.y=strtof(tempchar,NULL);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ zrank].start, sizeof(double));
 		ct.z=strtof(tempchar,NULL);
 		free(tempchar);
@@ -365,40 +376,40 @@ struct Legs legsExt(char *_JSON_STRING,initParser _IP,int _i,int objRank){
 		int ezrank=objectRank(stlegEndz,_JSON_STRING, _IP)-lgrank+objRank*tab;
 				
 		//---
-		tempchar = malloc(sizeof(int));
+		tempchar = safe_alloc(sizeof(int));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ idrank].start, sizeof(int));
 		lg.id=atoi(tempchar);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ lengthrank].start, sizeof(double));
 		lg.length=strtof(tempchar,NULL);
 		free(tempchar);
 		
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ sxrank].start, sizeof(double));
 		lg.startx=strtof(tempchar,NULL);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ syrank].start, sizeof(double));
 		lg.starty=strtof(tempchar,NULL);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ szrank].start, sizeof(double));
 		lg.startz=strtof(tempchar,NULL);
 		free(tempchar);
 		
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ exrank].start, sizeof(double));
 		lg.endx=strtof(tempchar,NULL);
 		free(tempchar);
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ eyrank].start, sizeof(double));
 		lg.endy=strtof(tempchar,NULL);
 		free(tempchar);
-		tempchar = malloc(sizeof(double));
+		tempchar = safe_alloc(sizeof(double));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ ezrank].start, sizeof(double));
 		lg.endz=strtof(tempchar,NULL);
 		free(tempchar);
@@ -422,27 +433,27 @@ struct Waypoints waypointsExt(char *_JSON_STRING,initParser _IP,int _i,int objRa
 		int typerank=objectRank(stwptype,_JSON_STRING, _IP)-wprank+objRank*tab;
 		
 		//---
-		typechar = malloc(13*sizeof(char));
+		typechar = safe_alloc(13*sizeof(char));
 		strncpy(typechar,  _JSON_STRING + _t[_i+ typerank].start, 13*sizeof(char));
 		wp.type=typechar;
 		//free(typechar);
 
-		tempchar = malloc(sizeof(int));
+		tempchar = safe_alloc(sizeof(int));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ idrank].start, sizeof(int));
 		wp.id=atoi(tempchar);
 		free(tempchar);
 		
-		tempchar = malloc(sizeof(float));
+		tempchar = safe_alloc(sizeof(float));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ xrank].start, sizeof(float));
 		wp.x=strtof(tempchar,NULL);
 		free(tempchar);
 		
-		tempchar = malloc(sizeof(float));
+		tempchar = safe_alloc(sizeof(float));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ yrank].start, sizeof(float));
 		wp.y=strtof(tempchar,NULL);
 		free(tempchar);
 		
-		tempchar = malloc(sizeof(float));
+		tempchar = safe_alloc(sizeof(float));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ zrank].start, sizeof(float));
 		wp.z=strtof(tempchar,NULL);
 		free(tempchar);
@@ -462,22 +473,22 @@ struct Beacons beaconsExt(char *_JSON_STRING,initParser _IP,int _i,int objRank){
 		int yrank=objectRank(stBeacony,_JSON_STRING, _IP)-Beaconrank+objRank*tab;
 		int zrank=objectRank(stBeaconz,_JSON_STRING, _IP)-Beaconrank+objRank*tab;
 		//---
-		tempchar = malloc(sizeof(char));
+		tempchar = safe_alloc(sizeof(char));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ idrank].start, sizeof(int));
 		B.id=atoi(&tempchar[0]);
 		free(tempchar);
 
-		tempchar = malloc(sizeof(float));
+		tempchar = safe_alloc(sizeof(float));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ xrank].start, sizeof(float));
 		B.x=strtof(tempchar,NULL);
 		free(tempchar);
 		
-		tempchar = malloc(sizeof(float));
+		tempchar = safe_alloc(sizeof(float));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ yrank].start, sizeof(float));
 		B.y=strtof(tempchar,NULL);
 		free(tempchar);
 		
-		tempchar = malloc(sizeof(float));
+		tempchar = safe_alloc(sizeof(float));
 		strncpy(tempchar,  _JSON_STRING + _t[_i+ zrank].start, sizeof(float));
 		B.z=strtof(tempchar,NULL);
 		free(tempchar);
@@ -874,22 +885,25 @@ void printnode(Node *n){
 	printf("\t|\n\t|\n--------------------\nid \t %d\nx \t %f\ny \t %f\n--------------------\n",n->id,n->x,n->y);
 }
 void traject_to_file(Node * n, int rank,int max){
+	// HEAD
 	char * mode="a";
-	char * string;
 	FILE * fp;
-
 	if(rank==0){
 		mode="w";
-		string = fprintf(fp, "{\"nodes\":");
+		fprintf(fp, "{\"nodes_id\" : ");
 	}
-	
+	// BODY
 	fp = fopen ("trajectory.json", mode);
-	fprintf(fp, "",n->id);
+	fprintf(fp, "%d",n->id);
+	if(rank<max){
+		fprintf(fp, ",");
+	}
+	// FOOTER
 	if(rank==max){
-		string = fprintf(fp, "]}");
+		fprintf(fp, "]}");
+		fclose(fp);
 
 	}
-	fclose(fp);
    
 }
 

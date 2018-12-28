@@ -5,9 +5,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <string.h> // strerror
 #include <math.h>
-
+#include <errno.h>
 
 
 int main(int argc, char const *argv[])
@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
         dest=5;
     };
     //=====================[ jSon IMPORT ]=====================
-    struct jdata * data = malloc(sizeof(jdata *));
+    struct jdata * data = safe_alloc(sizeof(jdata *));
     /* importData()
     *  this function import information from the json file in "jsonApi.h"->jsonFileName.
     *  then store it in the variable "data"(1), wich contain tables in the subVariable data->base
@@ -35,7 +35,7 @@ int main(int argc, char const *argv[])
     
     //=====================[TEST DIJKSTRA]=====================
     Path trajectorytest;
-    Cartography * graphtest = malloc(sizeof(Cartography));
+    Cartography * graphtest = safe_alloc(sizeof(Cartography));
 
     
     
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[])
     for(int i=0;i<trajectorytest.size;i++){
         Node n = getnodebyid(data,trajectorytest.dest[i]->id);
         printnode(&n);
-        traject_to_file(&n,i,trajectorytest.size);
+        //traject_to_file(&n,i,trajectorytest.size);
 
     }
     
