@@ -9,6 +9,8 @@
 #include <math.h>
 #include <errno.h>
 
+#define outputFile "output.txt"
+
 
 int main(int argc, char const *argv[])
 {
@@ -60,8 +62,7 @@ int main(int argc, char const *argv[])
     for(int i=0;i<trajectorytest.size;i++){
         Node n = getnodebyid(data,trajectorytest.dest[i]->id);
         printnode(&n);
-        //traject_to_file(&n,i,trajectorytest.size);
-
+        traject_to_file(&n,i,outputFile);
     }
     
     //=====================[ Tracking Robot ]=====================

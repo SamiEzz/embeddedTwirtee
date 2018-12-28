@@ -304,8 +304,7 @@ void importData(jdata *data);
 
 Node getnodebyid(jdata * data,int id);
 void printnode(Node *n);
-void traject_to_file(Node * n, int rank, int max);
-
+void traject_to_file(Node * n, int rank,char * outputFile);
 void countJson(int *a);
 int jsoneq(const char *json, jsmntok_t *tok, const char *s);
 int countNodes(Legs * l,int nlegs);

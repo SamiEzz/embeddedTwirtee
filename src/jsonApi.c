@@ -884,26 +884,50 @@ Node getnodebyid(jdata * data,int id){
 void printnode(Node *n){
 	printf("\t|\n\t|\n--------------------\nid \t %d\nx \t %f\ny \t %f\n--------------------\n",n->id,n->x,n->y);
 }
-void traject_to_file(Node * n, int rank,int max){
+void traject_to_file(Node * n, int rank,char * outputFile){
+	
 	// HEAD
 	char * mode="a";
 	FILE * fp;
 	if(rank==0){
 		mode="w";
-		fprintf(fp, "{\"nodes_id\" : ");
+		fp = fopen (outputFile, mode);
+		
+		fprintf(fp, "id, x, y\n");
+		fprintf(fp, "%d, %f, %f\n",n->id,n->x,n->y);
 	}
-	// BODY
-	fp = fopen ("trajectory.json", mode);
-	fprintf(fp, "%d",n->id);
-	if(rank<max){
-		fprintf(fp, ",");
+	else{
+		// BODY
+		fp = fopen (outputFile, mode);
+		fprintf(fp, "%d, %f, %f\n",n->id,n->x,n->y);
 	}
 	// FOOTER
-	if(rank==max){
-		fprintf(fp, "]}");
-		fclose(fp);
+	fclose(fp);
+   
+	// // HEAD
+	// char * mode="a";
+	// FILE * fp;
+	// if(rank==0){
+	// 	mode="w";
+	// 	fp = fopen ("trajectory.json", mode);
+	// 	fprintf(fp, "{\"nodes_id\" : [");
+	// 	fprintf(fp, "%d",n->id);
+	// }
+	// else{
+	// 	// BODY
+	// 	fp = fopen ("trajectory.json", mode);
+	// 	fprintf(fp, "%d",n->id);
+	// }
+	
+	// if(rank<max-1){
+	// 	fprintf(fp, ",");
+	// }
+	// // FOOTER
+	// if(rank==max-1){
+	// 	fprintf(fp, "]}");
+	// 	fclose(fp);
 
-	}
+	// }
    
 }
 
