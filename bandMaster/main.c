@@ -31,6 +31,7 @@ void *inc_x(void *x_void_ptr)
 
 /* increment x to 100 */
 int *x_ptr = (int *)x_void_ptr;
+
 while(++(*x_ptr) < 100);
 
 printf("x increment finished\n");
