@@ -23,6 +23,7 @@
 typedef struct spf_mission{
     int start;
     int end;
+    Path * path;
 }spf_mission;
 
 void *spf_thread(void *mission_se);

@@ -32,7 +32,7 @@ void *spf_thread(void *mission_se){
     
     src=mission->start;
     dest=mission->end;
-
+    
     //=====================[ jSon IMPORT ]=====================
     struct jdata * data = safe_alloc(sizeof(jdata *));
     /* importData()
@@ -67,12 +67,13 @@ void *spf_thread(void *mission_se){
     dijkstra(graphtest, src, dest, &trajectorytest);
 
     //=================[ PRINT THE SHORTEST PATH ]=================
+    /*
     for(int i=0;i<trajectorytest.size;i++){
         Node n = getnodebyid(data,trajectorytest.dest[i]->id);
         printnode(&n);
         traject_to_file(&n,i,outputFile);
     }
-    
+    */
     //=====================[ Tracking Robot ]=====================
     pthread_exit(&trajectorytest);
 }

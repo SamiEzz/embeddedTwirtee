@@ -11,7 +11,7 @@
             "label": "twirteeDebug",
             "type": "shell",
             "command": "gcc",
-            "args": [​
+            "args": [
                 "-g",
                 "src/main.c",
                 "src/jsonApi.c",
@@ -21,12 +21,37 @@
                 "-lm"
             ],
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}/"
             },
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "twirteeDebug_only_spf",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-pthread",
+                "src/main.c",
+                "src/jsonApi.c",
+                "src/dijkstra.c",
+                "src/spf_thread.c",
+                "-o",
+                "bin/spf",
+                "-lm"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/threads/short_path/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
         }
     ]
 }

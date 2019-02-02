@@ -30,9 +30,9 @@
 int main(int argc, char const *argv[])
 {
     int src,dest;
-    Path trajectorytest;
+    Path * trajectorytest;
     // printf("%s , %s , %d",argv[0],argv[1],argc);
-    
+    /*
     if(argc==3){
         src = atoi(argv[1]);
         dest= atoi(argv[2]);
@@ -47,9 +47,15 @@ int main(int argc, char const *argv[])
         src=0;
         dest=5;
     };
+    */
+    src=1;
+    dest=4;
+    
     spf_mission mission_se={
         .start = src,
-        .end = dest
+        .end = dest,
+        .path = &trajectorytest,
+        .mut = 
     };
 
     //---------- Creation des threads
@@ -60,14 +66,17 @@ int main(int argc, char const *argv[])
     }  
 
     // wait for thread to execute 
+    //void ** returned_path;
+
     if (pthread_join(t_spf, NULL)) {
         perror("pthread_join");
         return EXIT_FAILURE;
     }
     // end of thread
+    
 
-    for(int i=0;i<trajectorytest.size;i++){
-        printf("- %d\n",trajectorytest.dest[i]->id);    
+    for(int i=0;i<trajectorytest->size;i++){
+        printf("- %d\n",trajectorytest->dest[i]->id);    
     }
     printf("fin du main\n");
     return EXIT_SUCCESS;
