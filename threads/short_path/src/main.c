@@ -32,30 +32,16 @@ int main(int argc, char const *argv[])
     int src,dest;
     Path * trajectorytest;
     // printf("%s , %s , %d",argv[0],argv[1],argc);
-    /*
-    if(argc==3){
-        src = atoi(argv[1]);
-        dest= atoi(argv[2]);
-    }
-    else if(argc==2 && argv[2]=="--help"){
-        (void)fprintf(stderr,"Usage: main  \n");
-    }
-    else {
-        errno = 0;
-        (void)fprintf(stderr,"TwIRTee: no start and end point specified\nTwIRTee: Use --help for more information \n");
-        return errno;
-        src=0;
-        dest=5;
-    };
-    */
+    
+    
     src=1;
     dest=4;
     
     spf_mission mission_se={
         .start = src,
         .end = dest,
-        .path = &trajectorytest,
-        .mut = 
+        .path = trajectorytest,
+        .mut = PTHREAD_MUTEX_INITIALIZER
     };
 
     //---------- Creation des threads
@@ -74,10 +60,10 @@ int main(int argc, char const *argv[])
     }
     // end of thread
     
-
-    for(int i=0;i<trajectorytest->size;i++){
-        printf("- %d\n",trajectorytest->dest[i]->id);    
+    for(int i=0;i<mission_se.path->size;i++){
+        printf("- %d\n",mission_se.path->dest[i]->id);    
     }
+    
     printf("fin du main\n");
     return EXIT_SUCCESS;
 

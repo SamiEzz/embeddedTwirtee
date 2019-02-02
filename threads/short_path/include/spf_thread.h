@@ -24,6 +24,7 @@ typedef struct spf_mission{
     int start;
     int end;
     Path * path;
+    pthread_mutex_t mut;
 }spf_mission;
 
 void *spf_thread(void *mission_se);

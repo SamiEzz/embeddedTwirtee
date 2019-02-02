@@ -64,7 +64,8 @@ void *spf_thread(void *mission_se){
     * and arrive to.
     *     
     */
-    dijkstra(graphtest, src, dest, &trajectorytest);
+    mission->path = safe_alloc(sizeof(Path));
+    dijkstra(graphtest, src, dest, mission->path);
 
     //=================[ PRINT THE SHORTEST PATH ]=================
     /*
@@ -75,6 +76,6 @@ void *spf_thread(void *mission_se){
     }
     */
     //=====================[ Tracking Robot ]=====================
-    pthread_exit(&trajectorytest);
+    pthread_exit(NULL);
 }
 
