@@ -1,7 +1,7 @@
 echo "|------------------------------------------|"
 echo "|------" Extracting map to json file "-------|"
 echo "|                                          |"
-python3 ./map2json/main_extraction.py -i ./map2json/Map.dxf -o ./res/map.json
+python3 ../python_tools/map2json/main_extraction.py -i ../python_tools/map2json/Map.dxf -o ./res/map.json
 
 
 echo "|------------------------------------------|"

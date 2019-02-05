@@ -66,13 +66,21 @@ void check_mes(const T_mat *Xp, const T_mat *Pp,  T_loc *locp, T_head * headp)
 // - X_estp : état estimé
 // - covp : matrice de covariance
 
+typedef struct kalman_param {
+	double dt,wl_mes,wr_mes;
+	T_loc *locp;
+	T_head *headp;
+	T_mat *X_estp;
+	T_mat *Pp;
+};
+
 void kalman (	double dt,
 				double wl_mes, double wr_mes, 	// Vitesse des roues mesurées
 				T_loc *locp, T_head *headp,		// Mesures capteurs
 				T_mat *X_estp, 					// Etat estimé
 				T_mat *Pp)						// matrice de covariance
 {
-
+	
 	// --------------------
     //  Phase de prediction
 	// --------------------

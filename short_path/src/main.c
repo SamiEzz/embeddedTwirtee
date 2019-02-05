@@ -66,8 +66,16 @@ int main(int argc, char const *argv[])
     
     printf("fin du main\n");
     return EXIT_SUCCESS;
-
     return 0;
 }
 
 
+void system_loop(){
+    // Init varibles
+
+    // get mission
+
+    // sensor data initiation
+
+    
+}
