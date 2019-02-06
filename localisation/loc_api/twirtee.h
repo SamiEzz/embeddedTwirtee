@@ -9,7 +9,7 @@
 #define TWIRTEE_H_
 
 #include <stdint.h>
-#include "platform_types.h"
+//#include "platform_types.h"
 
 
 #define false			0

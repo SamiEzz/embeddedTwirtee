@@ -8,21 +8,22 @@
 //////////////////////////////////////////////////////////
 
 
-#include "../include/header.h"
-#include "../include/loc_thread.h"
+#include "dwm_api.h"
+#include "hal.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h> // strerror
 #include <math.h>
 #include <errno.h>
+#include <pthread.h>
 
+typedef struct T_loc {
+	double x;
+	double y;
+	double z;
+	double qf;
+	bool val;
+} T_loc;
 
-typedef struct spf_mission{
-    int start;
-    int end;
-    Path * path;
-    pthread_mutex_t mut;
-}spf_mission;
-
-void *spf_thread(void *mission_se);
+void *loc_thread(void *_position);

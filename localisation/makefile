@@ -31,14 +31,17 @@ INTERFACE_NUMBER = 0
 #  1:    fprintf (log.txt)       
 #  2:    printf (terminal)  
 #  3:    printf + fprintf    
-PRINT_LVL = 2
+PRINT_LVL = 0
 
 
 PROGRAM = loc_thread
-SOURCES = ./src/main.c
+SOURCES = ./src/main.c 
+SOURCES += ./src/loc_thread.c
 
-PROJ_DIR += ./loc_api/
+PROJ_DIR += ./loc_api
 
-CFLAGS += -Wall
+CFLAGS += -Wall 
+
+
 
 include $(PROJ_DIR)/include/dwm1001.mak

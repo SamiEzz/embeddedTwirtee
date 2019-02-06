@@ -9,46 +9,52 @@
  * All rights reserved.
  *
  */
- 
-#include "dwm_api.h"
-#include "hal.h"
-#include "twirtee.h"
-#include "loc_thread.h"
 
-      
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h> // strerror
+#include <math.h>
+#include <errno.h>
+#include <pthread.h>
+
+#include "../loc_api/loc_thread.h"
+
+
+
 int main(void)
 {
 
-   src=1;
-   dest=4;
-   
-   T_loc * position = malloc(sizeof(T_loc));
-
+   T_loc * position=malloc(sizeof(T_loc));
+   position->x=-1;
    //---------- Creation des threads
    pthread_t t_localisation;
-   if(pthread_create(&t_localisation, NULL, loc_thread, position) == -1) {
+   if(pthread_create(&t_localisation, NULL, loc_thread, (void *)position) == -1) {
       perror("pthread_create");
       return EXIT_FAILURE;
    }  
+   
+   printf("- x : %f\n",position->x);
+   printf("- y : %f\n",position->y);
+   printf("- z : %f\n",position->z);
+   printf("- qf : %f\n",position->qf);
 
    // wait for thread to execute 
    //void ** returned_path;
 
-   if (pthread_join(t_localisation, NULL)) {
+   if (pthread_join(t_localisation, (void *)position)) {
       perror("pthread_join");
       return EXIT_FAILURE;
    }
    // end of thread
 
    
-   printf("- x : %d\n",position->x);
-   printf("- y : %d\n",position->y);
-   printf("- z : %d\n",position->z);
-   printf("- qf : %d\n",position->qf);
+   printf("- x : %f\n",position->x);
+   printf("- y : %f\n",position->y);
+   printf("- z : %f\n",position->z);
+   printf("- qf : %f\n",position->qf);
        
    
 
    printf("fin du main\n");
-   return EXIT_SUCCESS;
    return 0;
 }

@@ -95,7 +95,7 @@ DEFINES += PRINT_LVL=$(PRINT_LVL)
 CFLAGS += $(addprefix -D,$(DEFINES))
 
 # Expand search paths
-CFLAGS += $(addprefix -I,$(SOURCEDIRS))
+CFLAGS += $(addprefix -I ,$(SOURCEDIRS))
 
 vpath %.c $(SOURCEDIRS)
 
