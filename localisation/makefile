@@ -37,7 +37,7 @@ PRINT_LVL = 0
 PROGRAM = loc_thread
 SOURCES = ./src/main.c
 
-PROJ_DIR += .
+PROJ_DIR += ./loc_api/
 
 CFLAGS += -Wall
 
