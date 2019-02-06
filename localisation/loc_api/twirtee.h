@@ -60,6 +60,8 @@ typedef struct Position {
 typedef struct T_loc {
 	Double64 x;
 	Double64 y;
+	Double64 z;
+	Double64 qf;
 	Bool8 val;
 } T_loc;
 

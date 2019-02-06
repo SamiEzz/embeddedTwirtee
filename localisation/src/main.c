@@ -1,5 +1,5 @@
 /*! ------------------------------------------------------------------------------------------------------------------
- * @file    anchor_cfg.c
+ * @file    tag_cfg.c
  * @brief   Decawave device configuration and control functions
  *
  * @attention
@@ -12,51 +12,43 @@
  
 #include "dwm_api.h"
 #include "hal.h"
+#include "twirtee.h"
+#include "loc_thread.h"
+
       
 int main(void)
 {
-   dwm_cfg_anchor_t cfg_anchor;
-   dwm_cfg_t cfg_node;
-   
-   HAL_Print("dwm_init(): dev%d\n", HAL_DevNum());
-   dwm_init();
-   
-   HAL_Print("Setting to anchor: dev%d.\n", HAL_DevNum());
-   cfg_anchor.initiator = 1; 
-   cfg_anchor.bridge = 0;
-   cfg_anchor.common.led_en = 1;
-   cfg_anchor.common.ble_en = 1;
-   cfg_anchor.common.uwb_mode = DWM_UWB_MODE_OFF;
-   cfg_anchor.common.fw_update_en = 1;
-   HAL_Print("dwm_cfg_anchor_set(&cfg_anchor): dev%d.\n", HAL_DevNum());
-   dwm_cfg_anchor_set(&cfg_anchor);
 
-   HAL_Print("Wait 2s for node to reset\n");
-   HAL_Delay(2000);
+   src=1;
+   dest=4;
    
-   HAL_Print("Getting configurations: dev%d.\n", HAL_DevNum());
-   dwm_cfg_get(&cfg_node);
-      
-   HAL_Print("Comparing set vs. get: dev%d.\n", HAL_DevNum());
-   if((cfg_anchor.initiator != cfg_node.initiator) 
-   || (cfg_anchor.bridge != cfg_node.bridge) 
-   || (cfg_anchor.common.led_en != cfg_node.common.led_en) 
-   || (cfg_anchor.common.ble_en != cfg_node.common.ble_en) 
-   || (cfg_anchor.common.uwb_mode != cfg_node.common.uwb_mode) 
-   || (cfg_anchor.common.fw_update_en != cfg_node.common.fw_update_en))
-   {
-      HAL_Print("initiator           cfg_anchor=%d : cfg_node=%d\n", cfg_anchor.initiator, cfg_node.initiator); 
-      HAL_Print("bridge              cfg_anchor=%d : cfg_node=%d\n", cfg_anchor.bridge, cfg_node.bridge); 
-      HAL_Print("common.led_en       cfg_anchor=%d : cfg_node=%d\n", cfg_anchor.common.led_en, cfg_node.common.led_en); 
-      HAL_Print("common.ble_en       cfg_anchor=%d : cfg_node=%d\n", cfg_anchor.common.ble_en, cfg_node.common.ble_en); 
-      HAL_Print("common.uwb_mode     cfg_anchor=%d : cfg_node=%d\n", cfg_anchor.common.uwb_mode, cfg_node.common.uwb_mode); 
-      HAL_Print("common.fw_update_en cfg_anchor=%d : cfg_node=%d\n", cfg_anchor.common.fw_update_en, cfg_node.common.fw_update_en); 
-      HAL_Print("\nConfiguration failed.\n\n");
+   T_loc * position = malloc(sizeof(T_loc));
+
+   //---------- Creation des threads
+   pthread_t t_localisation;
+   if(pthread_create(&t_localisation, NULL, loc_thread, position) == -1) {
+      perror("pthread_create");
+      return EXIT_FAILURE;
+   }  
+
+   // wait for thread to execute 
+   //void ** returned_path;
+
+   if (pthread_join(t_localisation, NULL)) {
+      perror("pthread_join");
+      return EXIT_FAILURE;
    }
-   else
-   {
-      HAL_Print("\nConfiguration succeeded.\n\n");
-   }
+   // end of thread
+
    
-   return 0;   
+   printf("- x : %d\n",position->x);
+   printf("- y : %d\n",position->y);
+   printf("- z : %d\n",position->z);
+   printf("- qf : %d\n",position->qf);
+       
+   
+
+   printf("fin du main\n");
+   return EXIT_SUCCESS;
+   return 0;
 }
