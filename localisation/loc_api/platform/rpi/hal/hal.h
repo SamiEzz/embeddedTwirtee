@@ -18,6 +18,7 @@
 
 #define HAL_OK          0
 #define HAL_ERR         1
+#define DWM_PORT         "/dev/ttyACM0"
 
 /** 
  * @brief HAL_Print redefines printf

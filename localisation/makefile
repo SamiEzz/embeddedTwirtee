@@ -22,7 +22,7 @@ TARGET = 0
 #  0: USE_UART  
 #  1: USE_SPI    
 #  2: USE_SPI_DRDY
-INTERFACE_NUMBER = 1
+INTERFACE_NUMBER = 0
 
 ####################################################
 #  PRINT_LVL 
@@ -31,7 +31,7 @@ INTERFACE_NUMBER = 1
 #  1:    fprintf (log.txt)       
 #  2:    printf (terminal)  
 #  3:    printf + fprintf    
-PRINT_LVL = 0
+PRINT_LVL = 3
 
 
 PROGRAM = loc_thread

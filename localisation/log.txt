@@ -1,0 +1,18 @@
+dwm_init(): dev0
+	LMH_UARTRX_Init()...
+	UART: Init start.
+	UART: Init done.
+Setting to anchor: dev0.
+dwm_cfg_anchor_set(&cfg_anchor): dev0.
+	UART: Tx 3 bytes: 0x07019c
+	UART: Rx 3 bytes: 0x400100
+	UART: Received all 3 bytes, within 459.67 ms 	 OK
+Wait 2s for node to reset
+Getting configurations: dev0.
+	UART: Tx 2 bytes: 0x0800
+	UART: Rx 7 bytes: 0x40010046021c30
+	UART: Received all 7 bytes, within 3.38 ms 	 OK
+Comparing set vs. get: dev0.
+
+Configuration succeeded.
+
