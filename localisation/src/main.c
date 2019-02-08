@@ -21,10 +21,9 @@
 
 
 
-int main(void)
-{
+static T_loc * position;
+int main(void){
 
-   T_loc * position=malloc(sizeof(T_loc));
    position->x=-1;
    //---------- Creation des threads
    pthread_t t_localisation;

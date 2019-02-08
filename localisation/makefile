@@ -15,7 +15,7 @@
 #  TARGET
 #  0: Raspberry-Pi
 #  1: else
-TARGET = 0
+TARGET = 1
 
 ####################################################
 #  INTERFACE_NUMBER

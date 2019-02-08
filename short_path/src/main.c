@@ -23,26 +23,21 @@
 
 
 
-
 #define outputFile "output.nodes"
 
 
 int main(int argc, char const *argv[])
 {
-    int src,dest;
-    Path * trajectorytest;
-    // printf("%s , %s , %d",argv[0],argv[1],argc);
-    
-    
-    src=1;
-    dest=4;
-    
-    spf_mission mission_se={
-        .start = src,
-        .end = dest,
-        .path = trajectorytest,
+    Path * trajectorytest=safe_alloc(sizeof(Path));
+    trajectorytest = (Path *) trajectorytest;
+    static  spf_mission mission_se={
+        .start = 13,
+        .end = 22,
         .mut = PTHREAD_MUTEX_INITIALIZER
     };
+    mission_se.path = trajectorytest;
+    
+   
 
     //---------- Creation des threads
     pthread_t t_spf;
