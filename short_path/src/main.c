@@ -25,38 +25,74 @@
 
 #define outputFile "output.nodes"
 
+typedef struct T_loc {
+	double x;
+	double y;
+	double z;
+	double qf;
+	bool val;
+} T_loc;
+
+typedef struct {
+    pthread_mutex_t mut;
+    Path mission_var;
+} mission_mtx;
+
+typedef struct {
+    pthread_mutex_t mut;
+    T_loc position_var;
+} position_mtx;
+
+static  spf_mission mission_se={
+    .start = 13,
+    .end = 22,
+    .mut = PTHREAD_MUTEX_INITIALIZER
+};
+
 
 int main(int argc, char const *argv[])
 {
+
     Path * trajectorytest=safe_alloc(sizeof(Path));
     trajectorytest = (Path *) trajectorytest;
-    static  spf_mission mission_se={
-        .start = 13,
-        .end = 22,
-        .mut = PTHREAD_MUTEX_INITIALIZER
-    };
     mission_se.path = trajectorytest;
     
    
+    // looooooooooooooooooooooooooop
+    while(1){
+        //---------- Creation des threads
+        // get mission thread
+        // TODO = connect directly with IHM  to get mission
+        pthread_t t_get_mission;
+        if(pthread_create(&t_get_mission, NULL, get_mission_thread, &mission_se) == -1) {
+            perror("pthread_create");
+            return EXIT_FAILURE;
+        }
 
-    //---------- Creation des threads
-    pthread_t t_spf;
-    if(pthread_create(&t_spf, NULL, spf_thread, &mission_se) == -1) {
-        perror("pthread_create");
-        return EXIT_FAILURE;
-    }  
+        if (pthread_join(t_get_mission, NULL)) {
+            perror("pthread_join");
+            return EXIT_FAILURE;
+        }
+        // short path first thread
+        pthread_t t_spf;
+        if(pthread_create(&t_spf, NULL, spf_thread, &mission_se) == -1) {
+            perror("pthread_create");
+            return EXIT_FAILURE;
+        }  
 
-    // wait for thread to execute 
-    //void ** returned_path;
+        // wait for thread to execute 
+        //void ** returned_path;
 
-    if (pthread_join(t_spf, NULL)) {
-        perror("pthread_join");
-        return EXIT_FAILURE;
-    }
-    // end of thread
-    
-    for(int i=0;i<mission_se.path->size;i++){
-        printf("- %d\n",mission_se.path->dest[i]->id);    
+        if (pthread_join(t_spf, NULL)) {
+            perror("pthread_join");
+            return EXIT_FAILURE;
+        }
+        // end of thread
+        
+        for(int i=0;i<mission_se.path->size;i++){
+            printf("- %d\n",mission_se.path->dest[i]->id);    
+        }
+        
     }
     
     printf("fin du main\n");

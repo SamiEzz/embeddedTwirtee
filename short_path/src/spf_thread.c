@@ -24,7 +24,27 @@
 
 #define outputFile "output.nodes"
 
+void* get_mission_thread (void * mission_se)
+{
+    //spf_mission *mission = mission_se;
+    int src,dest;
+    //mission = (spf_mission *)mission;
+    spf_mission * mission =  mission_se;
 
+    pthread_mutex_lock(&mission->mut);
+    printf("\nSaisissez le point de depart suivie du point d arrivee : ");
+    scanf("%d %d",&src,&dest);
+
+    mission->start = src;
+    mission->end = dest;
+       
+
+    pthread_mutex_unlock(&mission->mut);
+
+    pthread_exit(NULL);
+
+}
+ 
 void *spf_thread(void *mission_se){
     spf_mission * mission =  mission_se;
     int src,dest;
