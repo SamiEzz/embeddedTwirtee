@@ -1,0 +1,74 @@
+.
+├── bin
+│   ├── loop
+│   ├── mainRoutine
+│   ├── map.json
+│   ├── README.md
+│   └── setup
+├── build
+│   └── README.md
+├── Generic_makefile
+├── include
+│   ├── com.h
+│   ├── config.h
+│   ├── dijkstra.h
+│   ├── header.h
+│   ├── imu.h
+│   ├── jsonApi.h
+│   ├── kalman.h
+│   ├── localization.h
+│   ├── mat.h
+│   ├── mission_mgr.h
+│   ├── parametres.h
+│   ├── platform_types.h
+│   ├── simu.h
+│   ├── traking.h
+│   └── twirtee.h
+├── launch.sh
+├── LICENSE
+├── makefile
+├── map2json
+│   ├── Arc_t.py
+│   ├── Balise.py
+│   ├── bases.json
+│   ├── Contrainte.py
+│   ├── Fonctions_extraction2.py
+│   ├── Fonctions_extraction.py
+│   ├── Leg.py
+│   ├── Line_t.py
+│   ├── main_extraction.py
+│   ├── Map.dwg
+│   ├── Map.dxf
+│   ├── node.py
+│   ├── Notice Utilisateur _ Extraction et Analyse de la piste.docx
+│   ├── Point_t.py
+│   ├── __pycache__
+│   │   ├── Arc_t.cpython-36.pyc
+│   │   ├── Balise.cpython-36.pyc
+│   │   ├── Contrainte.cpython-36.pyc
+│   │   ├── Fonctions_extraction.cpython-36.pyc
+│   │   ├── Leg.cpython-36.pyc
+│   │   ├── Line_t.cpython-36.pyc
+│   │   ├── node.cpython-36.pyc
+│   │   ├── Point_t.cpython-36.pyc
+│   │   └── WPT.cpython-36.pyc
+│   ├── README.md
+│   ├── ttgrab.py
+│   └── WPT.py
+├── README.md
+├── res
+│   └── map.json
+├── src
+│   ├── dijkstra.c
+│   ├── imu.c
+│   ├── jsonApi.c
+│   ├── kalman.c
+│   ├── localization.c
+│   ├── main.c
+│   ├── mat.c
+│   ├── mission_mgr.c
+│   ├── simu.c
+│   └── traking.c
+└── tree.TXT
+
+7 directories, 64 files
