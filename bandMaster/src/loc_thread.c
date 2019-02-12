@@ -12,7 +12,7 @@
 
 
 void *loc_thread(void *_position){
-    struct T_loc *position = (struct T_loc *) _position;
+    struct position_mtx *position = (struct position_mtx *) _position;
 
     int i;
     int wait_period = 1000;
@@ -62,40 +62,33 @@ void *loc_thread(void *_position){
 
     dwm_loc_data_t loc;
     dwm_pos_t pos;
-    loc.p_pos = &pos;
-    //while(1)
-    //{      
-        HAL_Print("Wait %d ms...\n", wait_period);
-        HAL_Delay(wait_period);        
+    loc.p_pos = &pos;   while(1)
+   {      
+      HAL_Print("Wait %d ms...\n", wait_period);
+      HAL_Delay(wait_period);        
+   
+      HAL_Print("dwm_loc_get(&loc):\n");
+      if(dwm_loc_get(&loc) == RV_OK)
+      {
+         HAL_Print("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,
+               loc.p_pos->qf);
 
-        HAL_Print("dwm_loc_get(&loc):\n");
-        if(dwm_loc_get(&loc) == RV_OK)
-        {
-            HAL_Print("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,
-                loc.p_pos->qf);
-
-            for (i = 0; i < loc.anchors.dist.cnt; ++i) 
-            {
+         for (i = 0; i < loc.anchors.dist.cnt; ++i) 
+         {
             HAL_Print("\t%u)", i);
             HAL_Print("0x%llx", loc.anchors.dist.addr[i]);
             if (i < loc.anchors.an_pos.cnt) 
             {
-
-                printf("|test x : %d",loc.anchors.an_pos.pos[i].x);
-                position->x=loc.anchors.an_pos.pos[i].x;
-                position->y=loc.anchors.an_pos.pos[i].y;
-                position->z=loc.anchors.an_pos.pos[i].z;
-                position->qf=loc.anchors.an_pos.pos[i].qf;
-                
-                HAL_Print("[%d,%d,%d,%u]", loc.anchors.an_pos.pos[i].x,
-                        loc.anchors.an_pos.pos[i].y,
-                        loc.anchors.an_pos.pos[i].z,
-                        loc.anchors.an_pos.pos[i].qf);
+               HAL_Print("[%d,%d,%d,%u]", loc.anchors.an_pos.pos[i].x,
+                     loc.anchors.an_pos.pos[i].y,
+                     loc.anchors.an_pos.pos[i].z,
+                     loc.anchors.an_pos.pos[i].qf);
             }
             HAL_Print("=%u,%u\n", loc.anchors.dist.dist[i], loc.anchors.dist.qf[i]);
-            }
-        }
-    //}
+         }
+      }
+   }
+   
     pthread_exit((void *)position);
 }
 

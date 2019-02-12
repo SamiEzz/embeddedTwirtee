@@ -13,6 +13,7 @@
 #include "../include/jsonApi.h"
 #include "../include/dijkstra.h"
 #include "../include/spf_thread.h"
+#include "../include/loc_thread.h"
 #include "../include/threads_mgr.h"
 
 
@@ -30,16 +31,38 @@
 #define outputFile "output.nodes"
 
 
-static  spf_mission mission_se={
-    .start = 13,
-    .end = 22,
-    .mut = PTHREAD_MUTEX_INITIALIZER
-};
-      
 
-int main(int argc, char const *argv[])
-{
+// typedef struct T_loc {
+// 	double x;
+// 	double y;
+// 	double z;
+// 	double qf;
+// 	bool val;
+// } T_loc;
 
+
+// typedef struct {
+//     pthread_mutex_t mut;
+//     T_loc position_var;
+// } position_mtx;
+int main(int argc, char const *argv[]){
+    
+    static pthread_mutex_t pos_mtx=PTHREAD_MUTEX_INITIALIZER;
+
+    position_mtx * Pos;
+    Pos->position_var.x=-1;
+    Pos->position_var.y=-1;
+    Pos->position_var.z=-1;
+    Pos->position_var.qf=-1;
+    Pos->position_var.val = 0;
+    
+
+    static  spf_mission mission_se={
+        .start = 13,
+        .end = 22,
+        .mut = PTHREAD_MUTEX_INITIALIZER
+    };
+        
     Path * trajectorytest=safe_alloc(sizeof(Path));
     //trajectorytest = (Path *) trajectorytest;
     mission_se.path = trajectorytest;
@@ -50,7 +73,11 @@ int main(int argc, char const *argv[])
     pthread_t t_kalman;
     pthread_t t_spf;
     
-    //start_thread(&t_localisation,NULL,loc_thread,)
+    start_thread(&t_localisation,NULL,loc_thread,Pos);
+
+    end_thread(t_localisation,NULL);
+
+    printf("\nval : %d",Pos->position_var.val);
     // looooooooooooooooooooooooooop
     /* while(1){
         //---------- Creation des threads

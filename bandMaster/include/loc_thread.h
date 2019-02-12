@@ -26,4 +26,10 @@ typedef struct T_loc {
 	bool val;
 } T_loc;
 
+
+typedef struct {
+    pthread_mutex_t mut;
+    T_loc position_var;
+} position_mtx;
+
 void *loc_thread(void *_position);
