@@ -10,6 +10,14 @@
 #include "../include/kalman.h"
 #include "../include/parametres.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h> // strerror
+#include <math.h>
+#include <errno.h>
+#include <pthread.h>
+
+
 // ----------------------------------------------------------------------
 // Fonction d'élimination des outliers
 // ----------------------------------------------------------------------
@@ -66,21 +74,19 @@ void check_mes(const T_mat *Xp, const T_mat *Pp,  T_loc *locp, T_head * headp)
 // - X_estp : état estimé
 // - covp : matrice de covariance
 
-typedef struct kalman_param {
-	double dt,wl_mes,wr_mes;
-	T_loc *locp;
-	T_head *headp;
-	T_mat *X_estp;
-	T_mat *Pp;
-};
 
-void kalman (	double dt,
-				double wl_mes, double wr_mes, 	// Vitesse des roues mesurées
-				T_loc *locp, T_head *headp,		// Mesures capteurs
-				T_mat *X_estp, 					// Etat estimé
-				T_mat *Pp)						// matrice de covariance
-{
-	
+
+void *kalman(void * k_in){
+	kalman_param * k = k_in;
+	double dt = k->dt;
+	double wl_mes = k->wl_mes;
+	double wr_mes = k->wr_mes;
+	T_loc *locp = k->locp;
+	T_loc T_head = k->T_head;
+	T_loc *headp = k->headp;
+	T_mat *X_estp = k->X_estp;
+	T_mat *Pp = k->Pp; 
+
 	// --------------------
     //  Phase de prediction
 	// --------------------
@@ -384,5 +390,13 @@ void kalman (	double dt,
 		// La position estimée est la position prédite (pas de correction)
 		mat_copy(X_estp, &X_pred);
 	}
+	k->dt = dt;
+	k->wl_mes = wl_mes;
+	k->wr_mes = wr_mes;
+	k->locp = locp;
+	k->T_head = T_head;
+	k->headp = headp;
+	k->X_estp = X_estp;
+	k->Pp = Pp; 
 }
 

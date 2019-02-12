@@ -48,6 +48,8 @@ int main(int argc, char const *argv[])
     pthread_t t_localisation;
     pthread_t t_get_mission;
     pthread_t t_spf;
+    pthread_t t_kalman;
+    
 
     // looooooooooooooooooooooooooop
     //while(1){
