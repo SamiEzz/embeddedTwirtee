@@ -35,24 +35,24 @@ static  spf_mission mission_se={
     .end = 22,
     .mut = PTHREAD_MUTEX_INITIALIZER
 };
-
       
 
 int main(int argc, char const *argv[])
 {
 
     Path * trajectorytest=safe_alloc(sizeof(Path));
-    trajectorytest = (Path *) trajectorytest;
+    //trajectorytest = (Path *) trajectorytest;
     mission_se.path = trajectorytest;
-    
+    T_loc pos;
+
     pthread_t t_localisation;
     pthread_t t_get_mission;
-    pthread_t t_spf;
     pthread_t t_kalman;
+    pthread_t t_spf;
     
-
+    //start_thread(&t_localisation,NULL,loc_thread,)
     // looooooooooooooooooooooooooop
-    //while(1){
+    /* while(1){
         //---------- Creation des threads
         // get mission thread
         // TODO = connect directly with IHM  to get mission
@@ -68,11 +68,11 @@ int main(int argc, char const *argv[])
         for(int i=0;i<mission_se.path->size;i++){
             printf("-> %d",mission_se.path->dest[i]->id);    
         }
-
+    }
+    */
         
-    //}
     
-    printf("fin du main\n");
+    printf("\nfin du main\n");
     return EXIT_SUCCESS;
     return 0;
 }

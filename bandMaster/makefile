@@ -38,7 +38,7 @@ PRINT_LVL = 0
 # PROJ_DIR stands for the directory of the dwm api
 #
 
-PROJ_DIR += ./loc_api
+PROJ_DIR += ./include/loc_api
 
 CFLAGS += -lm
 

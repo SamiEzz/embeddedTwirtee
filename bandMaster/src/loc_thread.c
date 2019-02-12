@@ -8,7 +8,7 @@
 //////////////////////////////////////////////////////////
 
 
-#include "../loc_api/loc_thread.h"
+#include "../include/loc_thread.h"
 
 
 void *loc_thread(void *_position){
