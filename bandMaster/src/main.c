@@ -46,7 +46,8 @@
 //     T_loc position_var;
 // } position_mtx;
 int main(int argc, char const *argv[]){
-    
+    printf("\nGDB - main init\n");
+
     static pthread_mutex_t pos_mtx=PTHREAD_MUTEX_INITIALIZER;
 
     position_mtx * Pos;
@@ -56,28 +57,20 @@ int main(int argc, char const *argv[]){
     Pos->position_var.qf=-1;
     Pos->position_var.val = 0;
     
-
-    static  spf_mission mission_se={
-        .start = 13,
-        .end = 22,
-        .mut = PTHREAD_MUTEX_INITIALIZER
-    };
-        
-    Path * trajectorytest=safe_alloc(sizeof(Path));
-    //trajectorytest = (Path *) trajectorytest;
-    mission_se.path = trajectorytest;
-    T_loc pos;
+    printf("\nGDB - pos init\n");
 
     pthread_t t_localisation;
-    pthread_t t_get_mission;
-    pthread_t t_kalman;
-    pthread_t t_spf;
-    
+    // pthread_t t_get_mission;
+    // pthread_t t_kalman;
+    // pthread_t t_spf;
+    printf("\nGDB - threads init\n");
+
     start_thread(&t_localisation,NULL,loc_thread,Pos);
+    printf("\nGDB - inside loc in main\n");
 
     end_thread(t_localisation,NULL);
 
-    printf("\nval : %d",Pos->position_var.val);
+    //printf("\nval : %d",Pos->position_var.val);
     // looooooooooooooooooooooooooop
     /* while(1){
         //---------- Creation des threads

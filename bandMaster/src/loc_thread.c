@@ -12,6 +12,7 @@
 
 
 void *loc_thread(void *_position){
+    printf("\nGDB - loc_thread init\n");
     struct position_mtx *position = (struct position_mtx *) _position;
 
     int i;
