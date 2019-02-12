@@ -95,7 +95,7 @@ int main(int argc, char const *argv[]){
      while(1){
 
         start_thread(&t_localisation,NULL,loc_thread,Pos);
-        end_thread(t_localisation,NULL);
+        Pos = (position_mtx *) Pos;
         pthread_mutex_lock(Pos->mut);
         printf("\033[H\033[2J"); // system("clear")
 
@@ -109,6 +109,7 @@ int main(int argc, char const *argv[]){
         my_delay(1);
         pthread_mutex_unlock(Pos->mut);
 
+        end_thread(t_localisation,(void **)Pos);
     }
     
         

@@ -64,28 +64,27 @@ void *loc_thread(void *_position){
     dwm_loc_data_t loc;
     dwm_pos_t pos;
     loc.p_pos = &pos;  
-    int itest=0;
-    while(1) {      
+    //while(1) {      
       HAL_Print("Wait %d ms...\n", wait_period);
-      HAL_Delay(wait_period);        
+      //HAL_Delay(wait_period);        
    
       HAL_Print("dwm_loc_get(&loc):\n");
       if(dwm_loc_get(&loc) == RV_OK)
       {
-         //HAL_Print("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,loc.p_pos->qf);
+         HAL_Print("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,loc.p_pos->qf);
          
          pthread_mutex_lock(position->mut);
-/*          position->position_var.x=loc.p_pos->x;
+         position->position_var.x=loc.p_pos->x;
          position->position_var.y=loc.p_pos->y;
          position->position_var.z=loc.p_pos->z;
          position->position_var.qf=loc.p_pos->qf;
- */
+
          position->position_var.x=i+62;
          position->position_var.y=i*3;
          position->position_var.z=i+6;
          position->position_var.qf=100;
-         itest+=1;
-         
+         i+=1;
+
          pthread_mutex_unlock(position->mut);
          
 
@@ -105,7 +104,7 @@ void *loc_thread(void *_position){
          }
       }
 
-   }
+   //}
    
     pthread_exit((void *)position);
 }
