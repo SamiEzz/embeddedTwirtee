@@ -1,0 +1,20 @@
+	UART: Tx 4 bytes: 0x05027a00
+	UART: Rx 3 bytes: 0x400100
+	UART: Received all 3 bytes, within 438.03 ms 	 OK
+	UART: Tx 2 bytes: 0x0800
+	UART: Rx 7 bytes: 0x40010046027a00
+	UART: Received all 7 bytes, within 3.28 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 15 bytes: 0x400100410d00000000000000000000
+	UART: Rx 6 bytes: 0x000064480100
+	UART: Received 21 bytes, until timed out in 1000 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 18 bytes: 0x400100410d00000000000000000000000064
+	UART: Rx 3 bytes: 0x480100
+	UART: Received 21 bytes, until timed out in 1000 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 18 bytes: 0x400100410d00000000000000000000000064
+	UART: Rx 3 bytes: 0x480100
+	UART: Received 21 bytes, until timed out in 1000 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 21 bytes: 0x400100410d00000000000000000000000064480100

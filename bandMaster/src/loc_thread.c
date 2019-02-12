@@ -12,8 +12,8 @@
 
 
 void *loc_thread(void *_position){
-    printf("\nGDB - loc_thread init\n");
-    struct position_mtx *position = (struct position_mtx *) _position;
+    
+    position_mtx *position = (position_mtx *) _position;
 
     int i;
     int wait_period = 1000;
@@ -63,16 +63,23 @@ void *loc_thread(void *_position){
 
     dwm_loc_data_t loc;
     dwm_pos_t pos;
-    loc.p_pos = &pos;   while(1)
-   {      
+    loc.p_pos = &pos;  
+    while(1) {      
       HAL_Print("Wait %d ms...\n", wait_period);
       HAL_Delay(wait_period);        
    
       HAL_Print("dwm_loc_get(&loc):\n");
       if(dwm_loc_get(&loc) == RV_OK)
       {
-         HAL_Print("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,
-               loc.p_pos->qf);
+         //HAL_Print("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,loc.p_pos->qf);
+         
+         pthread_mutex_lock(position->mut);
+         position->position_var.x=loc.p_pos->x;
+         position->position_var.y=loc.p_pos->y;
+         position->position_var.z=loc.p_pos->z;
+         position->position_var.qf=loc.p_pos->qf;
+         pthread_mutex_unlock(position->mut);
+         
 
          for (i = 0; i < loc.anchors.dist.cnt; ++i) 
          {
@@ -84,12 +91,13 @@ void *loc_thread(void *_position){
                      loc.anchors.an_pos.pos[i].y,
                      loc.anchors.an_pos.pos[i].z,
                      loc.anchors.an_pos.pos[i].qf);
+               
             }
             HAL_Print("=%u,%u\n", loc.anchors.dist.dist[i], loc.anchors.dist.qf[i]);
          }
       }
+
    }
    
     pthread_exit((void *)position);
 }
-

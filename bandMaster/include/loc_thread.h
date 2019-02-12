@@ -28,7 +28,7 @@ typedef struct T_loc {
 
 
 typedef struct {
-    pthread_mutex_t mut;
+    pthread_mutex_t * mut;
     T_loc position_var;
 } position_mtx;
 
