@@ -1,86 +1,60 @@
-dwm_init(): dev-1557103132
-	LMH_UARTRX_Init()...
-	UART: Init start.
-	UART: Unable to open UART. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
-                   	UART: Ensure it is not in use by another application
-Setting to tag: dev0.
-dwm_cfg_tag_set(&cfg_tag): dev0.
-	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
- >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
-	UART: Received length=0
-Wait 2s for node to reset.
-	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
- >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
-	UART: Received length=0
-Comparing set vs. get: dev0.
-low_power_en        cfg_tag=-1081040505 : cfg_node=0
-meas_mode           cfg_tag=-1081040505 : cfg_node=0
-loc_engine_en       cfg_tag=-1081040505 : cfg_node=0
-common.led_en       cfg_tag=-1081040505 : cfg_node=0
-common.ble_en       cfg_tag=-1081040505 : cfg_node=0
-common.uwb_mode     cfg_tag=-1081040505 : cfg_node=0
-common.fw_update_en cfg_tag=-1081040505 : cfg_node=0
-
-Configuration failed.
-
-Wait 0 ms...
-dwm_loc_get(&loc):
-	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
-	UART: Received 0 bytes, until timed out in 1000 ms 	 OK
-dwm_init(): dev-1557103132
-	LMH_UARTRX_Init()...
-	UART: Init start.
-	UART: Unable to open UART. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
-                   	UART: Ensure it is not in use by another application
-Setting to tag: dev0.
-dwm_cfg_tag_set(&cfg_tag): dev0.
-	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
- >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
-	UART: Received length=0
-Wait 2s for node to reset.
-	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
- >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
-	UART: Received length=0
-Comparing set vs. get: dev0.
-low_power_en        cfg_tag=-1081040505 : cfg_node=0
-meas_mode           cfg_tag=-1081040505 : cfg_node=0
-loc_engine_en       cfg_tag=-1081040505 : cfg_node=0
-common.led_en       cfg_tag=-1081040505 : cfg_node=0
-common.ble_en       cfg_tag=-1081040505 : cfg_node=0
-common.uwb_mode     cfg_tag=-1081040505 : cfg_node=0
-common.fw_update_en cfg_tag=-1081040505 : cfg_node=0
-
-Configuration failed.
-
-Wait 0 ms...
-dwm_loc_get(&loc):
-	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
-	UART: Received 0 bytes, until timed out in 1000 ms 	 OK
-dwm_init(): dev-1557103132
-	LMH_UARTRX_Init()...
-	UART: Init start.
-	UART: Unable to open UART. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
-                   	UART: Ensure it is not in use by another application
-Setting to tag: dev0.
-dwm_cfg_tag_set(&cfg_tag): dev0.
-	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
- >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
-	UART: Received length=0
-Wait 2s for node to reset.
-	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
- >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
-	UART: Received length=0
-Comparing set vs. get: dev0.
-low_power_en        cfg_tag=-1081040505 : cfg_node=0
-meas_mode           cfg_tag=-1081040505 : cfg_node=0
-loc_engine_en       cfg_tag=-1081040505 : cfg_node=0
-common.led_en       cfg_tag=-1081040505 : cfg_node=0
-common.ble_en       cfg_tag=-1081040505 : cfg_node=0
-common.uwb_mode     cfg_tag=-1081040505 : cfg_node=0
-common.fw_update_en cfg_tag=-1081040505 : cfg_node=0
-
-Configuration failed.
-
-Wait 0 ms...
-dwm_loc_get(&loc):
-	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+	UART: Tx 4 bytes: 0x05025a04
+	UART: Rx 3 bytes: 0x400100
+	UART: Received all 3 bytes, within 443.28 ms 	 OK
+	UART: Tx 2 bytes: 0x0800
+	UART: Rx 7 bytes: 0x40010046025a04
+	UART: Received all 7 bytes, within 7.85 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 17 bytes: 0x400100410d000000000000000000000000
+	UART: Rx 4 bytes: 0x00490100
+	UART: Received 21 bytes, until timed out in 1000 ms 	 OK
+	UART: Tx 4 bytes: 0x05025a04
+	UART: Rx 3 bytes: 0x400100
+	UART: Received all 3 bytes, within 415.66 ms 	 OK
+	UART: Tx 2 bytes: 0x0800
+	UART: Rx 7 bytes: 0x40010046025a04
+	UART: Received all 7 bytes, within 4.35 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 4 bytes: 0x40010041
+	UART: Rx 13 bytes: 0x0d000000000000000000000000
+	UART: Rx 4 bytes: 0x00490100
+	UART: Received 21 bytes, until timed out in 1000 ms 	 OK
+	UART: Tx 4 bytes: 0x05027a04
+	UART: Rx 3 bytes: 0x400100
+	UART: Received all 3 bytes, within 412.62 ms 	 OK
+	UART: Tx 2 bytes: 0x0800
+	UART: Rx 7 bytes: 0x40010046027a04
+	UART: Received all 7 bytes, within 3.28 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 16 bytes: 0x400100410d0000000000000000000000
+	UART: Rx 5 bytes: 0x0000490100
+	UART: Received 21 bytes, until timed out in 1000 ms 	 OK
+	UART: Tx 4 bytes: 0x05027a04
+	UART: Rx 3 bytes: 0x400100
+	UART: Received all 3 bytes, within 432.78 ms 	 OK
+	UART: Tx 2 bytes: 0x0800
+	UART: Rx 7 bytes: 0x40010046027a04
+	UART: Received all 7 bytes, within 4.34 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 18 bytes: 0x400100410d00000000000000000000000000
+	UART: Rx 3 bytes: 0x490100
+	UART: Received 21 bytes, until timed out in 1000 ms 	 OK
+	UART: Tx 4 bytes: 0x05027a04
+	UART: Rx 3 bytes: 0x400100
+	UART: Received all 3 bytes, within 407.38 ms 	 OK
+	UART: Tx 2 bytes: 0x0800
+	UART: Rx 7 bytes: 0x40010046027a04
+	UART: Received all 7 bytes, within 4.34 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 16 bytes: 0x400100410d0000000000000000000000
+	UART: Rx 5 bytes: 0x0000490100
+	UART: Received 21 bytes, until timed out in 1000 ms 	 OK
+	UART: Tx 4 bytes: 0x05027a04
+	UART: Rx 3 bytes: 0x400100
+	UART: Received all 3 bytes, within 439.51 ms 	 OK
+	UART: Tx 2 bytes: 0x0800
+	UART: Rx 7 bytes: 0x40010046027a04
+	UART: Received all 7 bytes, within 3.28 ms 	 OK
+	UART: Tx 2 bytes: 0x0c00
+	UART: Rx 18 bytes: 0x400100410d00000000000000000000000000
+	UART: Rx 3 bytes: 0x490100

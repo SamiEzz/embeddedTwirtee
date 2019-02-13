@@ -31,7 +31,7 @@ INTERFACE_NUMBER = 0
 #  1:    fprintf (log.txt)       
 #  2:    printf (terminal)  
 #  3:    printf + fprintf    
-PRINT_LVL = 3
+PRINT_LVL = 0
 
 
 ######################################################

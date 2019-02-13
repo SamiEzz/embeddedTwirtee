@@ -87,8 +87,8 @@ int main(int argc, char const *argv[]){
         end_thread(t_localisation,NULL);
         Pos = (position_mtx *) Pos;
         pthread_mutex_lock(Pos->mut);
-        //printf("\033[H\033[2J"); // system("clear")
-
+        
+        printf("\033[H\033[2J"); // system("clear")
         printf("___________________________\n");
         printf("| mes \t|\t %d |\n",myk);
         printf("| x \t|\t %f |\n",Pos->position_var->x);    

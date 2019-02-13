@@ -67,7 +67,8 @@ void *loc_thread(void *_position){
     dwm_loc_data_t loc;
     dwm_pos_t pos;
     loc.p_pos = &pos;  
-    int itest=0;
+    static int itest=0;
+
     //while(1) {      
       HAL_Print("Wait %d ms...\n", wait_period);
       //HAL_Delay(wait_period);        
@@ -75,15 +76,8 @@ void *loc_thread(void *_position){
       HAL_Print("dwm_loc_get(&loc):\n");
       if(dwm_loc_get(&loc) == RV_OK)
       {
-        printf("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,loc.p_pos->qf);
-        //printf("\033[H\033[2J"); // system("clear")
-
-        printf("___________________________\n");
-        printf("| mes \t|\t %d \t|\n",itest);
-        printf("| x \t|\t %f |\n",Pos->position_var->x);    
-        printf("| y \t|\t %f |\n",Pos->position_var->y);    
-        printf("| z \t|\t %f |\n",Pos->position_var->z);    
-        printf("| qf \t|\t %f |\n",Pos->position_var->qf);  
+        HAL_Print("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,loc.p_pos->qf);
+        
         itest+=1;  
         HAL_Delay(1);
         //  pthread_mutex_lock(position->mut);
@@ -96,7 +90,6 @@ void *loc_thread(void *_position){
          Pos->position_var->y=itest*3;
          Pos->position_var->z=itest+6;
          Pos->position_var->qf=100;
-         itest+=1;
 
         // pthread_mutex_unlock(position->mut);
          
