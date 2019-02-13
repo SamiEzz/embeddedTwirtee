@@ -13,6 +13,7 @@
 #include "../include/jsonApi.h"
 #include "../include/dijkstra.h"
 #include "../include/spf_thread.h"
+#include "../include/threads_mgr.h"
 
 
 #include <stdlib.h>

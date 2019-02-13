@@ -1,31 +1,86 @@
-	UART: Tx 4 bytes: 0x05025a04
-	UART: Rx 1 bytes: 0x05
-	UART: Rx 1 bytes: 0x02
-	UART: Rx 1 bytes: 0x5a
-	UART: Tx 2 bytes: 0x0800
-	UART: Rx 3 bytes: 0x082008
-	UART: Tx 2 bytes: 0x0c00
-	UART: Rx 1 bytes: 0x0c
-	UART: Received 1 bytes, until timed out in 1000 ms 	 OK
-	UART: Tx 4 bytes: 0x05025a04
-	UART: Rx 1 bytes: 0x05
-	UART: Rx 1 bytes: 0x02
-	UART: Rx 1 bytes: 0x5a
-	UART: Tx 2 bytes: 0x0800
-	UART: Rx 3 bytes: 0x082008
-	UART: Tx 2 bytes: 0x0c00
-	UART: Rx 1 bytes: 0x0c
-	UART: Received 1 bytes, until timed out in 1000 ms 	 OK
-	UART: Tx 4 bytes: 0x05027a04
-	UART: Rx 1 bytes: 0x05
-	UART: Rx 1 bytes: 0x02
-	UART: Rx 1 bytes: 0x7a
-	UART: Tx 2 bytes: 0x0800
-	UART: Rx 3 bytes: 0x082008
-	UART: Tx 2 bytes: 0x0c00
-	UART: Rx 1 bytes: 0x0c
-	UART: Received 1 bytes, until timed out in 1000 ms 	 OK
-	UART: Tx 4 bytes: 0x05027a04
-	UART: Rx 1 bytes: 0x05
-	UART: Rx 1 bytes: 0x02
-	UART: Rx 1 bytes: 0x7a
+dwm_init(): dev-1557103132
+	LMH_UARTRX_Init()...
+	UART: Init start.
+	UART: Unable to open UART. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+                   	UART: Ensure it is not in use by another application
+Setting to tag: dev0.
+dwm_cfg_tag_set(&cfg_tag): dev0.
+	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+ >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
+	UART: Received length=0
+Wait 2s for node to reset.
+	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+ >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
+	UART: Received length=0
+Comparing set vs. get: dev0.
+low_power_en        cfg_tag=-1081040505 : cfg_node=0
+meas_mode           cfg_tag=-1081040505 : cfg_node=0
+loc_engine_en       cfg_tag=-1081040505 : cfg_node=0
+common.led_en       cfg_tag=-1081040505 : cfg_node=0
+common.ble_en       cfg_tag=-1081040505 : cfg_node=0
+common.uwb_mode     cfg_tag=-1081040505 : cfg_node=0
+common.fw_update_en cfg_tag=-1081040505 : cfg_node=0
+
+Configuration failed.
+
+Wait 0 ms...
+dwm_loc_get(&loc):
+	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+	UART: Received 0 bytes, until timed out in 1000 ms 	 OK
+dwm_init(): dev-1557103132
+	LMH_UARTRX_Init()...
+	UART: Init start.
+	UART: Unable to open UART. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+                   	UART: Ensure it is not in use by another application
+Setting to tag: dev0.
+dwm_cfg_tag_set(&cfg_tag): dev0.
+	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+ >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
+	UART: Received length=0
+Wait 2s for node to reset.
+	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+ >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
+	UART: Received length=0
+Comparing set vs. get: dev0.
+low_power_en        cfg_tag=-1081040505 : cfg_node=0
+meas_mode           cfg_tag=-1081040505 : cfg_node=0
+loc_engine_en       cfg_tag=-1081040505 : cfg_node=0
+common.led_en       cfg_tag=-1081040505 : cfg_node=0
+common.ble_en       cfg_tag=-1081040505 : cfg_node=0
+common.uwb_mode     cfg_tag=-1081040505 : cfg_node=0
+common.fw_update_en cfg_tag=-1081040505 : cfg_node=0
+
+Configuration failed.
+
+Wait 0 ms...
+dwm_loc_get(&loc):
+	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+	UART: Received 0 bytes, until timed out in 1000 ms 	 OK
+dwm_init(): dev-1557103132
+	LMH_UARTRX_Init()...
+	UART: Init start.
+	UART: Unable to open UART. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+                   	UART: Ensure it is not in use by another application
+Setting to tag: dev0.
+dwm_cfg_tag_set(&cfg_tag): dev0.
+	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+ >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
+	UART: Received length=0
+Wait 2s for node to reset.
+	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 
+ >>>>>> TIMED OUT <<<<<< UART: Received 0 bytes, expected -1082157312 bytes, timed out in 3432 ms
+	UART: Received length=0
+Comparing set vs. get: dev0.
+low_power_en        cfg_tag=-1081040505 : cfg_node=0
+meas_mode           cfg_tag=-1081040505 : cfg_node=0
+loc_engine_en       cfg_tag=-1081040505 : cfg_node=0
+common.led_en       cfg_tag=-1081040505 : cfg_node=0
+common.ble_en       cfg_tag=-1081040505 : cfg_node=0
+common.uwb_mode     cfg_tag=-1081040505 : cfg_node=0
+common.fw_update_en cfg_tag=-1081040505 : cfg_node=0
+
+Configuration failed.
+
+Wait 0 ms...
+dwm_loc_get(&loc):
+	UART: not initialized. >>>>>>>>>>>> ERROR <<<<<<<<<<<< 

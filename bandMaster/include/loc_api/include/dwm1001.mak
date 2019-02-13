@@ -7,7 +7,7 @@
 
 # CC?=arm-linux-gnueabihf-gcc
 
-ARM_CC ?= arm-linux-gnueabihf-gcc
+ARM_CC ?= gcc
 GCC = gcc
 
 LIBS=bcm2835

@@ -25,12 +25,6 @@
 #include <errno.h>
 #include <pthread.h>
 #include <time.h>
-void my_delay(int i)    /*Pause l'application pour i seconds*/
-{
-    clock_t start,end;
-    start=clock();
-    while(((end=clock())-start)<=i*CLOCKS_PER_SEC);
-}
 
 
 #define outputFile "output.nodes"
@@ -53,8 +47,7 @@ void my_delay(int i)    /*Pause l'application pour i seconds*/
 int main(int argc, char const *argv[]){
 
     // shared variables
-    position_mtx * Pos = (position_mtx *)safe_alloc(sizeof(position_mtx));
-    
+    position_mtx * Pos = safe_alloc(sizeof(position_mtx));
     Pos->position_var = (T_loc *)safe_alloc(sizeof(T_loc *));
     Pos->mut = (pthread_mutex_t *)safe_alloc(sizeof(pthread_mutex_t));
     spf_mission * mission_se = (spf_mission *) safe_alloc(sizeof(spf_mission));
@@ -87,23 +80,24 @@ int main(int argc, char const *argv[]){
         for(int i=0;i<mission_se->path->size;i++){
             printf("-> %d\n",mission_se->path->dest[i]->id);    
         }
-    int k=0;
+    int myk=0;
      while(1){
 
         start_thread(&t_localisation,NULL,loc_thread,Pos);
         end_thread(t_localisation,NULL);
         Pos = (position_mtx *) Pos;
         pthread_mutex_lock(Pos->mut);
-        printf("\033[H\033[2J"); // system("clear")
+        //printf("\033[H\033[2J"); // system("clear")
 
-        printf("____________________\n");
-        printf("mes \t|\t %d\n",k);
-        printf("x \t|\t %d\n",Pos->position_var->x);    
-        printf("y \t|\t %d\n",Pos->position_var->y);    
-        printf("z \t|\t %d\n",Pos->position_var->z);    
-        printf("qf \t|\t %d\n",Pos->position_var->qf);  
-        k+=1;  
+        printf("___________________________\n");
+        printf("| mes \t|\t %d |\n",myk);
+        printf("| x \t|\t %f |\n",Pos->position_var->x);    
+        printf("| y \t|\t %f |\n",Pos->position_var->y);    
+        printf("| z \t|\t %f |\n",Pos->position_var->z);    
+        printf("| qf \t|\t %f |\n",Pos->position_var->qf);  
+        myk+=1;  
         my_delay(1);
+        
         pthread_mutex_unlock(Pos->mut);
 
     }
