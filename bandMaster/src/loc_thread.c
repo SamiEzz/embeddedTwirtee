@@ -80,16 +80,16 @@ void *loc_thread(void *_position){
         
         itest+=1;  
         HAL_Delay(1);
-        //  pthread_mutex_lock(position->mut);
-        //  position->position_var.x=loc.p_pos->x;
-        //  position->position_var.y=loc.p_pos->y;
-        //  position->position_var.z=loc.p_pos->z;
-        //  position->position_var.qf=loc.p_pos->qf;
+         pthread_mutex_lock(position->mut);
+         position->position_var->x=loc.p_pos->x;
+         position->position_var->y=loc.p_pos->y;
+         position->position_var->z=loc.p_pos->z;
+         position->position_var->qf=loc.p_pos->qf;
 
-         Pos->position_var->x=itest+62;
-         Pos->position_var->y=itest*3;
-         Pos->position_var->z=itest+6;
-         Pos->position_var->qf=100;
+        //  Pos->position_var->x=itest+62;
+        //  Pos->position_var->y=itest*3;
+        //  Pos->position_var->z=itest+6;
+        //  Pos->position_var->qf=100;
 
         // pthread_mutex_unlock(position->mut);
          
