@@ -2,7 +2,7 @@
 
 
 
-int expectNvalues=8000;
+int expectNvalues=10000;
 
 void * safe_alloc(int size){
     errno = 0;
@@ -501,7 +501,8 @@ struct initParser getJsonToken(int expectNvalues,char * JSON_STRING){
 	initParser IP;
 	int r;
 	jsmn_parser p;
-	jsmntok_t  t[expectNvalues]; /* We expect no more than 128 tokens */
+	//jsmntok_t  t[expectNvalues]; /* We expect no more than 128 tokens */
+	jsmntok_t * t = safe_alloc(expectNvalues*sizeof(jsmntok_t)); /* We expect no more than 128 tokens */
 
 	jsmn_init(&p);
 	r = jsmn_parse(&p, JSON_STRING, strlen(JSON_STRING), t, r);
