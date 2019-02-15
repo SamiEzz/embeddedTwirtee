@@ -2,17 +2,22 @@
 
 
 
-int expectNvalues=8000;
+int expectNvalues=5000;
 
 void * safe_alloc(int size){
     errno = 0;
     void * memblock;
     memblock = malloc(size);
+	//memblock = realloc(memblock,size);
+	
     if(memblock==NULL){
         (void)fprintf(stderr,"Impossible d\'allouer l\'espace dans la mémoire. \n %s.",strerror(errno));
+		printf("Impossible d\'allouer l\'espace dans la mémoire. \n ");
     }
     else{
         return memblock;
+		printf("l\'espace dans la mémoire est alloué avec succés \n ");
+
     }
 }
 
@@ -39,6 +44,7 @@ void importData(jdata *data){
 	};
 	initParser IP;
 	IP = getJsonToken(expectNvalues, JSON_STRING);
+	printf("\n ----- F1 * r : %d ----- \n",IP.r);
 
 	int r = IP.r;
 	jsmntok_t *t = IP.t;
@@ -498,6 +504,7 @@ struct Beacons beaconsExt(char *_JSON_STRING,initParser _IP,int _i,int objRank){
 
 
 struct initParser getJsonToken(int expectNvalues,char * JSON_STRING){
+	static int counter = 0;
 	initParser IP;
 	int r;
 	jsmn_parser p;
@@ -512,11 +519,18 @@ struct initParser getJsonToken(int expectNvalues,char * JSON_STRING){
 		printf("Failed to parse JSON: %d\n", r);
 		//return 1;
 	}
-
+	if (counter<5 && r==-1){
+			expectNvalues = 2*expectNvalues;
+			getJsonToken(expectNvalues,JSON_STRING);
+		}
+	else{
+		return IP;
+	}
 	/* Assume the top-level element is an object */
 	if (r < 1 || t[0].type != JSMN_OBJECT) {
 		printf("Object expected\n");
 		//return 1;
+		
 	}
     
     return IP;

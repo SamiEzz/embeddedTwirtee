@@ -40,7 +40,7 @@ PRINT_LVL = 0
 
 PROJ_DIR += ./include/loc_api
 
-CFLAGS += -lm
+CFLAGS += -lm -std=c99
 
 ######################################################
 # SOURCES
