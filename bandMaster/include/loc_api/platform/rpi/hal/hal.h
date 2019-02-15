@@ -13,6 +13,8 @@
 #define _HAL_H_
 
 #include <stdio.h>
+
+#include <sys/time.h>
 #include "hal_fprint.h"
 #include "hal_interface.h"
 

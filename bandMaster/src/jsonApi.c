@@ -2,7 +2,7 @@
 
 
 
-int expectNvalues=10000;
+int expectNvalues=8000;
 
 void * safe_alloc(int size){
     errno = 0;

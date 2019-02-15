@@ -18,6 +18,8 @@
 #include <string.h> // strerror
 #include <math.h>
 #include <errno.h>
+#include <pthread.h>
+
 
 
 typedef struct spf_mission{

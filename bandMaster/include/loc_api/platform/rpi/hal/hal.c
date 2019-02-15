@@ -13,7 +13,6 @@
 #include "hal.h"
 #include <time.h>
 #include <stdarg.h>
-#include <sys/time.h>
 
 /** 
  * @brief Wait specified time in milisecond
