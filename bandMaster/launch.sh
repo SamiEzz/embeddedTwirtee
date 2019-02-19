@@ -1,3 +1,6 @@
+# ALIAS
+alias proj = "cd ~/Documents/git/emebeddedTwirtee/bandMaster"
+
 echo "|------------------------------------------|"
 echo "|------" Extracting map to json file "-------|"
 echo "|                                          |"

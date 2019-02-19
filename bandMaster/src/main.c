@@ -51,7 +51,7 @@ int main(int argc, char const *argv[]){
     Pos->position_var = (T_loc *)safe_alloc(sizeof(T_loc *));
     Pos->mut = (pthread_mutex_t *)safe_alloc(sizeof(pthread_mutex_t));
     spf_mission * mission_se = (spf_mission *) safe_alloc(sizeof(spf_mission));
-    
+    //kalman_param * k_param = (kalman_param *) safe_alloc(sizeof(kalman_param));
     
     pthread_mutex_init(Pos->mut, NULL);
 

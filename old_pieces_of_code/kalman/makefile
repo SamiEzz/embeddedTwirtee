@@ -1,7 +1,7 @@
 all: 	unit_test_kalman
 
 unit_test_kalman: parametres.o mat.o kalman.o main.o 
-		gcc -o unit_test_kalman parametres.o mat.o kalman.o 
+		gcc -o unit_test_kalman parametres.o mat.o kalman.o -lm
 kalman.o: kalman.o mat.o
 		gcc -o kalman.o -c kalman.c
 mat.o : mat.c
