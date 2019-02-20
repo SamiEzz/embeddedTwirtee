@@ -15,7 +15,6 @@
 void *loc_thread(void *_position){
     
     position_mtx *position = _position;
-    position_mtx *Pos = _position;
     
 
     int i;
@@ -86,10 +85,6 @@ void *loc_thread(void *_position){
          position->position_var->z=loc.p_pos->z;
          position->position_var->qf=loc.p_pos->qf;
 
-        //  Pos->position_var->x=itest+62;
-        //  Pos->position_var->y=itest*3;
-        //  Pos->position_var->z=itest+6;
-        //  Pos->position_var->qf=100;
 
         // pthread_mutex_unlock(position->mut);
          
