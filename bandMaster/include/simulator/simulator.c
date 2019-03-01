@@ -8,7 +8,7 @@
 #include "measurement_randomization.h"
 #include <math.h>
 #include "../parametres.h"
-#include "../guidance_mgr.h"
+#include "guidance_mgr.h"
 
 double	v = 0.0,
 		w = 0.0;
@@ -21,7 +21,7 @@ double	v = 0.0,
 	@param	OUT simu->gps : simulates new position at device  level
 	@param	OUT p	: simulates new position at process level
  */
-void update_simulation(void * __simu){
+void * update_simulation(void * __simu){
 	simu_param * simu = __simu;
 //	static int counter = 0;
 
