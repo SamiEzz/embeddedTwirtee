@@ -1,7 +1,7 @@
 #include <stdlib.h>
-//#include <time.h>
-#include "SysSe/Bsp/Bsp.h"
-#include "CPU2/app_Serial.h"
+#include <time.h>
+//#include "SysSe/Bsp/Bsp.h"
+//#include "CPU2/app_Serial.h"
 
 #include "measurement_randomization.h"
 

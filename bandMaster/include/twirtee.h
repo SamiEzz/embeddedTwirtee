@@ -149,6 +149,18 @@ typedef struct Point { ///< used in COM/Tracking/Segment
 typedef struct Segment { ///< used in COM/Tracking/Segment
 	Point p1, p2;
 } Segment;
+typedef struct Path
+{
+	Float32 def_max_speed;
+	Float32 def_max_speed_up;
+	UInt16 size;
+	Node *dest[MAX_CARTO_NODES];
+} Path;
+
+typedef struct Mission {
+	UInt16 size;
+	int ind[MAX_CARTO_NODES];
+} Mission;
 
 
 #endif /* TWIRTEE_H_ */
