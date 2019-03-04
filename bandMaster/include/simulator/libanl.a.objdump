@@ -1,0 +1,133 @@
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libanl.a(gai_cancel.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x24c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000040 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0001dc 000020 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 000074 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000074 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 000074 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 000074 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0000a8 0000d0 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000178 000064 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 0001fc 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libanl.a(gai_error.o)
+Il y a 9 en-têtes de section, débutant à l'adresse de décalage 0x14c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000008 00  AX  0   0  4
+  [ 2] .data             PROGBITS        00000000 00003c 000000 00  WA  0   0  1
+  [ 3] .bss              NOBITS          00000000 00003c 000000 00  WA  0   0  1
+  [ 4] .note.GNU-stack   PROGBITS        00000000 00003c 000000 00      0   0  1
+  [ 5] .ARM.attributes   ARM_ATTRIBUTES  00000000 00003c 000031 00      0   0  1
+  [ 6] .symtab           SYMTAB          00000000 000070 000080 10      7   7  4
+  [ 7] .strtab           STRTAB          00000000 0000f0 00000e 00      0   0  1
+  [ 8] .shstrtab         STRTAB          00000000 0000fe 00004c 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libanl.a(gai_misc.o)
+Il y a 15 en-têtes de section, débutant à l'adresse de décalage 0x104c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0005cc 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000e08 000198 08   I 12   1  4
+  [ 3] .data             PROGBITS        00000000 000600 000018 00  WA  0   0  4
+  [ 4] .bss              NOBITS          00000000 000618 000054 00  WA  0   0  8
+  [ 5] __libc_freeres_fn PROGBITS        00000000 000618 000044 00  AX  0   0  4
+  [ 6] .rel__libc_freere REL             00000000 000fa0 000018 08   I 12   5  4
+  [ 7] .rodata.str1.4    PROGBITS        00000000 00065c 000092 01 AMS  0   0  4
+  [ 8] __libc_subfreeres PROGBITS        00000000 0006f0 000004 00   A  0   0  4
+  [ 9] .rel__libc_subfre REL             00000000 000fb8 000008 08   I 12   8  4
+  [10] .note.GNU-stack   PROGBITS        00000000 0006f4 000000 00      0   0  1
+  [11] .ARM.attributes   ARM_ATTRIBUTES  00000000 0006f4 000031 00      0   0  1
+  [12] .symtab           SYMTAB          00000000 000728 000410 10     13  37  4
+  [13] .strtab           STRTAB          00000000 000b38 0002cf 00      0   0  1
+  [14] .shstrtab         STRTAB          00000000 000fc0 00008b 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libanl.a(gai_notify.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x65c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0001f4 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000574 000088 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000228 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000228 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000228 00006e 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 000296 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000296 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 0002c8 0001c0 10      9  16  4
+  [ 9] .strtab           STRTAB          00000000 000488 0000ea 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 0005fc 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libanl.a(gai_suspend.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x5a8:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000258 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0004f8 000050 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 00028c 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 00028c 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 00028c 000074 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 000300 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000300 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000334 000120 10      9  11  4
+  [ 9] .strtab           STRTAB          00000000 000454 0000a1 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000548 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libanl.a(getaddrinfo_a.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x724:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000314 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00063c 000088 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000348 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000348 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000348 000076 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 0003be 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 0003be 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 0003f0 000170 10      9  11  4
+  [ 9] .strtab           STRTAB          00000000 000560 0000dc 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 0006c4 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)

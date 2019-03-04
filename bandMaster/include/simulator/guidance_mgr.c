@@ -16,7 +16,7 @@
 */
 #include <math.h>
 #include <stdlib.h>
-#include "../com.h"
+#include "com.h"
 #include "guidance_mgr.h"
 #include "segment.h"
 

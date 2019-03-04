@@ -9,7 +9,7 @@
 #ifndef GUIDANCE_MGR_H_
 #define GUIDANCE_MGR_H_
 
-#include "../com.h"
+#include "com.h"
 
 #include "kanayama.h"
 

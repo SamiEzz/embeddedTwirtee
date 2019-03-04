@@ -1,7 +1,7 @@
 #ifndef __MEASUREMENT_RANDOMIZATION_H_
 #define __MEASUREMENT_RANDOMIZATION_H_
 
-#include "../twirtee.h"
+#include "twirtee.h"
 
 #define FREQ_PRECISION 10
 

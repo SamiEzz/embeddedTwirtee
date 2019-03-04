@@ -7,7 +7,7 @@
 #include "simulator.h"
 #include "measurement_randomization.h"
 #include <math.h>
-#include "../parametres.h"
+#include "parametres.h"
 #include "guidance_mgr.h"
 
 double	v = 0.0,

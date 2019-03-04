@@ -1,32 +1,18 @@
 #include "simulator.h"
+#include "threads_mgr.h"
 
 #include "measurement_randomization.h"
 
 #include <stdio.h>
+
+#include <stdlib.h>
 #include <pthread.h>
 #include <time.h>
 
 
 #define EXIT_FAILURE 1
-void my_delay(int i)    /*Pause l'application pour i seconds*/
-{
-    clock_t start,end;
-    start=clock();
-    while(((end=clock())-start)<=i*CLOCKS_PER_SEC);
-}
-int start_thread(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg){
-    if(pthread_create(thread, attr, start_routine, arg) == -1) {
-            perror("pthread_create");
-            return EXIT_FAILURE;
-    }
-}
 
-int end_thread(pthread_t th, void **thread_return){
-    if (pthread_join(th, thread_return)) {
-            perror("pthread_join");
-            return EXIT_FAILURE;
-    }
-} 
+
 
 
 /*
@@ -47,12 +33,15 @@ typedef struct simu_param(){
 
 
 int main(){
+    #ifdef DEBUG 
+        printf("init main\n");
+    #endif
     pthread_t t_simu;
-    simu_param * simu;
+    //simu_param * simu = safe_alloc(sizeof(simu_param));
+    simu_param simu[1];
     simu->end_request = 0;
 
 
-    printf("init main\n");
     //initializations
 	double Pd[3][3] = { {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0} };
 	T_mat Q = {3, 3, _MAT_ Pd}; ///< Error matrix computed with Kalman filter
@@ -79,7 +68,9 @@ int main(){
         // wait for thread to execute 
         end_thread(t_simu, NULL);
 
-        printf("%d \n",k);
+        #ifdef DEBUG 
+            printf("%d \n",k);
+        #endif
     }
 
     return 0;

@@ -11,6 +11,18 @@
 #include <pthread.h>
 #include <time.h>
 
+void * safe_alloc(int size){
+    errno = 0;
+    void * memblock;
+    memblock = malloc(size);
+    if(memblock==NULL){
+        (void)fprintf(stderr,"Impossible d\'allouer l\'espace dans la mémoire. \n %s.",strerror(errno));
+    }
+    else{
+        return memblock;
+    }
+}
+
 void my_delay(int i)    /*Pause l'application pour i seconds*/
 {
     clock_t start,end;
@@ -30,4 +42,5 @@ int end_thread(pthread_t th, void **thread_return){
             return EXIT_FAILURE;
     }
 } 
+
 

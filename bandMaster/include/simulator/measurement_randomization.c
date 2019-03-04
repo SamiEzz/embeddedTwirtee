@@ -1,16 +1,20 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 //#include "SysSe/Bsp/Bsp.h"
 //#include "CPU2/app_Serial.h"
 
 #include "measurement_randomization.h"
 
-extern Randomization_Parameters input_random_param;
+Randomization_Parameters input_random_param;
 
-
+void sendMsg_CPU2(char * msg){
+	printf("\n%s",msg);
+}
 void init_random(void)
 {
-	srand((unsigned) now());
+	//srand((unsigned) now());
+	srand(time(NULL));
 }
 
 int random_int(int min, int max)
