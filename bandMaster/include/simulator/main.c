@@ -4,7 +4,6 @@
 #include "measurement_randomization.h"
 
 #include <stdio.h>
-
 #include <stdlib.h>
 #include <pthread.h>
 #include <time.h>
@@ -31,14 +30,18 @@ typedef struct simu_param(){
 //void update_simulation(Bool8 end_request, Speed speed_gui, Position pos_sp, Position kalm_res, Position *p, T_head *compass, T_loc *gps, T_odo *odometry);
 
 
+extern void main (void);
 
-int main(){
-    #ifdef DEBUG 
-        printf("init main\n");
-    #endif
+void main(void){
+     
+    printf("init main\n");
     pthread_t t_simu;
     //simu_param * simu = safe_alloc(sizeof(simu_param));
     simu_param simu[1];
+    simu->p=malloc(sizeof(Position));
+    simu->compass=malloc(sizeof(T_head));
+    simu->gps=malloc(sizeof(T_loc));
+    simu->odometry=malloc(sizeof(T_odo));
     simu->end_request = 0;
 
 
@@ -57,6 +60,11 @@ int main(){
     simu->pos_sp.y=0;
     simu->kalm_res.x=0;
     simu->kalm_res.y=0;
+    //
+    simu->p->x=0;
+    simu->p->y=0;
+    simu->p->theta=0;
+    
     
      
     //
@@ -67,11 +75,7 @@ int main(){
         start_thread(&t_simu, NULL, update_simulation, simu);
         // wait for thread to execute 
         end_thread(t_simu, NULL);
-
-        #ifdef DEBUG 
-            printf("%d \n",k);
-        #endif
+        printf("\n# %d :\n",k);
+        printf("");
     }
-
-    return 0;
 }
