@@ -6,9 +6,9 @@
 // Fichier de d�finition des donn�es utilis�es par le filtre de Kalman
 //======================================================================
 
-#include "com.h"
-#include "mat.h"
-#include "parametres.h"
+#include "../include/com.h"
+#include "../include/mat.h"
+#include "../include/parametres.h"
 
 
 

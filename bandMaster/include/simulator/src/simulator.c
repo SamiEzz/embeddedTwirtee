@@ -4,11 +4,11 @@
  *  Created on: 26 janv. 2018
  *      Author: GPH
  */
-#include "simulator.h"
-#include "measurement_randomization.h"
+#include "../include/simulator.h"
+#include "../include/measurement_randomization.h"
 #include <math.h>
-#include "parametres.h"
-#include "guidance_mgr.h"
+#include "../include/parametres.h"
+#include "../include/guidance_mgr.h"
 
 double	v = 0.0,
 		w = 0.0;

@@ -7,8 +7,8 @@
 */
 #include <math.h>
 #include <stdlib.h>
-#include "com.h"
-#include "segment.h"
+#include "../include/com.h"
+#include "../include/segment.h"
 #define EPSILON 0.00001f ///< imprecision margin
 #define PI_DIV2 1.57079632679
 

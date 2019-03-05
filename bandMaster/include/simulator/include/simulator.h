@@ -4,11 +4,11 @@
  *  Created on: 11 janv. 2018
  *      Author: twirteeop
  */
+#include "twirtee.h"
 
 #ifndef SIMULATOR_H_
 #define SIMULATOR_H_
 
-#include "../twirtee.h"
 typedef struct simu_param{
     Bool8 end_request; 
     Speed speed_gui; 

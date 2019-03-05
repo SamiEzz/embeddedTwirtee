@@ -8,8 +8,8 @@
 */
 
 /* Includes ------------------------------------------------------------------*/
-#include "com.h"
-#include "kanayama.h"
+#include "../include/com.h"
+#include "../include/kanayama.h"
 #include <math.h>
 
 /* Private function prototypes -----------------------------------------------*/

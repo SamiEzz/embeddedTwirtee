@@ -3,10 +3,10 @@
 #include <time.h>
 #include <math.h>
 
-//#include "SysSe/Bsp/Bsp.h"
-//#include "CPU2/app_Serial.h"
+//#include "../include/SysSe/Bsp/Bsp.h"
+//#include "../include/CPU2/app_Serial.h"
 
-#include "measurement_randomization.h"
+#include "../include/measurement_randomization.h"
 
 Randomization_Parameters input_random_param;
 

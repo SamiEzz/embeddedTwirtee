@@ -6,14 +6,14 @@ RM=/bin/rm
 PROGRAM = mysimu
 
 SOURCES = main.c 
-SOURCES += kanayama.c
-SOURCES += guidance_mgr.c
-SOURCES += measurement_randomization.c
-SOURCES += segment.c
-SOURCES += simulator.c
-SOURCES += parametres.c
-SOURCES += mat.c
-SOURCES += threads_mgr.c
+SOURCES +=./src/kanayama.c
+SOURCES +=./src/guidance_mgr.c
+SOURCES +=./src/measurement_randomization.c
+SOURCES +=./src/segment.c
+SOURCES +=./src/simulator.c
+SOURCES +=./src/parametres.c
+SOURCES +=./src/mat.c
+SOURCES +=./src/threads_mgr.c
 
 
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))

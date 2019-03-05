@@ -1,7 +1,7 @@
-#include "simulator.h"
-#include "threads_mgr.h"
+#include "./include/simulator.h"
+#include "./include/threads_mgr.h"
 
-#include "measurement_randomization.h"
+#include "./include/measurement_randomization.h"
 
 #include <stdio.h>
 #include <stdlib.h>

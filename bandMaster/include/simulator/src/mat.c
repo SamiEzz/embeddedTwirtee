@@ -10,8 +10,8 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "com.h"
-#include "mat.h"
+#include "../include/com.h"
+#include "../include/mat.h"
 
 // =====================================================================
 // CONSTANTES
