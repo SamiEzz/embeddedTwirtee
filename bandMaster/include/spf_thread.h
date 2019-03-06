@@ -8,7 +8,7 @@
 //////////////////////////////////////////////////////////
 
 
-//#include "../include/jsonApi.h"
+#include "../include/misc.h"
 #include "../include/dijkstra.h"
 
 #include <stdlib.h>
@@ -19,13 +19,6 @@
 #include <pthread.h>
 
 
-
-typedef struct spf_mission{
-    int start;
-    int end;
-    Path * path;
-    pthread_mutex_t mut;
-}spf_mission;
 
 
 void* get_mission_thread (void * mission_se);

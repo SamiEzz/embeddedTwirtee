@@ -1,7 +1,7 @@
 #include "./include/simulator.h"
 #include "./include/threads_mgr.h"
-
 #include "./include/measurement_randomization.h"
+#include "./include/spf_thread.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +10,8 @@
 
 
 #define EXIT_FAILURE 1
+#define EXIT_SUCCESS 0
+
 
 
 
@@ -30,6 +32,7 @@ typedef struct simu_param(){
 
 
 int main(){
+    
     //###############################################
     //          Create shared variables             #
     //###############################################
@@ -54,6 +57,21 @@ int main(){
     simu->odometry = (T_odo *)safe_alloc(sizeof(T_odo));    
     
     // Position
+    //position_mtx * Pos = safe_alloc(sizeof(position_mtx));
+    //Pos->position_var = (T_loc *)safe_alloc(sizeof(T_loc *));
+    
+    // mission
+    spf_mission * mission_se = (spf_mission *) safe_alloc(sizeof(spf_mission));
+
+
+    //###############################################
+    //          init variables                      #
+    //###############################################
+    // init mutex
+    //Pos->mut = (pthread_mutex_t *)safe_alloc(sizeof(pthread_mutex_t));
+
+
+    // init values
 
     //###############################################
     //          Create main auxilary variables      #
@@ -63,15 +81,6 @@ int main(){
 	Speed s_arp	= {0.0f, 0.0f, 0.0f}; ///< Speed set by the anticollision process ARP
 	Speed s_rec	= {0.0f, 0.0f, 0.0f}; ///< Speed set by the joystick if present
 	Speed s_safety = {0.0f, 0.0f, 0.0f}; ///< Speed selected among the previous ones by the Speed selector
-
-    //###############################################
-    //          init variables                      #
-    //###############################################
-    // init mutex
-
-
-    // init values
-
 
     //###############################################
     //                 Create threads               #
@@ -88,17 +97,27 @@ int main(){
 
     // Simulation thread
     start_thread(&t_simu, NULL, update_simulation, simu);
-    
     end_thread(t_simu, NULL);
+
+    start_thread(&t_get_mission, NULL, get_mission_thread, mission_se);
+    // wait for thread to execute 
+    end_thread(t_get_mission, NULL);
+    
+    // short path first thread
+    //start_thread(&t_spf, NULL, spf_thread, mission_se);
+    // wait for thread to execute 
+    //end_thread(t_spf, NULL);
+
 
     //###############################################
     //              show results                    #
     //###############################################  
-
+    for(int i=0;i<mission_se->path->size;i++){
+        printf("-> %d\n",mission_se->path->dest[i]->id);    
+    }
     printf("\nExecuted !\n");
     //###############################################
     //                  close                       #
     //###############################################
-
-
+    return EXIT_SUCCESS;
 }
