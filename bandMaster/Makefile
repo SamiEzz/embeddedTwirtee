@@ -39,4 +39,6 @@ $(PROGRAM): $(OBJECTS)
 clean:
 	@echo "Cleaning"
 	$(RM) -f $(PROGRAM)
-	$(RM) build/*.o
+	$(RM) ./build/*.o
+	$(RM) ./src/*.o
+	
