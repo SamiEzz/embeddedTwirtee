@@ -1,6 +1,8 @@
 PATH=/usr/include/arm-linux-gnueabihf/
 LIBS= -lpthread -lm -lc
-CC=arm-linux-gnueabihf-gcc
+CC=/usr/bin/arm-linux-gnueabihf-gcc
+AS=/usr/bin/arm-linux-gnueabihf-as
+
 RM=/bin/rm
 
 PROGRAM = mysimu
@@ -14,20 +16,27 @@ SOURCES +=./src/simulator.c
 SOURCES +=./src/parametres.c
 SOURCES +=./src/mat.c
 SOURCES +=./src/threads_mgr.c
+SOURCES +=./src/spf_thread.c
+SOURCES +=./src/dijkstra.c
+SOURCES +=./src/jsonApi.c
+SOURCES +=./src/misc.c
+
 
 
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
 
-%.o: %.c
-	$(CC) $(CFLAGS) -g -c -o $@ $<
-
 
 $(PROGRAM): $(OBJECTS)
 	$(CC) -o $@ $(OBJECTS) $(LIBS)
-	$(RM) *.o
 	@echo $@ "build done"
+	mv ./src/*.o ./build/
+	mv *.o ./build/
+
+%.o: %.c
+	$(CC) $(CFLAGS) -g -c -o $@ $<
 
 clean:
 	@echo "Cleaning"
-	$(RM) -f $(PROGRAM) $(OBJECTS)
+	$(RM) -f $(PROGRAM)
+	$(RM) build/*.o
