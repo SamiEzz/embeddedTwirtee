@@ -1,0 +1,657 @@
+Dans l'archive /usr/lib/arm-linux-gnueabihf/libutil.a :
+
+login.o:     format de fichier elf32-littlearm
+
+
+Déassemblage de la section .text :
+
+00000000 <tty_name.constprop.0>:
+   0:	e92d4ff8 	push	{r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+   4:	e1a07001 	mov	r7, r1
+   8:	e1a0a000 	mov	sl, r0
+   c:	e5915000 	ldr	r5, [r1]
+  10:	e59f4110 	ldr	r4, [pc, #272]	; 128 <tty_name.constprop.0+0x128>
+  14:	e3a0b000 	mov	fp, #0
+  18:	e3a08080 	mov	r8, #128	; 0x80
+  1c:	ea000005 	b	38 <tty_name.constprop.0+0x38>
+  20:	e1a01008 	mov	r1, r8
+  24:	e1a00006 	mov	r0, r6
+  28:	ebfffffe 	bl	0 <realloc>
+  2c:	e2505000 	subs	r5, r0, #0
+  30:	0a00002f 	beq	f4 <tty_name.constprop.0+0xf4>
+  34:	e3a04080 	mov	r4, #128	; 0x80
+  38:	e1a02004 	mov	r2, r4
+  3c:	e1a01005 	mov	r1, r5
+  40:	e1a0000a 	mov	r0, sl
+  44:	ebfffffe 	bl	0 <ttyname_r>
+  48:	e2509000 	subs	r9, r0, #0
+  4c:	1a00002d 	bne	108 <tty_name.constprop.0+0x108>
+  50:	e1a02004 	mov	r2, r4
+  54:	e1a0100b 	mov	r1, fp
+  58:	e1a00005 	mov	r0, r5
+  5c:	ebfffffe 	bl	0 <memchr>
+  60:	e3500000 	cmp	r0, #0
+  64:	1a000024 	bne	fc <tty_name.constprop.0+0xfc>
+  68:	e5973000 	ldr	r3, [r7]
+  6c:	e1a04084 	lsl	r4, r4, #1
+  70:	e1530005 	cmp	r3, r5
+  74:	0a00001a 	beq	e4 <tty_name.constprop.0+0xe4>
+  78:	e1a01004 	mov	r1, r4
+  7c:	e1a00005 	mov	r0, r5
+  80:	ebfffffe 	bl	0 <realloc>
+  84:	e1a06000 	mov	r6, r0
+  88:	e3560000 	cmp	r6, #0
+  8c:	0a000020 	beq	114 <tty_name.constprop.0+0x114>
+  90:	e3540000 	cmp	r4, #0
+  94:	1a000021 	bne	120 <tty_name.constprop.0+0x120>
+  98:	e5974000 	ldr	r4, [r7]
+  9c:	e1560004 	cmp	r6, r4
+  a0:	1affffde 	bne	20 <tty_name.constprop.0+0x20>
+  a4:	e1a00008 	mov	r0, r8
+  a8:	ebfffffe 	bl	0 <malloc>
+  ac:	e2505000 	subs	r5, r0, #0
+  b0:	1affffdf 	bne	34 <tty_name.constprop.0+0x34>
+  b4:	e59f3070 	ldr	r3, [pc, #112]	; 12c <tty_name.constprop.0+0x12c>
+  b8:	e3e09000 	mvn	r9, #0
+  bc:	e3a0200c 	mov	r2, #12
+  c0:	e79f3003 	ldr	r3, [pc, r3]
+  c4:	ebfffffe 	bl	0 <__aeabi_read_tp>
+  c8:	e7802003 	str	r2, [r0, r3]
+  cc:	e1540006 	cmp	r4, r6
+  d0:	0a000001 	beq	dc <tty_name.constprop.0+0xdc>
+  d4:	e1a00006 	mov	r0, r6
+  d8:	ebfffffe 	bl	0 <free>
+  dc:	e1a00009 	mov	r0, r9
+  e0:	e8bd8ff8 	pop	{r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+  e4:	e1a00004 	mov	r0, r4
+  e8:	ebfffffe 	bl	0 <malloc>
+  ec:	e1a06000 	mov	r6, r0
+  f0:	eaffffe4 	b	88 <tty_name.constprop.0+0x88>
+  f4:	e5974000 	ldr	r4, [r7]
+  f8:	eaffffed 	b	b4 <tty_name.constprop.0+0xb4>
+  fc:	e5875000 	str	r5, [r7]
+ 100:	e1a00009 	mov	r0, r9
+ 104:	e8bd8ff8 	pop	{r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 108:	e5974000 	ldr	r4, [r7]
+ 10c:	e1a06005 	mov	r6, r5
+ 110:	eaffffed 	b	cc <tty_name.constprop.0+0xcc>
+ 114:	e5974000 	ldr	r4, [r7]
+ 118:	e1a06005 	mov	r6, r5
+ 11c:	eaffffe4 	b	b4 <tty_name.constprop.0+0xb4>
+ 120:	e1a05006 	mov	r5, r6
+ 124:	eaffffc3 	b	38 <tty_name.constprop.0+0x38>
+ 128:	00001020 	andeq	r1, r0, r0, lsr #32
+ 12c:	00000064 	andeq	r0, r0, r4, rrx
+
+00000130 <login>:
+ 130:	e92d4030 	push	{r4, r5, lr}
+ 134:	e24ddd46 	sub	sp, sp, #4480	; 0x1180
+ 138:	e24dd02c 	sub	sp, sp, #44	; 0x2c
+ 13c:	e28d3008 	add	r3, sp, #8
+ 140:	e1a01000 	mov	r1, r0
+ 144:	e3a02d06 	mov	r2, #384	; 0x180
+ 148:	e1a00003 	mov	r0, r3
+ 14c:	e28d5f62 	add	r5, sp, #392	; 0x188
+ 150:	e58d5004 	str	r5, [sp, #4]
+ 154:	ebfffffe 	bl	0 <memcpy>
+ 158:	e3a02007 	mov	r2, #7
+ 15c:	e1c020b0 	strh	r2, [r0]
+ 160:	ebfffffe 	bl	0 <getpid>
+ 164:	e28d1004 	add	r1, sp, #4
+ 168:	e58d000c 	str	r0, [sp, #12]
+ 16c:	e3a00000 	mov	r0, #0
+ 170:	ebffffa2 	bl	0 <tty_name.constprop.0>
+ 174:	e3500000 	cmp	r0, #0
+ 178:	ba000022 	blt	208 <login+0xd8>
+ 17c:	e59d4004 	ldr	r4, [sp, #4]
+ 180:	e59f10c0 	ldr	r1, [pc, #192]	; 248 <login+0x118>
+ 184:	e3a02005 	mov	r2, #5
+ 188:	e1a00004 	mov	r0, r4
+ 18c:	ebfffffe 	bl	0 <strncmp>
+ 190:	e3500000 	cmp	r0, #0
+ 194:	02841005 	addeq	r1, r4, #5
+ 198:	1a000011 	bne	1e4 <login+0xb4>
+ 19c:	e3a02020 	mov	r2, #32
+ 1a0:	e28d0010 	add	r0, sp, #16
+ 1a4:	ebfffffe 	bl	0 <strncpy>
+ 1a8:	e59f009c 	ldr	r0, [pc, #156]	; 24c <login+0x11c>
+ 1ac:	ebfffffe 	bl	0 <utmpname>
+ 1b0:	e28d4008 	add	r4, sp, #8
+ 1b4:	e3500000 	cmp	r0, #0
+ 1b8:	0a00000d 	beq	1f4 <login+0xc4>
+ 1bc:	e59d0004 	ldr	r0, [sp, #4]
+ 1c0:	e1500005 	cmp	r0, r5
+ 1c4:	0a000000 	beq	1cc <login+0x9c>
+ 1c8:	ebfffffe 	bl	0 <free>
+ 1cc:	e1a01004 	mov	r1, r4
+ 1d0:	e59f0078 	ldr	r0, [pc, #120]	; 250 <login+0x120>
+ 1d4:	ebfffffe 	bl	0 <updwtmp>
+ 1d8:	e28ddd46 	add	sp, sp, #4480	; 0x1180
+ 1dc:	e28dd02c 	add	sp, sp, #44	; 0x2c
+ 1e0:	e8bd8030 	pop	{r4, r5, pc}
+ 1e4:	e1a00004 	mov	r0, r4
+ 1e8:	ebfffffe 	bl	0 <basename>
+ 1ec:	e1a01000 	mov	r1, r0
+ 1f0:	eaffffe9 	b	19c <login+0x6c>
+ 1f4:	ebfffffe 	bl	0 <setutent>
+ 1f8:	e1a00004 	mov	r0, r4
+ 1fc:	ebfffffe 	bl	0 <pututline>
+ 200:	ebfffffe 	bl	0 <endutent>
+ 204:	eaffffec 	b	1bc <login+0x8c>
+ 208:	e28d1004 	add	r1, sp, #4
+ 20c:	e3a00001 	mov	r0, #1
+ 210:	ebffff7a 	bl	0 <tty_name.constprop.0>
+ 214:	e3500000 	cmp	r0, #0
+ 218:	aaffffd7 	bge	17c <login+0x4c>
+ 21c:	e28d1004 	add	r1, sp, #4
+ 220:	e3a00002 	mov	r0, #2
+ 224:	ebffff75 	bl	0 <tty_name.constprop.0>
+ 228:	e3500000 	cmp	r0, #0
+ 22c:	aaffffd2 	bge	17c <login+0x4c>
+ 230:	e28d0010 	add	r0, sp, #16
+ 234:	e3a02020 	mov	r2, #32
+ 238:	e59f1014 	ldr	r1, [pc, #20]	; 254 <login+0x124>
+ 23c:	ebfffffe 	bl	0 <strncpy>
+ 240:	e28d4008 	add	r4, sp, #8
+ 244:	eaffffe0 	b	1cc <login+0x9c>
+ 248:	00000000 	andeq	r0, r0, r0
+ 24c:	00000008 	andeq	r0, r0, r8
+ 250:	0000001c 	andeq	r0, r0, ip, lsl r0
+ 254:	00000018 	andeq	r0, r0, r8, lsl r0
+
+Déassemblage de la section .rodata.str1.4 :
+
+00000000 <.rodata.str1.4>:
+   0:	7665642f 	strbtvc	r6, [r5], -pc, lsr #8
+   4:	0000002f 	andeq	r0, r0, pc, lsr #32
+   8:	7261762f 	rsbvc	r7, r1, #49283072	; 0x2f00000
+   c:	6e75722f 	cdpvs	2, 7, cr7, cr5, cr15, {1}
+  10:	6d74752f 	cfldr64vs	mvdx7, [r4, #-188]!	; 0xffffff44
+  14:	00000070 	andeq	r0, r0, r0, ror r0
+  18:	003f3f3f 	eorseq	r3, pc, pc, lsr pc	; <UNPREDICTABLE>
+  1c:	7261762f 	rsbvc	r7, r1, #49283072	; 0x2f00000
+  20:	676f6c2f 	strbvs	r6, [pc, -pc, lsr #24]!
+  24:	6d74772f 	ldclvs	7, cr7, [r4, #-188]!	; 0xffffff44
+  28:	Adresse 0x00000028 hors intervalle.
+
+
+Déassemblage de la section .ARM.attributes :
+
+00000000 <.ARM.attributes>:
+   0:	00003041 	andeq	r3, r0, r1, asr #32
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000026 	andeq	r0, r0, r6, lsr #32
+  10:	06003605 	streq	r3, [r0], -r5, lsl #12
+  14:	09010806 	stmdbeq	r1, {r1, r2, fp}
+  18:	12020a01 	andne	r0, r2, #4096	; 0x1000
+  1c:	14011304 	strne	r1, [r1], #-772	; 0xfffffcfc
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c021a01 			; <UNDEFINED> instruction: 0x1c021a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Adresse 0x00000030 hors intervalle.
+
+
+login_tty.o:     format de fichier elf32-littlearm
+
+
+Déassemblage de la section .text :
+
+00000000 <login_tty>:
+   0:	e92d4070 	push	{r4, r5, r6, lr}
+   4:	e1a04000 	mov	r4, r0
+   8:	ebfffffe 	bl	0 <setsid>
+   c:	e1a00004 	mov	r0, r4
+  10:	e3a02000 	mov	r2, #0
+  14:	e59f10c4 	ldr	r1, [pc, #196]	; e0 <login_tty+0xe0>
+  18:	ebfffffe 	bl	0 <ioctl>
+  1c:	e3700001 	cmn	r0, #1
+  20:	08bd8070 	popeq	{r4, r5, r6, pc}
+  24:	e3a05000 	mov	r5, #0
+  28:	ea000004 	b	40 <login_tty+0x40>
+  2c:	e79f3003 	ldr	r3, [pc, r3]
+  30:	ebfffffe 	bl	0 <__aeabi_read_tp>
+  34:	e7903003 	ldr	r3, [r0, r3]
+  38:	e3530010 	cmp	r3, #16
+  3c:	1a000005 	bne	58 <login_tty+0x58>
+  40:	e1a01005 	mov	r1, r5
+  44:	e1a00004 	mov	r0, r4
+  48:	ebfffffe 	bl	0 <dup2>
+  4c:	e59f3090 	ldr	r3, [pc, #144]	; e4 <login_tty+0xe4>
+  50:	e3700001 	cmn	r0, #1
+  54:	0afffff4 	beq	2c <login_tty+0x2c>
+  58:	e3a05001 	mov	r5, #1
+  5c:	ea000004 	b	74 <login_tty+0x74>
+  60:	e79f3003 	ldr	r3, [pc, r3]
+  64:	ebfffffe 	bl	0 <__aeabi_read_tp>
+  68:	e7903003 	ldr	r3, [r0, r3]
+  6c:	e3530010 	cmp	r3, #16
+  70:	1a000005 	bne	8c <login_tty+0x8c>
+  74:	e1a01005 	mov	r1, r5
+  78:	e1a00004 	mov	r0, r4
+  7c:	ebfffffe 	bl	0 <dup2>
+  80:	e59f3060 	ldr	r3, [pc, #96]	; e8 <login_tty+0xe8>
+  84:	e3700001 	cmn	r0, #1
+  88:	0afffff4 	beq	60 <login_tty+0x60>
+  8c:	e3a05002 	mov	r5, #2
+  90:	ea000004 	b	a8 <login_tty+0xa8>
+  94:	e79f3003 	ldr	r3, [pc, r3]
+  98:	ebfffffe 	bl	0 <__aeabi_read_tp>
+  9c:	e7903003 	ldr	r3, [r0, r3]
+  a0:	e3530010 	cmp	r3, #16
+  a4:	1a000005 	bne	c0 <login_tty+0xc0>
+  a8:	e1a01005 	mov	r1, r5
+  ac:	e1a00004 	mov	r0, r4
+  b0:	ebfffffe 	bl	0 <dup2>
+  b4:	e59f3030 	ldr	r3, [pc, #48]	; ec <login_tty+0xec>
+  b8:	e3700001 	cmn	r0, #1
+  bc:	0afffff4 	beq	94 <login_tty+0x94>
+  c0:	e3540002 	cmp	r4, #2
+  c4:	ca000001 	bgt	d0 <login_tty+0xd0>
+  c8:	e3a00000 	mov	r0, #0
+  cc:	e8bd8070 	pop	{r4, r5, r6, pc}
+  d0:	e1a00004 	mov	r0, r4
+  d4:	ebfffffe 	bl	0 <close>
+  d8:	e3a00000 	mov	r0, #0
+  dc:	e8bd8070 	pop	{r4, r5, r6, pc}
+  e0:	0000540e 	andeq	r5, r0, lr, lsl #8
+  e4:	000000b0 	strheq	r0, [r0], -r0	; <UNPREDICTABLE>
+  e8:	00000080 	andeq	r0, r0, r0, lsl #1
+  ec:	00000050 	andeq	r0, r0, r0, asr r0
+
+Déassemblage de la section .ARM.attributes :
+
+00000000 <.ARM.attributes>:
+   0:	00003041 	andeq	r3, r0, r1, asr #32
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000026 	andeq	r0, r0, r6, lsr #32
+  10:	06003605 	streq	r3, [r0], -r5, lsl #12
+  14:	09010806 	stmdbeq	r1, {r1, r2, fp}
+  18:	12020a01 	andne	r0, r2, #4096	; 0x1000
+  1c:	14011304 	strne	r1, [r1], #-772	; 0xfffffcfc
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c021a01 			; <UNDEFINED> instruction: 0x1c021a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Adresse 0x00000030 hors intervalle.
+
+
+logout.o:     format de fichier elf32-littlearm
+
+
+Déassemblage de la section .text :
+
+00000000 <logout>:
+   0:	e92d4010 	push	{r4, lr}
+   4:	e1a04000 	mov	r4, r0
+   8:	e24dde31 	sub	sp, sp, #784	; 0x310
+   c:	e59f00a4 	ldr	r0, [pc, #164]	; b8 <logout+0xb8>
+  10:	ebfffffe 	bl	0 <utmpname>
+  14:	e3700001 	cmn	r0, #1
+  18:	03a04000 	moveq	r4, #0
+  1c:	0a000022 	beq	ac <logout+0xac>
+  20:	ebfffffe 	bl	0 <setutent>
+  24:	e1a01004 	mov	r1, r4
+  28:	e3a03007 	mov	r3, #7
+  2c:	e3a02020 	mov	r2, #32
+  30:	e28d0018 	add	r0, sp, #24
+  34:	e1cd31b0 	strh	r3, [sp, #16]
+  38:	ebfffffe 	bl	0 <strncpy>
+  3c:	e28d0010 	add	r0, sp, #16
+  40:	e28d2004 	add	r2, sp, #4
+  44:	e28d1e19 	add	r1, sp, #400	; 0x190
+  48:	ebfffffe 	bl	0 <getutline_r>
+  4c:	e3500000 	cmp	r0, #0
+  50:	b3a04000 	movlt	r4, #0
+  54:	ba000013 	blt	a8 <logout+0xa8>
+  58:	e59d4004 	ldr	r4, [sp, #4]
+  5c:	e3a02020 	mov	r2, #32
+  60:	e284002c 	add	r0, r4, #44	; 0x2c
+  64:	e3a01000 	mov	r1, #0
+  68:	ebfffffe 	bl	0 <memset>
+  6c:	e3a02c01 	mov	r2, #256	; 0x100
+  70:	e284004c 	add	r0, r4, #76	; 0x4c
+  74:	e3a01000 	mov	r1, #0
+  78:	ebfffffe 	bl	0 <memset>
+  7c:	e3a01000 	mov	r1, #0
+  80:	e28d0008 	add	r0, sp, #8
+  84:	ebfffffe 	bl	0 <__gettimeofday>
+  88:	e99d0007 	ldmib	sp, {r0, r1, r2}
+  8c:	e3a03008 	mov	r3, #8
+  90:	e5801154 	str	r1, [r0, #340]	; 0x154
+  94:	e5802158 	str	r2, [r0, #344]	; 0x158
+  98:	e1c030b0 	strh	r3, [r0]
+  9c:	ebfffffe 	bl	0 <pututline>
+  a0:	e2904000 	adds	r4, r0, #0
+  a4:	13a04001 	movne	r4, #1
+  a8:	ebfffffe 	bl	0 <endutent>
+  ac:	e1a00004 	mov	r0, r4
+  b0:	e28dde31 	add	sp, sp, #784	; 0x310
+  b4:	e8bd8010 	pop	{r4, pc}
+  b8:	00000000 	andeq	r0, r0, r0
+
+Déassemblage de la section .rodata.str1.4 :
+
+00000000 <.rodata.str1.4>:
+   0:	7261762f 	rsbvc	r7, r1, #49283072	; 0x2f00000
+   4:	6e75722f 	cdpvs	2, 7, cr7, cr5, cr15, {1}
+   8:	6d74752f 	cfldr64vs	mvdx7, [r4, #-188]!	; 0xffffff44
+   c:	Adresse 0x0000000c hors intervalle.
+
+
+Déassemblage de la section .ARM.attributes :
+
+00000000 <.ARM.attributes>:
+   0:	00003041 	andeq	r3, r0, r1, asr #32
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000026 	andeq	r0, r0, r6, lsr #32
+  10:	06003605 	streq	r3, [r0], -r5, lsl #12
+  14:	09010806 	stmdbeq	r1, {r1, r2, fp}
+  18:	12020a01 	andne	r0, r2, #4096	; 0x1000
+  1c:	14011304 	strne	r1, [r1], #-772	; 0xfffffcfc
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c021a01 			; <UNDEFINED> instruction: 0x1c021a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Adresse 0x00000030 hors intervalle.
+
+
+logwtmp.o:     format de fichier elf32-littlearm
+
+
+Déassemblage de la section .text :
+
+00000000 <logwtmp>:
+   0:	e92d4070 	push	{r4, r5, r6, lr}
+   4:	e24ddf62 	sub	sp, sp, #392	; 0x188
+   8:	e1a04001 	mov	r4, r1
+   c:	e1a06000 	mov	r6, r0
+  10:	e1a05002 	mov	r5, r2
+  14:	e3a01000 	mov	r1, #0
+  18:	e3a02d06 	mov	r2, #384	; 0x180
+  1c:	e28d0008 	add	r0, sp, #8
+  20:	ebfffffe 	bl	0 <memset>
+  24:	ebfffffe 	bl	0 <getpid>
+  28:	e5d43000 	ldrb	r3, [r4]
+  2c:	e1a01006 	mov	r1, r6
+  30:	e3a02020 	mov	r2, #32
+  34:	e3530000 	cmp	r3, #0
+  38:	13a03007 	movne	r3, #7
+  3c:	03a03008 	moveq	r3, #8
+  40:	e1cd30b8 	strh	r3, [sp, #8]
+  44:	e58d000c 	str	r0, [sp, #12]
+  48:	e28d0010 	add	r0, sp, #16
+  4c:	ebfffffe 	bl	0 <strncpy>
+  50:	e1a01004 	mov	r1, r4
+  54:	e3a02020 	mov	r2, #32
+  58:	e28d0034 	add	r0, sp, #52	; 0x34
+  5c:	ebfffffe 	bl	0 <strncpy>
+  60:	e1a01005 	mov	r1, r5
+  64:	e3a02c01 	mov	r2, #256	; 0x100
+  68:	e28d0054 	add	r0, sp, #84	; 0x54
+  6c:	ebfffffe 	bl	0 <strncpy>
+  70:	e3a01000 	mov	r1, #0
+  74:	e1a0000d 	mov	r0, sp
+  78:	ebfffffe 	bl	0 <__gettimeofday>
+  7c:	e89d000c 	ldm	sp, {r2, r3}
+  80:	e28d1008 	add	r1, sp, #8
+  84:	e59f0010 	ldr	r0, [pc, #16]	; 9c <logwtmp+0x9c>
+  88:	e58d215c 	str	r2, [sp, #348]	; 0x15c
+  8c:	e58d3160 	str	r3, [sp, #352]	; 0x160
+  90:	ebfffffe 	bl	0 <updwtmp>
+  94:	e28ddf62 	add	sp, sp, #392	; 0x188
+  98:	e8bd8070 	pop	{r4, r5, r6, pc}
+  9c:	00000000 	andeq	r0, r0, r0
+
+Déassemblage de la section .rodata.str1.4 :
+
+00000000 <.rodata.str1.4>:
+   0:	7261762f 	rsbvc	r7, r1, #49283072	; 0x2f00000
+   4:	676f6c2f 	strbvs	r6, [pc, -pc, lsr #24]!
+   8:	6d74772f 	ldclvs	7, cr7, [r4, #-188]!	; 0xffffff44
+   c:	Adresse 0x0000000c hors intervalle.
+
+
+Déassemblage de la section .ARM.attributes :
+
+00000000 <.ARM.attributes>:
+   0:	00003041 	andeq	r3, r0, r1, asr #32
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000026 	andeq	r0, r0, r6, lsr #32
+  10:	06003605 	streq	r3, [r0], -r5, lsl #12
+  14:	09010806 	stmdbeq	r1, {r1, r2, fp}
+  18:	12020a01 	andne	r0, r2, #4096	; 0x1000
+  1c:	14011304 	strne	r1, [r1], #-772	; 0xfffffcfc
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c021a01 			; <UNDEFINED> instruction: 0x1c021a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Adresse 0x00000030 hors intervalle.
+
+
+openpty.o:     format de fichier elf32-littlearm
+
+
+Déassemblage de la section .text :
+
+00000000 <openpty>:
+   0:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+   4:	e24dda01 	sub	sp, sp, #4096	; 0x1000
+   8:	e24dd014 	sub	sp, sp, #20
+   c:	e1a0b003 	mov	fp, r3
+  10:	e98d0007 	stmib	sp, {r0, r1, r2}
+  14:	ebfffffe 	bl	0 <getpt>
+  18:	e3700001 	cmn	r0, #1
+  1c:	e1a07000 	mov	r7, r0
+  20:	0a000039 	beq	10c <openpty+0x10c>
+  24:	ebfffffe 	bl	0 <grantpt>
+  28:	e3500000 	cmp	r0, #0
+  2c:	1a000034 	bne	104 <openpty+0x104>
+  30:	e1a00007 	mov	r0, r7
+  34:	ebfffffe 	bl	0 <unlockpt>
+  38:	e2508000 	subs	r8, r0, #0
+  3c:	1a000030 	bne	104 <openpty+0x104>
+  40:	e28d5010 	add	r5, sp, #16
+  44:	e1a0a005 	mov	sl, r5
+  48:	e3a04a01 	mov	r4, #4096	; 0x1000
+  4c:	e3a06080 	mov	r6, #128	; 0x80
+  50:	ea000005 	b	6c <openpty+0x6c>
+  54:	e1a01006 	mov	r1, r6
+  58:	e1a00009 	mov	r0, r9
+  5c:	ebfffffe 	bl	0 <realloc>
+  60:	e250a000 	subs	sl, r0, #0
+  64:	0a00001d 	beq	e0 <openpty+0xe0>
+  68:	e3a04080 	mov	r4, #128	; 0x80
+  6c:	e1a02004 	mov	r2, r4
+  70:	e1a0100a 	mov	r1, sl
+  74:	e1a00007 	mov	r0, r7
+  78:	ebfffffe 	bl	0 <ptsname_r>
+  7c:	e2509000 	subs	r9, r0, #0
+  80:	1a000052 	bne	1d0 <openpty+0x1d0>
+  84:	e1a02004 	mov	r2, r4
+  88:	e1a01008 	mov	r1, r8
+  8c:	e1a0000a 	mov	r0, sl
+  90:	ebfffffe 	bl	0 <memchr>
+  94:	e3500000 	cmp	r0, #0
+  98:	1a000020 	bne	120 <openpty+0x120>
+  9c:	e15a0005 	cmp	sl, r5
+  a0:	e1a04084 	lsl	r4, r4, #1
+  a4:	0a000045 	beq	1c0 <openpty+0x1c0>
+  a8:	e1a01004 	mov	r1, r4
+  ac:	e1a0000a 	mov	r0, sl
+  b0:	ebfffffe 	bl	0 <realloc>
+  b4:	e1a09000 	mov	r9, r0
+  b8:	e3590000 	cmp	r9, #0
+  bc:	0a000045 	beq	1d8 <openpty+0x1d8>
+  c0:	e3540000 	cmp	r4, #0
+  c4:	1a00004a 	bne	1f4 <openpty+0x1f4>
+  c8:	e1590005 	cmp	r9, r5
+  cc:	1affffe0 	bne	54 <openpty+0x54>
+  d0:	e1a00006 	mov	r0, r6
+  d4:	ebfffffe 	bl	0 <malloc>
+  d8:	e250a000 	subs	sl, r0, #0
+  dc:	1affffe1 	bne	68 <openpty+0x68>
+  e0:	e59f3114 	ldr	r3, [pc, #276]	; 1fc <openpty+0x1fc>
+  e4:	e3a0200c 	mov	r2, #12
+  e8:	ebfffffe 	bl	0 <__aeabi_read_tp>
+  ec:	e79f3003 	ldr	r3, [pc, r3]
+  f0:	e7802003 	str	r2, [r0, r3]
+  f4:	e1590005 	cmp	r9, r5
+  f8:	0a000001 	beq	104 <openpty+0x104>
+  fc:	e1a00009 	mov	r0, r9
+ 100:	ebfffffe 	bl	0 <free>
+ 104:	e1a00007 	mov	r0, r7
+ 108:	ebfffffe 	bl	0 <close>
+ 10c:	e3e09000 	mvn	r9, #0
+ 110:	e1a00009 	mov	r0, r9
+ 114:	e28dda01 	add	sp, sp, #4096	; 0x1000
+ 118:	e28dd014 	add	sp, sp, #20
+ 11c:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 120:	e59f10d8 	ldr	r1, [pc, #216]	; 200 <openpty+0x200>
+ 124:	e1a0000a 	mov	r0, sl
+ 128:	ebfffffe 	bl	0 <open>
+ 12c:	e3700001 	cmn	r0, #1
+ 130:	e1a04000 	mov	r4, r0
+ 134:	0a000029 	beq	1e0 <openpty+0x1e0>
+ 138:	e35b0000 	cmp	fp, #0
+ 13c:	0a000002 	beq	14c <openpty+0x14c>
+ 140:	e1a0200b 	mov	r2, fp
+ 144:	e3a01002 	mov	r1, #2
+ 148:	ebfffffe 	bl	0 <tcsetattr>
+ 14c:	e28d3a01 	add	r3, sp, #4096	; 0x1000
+ 150:	e2833038 	add	r3, r3, #56	; 0x38
+ 154:	e5933000 	ldr	r3, [r3]
+ 158:	e3530000 	cmp	r3, #0
+ 15c:	0a000005 	beq	178 <openpty+0x178>
+ 160:	e28d3a01 	add	r3, sp, #4096	; 0x1000
+ 164:	e2833038 	add	r3, r3, #56	; 0x38
+ 168:	e59f1094 	ldr	r1, [pc, #148]	; 204 <openpty+0x204>
+ 16c:	e5932000 	ldr	r2, [r3]
+ 170:	e1a00004 	mov	r0, r4
+ 174:	ebfffffe 	bl	0 <ioctl>
+ 178:	e59d2004 	ldr	r2, [sp, #4]
+ 17c:	e59d300c 	ldr	r3, [sp, #12]
+ 180:	e5827000 	str	r7, [r2]
+ 184:	e59d2008 	ldr	r2, [sp, #8]
+ 188:	e3530000 	cmp	r3, #0
+ 18c:	e5824000 	str	r4, [r2]
+ 190:	0a000002 	beq	1a0 <openpty+0x1a0>
+ 194:	e1a00003 	mov	r0, r3
+ 198:	e1a0100a 	mov	r1, sl
+ 19c:	ebfffffe 	bl	0 <strcpy>
+ 1a0:	e15a0005 	cmp	sl, r5
+ 1a4:	0affffd9 	beq	110 <openpty+0x110>
+ 1a8:	e1a0000a 	mov	r0, sl
+ 1ac:	ebfffffe 	bl	0 <free>
+ 1b0:	e1a00009 	mov	r0, r9
+ 1b4:	e28dda01 	add	sp, sp, #4096	; 0x1000
+ 1b8:	e28dd014 	add	sp, sp, #20
+ 1bc:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 1c0:	e1a00004 	mov	r0, r4
+ 1c4:	ebfffffe 	bl	0 <malloc>
+ 1c8:	e1a09000 	mov	r9, r0
+ 1cc:	eaffffb9 	b	b8 <openpty+0xb8>
+ 1d0:	e1a0900a 	mov	r9, sl
+ 1d4:	eaffffc6 	b	f4 <openpty+0xf4>
+ 1d8:	e1a0900a 	mov	r9, sl
+ 1dc:	eaffffbf 	b	e0 <openpty+0xe0>
+ 1e0:	e15a0005 	cmp	sl, r5
+ 1e4:	0affffc6 	beq	104 <openpty+0x104>
+ 1e8:	e1a0000a 	mov	r0, sl
+ 1ec:	ebfffffe 	bl	0 <free>
+ 1f0:	eaffffc3 	b	104 <openpty+0x104>
+ 1f4:	e1a0a009 	mov	sl, r9
+ 1f8:	eaffff9b 	b	6c <openpty+0x6c>
+ 1fc:	00000108 	andeq	r0, r0, r8, lsl #2
+ 200:	00000102 	andeq	r0, r0, r2, lsl #2
+ 204:	00005414 	andeq	r5, r0, r4, lsl r4
+
+Déassemblage de la section .ARM.attributes :
+
+00000000 <.ARM.attributes>:
+   0:	00003041 	andeq	r3, r0, r1, asr #32
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000026 	andeq	r0, r0, r6, lsr #32
+  10:	06003605 	streq	r3, [r0], -r5, lsl #12
+  14:	09010806 	stmdbeq	r1, {r1, r2, fp}
+  18:	12020a01 	andne	r0, r2, #4096	; 0x1000
+  1c:	14011304 	strne	r1, [r1], #-772	; 0xfffffcfc
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c021a01 			; <UNDEFINED> instruction: 0x1c021a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Adresse 0x00000030 hors intervalle.
+
+
+forkpty.o:     format de fichier elf32-littlearm
+
+
+Déassemblage de la section .text :
+
+00000000 <forkpty>:
+   0:	e92d4030 	push	{r4, r5, lr}
+   4:	e24dd014 	sub	sp, sp, #20
+   8:	e1a05000 	mov	r5, r0
+   c:	e58d3000 	str	r3, [sp]
+  10:	e28d0008 	add	r0, sp, #8
+  14:	e1a03002 	mov	r3, r2
+  18:	e1a02001 	mov	r2, r1
+  1c:	e28d100c 	add	r1, sp, #12
+  20:	ebfffffe 	bl	0 <openpty>
+  24:	e3700001 	cmn	r0, #1
+  28:	e1a04000 	mov	r4, r0
+  2c:	0a00000b 	beq	60 <forkpty+0x60>
+  30:	ebfffffe 	bl	0 <fork>
+  34:	e3700001 	cmn	r0, #1
+  38:	e1a04000 	mov	r4, r0
+  3c:	0a000011 	beq	88 <forkpty+0x88>
+  40:	e3500000 	cmp	r0, #0
+  44:	1a000008 	bne	6c <forkpty+0x6c>
+  48:	e59d0008 	ldr	r0, [sp, #8]
+  4c:	ebfffffe 	bl	0 <close>
+  50:	e59d000c 	ldr	r0, [sp, #12]
+  54:	ebfffffe 	bl	0 <login_tty>
+  58:	e2504000 	subs	r4, r0, #0
+  5c:	1a000010 	bne	a4 <forkpty+0xa4>
+  60:	e1a00004 	mov	r0, r4
+  64:	e28dd014 	add	sp, sp, #20
+  68:	e8bd8030 	pop	{r4, r5, pc}
+  6c:	e59d3008 	ldr	r3, [sp, #8]
+  70:	e59d000c 	ldr	r0, [sp, #12]
+  74:	e5853000 	str	r3, [r5]
+  78:	ebfffffe 	bl	0 <close>
+  7c:	e1a00004 	mov	r0, r4
+  80:	e28dd014 	add	sp, sp, #20
+  84:	e8bd8030 	pop	{r4, r5, pc}
+  88:	e59d0008 	ldr	r0, [sp, #8]
+  8c:	ebfffffe 	bl	0 <close>
+  90:	e59d000c 	ldr	r0, [sp, #12]
+  94:	ebfffffe 	bl	0 <close>
+  98:	e1a00004 	mov	r0, r4
+  9c:	e28dd014 	add	sp, sp, #20
+  a0:	e8bd8030 	pop	{r4, r5, pc}
+  a4:	e3a00001 	mov	r0, #1
+  a8:	ebfffffe 	bl	0 <_exit>
+
+Déassemblage de la section .ARM.attributes :
+
+00000000 <.ARM.attributes>:
+   0:	00003041 	andeq	r3, r0, r1, asr #32
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000026 	andeq	r0, r0, r6, lsr #32
+  10:	06003605 	streq	r3, [r0], -r5, lsl #12
+  14:	09010806 	stmdbeq	r1, {r1, r2, fp}
+  18:	12020a01 	andne	r0, r2, #4096	; 0x1000
+  1c:	14011304 	strne	r1, [r1], #-772	; 0xfffffcfc
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c021a01 			; <UNDEFINED> instruction: 0x1c021a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Adresse 0x00000030 hors intervalle.
+

@@ -1,0 +1,35 @@
+CC:=/usr/bin/arm-linux-gnueabihf-gcc
+AS:=/usr/bin/arm-linux-gnueabihf-as
+LD:=/usr/bin/arm-linux-gnueabihf-ld
+
+CFLAGS= 
+#PATH= /usr/lib/arm-linux-gnueabihf/
+PATH=/usr/include/arm-linux-gnueabihf/
+LIBS= -lpthread -lm -lc
+
+RM=/bin/rm
+
+PROGRAM = mysimu
+
+SOURCES = main.c 
+SOURCES += kanayama.c
+SOURCES += guidance_mgr.c
+SOURCES += measurement_randomization.c
+SOURCES += segment.c
+SOURCES += simulator.c
+SOURCES += parametres.c
+SOURCES += mat.c
+SOURCES += threads_mgr.c
+
+OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
+
+%.o: %.c
+	$(CC) $(CFLAGS) -g -c -o $@ $<
+
+$(PROGRAM): $(OBJECTS)
+	$(LD) -o $@ $(OBJECTS) -Map $@.map -L$(PATH) $(LIBS) -e main
+	$(RM) *.o
+	@echo $@ "build done"
+clean:
+	@echo "Cleaning"
+	$(RM) -f $(PROGRAM) $(OBJECTS)

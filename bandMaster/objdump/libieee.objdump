@@ -1,0 +1,26 @@
+
+/usr/lib/arm-linux-gnueabihf/libieee.a:     format de fichier elf32-littlearm
+
+
+Déassemblage de la section .data :
+
+00000000 <_LIB_VERSION>:
+   0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+
+Déassemblage de la section .ARM.attributes :
+
+00000000 <.ARM.attributes>:
+   0:	00003041 	andeq	r3, r0, r1, asr #32
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000026 	andeq	r0, r0, r6, lsr #32
+  10:	06003605 	streq	r3, [r0], -r5, lsl #12
+  14:	09010806 	stmdbeq	r1, {r1, r2, fp}
+  18:	12020a01 	andne	r0, r2, #4096	; 0x1000
+  1c:	14011304 	strne	r1, [r1], #-772	; 0xfffffcfc
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c021a01 			; <UNDEFINED> instruction: 0x1c021a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Adresse 0x00000030 hors intervalle.
+
