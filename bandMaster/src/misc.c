@@ -20,7 +20,7 @@ void * safe_alloc(int size){
 void debug_msg(char * msg){
 	if(debug==1){
 		printf("\n");
-		printf((char *)msg);
+		printf("%s",msg);
 		printf("\n");
 	}
 	else{
