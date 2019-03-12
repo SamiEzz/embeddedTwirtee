@@ -1,3 +1,5 @@
+
+#include "../include/misc.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -13,4 +15,15 @@ void * safe_alloc(int size){
     else{
         return memblock;
     }
+}
+
+void debug_msg(char * msg){
+	if(debug==1){
+		printf("\n");
+		printf((char *)msg);
+		printf("\n");
+	}
+	else{
+
+	}
 }

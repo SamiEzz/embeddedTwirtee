@@ -1,11 +1,10 @@
-PATH=/usr/include/arm-linux-gnueabihf/
+
 LIBS= -lpthread -lm -lc
-CC=/usr/bin/arm-linux-gnueabihf-gcc
-AS=/usr/bin/arm-linux-gnueabihf-as
+CC=gcc
 
 RM=/bin/rm
 
-PROGRAM = mysimu
+PROGRAM = ./bin/mysimu
 
 SOURCES = main.c 
 SOURCES +=./src/kanayama.c
@@ -39,6 +38,6 @@ $(PROGRAM): $(OBJECTS)
 clean:
 	@echo "Cleaning"
 	$(RM) -f $(PROGRAM)
-	$(RM) ./build/*.o
 	$(RM) ./src/*.o
+	$(RM) ./build/*.o
 	

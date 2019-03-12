@@ -12,7 +12,8 @@
 #define outputFile "output.txt"
 
 
-int main(int argc, char const *argv[])
+//int main(int argc, char const *argv[])
+void* 
 {
     int src,dest;
     // printf("%s , %s , %d",argv[0],argv[1],argc);

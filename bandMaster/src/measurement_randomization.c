@@ -19,22 +19,22 @@ void init_random(void)
 	srand(time(NULL));
 }
 
-// int random_int_old(int min, int max)
-// {
-// 	int n = max - min + 1;
-// 	int remainder = RAND_MAX % n;
-// 	int x;
-// 	do
-// 	{
-// 		x = rand();
-// 	} while (x >= RAND_MAX - remainder);
-// 	return min + x % n;
-// }
 int random_int(int min, int max)
 {
-	
-	return min + 1;
+	int n = max - min + 1;
+	int remainder = RAND_MAX % n;
+	int x;
+	do
+	{
+		x = rand();
+	} while (x >= RAND_MAX - remainder);
+	return min + x % n;
 }
+// int random_int(int min, int max)
+// {
+	
+// 	return min + 1;
+// }
 /* GPS RANDOMIZATION */
 void random_gps(T_loc *gps, float freq_val, float noise_amplitude, float freq_noise)
 {

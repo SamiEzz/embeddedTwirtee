@@ -2,6 +2,7 @@
 #include "./include/threads_mgr.h"
 #include "./include/measurement_randomization.h"
 #include "./include/spf_thread.h"
+#include "./include/misc.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -99,23 +100,27 @@ int main(){
     start_thread(&t_simu, NULL, update_simulation, simu);
     end_thread(t_simu, NULL);
 
+
     start_thread(&t_get_mission, NULL, get_mission_thread, mission_se);
     // wait for thread to execute 
     end_thread(t_get_mission, NULL);
-    
+ 
     // short path first thread
-    //start_thread(&t_spf, NULL, spf_thread, mission_se);
+    
+    start_thread(&t_spf, NULL, spf_thread, mission_se);
     // wait for thread to execute 
-    //end_thread(t_spf, NULL);
+    end_thread(t_spf, NULL);
 
 
     //###############################################
     //              show results                    #
     //###############################################  
+    
     for(int i=0;i<mission_se->path->size;i++){
         printf("-> %d\n",mission_se->path->dest[i]->id);    
     }
-    printf("\nExecuted !\n");
+    debug_msg("Executed !");
+    
     //###############################################
     //                  close                       #
     //###############################################

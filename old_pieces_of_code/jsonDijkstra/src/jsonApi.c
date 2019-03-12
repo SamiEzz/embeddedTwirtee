@@ -2,7 +2,7 @@
 
 
 
-int expectNvalues=8000;
+long int expectNvalues=8000;
 
 void * safe_alloc(int size){
     errno = 0;
@@ -499,13 +499,13 @@ struct Beacons beaconsExt(char *_JSON_STRING,initParser _IP,int _i,int objRank){
 
 struct initParser getJsonToken(int expectNvalues,char * JSON_STRING){
 	initParser IP;
-	int r;
+	int r=0;
 	jsmn_parser p;
 	jsmntok_t  t[expectNvalues]; /* We expect no more than 128 tokens */
 
 	jsmn_init(&p);
 	r = jsmn_parse(&p, JSON_STRING, strlen(JSON_STRING), t, r);
-    IP.r=r;
+	IP.r=r;
 	IP.p=p;
 	IP.t=t;
 	if (r < 0) {

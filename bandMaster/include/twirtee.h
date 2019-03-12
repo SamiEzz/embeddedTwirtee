@@ -9,6 +9,8 @@
 #define TWIRTEE_H_
 
 #include <stdint.h>
+#include <pthread.h>
+
 //#include "platform_types.h"
 
 
@@ -196,6 +198,17 @@ typedef struct Cartography{
 } Cartography;
 
 
+typedef struct spf_mission{
+    int start;
+    int end;
+    Path * path;
+    pthread_mutex_t mut;
+}spf_mission;
+
+typedef struct {
+    pthread_mutex_t mut;
+    Path mission_var;
+} mission_mtx;
 
 
 #endif /* TWIRTEE_H_ */
