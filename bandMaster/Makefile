@@ -19,15 +19,20 @@ INTERFACE_NUMBER = 0
 PRINT_LVL = 0
 
 # PROJ_DIR += ./DWM_api/loc_api
-PROJ_DIR 	= ./DWM_api/loc_api
+DWM_PROJ_DIR 	= ./include/DWM_api/loc_api
 
 # DWM_SOURCES
-DWM_SOURCES = $(PROJ_DIR)/src/loc_thread.c
+DWM_SOURCES 	= $(PROJ_DIR)/src/loc_thread.c
+
+# DWM binary program
+DWM_PROGRAM		= $(PROJ_DIR)/../../../build/dwm_binary.o
 
 
 # DWM FLAGS
+# CFLAGS += -Wall 
 
-CFLAGS += -Wall 
+# include dwm1001.mak :  include $(PROJ_DIR)/include/dwm1001.mak
+#include $(PROJ_DIR)/include/dwm1001.mak
 
 ######################################################################################################
 ## 
