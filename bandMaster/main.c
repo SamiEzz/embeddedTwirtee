@@ -1,6 +1,8 @@
 #include "./include/simulator.h"
 #include "./include/threads_mgr.h"
 #include "./include/mission_mgr.h"
+#include "./include/localization.h"
+
 
 #include "./include/measurement_randomization.h"
 #include "./include/spf_thread.h"
@@ -98,8 +100,7 @@ int main(){
     //###############################################
 
     // Simulation thread
-    start_thread(&t_simu, NULL, update_simulation, simu);
-    end_thread(t_simu, NULL);
+    
 
 
     start_thread(&t_get_mission, NULL, get_mission_thread, mission_se);
@@ -111,8 +112,22 @@ int main(){
     start_thread(&t_spf, NULL, spf_thread, mission_se);
     // wait for thread to execute 
     end_thread(t_spf, NULL);
+    int max_iterations = 100;
+    for(int iterate=0;iterate<max_iterations;iterate++){
+        // com_localize(compass, gps, odometry, &kalman_position, &Q);		///< Kalman call for better position estimation from noised data
 
-
+        
+        // com_generation(kalman_position, &path, &position_sp); ///< defines SetPoint
+		
+        
+        // com_tracking(kalman_position, position_sp, &Q, &s_gui); ///< Kanayama call to track the defined SetPoint
+		
+        
+        // com_speed_selection(s_gui, s_rec, s_safety, s_arp, &s_out);	///< Shall select the biggest speed asserting s_out <= min(s_safety, s_arp)
+        
+        start_thread(&t_simu, NULL, update_simulation, simu);
+        end_thread(t_simu, NULL);
+    }
     //###############################################
     //              show results                    #
     //###############################################  

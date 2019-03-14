@@ -21,9 +21,9 @@
 
 
 
-static T_loc * position;
-int main(void){
-
+//static T_loc * position;
+int main(){
+   /*
    position->x=-1;
    //---------- Creation des threads
    pthread_t t_localisation;
@@ -55,5 +55,6 @@ int main(void){
    
 
    printf("fin du main\n");
+   */
    return 0;
 }

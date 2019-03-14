@@ -34,14 +34,14 @@ INTERFACE_NUMBER = 0
 PRINT_LVL = 0
 
 
-PROGRAM = loc_thread
-SOURCES = ./src/main.c 
-SOURCES += ./src/loc_thread.c
+DWM_PROGRAM = $(DWM_PROJ_DIR)/../../../../build/dwm_api.o
+DWM_SOURCES =   ./src/main.c 
+DWM_SOURCES +=  ./src/loc_thread.c
+DWM_PROJ_DIR += ./loc_api
 
-PROJ_DIR += ./loc_api
 
 CFLAGS += -Wall 
 
 
 
-include $(PROJ_DIR)/include/dwm1001.mak
+include $(DWM_PROJ_DIR)/include/dwm1001.mak

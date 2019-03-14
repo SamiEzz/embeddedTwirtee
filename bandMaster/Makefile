@@ -59,6 +59,10 @@ SOURCES +=./src/spf_thread.c
 SOURCES +=./src/dijkstra.c
 SOURCES +=./src/jsonApi.c
 SOURCES +=./src/misc.c
+SOURCES +=./src/localization.c
+SOURCES +=./src/kalman.c
+
+
 
 
 
@@ -66,8 +70,8 @@ OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
 
 
-$(PROGRAM): $(OBJECTS)
-	$(CC) -o $@ $(OBJECTS) $(LIBS)
+$(PROGRAM): $(OBJECTS) dwm_api.o
+	$(CC) -o $@ $(OBJECTS) ./build/dwm_api.o $(LIBS)
 	@echo $@ "build done"
 	mv ./src/*.o ./build/
 	mv *.o ./build/
