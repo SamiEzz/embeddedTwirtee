@@ -1,5 +1,7 @@
 #include "./include/simulator.h"
 #include "./include/threads_mgr.h"
+#include "./include/mission_mgr.h"
+
 #include "./include/measurement_randomization.h"
 #include "./include/spf_thread.h"
 #include "./include/misc.h"
@@ -89,7 +91,6 @@ int main(){
     pthread_t t_simu;
     pthread_t t_localisation;
     pthread_t t_get_mission;
-    pthread_t t_kalman;
     pthread_t t_spf;
 
     //###############################################
@@ -100,13 +101,13 @@ int main(){
     start_thread(&t_simu, NULL, update_simulation, simu);
     end_thread(t_simu, NULL);
 
-
+/*
     start_thread(&t_get_mission, NULL, get_mission_thread, mission_se);
     // wait for thread to execute 
     end_thread(t_get_mission, NULL);
- 
+ */
     // short path first thread
-    
+    spf_thread(mission_se);
     start_thread(&t_spf, NULL, spf_thread, mission_se);
     // wait for thread to execute 
     end_thread(t_spf, NULL);

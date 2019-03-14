@@ -13,7 +13,7 @@
 #include <pthread.h>
 
 
-void * safe_alloc(int size);
+//void * safe_alloc(int size);
 void my_delay(int i);    /*Pause l'application pour i seconds*/
 
 int start_thread(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);

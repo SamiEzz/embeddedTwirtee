@@ -8,26 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bandMaster/bin/mysimu",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "(gdb) Launch_spf_only",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/threads/short_path/bin/spf",
+            "program": "${workspaceFolder}/bin/mysimu",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

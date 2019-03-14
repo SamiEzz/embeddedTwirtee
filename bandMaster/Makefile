@@ -1,3 +1,38 @@
+######################################################################################################
+## Decawave DWM Drivers - make variables
+######################################################################################################
+
+#  Configurations
+
+#  TARGET ={0->Raspberry-Pi ,  1->else}
+TARGET = 0
+
+#  INTERFACE_NUMBER={0: USE_UART,1: USE_SPI, 2: USE_SPI_DRDY}
+INTERFACE_NUMBER = 0
+
+#  PRINT_LVL 
+#  for   HAL_Print         
+#  0:    none      
+#  1:    fprintf (log.txt)       
+#  2:    printf (terminal)  
+#  3:    printf + fprintf    
+PRINT_LVL = 0
+
+# PROJ_DIR += ./DWM_api/loc_api
+PROJ_DIR 	= ./DWM_api/loc_api
+
+# DWM_SOURCES
+DWM_SOURCES = $(PROJ_DIR)/src/loc_thread.c
+
+
+# DWM FLAGS
+
+CFLAGS += -Wall 
+
+######################################################################################################
+## 
+##########################################################################################################
+
 
 LIBS= -lpthread -lm -lc
 CC=gcc

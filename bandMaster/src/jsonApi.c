@@ -2,10 +2,10 @@
 #include "../include/misc.h"
 
 
-
-
-long int expectNvalues=8000; // 6369
+long int expectNvalues=7000; // 6369
 char * jsonFileName = "map.json";
+//char * jsonFileName = "/home/samie/Documents/git/emebeddedTwirtee/map.json";
+
 // void * safe_alloc(int size){
 //     errno = 0;
 //     void * memblock;
@@ -47,7 +47,7 @@ void importData(jdata *data){
 	}
 	initParser IP;
 	IP = getJsonToken(expectNvalues, JSON_STRING);
-	debug_msg("jsonApi.c : IP imported");
+	debug_msg("jsonApi.c : json parsed and $IP structure populated");
 	int r = IP.r;
 	jsmntok_t *t = IP.t;
 	int i = 0;
@@ -64,7 +64,7 @@ void importData(jdata *data){
 	data->base->_lg=safe_alloc(sizeof(Node)*data->occur->legs);
 	data->base->_ct=safe_alloc(sizeof(Node)*data->occur->Constraints);
 	data->base->_wpt=safe_alloc(sizeof(Node)*data->occur->waypoints);
-	debug_msg("jsonApi.c : objects imported");
+	debug_msg("jsonApi.c : $data structure populated");
 
 	
 	for (i = 1; i < r; i++)

@@ -10,6 +10,7 @@
         "type_traits": "c",
         "stdio.h": "c",
         "math.h": "c",
-        "dwm_api.h": "c"
+        "dwm_api.h": "c",
+        "jsonapi.h": "c"
     }
 }
