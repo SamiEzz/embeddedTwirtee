@@ -13,18 +13,17 @@
 
 // Param�tres relatifs au robot
 typedef struct {
-    double lwd;					// Diametre de la roue gauche en m
-    double rwd;					// Diametre de la roue droite en m
-    double width;				// Distance entre les deux roues en m
-    double sigma_lw_noise;		// Ecart type vitesse roue gauche
-    double sigma_rw_noise;		// Ecart type vitesse roue droite
+    double lwd;            // Diametre de la roue gauche en m
+    double rwd;            // Diametre de la roue droite en m
+    double width;          // Distance entre les deux roues en m
+    double sigma_lw_noise; // Ecart type vitesse roue gauche
+    double sigma_rw_noise; // Ecart type vitesse roue droite
 } T_robot_parameters;
-
 
 extern const T_robot_parameters K_rp;
 
 //// Affichage des param�tres du robot
-//extern void print_robot_parameters();
+// extern void print_robot_parameters();
 
 // ----------------------------------------
 // Matrice de covariance du bruit de modele
@@ -51,16 +50,18 @@ extern const T_mat RGPSCOMP;
 // �gales � celles donn�es dans la matrice de covariance utilis�e par
 // le filtre de Kalman.
 typedef struct {
-	double sigma_x_noise; 		// Ecart type de la mesure en position selon x par le GPS
-    double sigma_y_noise; 		// Ecart type de la mesure en position selon y par le GPS
-    double sigma_theta_noise; 	// Ecart type de la mesure cap par le magnetometre
-	double sigma_thetal_noise;	// Ecart type de la mesure odometrique roue gauche par le capteur hall
-	double sigma_thetar_noise;	// Ecart type de la mesure odometrique roue droite par le capteur hall
+    double sigma_x_noise;     // Ecart type de la mesure en position selon x par le GPS
+    double sigma_y_noise;     // Ecart type de la mesure en position selon y par le GPS
+    double sigma_theta_noise; // Ecart type de la mesure cap par le magnetometre
+    double
+        sigma_thetal_noise; // Ecart type de la mesure odometrique roue gauche par le capteur hall
+    double
+        sigma_thetar_noise; // Ecart type de la mesure odometrique roue droite par le capteur hall
 } T_measure_noise;
 
 extern const T_measure_noise K_mn;
 
 //// Affiche bruit de mesure
-//extern void print_measure_noise();
+// extern void print_measure_noise();
 
 #endif /* PARAMETRES_H_ */

@@ -7,86 +7,77 @@
 //                                                      //
 //////////////////////////////////////////////////////////
 
-
-#include "../include/jsonApi.h"
-#include "../include/dijkstra.h"
 #include "../include/spf_thread.h"
-#include "../include/threads_mgr.h"
+#include "../include/dijkstra.h"
+#include "../include/jsonApi.h"
 #include "../include/misc.h"
+#include "../include/threads_mgr.h"
 
-
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h> // strerror
-#include <math.h>
 #include <errno.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h> // strerror
 
 #define outputFile "output.nodes"
 
-
-void* get_mission_thread (void * mission_se)
-{
-    //spf_mission *mission = mission_se;
-    int src,dest;
-    //mission = (spf_mission *)mission;
-    spf_mission * mission =  mission_se;
+void* get_mission_thread(void* mission_se) {
+    // spf_mission *mission = mission_se;
+    int src, dest;
+    // mission = (spf_mission *)mission;
+    spf_mission* mission = mission_se;
 
     pthread_mutex_lock(&mission->mut);
     printf("\nSaisissez le point de depart suivie du point d arrivee : ");
-    scanf("%d %d",&src,&dest);
+    scanf("%d %d", &src, &dest);
 
     mission->start = src;
     mission->end = dest;
-       
 
     pthread_mutex_unlock(&mission->mut);
 
     pthread_exit(NULL);
-
 }
- 
-void *spf_thread(void *mission_se){
+
+void* spf_thread(void* mission_se) {
     debug_msg("spf_thread.c : starting thread");
-    spf_mission * mission =  mission_se;
-    int src,dest;
+    spf_mission* mission = mission_se;
+    int src, dest;
     // printf("%s , %s , %d",argv[0],argv[1],argc);
-    
-    src=mission->start;
-    dest=mission->end;
-    
+
+    src = mission->start;
+    dest = mission->end;
+
     //=====================[ jSon IMPORT ]=====================
-    struct jdata * data = safe_alloc(sizeof(jdata *));
+    struct jdata* data = safe_alloc(sizeof(jdata*));
     /* importData()
-    *  this function import information from the json file in "jsonApi.h"->jsonFileName.
-    *  then store it in the variable "data"(1), wich contain tables in the subVariable data->base
-    *  and store the size of each element in data->occur.
-    *  (1)-Check "struct jdata" in jsonApi.h
-    */
+     *  this function import information from the json file in "jsonApi.h"->jsonFileName.
+     *  then store it in the variable "data"(1), wich contain tables in the subVariable data->base
+     *  and store the size of each element in data->occur.
+     *  (1)-Check "struct jdata" in jsonApi.h
+     */
     debug_msg("spf_thread.c : import data");
-	importData(data);
-    
+    importData(data);
+
     //=====================[TEST DIJKSTRA]=====================
     Path trajectorytest;
-    Cartography * graphtest = safe_alloc(sizeof(Cartography));
+    Cartography* graphtest = safe_alloc(sizeof(Cartography));
 
-    
-    
     /* initCarto()
-    * this function use "jdata structure" to assign 
-    * - the Cartography nodes, 
-    * - speed and speedup limitations from "dijkstra.h" defined variables
-    * - number of arcs in the cartography
-    *     
-    */
-    initCarto(graphtest, data->base->_nd,data->occur->nodes);
+     * this function use "jdata structure" to assign
+     * - the Cartography nodes,
+     * - speed and speedup limitations from "dijkstra.h" defined variables
+     * - number of arcs in the cartography
+     *
+     */
+    initCarto(graphtest, data->base->_nd, data->occur->nodes);
 
     /* dijkstra()
-    * this is an implementation of Dijkstra's algorithm to find the Shortest path
-    * betwin "int src" and "int dest" which are the ids of nodes we want to go from 
-    * and arrive to.
-    *     
-    */
+     * this is an implementation of Dijkstra's algorithm to find the Shortest path
+     * betwin "int src" and "int dest" which are the ids of nodes we want to go from
+     * and arrive to.
+     *
+     */
     mission->path = safe_alloc(sizeof(Path));
     dijkstra(graphtest, src, dest, mission->path);
 
@@ -101,4 +92,3 @@ void *spf_thread(void *mission_se){
     //=====================[ Tracking Robot ]=====================
     pthread_exit(NULL);
 }
-

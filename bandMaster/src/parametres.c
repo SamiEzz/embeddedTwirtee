@@ -6,22 +6,19 @@
 // Fichier de d�finition des donn�es utilis�es par le filtre de Kalman
 //======================================================================
 
+#include "../include/parametres.h"
 #include "../include/com.h"
 #include "../include/mat.h"
-#include "../include/parametres.h"
-
-
 
 // Param�tres relatifs au robot
 
 const T_robot_parameters K_rp = {
-	0.07, 	// Diametre de la roue gauche en m
- 	0.07, 	// Diametre de la roue droite en m
-	0.3,	// Distance entre les deux roues en m
-  	1.745,	// Ecart type vitesse roue gauche
-	1.745	// Ecart type vitesse roue droite
+    0.07,  // Diametre de la roue gauche en m
+    0.07,  // Diametre de la roue droite en m
+    0.3,   // Distance entre les deux roues en m
+    1.745, // Ecart type vitesse roue gauche
+    1.745  // Ecart type vitesse roue droite
 };
-
 
 /* ---------------------------------
    Parametres du filtrage de Kalman
@@ -56,40 +53,32 @@ const T_robot_parameters K_rp = {
 // ----------------------------------------
 // Matrice de covariance du bruit de modele
 // ----------------------------------------
-const double Qd[2][2] =
-		{ { 0.01, 0 },
-		  { 0, 0.01 } };
+const double Qd[2][2] = {{0.01, 0}, {0, 0.01}};
 
-const T_mat Q = {2,2, _MAT_ Qd };
-
+const T_mat Q = {2, 2, _MAT_ Qd};
 
 const T_measure_noise K_mn = {
-	0.01, 						// Ecart type de la mesure en position selon x
-    0.01, 						// Ecart type de la mesure en position selon y
-    0.087 						// Ecart type de la mesure cap
+    0.01, // Ecart type de la mesure en position selon x
+    0.01, // Ecart type de la mesure en position selon y
+    0.087 // Ecart type de la mesure cap
 };
 
 // -----------------------------------------------------
 // Matrice de covariance des mesures gps et magnetometre
 // -----------------------------------------------------
-const double RGPSd[2][2] =
-			{ {	0.01*0.01, 	0.0			},
-			  { 0.0,		0.01*0.01	} };
+const double RGPSd[2][2] = {{0.01 * 0.01, 0.0}, {0.0, 0.01 * 0.01}};
 
-const T_mat RGPS = { 2,2, _MAT_ RGPSd };
+const T_mat RGPS = {2, 2, _MAT_ RGPSd};
 
-const double RCOMPd[1][1] =
-		{{	0.087*0.087 }};
+const double RCOMPd[1][1] = {{0.087 * 0.087}};
 
-const T_mat RCOMP = { 1,1, _MAT_ RCOMPd };
+const T_mat RCOMP = {1, 1, _MAT_ RCOMPd};
 
+const double RGPSCOMPd[3][3] = {{0.01 * 0.01, 0.0, 0.0},
+                                {0.0, 0.01 * 0.01, 0.0},
+                                {0.0, 0.0, 0.087 * 0.087}};
 
-const double RGPSCOMPd[3][3] =
-			{ {	0.01*0.01, 	0.0,		0.0 },
-			  { 0.0,		0.01*0.01,	0.0	},
-			  { 0.0,		0.0,		0.087*0.087 }} ;
-
-const T_mat RGPSCOMP = {3,3, _MAT_ RGPSCOMPd };
+const T_mat RGPSCOMP = {3, 3, _MAT_ RGPSCOMPd};
 
 // --------------------------
 // Ecart type sur les mesures
@@ -97,4 +86,3 @@ const T_mat RGPSCOMP = {3,3, _MAT_ RGPSCOMPd };
 // Attention, ces donn�es ne sont pas n�cessairement strictement
 // �gales � celles donn�es dans la matrice de covariance utilis�e par
 // le filtre de Kalman.
-
