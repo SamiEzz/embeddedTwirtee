@@ -65,13 +65,13 @@ int main()
     simu->speed_out = (Speed){0.0f, 0.0f, VALID_DATA};
 
     //1995.581055,-199.699997
-    simu->pos_sp.x = 1995;
-    simu->pos_sp.y = -199;
-    simu->kalm_res.x = 1915;
-    simu->kalm_res.y = -119;
+    simu->pos_sp.x = 0;
+    simu->pos_sp.y = 0;
+    simu->kalm_res.x = 0;
+    simu->kalm_res.y = 0;
     //
-    simu->p->x = 1915;
-    simu->p->y = -119;
+    simu->p->x = 0;
+    simu->p->y = 0;
     simu->p->theta = 0;
     //
     simu->odometry = (T_odo *)safe_alloc(sizeof(T_odo));
@@ -125,10 +125,17 @@ int main()
     // wait for thread to execute
     end_thread(t_spf, NULL);
 
+    simu->pos_sp.x = mission_se->path->dest[1]->x;
+    simu->pos_sp.y = mission_se->path->dest[1]->y;
+    simu->kalm_res.x = mission_se->path->dest[0]->x;
+    simu->kalm_res.y = mission_se->path->dest[0]->y;
+    //
+    simu->p->x = mission_se->path->dest[0]->x;
+    simu->p->y = mission_se->path->dest[0]->y;
     //
 
     simu->odometry = (T_odo *)safe_alloc(sizeof(T_odo));
-    int max_iterations = 1000;
+    int max_iterations = 50;
 
     fprintf(f_tracking, "\nMission : id,x,y \n");
     for (int i = 0; i < mission_se->path->size; i++)
@@ -143,7 +150,7 @@ int main()
 
         // com_generation(kalman_position, &path, &position_sp); ///< defines SetPoint
         com_generation(simu->kalm_res, mission_se->path, &simu->pos_sp);
-        printf("x:%f, y: %f\n",simu->pos_sp.x,simu->pos_sp.y);
+        //printf("x:%f, y: %f\n",simu->pos_sp.x,simu->pos_sp.y);
         // com_tracking(kalman_position, position_sp, &Q, &s_gui); ///< Kanayama call to track the defined SetPoint
         com_tracking(simu->kalm_res, simu->pos_sp, &Q, &simu->speed_gui);
 
