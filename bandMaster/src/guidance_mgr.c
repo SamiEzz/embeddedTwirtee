@@ -217,7 +217,9 @@ static Position get_pose_at_last_node(Node n_1, Node n_2) {
 	@param path_r must have at least 2 elements
 	[TODO] (ejn) This algorithm seems a bit complicated. It seems that the constraint about distance d
 	could be handled in a simpler way than computing a left and right path.
-	[TODO] (ejn) This function has a nasty side effect!!!! (on prev_pos, prev_index; l_side). See if it could be avoided! It could be avoided by performing the complete calculation each and every cycle. This would be less efficient, but much simpler to analyse in terms of WCET...
+	[TODO] (ejn) This function has a nasty side effect!!!! (on prev_pos, prev_index; l_side). See if it could be avoided! 
+		It could be avoided by performing the complete calculation each and every cycle. This would be less efficient, 
+		but much simpler to analyse in terms of WCET...
 	[TODO] (ejn) Replace the returned value (0,1,...) by an enumeration!
 	[TODO] (ejn) Provide a sensible documentation fort this function (e.g.: the returned value is not documented).
 */
