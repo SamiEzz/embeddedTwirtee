@@ -3,8 +3,8 @@
 
 
 long int expectNvalues=7000; // 6369
-char * jsonFileName = "map.json";
-//char * jsonFileName = "/home/samie/Documents/git/emebeddedTwirtee/map.json";
+//char * jsonFileName = "map.json";
+char * jsonFileName = "/home/samie/Documents/git/emebeddedTwirtee/map.json";
 
 // void * safe_alloc(int size){
 //     errno = 0;

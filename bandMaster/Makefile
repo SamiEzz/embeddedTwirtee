@@ -61,6 +61,7 @@ SOURCES +=./src/jsonApi.c
 SOURCES +=./src/misc.c
 SOURCES +=./src/localization.c
 SOURCES +=./src/kalman.c
+SOURCES +=./src/speed_selection.c
 
 
 
@@ -69,9 +70,9 @@ SOURCES +=./src/kalman.c
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
 
-
-$(PROGRAM): $(OBJECTS) dwm_api.o
-	$(CC) -o $@ $(OBJECTS) ./build/dwm_api.o $(LIBS)
+#./build/dwm_api.o
+$(PROGRAM): $(OBJECTS) 
+	$(CC) -o $@ $(OBJECTS)  $(LIBS)
 	@echo $@ "build done"
 	mv ./src/*.o ./build/
 	mv *.o ./build/

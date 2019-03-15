@@ -107,6 +107,6 @@ void *spf_thread(void *mission_se){
     }
     */
     //=====================[ Tracking Robot ]=====================
-    pthread_exit(NULL);
+    //pthread_exit(NULL);
 }
 

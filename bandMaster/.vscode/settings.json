@@ -4,6 +4,7 @@
         "com.h": "c",
         "mat.h": "c",
         "kalman.h": "c",
-        "parametres.h": "c"
+        "parametres.h": "c",
+        "speed_selection.h": "c"
     }
 }

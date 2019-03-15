@@ -12,6 +12,8 @@
 typedef struct simu_param{
     Bool8 end_request; 
     Speed speed_gui; 
+    Speed speed_out; 
+    
     Position pos_sp; 
     Position kalm_res; 
     Position *p; 
