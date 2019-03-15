@@ -7,6 +7,7 @@
 
 #ifndef DIJKSTRA_H_
 #define DIJKSTRA_H_
+#include "twirtee.h"
 
 #define true 1
 #define false 0
@@ -17,20 +18,7 @@
 
 
 // --------------------------------------------------
-typedef struct Cartography{
-	Float32 def_max_speed;
-	Float32 def_max_speed_up;
-	Int16 nb_arcs;
-	Int16 nb_nodes;
-	Node *nodes;
-} Cartography;
 
-typedef struct Path {
-	Float32 def_max_speed;
-	Float32 def_max_speed_up;
-	UInt16 size;
-	Node *dest[MAX_CARTO_NODES];
-} Path;
 /*
 typedef struct Mission {
 	int ind[CARTO_NODE_NBR];

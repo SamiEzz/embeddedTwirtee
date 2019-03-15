@@ -1,6 +1,3 @@
-#include "../include/jsonApi.h"
-#include "../include/dijkstra.h"
-
 #include "../include/threads_mgr.h"
 
 #include <stdlib.h>

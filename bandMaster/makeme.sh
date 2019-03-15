@@ -1,0 +1,1 @@
+make -n -> ./build/shell.sh && chmod 777  ./build/shell.sh &&  ./build/shell.sh && ./mysimu

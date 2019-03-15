@@ -9,11 +9,16 @@
 #define TWIRTEE_H_
 
 #include <stdint.h>
-#include "platform_types.h"
+#include <pthread.h>
+
+//#include "platform_types.h"
 
 
 #define false			0
 #define true			1
+#define FALSE			0
+#define TRUE			1
+
 #define INVALID_DATA	0
 #define VALID_DATA		1
 
@@ -32,6 +37,29 @@
 #define ABS(A)			((A) >= 0 ? (A) : -(A))
 #define SQR(x)			((x)*(x))
 #define _MAT_ (double (*)[])
+
+
+/*
+ * AUTOSAR integer data types
+ */
+typedef signed char    sint8;               /*        -128 .. +127            */
+typedef unsigned char  uint8;               /*           0 .. 255             */
+typedef signed short   sint16;              /*      -32768 .. +32767          */
+typedef unsigned short uint16;              /*           0 .. 65535           */
+typedef signed long    sint32;              /* -2147483648 .. +2147483647     */
+typedef unsigned long  uint32;              /*           0 .. 4294967295      */
+typedef float          float32;
+typedef double         float64;
+
+typedef unsigned long  uint8_least;         /* At least 8 bit                 */
+typedef unsigned long  uint16_least;        /* At least 16 bit                */
+typedef unsigned long  uint32_least;        /* At least 32 bit                */
+typedef signed long    sint8_least;         /* At least 7 bit + 1 bit sign    */
+typedef signed long    sint16_least;        /* At least 15 bit + 1 bit sign   */
+typedef signed long    sint32_least;        /* At least 31 bit + 1 bit sign   */
+
+typedef unsigned char  boolean;   
+//-----------------------
 
 typedef sint8			Bool8;
 typedef sint32			Bool32;
@@ -149,6 +177,38 @@ typedef struct Point { ///< used in COM/Tracking/Segment
 typedef struct Segment { ///< used in COM/Tracking/Segment
 	Point p1, p2;
 } Segment;
+typedef struct Path
+{
+	Float32 def_max_speed;
+	Float32 def_max_speed_up;
+	UInt16 size;
+	Node *dest[MAX_CARTO_NODES];
+} Path;
+
+typedef struct Mission {
+	UInt16 size;
+	int ind[MAX_CARTO_NODES];
+} Mission;
+typedef struct Cartography{
+	Float32 def_max_speed;
+	Float32 def_max_speed_up;
+	Int16 nb_arcs;
+	Int16 nb_nodes;
+	Node *nodes;
+} Cartography;
+
+
+typedef struct spf_mission{
+    int start;
+    int end;
+    Path * path;
+    pthread_mutex_t mut;
+}spf_mission;
+
+typedef struct {
+    pthread_mutex_t mut;
+    Path mission_var;
+} mission_mtx;
 
 
 #endif /* TWIRTEE_H_ */

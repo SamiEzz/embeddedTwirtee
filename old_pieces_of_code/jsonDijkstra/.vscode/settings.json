@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "kalman.h": "c",
+        "parametres.h": "c",
+        "mat.h": "c",
+        "com.h": "c",
+        "mission_mgr.h": "c",
+        "stdlib.h": "c",
+        "dijkstra.h": "c",
+        "type_traits": "c",
+        "stdio.h": "c",
+        "math.h": "c"
+    }
+}

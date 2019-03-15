@@ -21,17 +21,17 @@
 // - locp->val, headp->val : valeur mise à jour (élimination des "outliers")
 // - X_estp : état estimé
 // - covp : matrice de covariance
+void kalman (	double dt,
+				double wl_mes, double wr_mes, 	// Vitesse des roues
+				T_loc *locp,  T_head *headp,	// Mesures capteurs
+				T_mat *X_estp, 					// Etat estimé
+				T_mat *covp);					// Matrice de covariance				// Matrice de covariance
 
-
-typedef struct kalman_param {
-	double dt,wl_mes,wr_mes;
-	T_loc *locp;
-	T_head *headp;
-	T_mat *X_estp;
-	T_mat *Pp;
-};
-void *kalman(void * k_in);
 
 #endif
 
 
+void kalman (double dt,double wl_mes, double wr_mes, 	// Vitesse des roues
+		T_loc *locp,  T_head *headp,	// Mesures capteurs
+		T_mat *X_estp, 					// Etat estimé
+		T_mat *covp);					// Matrice de covariance

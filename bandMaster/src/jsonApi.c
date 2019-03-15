@@ -1,22 +1,25 @@
 #include "../include/jsonApi.h"
+#include "../include/misc.h"
 
 
+long int expectNvalues=7000; // 6369
+//char * jsonFileName = "map.json";
+char * jsonFileName = "/home/samie/Documents/git/emebeddedTwirtee/map.json";
 
-int expectNvalues=8000;
-
-void * safe_alloc(int size){
-    errno = 0;
-    void * memblock;
-    memblock = malloc(size);
-    if(memblock==NULL){
-        (void)fprintf(stderr,"Impossible d\'allouer l\'espace dans la mémoire. \n %s.",strerror(errno));
-    }
-    else{
-        return memblock;
-    }
-}
+// void * safe_alloc(int size){
+//     errno = 0;
+//     void * memblock;
+//     memblock = malloc(size);
+//     if(memblock==NULL){
+//         (void)fprintf(stderr,"Impossible d\'allouer l\'espace dans la mémoire. \n %s.",strerror(errno));
+//     }
+//     else{
+//         return memblock;
+//     }
+// }
 
 void importData(jdata *data){
+	debug_msg("jsonApi: init import data");
 	data->base=safe_alloc(sizeof(Base));
 	data->occur=safe_alloc(sizeof(occur));
 
@@ -36,10 +39,15 @@ void importData(jdata *data){
 			fread(JSON_STRING, 1, length, f);
 		}
 		fclose(f);
-	};
+		debug_msg("jsonApi.c : Json file imported !");
+
+	}
+	else{
+		debug_msg("jsonApi.c : Couldn't open json file.");
+	}
 	initParser IP;
 	IP = getJsonToken(expectNvalues, JSON_STRING);
-
+	debug_msg("jsonApi.c : json parsed and $IP structure populated");
 	int r = IP.r;
 	jsmntok_t *t = IP.t;
 	int i = 0;
@@ -49,12 +57,15 @@ void importData(jdata *data){
 	data->occur->legs=objectOccurance(stlegId, JSON_STRING, IP);
 	data->occur->Constraints=objectOccurance(stCid, JSON_STRING, IP);
 	data->occur->waypoints=objectOccurance(stwpid, JSON_STRING, IP);
-
+	
+	debug_msg("jsonApi.c : objects counted");
 	data->base->_nd=safe_alloc(sizeof(Node)*data->occur->nodes);
 	data->base->_b=safe_alloc(sizeof(Node)*data->occur->beacons);
 	data->base->_lg=safe_alloc(sizeof(Node)*data->occur->legs);
 	data->base->_ct=safe_alloc(sizeof(Node)*data->occur->Constraints);
 	data->base->_wpt=safe_alloc(sizeof(Node)*data->occur->waypoints);
+	debug_msg("jsonApi.c : $data structure populated");
+
 	
 	for (i = 1; i < r; i++)
 	{
@@ -499,25 +510,29 @@ struct Beacons beaconsExt(char *_JSON_STRING,initParser _IP,int _i,int objRank){
 
 struct initParser getJsonToken(int expectNvalues,char * JSON_STRING){
 	initParser IP;
-	int r;
+	int r=0;
 	jsmn_parser p;
-	//jsmntok_t  t[expectNvalues]; /* We expect no more than 128 tokens */
-	jsmntok_t * t = safe_alloc(expectNvalues*sizeof(jsmntok_t)); /* We expect no more than 128 tokens */
+	//jsmntok_t  t[expectNvalues]; 
+	/* We expect no more than 128 tokens 
+	Debugger error : Value requires 128000bytes, more than max-value-size
+	*/
+	IP.t = (jsmntok_t *)safe_alloc(sizeof(jsmntok_t)*expectNvalues); /* We expect no more than 128 tokens */
 
-	jsmn_init(&p);
-	r = jsmn_parse(&p, JSON_STRING, strlen(JSON_STRING), t, r);
-    IP.r=r;
-	IP.p=p;
-	IP.t=t;
-	if (r < 0) {
+	IP.r=0;
+//	IP.t=t;
+	jsmn_init(&IP.p);
+	//IP.p=p;
+	IP.r = jsmn_parse(&IP.p, JSON_STRING, strlen(JSON_STRING), IP.t, expectNvalues);
+	
+	if (IP.r < 0) {
 		printf("Failed to parse JSON: %d\n", r);
-		//return 1;
+		//break;
 	}
 
 	/* Assume the top-level element is an object */
-	if (r < 1 || t[0].type != JSMN_OBJECT) {
+	if (IP.r < 1 || IP.t[0].type != JSMN_OBJECT) {
 		printf("Object expected\n");
-		//return 1;
+		//break;
 	}
     
     return IP;

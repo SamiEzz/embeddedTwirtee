@@ -101,7 +101,7 @@ vpath %.c $(SOURCEDIRS)
 
 
 $(PROGRAM): $(SOURCES) $(INCLUDES)
-	$(cc) -g -o $@ $(SOURCES) -l $(LIBS) $(CFLAGS)
+	$(GCC) -g -o $@ $(SOURCES) -l $(LIBS) $(CFLAGS)
 	@echo $@ "build done"  
    
 clean:

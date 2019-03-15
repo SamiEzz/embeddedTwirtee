@@ -1,14 +1,12 @@
-
-
 /**
  * @file localization.c
  * @author Guillaume PHAVORIN
  * @brief Regroupe les fonctions du process Localization de l'unit� COM
 */
+#include "../include/localization.h"
 
 #include <math.h>
 #include "../include/com.h"
-#include "../include/localization.h"
 #include "../include/mat.h"
 #include "../include/kalman.h"
 #include "../include/parametres.h"

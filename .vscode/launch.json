@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/mainRoutine",
+            "program": "${workspaceFolder}/bandMaster/bin/mysimu",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

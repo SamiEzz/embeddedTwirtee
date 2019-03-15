@@ -9,12 +9,10 @@
 #include <stdint.h>
 #include <math.h>
 #include <errno.h>
-
-void * safe_alloc(int size);
-
+#include "twirtee.h"
 
 
-#define jsonFileName "./res/map.json"
+
 
 #define CARTO_NODE_NBR	653
 #define MAX_NODE_ARCS 4 // obsolete
@@ -93,16 +91,16 @@ void * safe_alloc(int size);
 /****{ end(from twirtee.h) }****************************************************/
 
 
-typedef int8_t			Bool8;
-typedef int32_t			Bool32;
-typedef uint8_t			UInt8;
-typedef unsigned short	UInt16;
-typedef uint32_t 		UInt32;
-typedef signed short	Int16;
-typedef int32_t			Int32;
-typedef signed long		Int64;
-typedef float 			Float32;
-typedef double 			Double64;
+// typedef int8_t			Bool8;
+// typedef int32_t			Bool32;
+// typedef uint8_t			UInt8;
+// typedef unsigned short	UInt16;
+// typedef uint32_t 		UInt32;
+// typedef signed short	Int16;
+// typedef int32_t			Int32;
+// typedef signed long		Int64;
+// typedef float 			Float32;
+// typedef double 			Double64;
 
 
 #ifdef __cplusplus
@@ -177,12 +175,12 @@ int jsmn_parse(jsmn_parser *parser, const char *js, size_t len,
 
 //---------------------------------------------------
 
-typedef enum Node_type {
-	DEFAULT = 0,///< standart point
-	TARGET,		///< waypoint
-	STATION,	///< rest point
-	AUTO		///< generated point
-} Node_type;
+// typedef enum Node_type {
+// 	DEFAULT = 0,///< standart point
+// 	TARGET,		///< waypoint
+// 	STATION,	///< rest point
+// 	AUTO		///< generated point
+// } Node_type;
 
 typedef struct legtoarc{
     float x,y;
@@ -190,21 +188,21 @@ typedef struct legtoarc{
 } legtoarc;
 typedef struct Node Node, *Node_p;
 
-typedef struct Arc {
-	Node	*dest;
-	Float32 max_speed;		///< Max linear speed,		-1.f if unset
-	Float32 max_speed_up;	///< Max linear speed-up,	-1.f if unset
-}Arc;
+// typedef struct Arc {
+// 	Node	*dest;
+// 	Float32 max_speed;		///< Max linear speed,		-1.f if unset
+// 	Float32 max_speed_up;	///< Max linear speed-up,	-1.f if unset
+// }Arc;
 
 
-typedef struct Node {
-    int id;
-	Float32 x, y;
-	Node_type nt;
-	UInt8 nb_a;
-	Arc arcs[MAX_NODE_ARCS];
-    int ids[MAX_NODE_ARCS];
-}Node;
+// typedef struct Node {
+//     int id;
+// 	Float32 x, y;
+// 	Node_type nt;
+// 	UInt8 nb_a;
+// 	Arc arcs[MAX_NODE_ARCS];
+//     int ids[MAX_NODE_ARCS];
+// }Node;
 
 
 

@@ -1,0 +1,850 @@
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(yp_xdr.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0xbf4:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0004f4 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0009fc 0001a8 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 000528 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000528 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 000528 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 000528 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 00055c 0002c0 10      8  11  4
+  [ 8] .strtab           STRTAB          00000000 00081c 0001de 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000ba4 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(ypclnt.o)
+Il y a 13 en-têtes de section, débutant à l'adresse de décalage 0x2cb8:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0015f0 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 002664 000540 08   I 10   1  4
+  [ 3] .data             PROGBITS        00000000 001624 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 001624 000435 00  WA  0   0  4
+  [ 5] .rodata           PROGBITS        00000000 001624 000070 00   A  0   0  4
+  [ 6] .rel.rodata       REL             00000000 002ba4 0000a8 08   I 10   5  4
+  [ 7] .rodata.str1.4    PROGBITS        00000000 001694 000365 01 AMS  0   0  4
+  [ 8] .note.GNU-stack   PROGBITS        00000000 0019f9 000000 00      0   0  1
+  [ 9] .ARM.attributes   ARM_ATTRIBUTES  00000000 0019f9 000031 00      0   0  1
+  [10] .symtab           SYMTAB          00000000 001a2c 000870 10     11  76  4
+  [11] .strtab           STRTAB          00000000 00229c 0003c8 00      0   0  1
+  [12] .shstrtab         STRTAB          00000000 002c4c 00006b 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(ypupdate_xdr.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x28c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 00009c 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00020c 000030 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 0000d0 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0000d0 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 0000d0 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 0000d0 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 000104 0000c0 10      8   7  4
+  [ 8] .strtab           STRTAB          00000000 0001c4 000048 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 00023c 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_subr.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0xe3c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0007b8 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000c2c 0001b0 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 0007ec 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0007ec 000805 00  WA  0   0  4
+  [ 5] .rodata.str1.4    PROGBITS        00000000 0007ec 00001d 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 000809 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000809 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 00083c 0002d0 10      9  22  4
+  [ 9] .strtab           STRTAB          00000000 000b0c 00011d 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000ddc 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_local_names.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x974:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000350 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0007dc 000138 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000384 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000384 00100d 00  WA  0   0  4
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000384 000077 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 0003fb 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 0003fb 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 00042c 000280 10      9  21  4
+  [ 9] .strtab           STRTAB          00000000 0006ac 000130 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000914 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_free.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x470:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0000c8 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0003a8 000078 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 0000fc 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0000fc 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 0000fc 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 0000fc 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 000130 0001c0 10      8  16  4
+  [ 8] .strtab           STRTAB          00000000 0002f0 0000b5 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000420 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_file.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x5f4:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000178 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00050c 000088 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 0001ac 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0001ac 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 0001ac 000020 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 0001cc 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 0001cc 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000200 000230 10      9  23  4
+  [ 9] .strtab           STRTAB          00000000 000430 0000dc 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000594 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_print.o)
+Il y a 13 en-têtes de section, débutant à l'adresse de décalage 0x1f08:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000cf8 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0016f4 000768 08   I 10   1  4
+  [ 3] .data             PROGBITS        00000000 000d2c 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000d2c 000000 00  WA  0   0  1
+  [ 5] .rodata           PROGBITS        00000000 000d2c 000020 00   A  0   0  4
+  [ 6] .rel.rodata       REL             00000000 001e5c 000040 08   I 10   5  4
+  [ 7] .rodata.str1.4    PROGBITS        00000000 000d4c 000514 01 AMS  0   0  4
+  [ 8] .note.GNU-stack   PROGBITS        00000000 001260 000000 00      0   0  1
+  [ 9] .ARM.attributes   ARM_ATTRIBUTES  00000000 001260 000031 00      0   0  1
+  [10] .symtab           SYMTAB          00000000 001294 000360 10     11  36  4
+  [11] .strtab           STRTAB          00000000 0015f4 0000fe 00      0   0  1
+  [12] .shstrtab         STRTAB          00000000 001e9c 00006b 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_error.o)
+Il y a 12 en-têtes de section, débutant à l'adresse de décalage 0xb64:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000158 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000a74 000088 08   I  9   1  4
+  [ 3] .data             PROGBITS        00000000 00018c 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 00018c 000401 00  WA  0   0  4
+  [ 5] .rodata           PROGBITS        00000000 00018c 000588 00   A  0   0  4
+  [ 6] .rodata.str1.4    PROGBITS        00000000 000714 000013 01 AMS  0   0  4
+  [ 7] .note.GNU-stack   PROGBITS        00000000 000727 000000 00      0   0  1
+  [ 8] .ARM.attributes   ARM_ATTRIBUTES  00000000 000727 000031 00      0   0  1
+  [ 9] .symtab           SYMTAB          00000000 000758 000270 10     10  27  4
+  [10] .strtab           STRTAB          00000000 0009c8 0000aa 00      0   0  1
+  [11] .shstrtab         STRTAB          00000000 000afc 000067 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_call.o)
+Il y a 12 en-têtes de section, débutant à l'adresse de décalage 0x236c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 001424 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 001e1c 0004e8 08   I  9   1  4
+  [ 3] .data             PROGBITS        00000000 001458 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 001458 000088 00  WA  0   0  4
+  [ 5] .rodata           PROGBITS        00000000 001458 000010 00   A  0   0  4
+  [ 6] .rodata.str1.4    PROGBITS        00000000 001468 000038 01 AMS  0   0  4
+  [ 7] .note.GNU-stack   PROGBITS        00000000 0014a0 000000 00      0   0  1
+  [ 8] .ARM.attributes   ARM_ATTRIBUTES  00000000 0014a0 000031 00      0   0  1
+  [ 9] .symtab           SYMTAB          00000000 0014d4 0005b0 10     10  39  4
+  [10] .strtab           STRTAB          00000000 001a84 000398 00      0   0  1
+  [11] .shstrtab         STRTAB          00000000 002304 000067 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_lookup.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0xc84:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000510 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00088c 0003a0 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000544 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000544 000000 00  WA  0   0  1
+  [ 5] .rodata           PROGBITS        00000000 000544 000008 00   A  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 00054c 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 00054c 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000580 000210 10      9  15  4
+  [ 9] .strtab           STRTAB          00000000 000790 0000fc 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000c2c 000058 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_table.o)
+Il y a 12 en-têtes de section, débutant à l'adresse de décalage 0x1bd0:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 001084 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 001728 000440 08   I  9   1  4
+  [ 3] .data             PROGBITS        00000000 0010b8 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0010b8 000000 00  WA  0   0  1
+  [ 5] .rodata           PROGBITS        00000000 0010b8 000008 00   A  0   0  4
+  [ 6] .rodata.str1.4    PROGBITS        00000000 0010c0 000001 01 AMS  0   0  4
+  [ 7] .note.GNU-stack   PROGBITS        00000000 0010c1 000000 00      0   0  1
+  [ 8] .ARM.attributes   ARM_ATTRIBUTES  00000000 0010c1 000031 00      0   0  1
+  [ 9] .symtab           SYMTAB          00000000 0010f4 000400 10     10  25  4
+  [10] .strtab           STRTAB          00000000 0014f4 000231 00      0   0  1
+  [11] .shstrtab         STRTAB          00000000 001b68 000067 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_xdr.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x1184:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000890 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000e2c 000308 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 0008c4 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0008c4 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 0008c4 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 0008c4 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0008f8 000390 10      8  31  4
+  [ 8] .strtab           STRTAB          00000000 000c88 0001a4 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 001134 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_server.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x374:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 00012c 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0002f4 000030 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 000160 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000160 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 000160 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 000160 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 000194 000110 10      8  11  4
+  [ 8] .strtab           STRTAB          00000000 0002a4 000050 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000324 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_ping.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x368:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000130 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0002e0 000038 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 000164 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000164 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 000164 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 000164 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 000198 0000f0 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000288 000056 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000318 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_checkpoint.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x3c4:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000164 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000334 000040 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 000198 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000198 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 000198 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 000198 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0001cc 000100 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 0002cc 000067 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000374 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_mkdir.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x28c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000098 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00021c 000020 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 0000cc 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0000cc 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 0000cc 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 0000cc 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 000100 0000d0 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 0001d0 000049 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 00023c 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_rmdir.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x234:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000068 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0001cc 000018 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 00009c 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 00009c 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 00009c 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 00009c 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0000d0 0000c0 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000190 00003c 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 0001e4 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_getservlist.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x6b4:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000388 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00059c 0000c8 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 0003bc 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0003bc 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 0003bc 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 0003bc 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0003f0 000130 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000520 000079 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000664 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_verifygroup.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x38c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0000f0 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0002ec 000040 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000124 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000124 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000124 00000c 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 000130 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000130 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000164 000120 10      9  10  4
+  [ 9] .strtab           STRTAB          00000000 000284 000066 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 00032c 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_ismember.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x6f8:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000390 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0005d0 0000c8 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 0003c4 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0003c4 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 0003c4 00000c 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 0003d0 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 0003d0 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000404 000150 10      9  12  4
+  [ 9] .strtab           STRTAB          00000000 000554 00007c 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000698 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_addmember.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x62c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 00020c 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000524 0000a8 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000240 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000240 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000240 000066 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 0002a6 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 0002a6 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 0002d8 000190 10      9  11  4
+  [ 9] .strtab           STRTAB          00000000 000468 0000ba 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 0005cc 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_util.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x458:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0001b8 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0003a8 000060 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 0001ec 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0001ec 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 0001ec 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 0001ec 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 000220 000120 10      8  11  4
+  [ 8] .strtab           STRTAB          00000000 000340 000066 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000408 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_removemember.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x554:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000200 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000474 000080 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000234 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000234 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000234 00000e 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 000242 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000242 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000274 000170 10      9  10  4
+  [ 9] .strtab           STRTAB          00000000 0003e4 000090 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 0004f4 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_creategroup.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x5d0:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0001f0 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0004d0 0000a0 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000224 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000224 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000224 00000c 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 000230 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000230 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000264 0001a0 10      9  10  4
+  [ 9] .strtab           STRTAB          00000000 000404 0000ca 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000570 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_destroygroup.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x38c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0000f0 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0002ec 000040 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000124 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000124 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000124 00000c 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 000130 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000130 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000164 000120 10      9  10  4
+  [ 9] .strtab           STRTAB          00000000 000284 000067 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 00032c 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_print_group_entry.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0xb84:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000540 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00093c 0001e8 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000574 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000574 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000574 000181 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 0006f5 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 0006f5 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000728 000170 10      9  10  4
+  [ 9] .strtab           STRTAB          00000000 000898 0000a2 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000b24 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_domain_of.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x2a0:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000050 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000218 000028 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000084 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000084 000401 00  WA  0   0  4
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000084 000006 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 00008a 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 00008a 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 0000bc 000120 10      9  14  4
+  [ 9] .strtab           STRTAB          00000000 0001dc 00003b 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000240 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_domain_of_r.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x30c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0000c0 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00026c 000040 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 0000f4 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0000f4 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 0000f4 000002 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 0000f6 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 0000f6 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000128 000100 10      9  10  4
+  [ 9] .strtab           STRTAB          00000000 000228 000042 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 0002ac 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_modify.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x484:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000180 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0003dc 000058 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 0001b4 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0001b4 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 0001b4 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 0001b4 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0001e8 000140 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000328 0000b3 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000434 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_remove.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x2ec:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0000a8 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00026c 000030 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 0000dc 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0000dc 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 0000dc 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 0000dc 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 000110 0000f0 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000200 00006a 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 00029c 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_add.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x47c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 00017c 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0003d4 000058 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 0001b0 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0001b0 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 0001b0 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 0001b0 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0001e4 000140 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000324 0000b0 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 00042c 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_defaults.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x1500:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 0009bc 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000f08 000598 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 0009f0 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 0009f0 000000 00  WA  0   0  1
+  [ 5] .rodata.str1.4    PROGBITS        00000000 0009f0 00007a 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 000a6a 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000a6a 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000a9c 000350 10      9  34  4
+  [ 9] .strtab           STRTAB          00000000 000dec 00011c 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 0014a0 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_findserv.o)
+Il y a 12 en-têtes de section, débutant à l'adresse de décalage 0x85c:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000454 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00075c 000098 08   I  9   1  4
+  [ 3] .data             PROGBITS        00000000 000488 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000488 000000 00  WA  0   0  1
+  [ 5] .rodata           PROGBITS        00000000 000488 000008 00   A  0   0  4
+  [ 6] .rodata.str1.4    PROGBITS        00000000 000490 000005 01 AMS  0   0  4
+  [ 7] .note.GNU-stack   PROGBITS        00000000 000495 000000 00      0   0  1
+  [ 8] .ARM.attributes   ARM_ATTRIBUTES  00000000 000495 000031 00      0   0  1
+  [ 9] .symtab           SYMTAB          00000000 0004c8 0001d0 10     10  13  4
+  [10] .strtab           STRTAB          00000000 000698 0000c4 00      0   0  1
+  [11] .shstrtab         STRTAB          00000000 0007f4 000067 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_callback.o)
+Il y a 11 en-têtes de section, débutant à l'adresse de décalage 0x1304:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000820 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 00100c 000298 08   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000854 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000854 00001c 00  WA  0   0  4
+  [ 5] .rodata.str1.4    PROGBITS        00000000 000854 0000d4 01 AMS  0   0  4
+  [ 6] .note.GNU-stack   PROGBITS        00000000 000928 000000 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000928 000031 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 00095c 000440 10      9  22  4
+  [ 9] .strtab           STRTAB          00000000 000d9c 00026d 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 0012a4 00005f 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_clone_dir.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x384:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000140 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0002dc 000058 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 000174 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000174 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 000174 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 000174 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0001a8 0000e0 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000288 000053 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000334 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_clone_obj.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x388:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000140 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0002d8 000060 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 000174 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000174 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 000174 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 000174 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0001a8 0000e0 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000288 00004d 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000338 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nis_clone_res.o)
+Il y a 10 en-têtes de section, débutant à l'adresse de décalage 0x380:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000140 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0002d8 000058 08   I  7   1  4
+  [ 3] .data             PROGBITS        00000000 000174 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000174 000000 00  WA  0   0  1
+  [ 5] .note.GNU-stack   PROGBITS        00000000 000174 000000 00      0   0  1
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 000174 000031 00      0   0  1
+  [ 7] .symtab           SYMTAB          00000000 0001a8 0000e0 10      8   8  4
+  [ 8] .strtab           STRTAB          00000000 000288 00004d 00      0   0  1
+  [ 9] .shstrtab         STRTAB          00000000 000330 000050 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Fichier: /usr/lib/arm-linux-gnueabihf/libnsl.a(nss-default.o)
+Il y a 12 en-têtes de section, débutant à l'adresse de décalage 0x6e0:
+
+En-têtes de section :
+  [Nr] Nom               Type            Adr      Décala.Taille ES Fan LN Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000260 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0005d0 0000a8 08   I  9   1  4
+  [ 3] .data             PROGBITS        00000000 000294 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          00000000 000294 000008 00  WA  0   0  4
+  [ 5] .rodata           PROGBITS        00000000 000294 000080 00   A  0   0  4
+  [ 6] .rodata.str1.4    PROGBITS        00000000 000314 00001d 01 AMS  0   0  4
+  [ 7] .note.GNU-stack   PROGBITS        00000000 000331 000000 00      0   0  1
+  [ 8] .ARM.attributes   ARM_ATTRIBUTES  00000000 000331 000031 00      0   0  1
+  [ 9] .symtab           SYMTAB          00000000 000364 0001e0 10     10  20  4
+  [10] .strtab           STRTAB          00000000 000544 00008c 00      0   0  1
+  [11] .shstrtab         STRTAB          00000000 000678 000067 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)

@@ -6,13 +6,12 @@
  ******************************************************************************
  */
 
-#include "mission_mgr.h"
-
 #include <math.h>
 #include <stdlib.h>
 #include "../include/com.h"
 #include "../include/mission_mgr.h"
 #include "../include/dijkstra.h"
+
 
 
 /**

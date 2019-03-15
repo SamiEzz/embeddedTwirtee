@@ -8,12 +8,12 @@
 //////////////////////////////////////////////////////////
 
 
-#include "../include/header.h"
-#include "../include/config.h"
 #include "../include/jsonApi.h"
 #include "../include/dijkstra.h"
 #include "../include/spf_thread.h"
 #include "../include/threads_mgr.h"
+#include "../include/misc.h"
+
 
 
 #include <stdlib.h>
@@ -23,6 +23,7 @@
 #include <errno.h>
 
 #define outputFile "output.nodes"
+
 
 void* get_mission_thread (void * mission_se)
 {
@@ -46,6 +47,7 @@ void* get_mission_thread (void * mission_se)
 }
  
 void *spf_thread(void *mission_se){
+    debug_msg("spf_thread.c : starting thread");
     spf_mission * mission =  mission_se;
     int src,dest;
     // printf("%s , %s , %d",argv[0],argv[1],argc);
@@ -61,6 +63,7 @@ void *spf_thread(void *mission_se){
     *  and store the size of each element in data->occur.
     *  (1)-Check "struct jdata" in jsonApi.h
     */
+    debug_msg("spf_thread.c : import data");
 	importData(data);
     
     //=====================[TEST DIJKSTRA]=====================
