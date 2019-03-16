@@ -59,27 +59,58 @@
 #define stlegEndz "legEndz"
 
 /****{ start(from twirtee.h)}****************************************************/
-#define false 0
-#define true 1
-#define INVALID_DATA 0
-#define VALID_DATA 1
 
-//#define GPS_NOISE_SCALE			0.0	///< default scale is 1.0
-//#define COMPASS_NOISE_SCALE		0.0	///< default scale is 1.0
-//#define ODOMETRY_NOISE_SCALE	0.0	///< default scale is 1.0
-
-#define MAX_CARTO_NODES 1000
-#define MAX_NODE_ARCS 4
-
+#ifndef  false
+#define false			0
+#endif 
+#ifndef  true
+#define true			1
+#endif 
+#ifndef  FALSE
+#define FALSE			0
+#endif 
+#ifndef  TRUE
+#define TRUE			1
+#endif 
+#ifndef  INVALID_DATA
+#define INVALID_DATA	0
+#endif 
+#ifndef  VALID_DATA
+#define VALID_DATA		1
+#endif 
+#ifndef  GPS_NOISE_SCALE
+#define GPS_NOISE_SCALE			0.0	///< default scale is 1.0
+#endif 
+#ifndef  COMPASS_NOISE_SCALE
+#define COMPASS_NOISE_SCALE		0.0	///< default scale is 1.0
+#endif 
+#ifndef  ODOMETRY_NOISE_SCALE
+#define ODOMETRY_NOISE_SCALE	0.0	///< default scale is 1.0
+#endif 
+#ifndef  MAX_CARTO_NODES
+#define MAX_CARTO_NODES	1000
+#endif 
+#ifndef  MAX_NODE_ARCS
+#define MAX_NODE_ARCS	4
+#endif 
+#ifndef  PI
 #define PI 3.1415927f
-#ifndef M_PI
+#endif 
+#ifndef  M_PI
 #define M_PI 3.14159265358979323846264338328
 #endif
-#define POINTDIST(A, B)                                                                            \
-    (float)(sqrt((((A).x - (B).x) * ((A).x - (B).x)) + (((A).y - (B).y) * ((A).y - (B).y))))
-#define ABS(A) ((A) >= 0 ? (A) : -(A))
-#define SQR(x) ((x) * (x))
-#define _MAT_ (double(*)[])
+#ifndef  POINTDIST
+#define POINTDIST(A,B)  (float)(sqrt((((A).x-(B).x)*((A).x-(B).x)) + (((A).y-(B).y)*((A).y-(B).y))))
+#endif 
+#ifndef  ABS
+#define ABS(A)			((A) >= 0 ? (A) : -(A))
+#endif 
+#ifndef  SQR
+#define SQR(x)			((x)*(x))
+#endif 
+#ifndef  _MAT_
+#define _MAT_ (double (*)[])
+#endif 
 
 /****{ end(from twirtee.h) }****************************************************/
 
