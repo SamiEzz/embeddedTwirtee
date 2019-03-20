@@ -47,6 +47,7 @@ void get_ref_speed(Position setpoint, Position prev_setpoint, float* vr, float* 
 	speed_W.y = (float)((setpoint.y - prev_setpoint.y)*CALL_PER_SEC);
 	speed_W.theta = (float)((setpoint.theta - prev_setpoint.theta)*CALL_PER_SEC);
 
+
 	change_coordinate_system(&speed_R, speed_W, matrix);
 
 	*vr = (float)sqrt((speed_R.x*speed_R.x) + (speed_R.y*speed_R.y));

@@ -54,7 +54,7 @@ int main() {
     simu->compass = (T_head*)safe_alloc(sizeof(T_head));
     simu->gps = (T_loc*)safe_alloc(sizeof(T_loc));
     simu->odometry = (T_odo*)safe_alloc(sizeof(T_odo));
-    *simu->odometry = (T_odo){0.0, 0.0, 0.0f, 0.0f, 0, 0, INVALID_DATA};
+    *simu->odometry = (T_odo){0.0, 0.0, 0.0f, 0.0f, 0, 0, VALID_DATA};
     simu->end_request = 0;
     simu->speed_gui = (Speed){0.0f, 0.0f, VALID_DATA};
     simu->speed_out = (Speed){0.0f, 0.0f, VALID_DATA};
@@ -159,7 +159,7 @@ int main() {
         // start_thread(&t_simu, NULL, update_simulation, simu);
         // end_thread(t_simu, NULL);
 
-
+        
         // fprintf(f_tracking, "\n%d,%f,%f,%f", iterate, simu->kalm_res.x, simu->kalm_res.y,
         //         simu->kalm_res.theta);
     }

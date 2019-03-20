@@ -58,7 +58,7 @@ void* spf_thread(void* mission_se) {
      */
     debug_msg("spf_thread.c : import data");
     importData(data);
-
+    
     //=====================[TEST DIJKSTRA]=====================
     Path trajectorytest;
     Cartography* graphtest = safe_alloc(sizeof(Cartography));
@@ -80,7 +80,16 @@ void* spf_thread(void* mission_se) {
      */
     mission->path = safe_alloc(sizeof(Path));
     dijkstra(graphtest, src, dest, mission->path);
-
+    //def_speed_()
+    
+    mission->path->def_max_speed=data->base->_c.vdef;
+    mission->path->def_max_speed_up =data->base->_c.adef;
+    for(int p=0;p<mission->path->size;p++){
+        for(int s=0;s<mission->path->dest[p]->nb_a;s++){
+            mission->path->dest[p]->arcs[s].max_speed=mission->path->def_max_speed;
+            mission->path->dest[p]->arcs[s].max_speed_up=mission->path->def_max_speed_up;
+        }
+    }
     //=================[ PRINT THE SHORTEST PATH ]=================
     /*
     for(int i=0;i<trajectorytest.size;i++){

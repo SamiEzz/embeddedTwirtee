@@ -35,6 +35,7 @@ static void compute_command(double v_cons, double w_cons, double *wl_cons, doubl
         Axis change and that's why this interface is needed : change only for Kalman call time the
    referential.
 */
+
 static void kalman_interface(T_head compass, T_loc gps, T_odo odometry, Position* pos) {
     static double estimation_pos[3][1];
     static T_mat estimation = {3, 1, _MAT_ estimation_pos};
