@@ -120,11 +120,12 @@ int main() {
     end_thread(t_get_mission, NULL);
 
     // short path first thread
-    // spf_thread(mission_se);
-    start_thread(&t_spf, NULL, spf_thread, mission_se);
-    // wait for thread to execute
-    end_thread(t_spf, NULL);
+    spf_thread(mission_se);
+    // start_thread(&t_spf, NULL, spf_thread, mission_se);
+    // // wait for thread to execute
+    // end_thread(t_spf, NULL);
 
+    debug_msg("main.c : Mission computed !");
     //simu->pos_sp.x = mission_se->path->dest[1]->x;
     //simu->pos_sp.y = mission_se->path->dest[1]->y;
     //simu->kalm_res.x = mission_se->path->dest[0]->x;
