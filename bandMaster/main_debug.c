@@ -54,7 +54,7 @@ int main() {
     simu->compass = (T_head*)safe_alloc(sizeof(T_head));
     simu->gps = (T_loc*)safe_alloc(sizeof(T_loc));
     simu->odometry = (T_odo*)safe_alloc(sizeof(T_odo));
-    *simu->odometry = (T_odo){0.0, 0.0, 0.0f, 0.0f, 0, 0, VALID_DATA};
+    *simu->odometry = (T_odo){0.0, 0.0, 0.0f, 0.0f, 0, 0, INVALID_DATA};
     simu->end_request = 0;
     simu->speed_gui = (Speed){0.0f, 0.0f, VALID_DATA};
     simu->speed_out = (Speed){0.0f, 0.0f, VALID_DATA};
@@ -126,12 +126,17 @@ int main() {
     //simu->kalm_res.x = mission_se->path->dest[0]->x;
     //simu->kalm_res.y = mission_se->path->dest[0]->y;
     //
+    mission_se->path->dest[0]->x=0;
+    mission_se->path->dest[0]->y=0;
+    mission_se->path->dest[1]->x=100;
+    mission_se->path->dest[1]->y=100;
+    
     simu->p->x = mission_se->path->dest[0]->x;
     simu->p->y = mission_se->path->dest[0]->y;
     //
 
     simu->odometry = (T_odo*)safe_alloc(sizeof(T_odo));
-    int max_iterations = 500;
+    int max_iterations = 1000;
 
     // fprintf(f_tracking, "\nMission : id,x,y \n");
     // for (int i = 0; i < mission_se->path->size; i++) {
@@ -159,7 +164,7 @@ int main() {
         // start_thread(&t_simu, NULL, update_simulation, simu);
         // end_thread(t_simu, NULL);
 
-        
+
         // fprintf(f_tracking, "\n%d,%f,%f,%f", iterate, simu->kalm_res.x, simu->kalm_res.y,
         //         simu->kalm_res.theta);
     }

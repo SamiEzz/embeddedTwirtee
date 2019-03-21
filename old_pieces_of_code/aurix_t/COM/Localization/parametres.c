@@ -3,7 +3,7 @@
 //  (c) IRT Saint-Exupery
 //
 //----------------------------------------------------------------------
-// Fichier de définition des données utilisées par le filtre de Kalman
+// Fichier de dï¿½finition des donnï¿½es utilisï¿½es par le filtre de Kalman
 //======================================================================
 
 #include "com.h"
@@ -12,7 +12,7 @@
 
 
 
-// Paramètres relatifs au robot
+// Paramï¿½tres relatifs au robot
 
 const T_robot_parameters K_rp = {
 	0.07, 	// Diametre de la roue gauche en m
@@ -36,20 +36,20 @@ const T_robot_parameters K_rp = {
 
     % Covariance du bruit de modele (eric)
     % -----------------------------
-    % (Nota: dans l'article de Sasiadeck [1], la matrice Q dépend du temps.
-    % Une formulation de la matrice de covariance est donnée dans l'article
-    % de C. Ming Wang [2], sous une forme discrétisée (la matrice est mise
-    % à jour tous les delta t).
-    % Une autre formulation est donnée dans [3]. Dans cette formulation, la
-    % matrice est exprimée explicitement ("closed-form") pour différentes
-    % "portions" de chemin, droits ou courbe. Le code matlab est donné en
+    % (Nota: dans l'article de Sasiadeck [1], la matrice Q dï¿½pend du temps.
+    % Une formulation de la matrice de covariance est donnï¿½e dans l'article
+    % de C. Ming Wang [2], sous une forme discrï¿½tisï¿½e (la matrice est mise
+    % ï¿½ jour tous les delta t).
+    % Une autre formulation est donnï¿½e dans [3]. Dans cette formulation, la
+    % matrice est exprimï¿½e explicitement ("closed-form") pour diffï¿½rentes
+    % "portions" de chemin, droits ou courbe. Le code matlab est donnï¿½ en
     % annexe de l'article.
-    % Une autre forme explicite est donnée dans [4] (avec l'auteur de [3]).
-    % Les auteurs montrent le caractère incorrect du modèle traditionnel.
+    % Une autre forme explicite est donnï¿½e dans [4] (avec l'auteur de [3]).
+    % Les auteurs montrent le caractï¿½re incorrect du modï¿½le traditionnel.
     % On trouve aussi
     % Q=[ \sigma r_r Vr, \sigma rl V ; \sigma lr V, \sigma ll Vl]
     % avec V = (Vl+Vr)/2
-    % d'où Qk = Q \Delta_t
+    % d'oï¿½ Qk = Q \Delta_t
 
 */
 
@@ -64,7 +64,7 @@ const T_mat Q = {2,2, _MAT_ Qd };
 
 
 const T_measure_noise K_mn = {
-	0.01, 						// Ecart type de la mesure en position selon x
+	 0.01, 						// Ecart type de la mesure en position selon x
     0.01, 						// Ecart type de la mesure en position selon y
     0.087 						// Ecart type de la mesure cap
 };
@@ -94,7 +94,7 @@ const T_mat RGPSCOMP = {3,3, _MAT_ RGPSCOMPd };
 // --------------------------
 // Ecart type sur les mesures
 // --------------------------
-// Attention, ces données ne sont pas nécessairement strictement
-// égales à celles données dans la matrice de covariance utilisée par
+// Attention, ces donnï¿½es ne sont pas nï¿½cessairement strictement
+// ï¿½gales ï¿½ celles donnï¿½es dans la matrice de covariance utilisï¿½e par
 // le filtre de Kalman.
 

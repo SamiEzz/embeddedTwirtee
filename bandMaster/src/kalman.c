@@ -138,7 +138,8 @@ void kalman(double dt, double wl_mes, double wr_mes, // Vitesse des roues mesur�
 
     // Vérification de la cohérence des mesures
     // L'indicateur de validité est mis à jour directement.
-    check_mes(X_estp, Pp, locp, headp);
+    
+    //check_mes(X_estp, Pp, locp, headp);
 
     if (headp->val && !locp->val) {
         //  --------------------------------------------------

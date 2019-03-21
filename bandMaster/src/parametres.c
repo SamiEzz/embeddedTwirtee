@@ -58,9 +58,9 @@ const double Qd[2][2] = {{0.01, 0}, {0, 0.01}};
 const T_mat Q = {2, 2, _MAT_ Qd};
 
 const T_measure_noise K_mn = {
-    0.01, // Ecart type de la mesure en position selon x
-    0.01, // Ecart type de la mesure en position selon y
-    0.087 // Ecart type de la mesure cap
+    0.1, // Ecart type de la mesure en position selon x
+    0.1, // Ecart type de la mesure en position selon y
+    0.87 // Ecart type de la mesure cap
 };
 
 // -----------------------------------------------------
