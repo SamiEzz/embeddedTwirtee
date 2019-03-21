@@ -49,6 +49,10 @@ int main() {
     //          Create shared variables             #
     //###############################################
     // Simulation
+    int max_iterations = 20000;
+    int hach=0;
+    int max_hach=100;
+
     simu_param simu[1];
     simu->p = (Position*)safe_alloc(sizeof(Position));
     simu->compass = (T_head*)safe_alloc(sizeof(T_head));
@@ -128,15 +132,29 @@ int main() {
     //
     mission_se->path->dest[0]->x=0;
     mission_se->path->dest[0]->y=0;
-    mission_se->path->dest[1]->x=0;
-    mission_se->path->dest[1]->y=100;
+
+    // mission_se->path->dest[1]->x=100;
+    // mission_se->path->dest[1]->y=100;
+    
+    // mission_se->path->dest[2]->x=0;
+    // mission_se->path->dest[2]->y=100;
+    
+    // mission_se->path->dest[3]->x=100;
+    // mission_se->path->dest[3]->y=0;
+    
+    // mission_se->path->dest[4]->x=50;
+    // mission_se->path->dest[4]->y=150;
+    
+    // mission_se->path->dest[5]->x=0;
+    // mission_se->path->dest[5]->y=0;
+    
+    
 
     simu->p->x = mission_se->path->dest[0]->x;
     simu->p->y = mission_se->path->dest[0]->y;
     //
 
     simu->odometry = (T_odo*)safe_alloc(sizeof(T_odo));
-    int max_iterations = 1000;
 
     fprintf(f_tracking, "\nMission : id,x,y \n");
     for (int i = 0; i < mission_se->path->size; i++) {
@@ -164,9 +182,12 @@ int main() {
         // start_thread(&t_simu, NULL, update_simulation, simu);
         // end_thread(t_simu, NULL);
 
-        
-        fprintf(f_tracking, "\n%d,%f,%f,%f", iterate, simu->kalm_res.x, simu->kalm_res.y,
-                 simu->kalm_res.theta);
+        if(hach==max_hach){
+            hach=0;
+            fprintf(f_tracking, "\n%d,%f,%f,%f", iterate, simu->kalm_res.x, simu->kalm_res.y,
+                     simu->kalm_res.theta);
+        }
+        hach++;
     }
     //###############################################
     //              show results                    #

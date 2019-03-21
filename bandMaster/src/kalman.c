@@ -138,8 +138,14 @@ void kalman(double dt, double wl_mes, double wr_mes, // Vitesse des roues mesur�
 
     // Vérification de la cohérence des mesures
     // L'indicateur de validité est mis à jour directement.
-    
+    /**
+     * @brief Construct a new check mes object
+     * cette fonction bloque l'avancement du robot
+     * 
+     */ 
     //check_mes(X_estp, Pp, locp, headp);
+
+
 
     if (headp->val && !locp->val) {
         //  --------------------------------------------------
