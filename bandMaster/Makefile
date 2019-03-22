@@ -44,7 +44,7 @@ CC=gcc
 
 RM=/bin/rm
 
-PROGRAM = ./bin/mysimu
+PROGRAM = ./bin/twirtee.bin
 
 SOURCES = main.c 
 SOURCES +=./src/kanayama.c

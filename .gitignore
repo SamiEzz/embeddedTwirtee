@@ -1,3 +1,4 @@
 *.o
-./output_txt/*.*
-
+./bandMaster/output_txt/*.*
+*.bin
+*.ipch
