@@ -1,9 +1,51 @@
 #include "../include/jsonApi.h"
 #include "../include/misc.h"
 
+char* stBeacons= "Beacons";
+char* stBeaconid= "Beaconid";
+char* stBeaconx= "Beaconx";
+char* stBeacony= "Beacony";
+char* stBeaconz= "Beaconz";
+char* stnodes= "nodes";
+char* stNodeId= "nodId";
+char* stnodx= "nodx";
+char* stnody= "nody";
+char* stnodeNbA= "nodeNbA";
+char* stnodeArc1= "nodeArc1";
+char* stnodeArc2= "nodeArc2";
+char* stnodeArc3= "nodeArc3";
+char* stnodeArc4= "nodeArc4";
+char* stConstants= "Constants";
+char* stvdef= "VDEF";
+char* stadef= "ADEF";
+char* stv1= "V1";
+char* stv2= "V2";
+char* stConstraints= "Constraints";
+char* stCid= "Cid";
+char* stCvalue= "Cvalue";
+char* stCname= "Cname";
+char* stCtype= "Ctype";
+char* stCx= "Cx";
+char* stCy= "Cy";
+char* stCz= "Cz";
+char* stWaypoints= "Waypoints";
+char* stwpid= "wpid";
+char* stwptype= "wptype";
+char* stwpx= "wpx";
+char* stwpy= "wpy";
+char* stwpz= "wpz";
+char* stLegs= "Legs";
+char* stlegId= "legId";
+char* stlegLength= "legLength";
+char* stlegStartx= "legStartx";
+char* stlegStarty= "legStarty";
+char* stlegStartz= "legStartz";
+char* stlegEndx= "legEndx";
+char* stlegEndy= "legEndy";
+char* stlegEndz= "legEndz";
 long int expectNvalues = 7000; // 6369
 // char * jsonFileName = "map.json";
-char* jsonFileName = "/home/samie/Documents/git/emebeddedTwirtee/map.json";
+char* jsonFileName = "map.json";
 
 // void * safe_alloc(int size){
 //     errno = 0;
