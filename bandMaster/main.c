@@ -49,11 +49,11 @@ int main() {
     //          Create shared variables             #
     //###############################################
     // Simulation
-    int max_iterations = 20000;
-    int hach=0;
-    int max_hach=100;
-
     simu_param simu[1];
+    simu->max_iterations = 30000;
+    simu->hach=0;
+    simu->max_hach=100;
+
     simu->p = (Position*)safe_alloc(sizeof(Position));
     simu->compass = (T_head*)safe_alloc(sizeof(T_head));
     simu->gps = (T_loc*)safe_alloc(sizeof(T_loc));
@@ -63,15 +63,6 @@ int main() {
     simu->speed_gui = (Speed){0.0f, 0.0f, VALID_DATA};
     simu->speed_out = (Speed){0.0f, 0.0f, VALID_DATA};
 
-    // 1995.581055,-199.699997
-    simu->pos_sp.x = 0;
-    simu->pos_sp.y = 0;
-    simu->kalm_res.x = 0;
-    simu->kalm_res.y = 0;
-    //
-    simu->p->x = 0;
-    simu->p->y = 0;
-    simu->p->theta = 0;
     //
     simu->odometry = (T_odo*)safe_alloc(sizeof(T_odo));
 
@@ -130,8 +121,8 @@ int main() {
     //simu->kalm_res.x = mission_se->path->dest[0]->x;
     //simu->kalm_res.y = mission_se->path->dest[0]->y;
     //
-    mission_se->path->dest[0]->x=0;
-    mission_se->path->dest[0]->y=0;
+    // mission_se->path->dest[0]->x=0;
+    // mission_se->path->dest[0]->y=0;
 
     // mission_se->path->dest[1]->x=100;
     // mission_se->path->dest[1]->y=100;
@@ -149,6 +140,17 @@ int main() {
     // mission_se->path->dest[5]->y=0;
     
     
+    simu->pos_sp.x =  mission_se->path->dest[0]->x;
+    simu->pos_sp.y = mission_se->path->dest[0]->y;
+    simu->kalm_res.x = mission_se->path->dest[0]->x;
+    simu->kalm_res.y = mission_se->path->dest[0]->y;
+    //
+    simu->p->x = mission_se->path->dest[0]->x;
+    simu->p->y = mission_se->path->dest[0]->y;
+    simu->p->theta =0;
+
+    simu->p->x = mission_se->path->dest[0]->x;
+    simu->p->y = mission_se->path->dest[0]->y;
 
     simu->p->x = mission_se->path->dest[0]->x;
     simu->p->y = mission_se->path->dest[0]->y;
@@ -162,7 +164,7 @@ int main() {
                 mission_se->path->dest[i]->x, mission_se->path->dest[i]->y);
     }
     // fprintf(f_tracking, "\niteration,x,y,theta");
-    for (int iterate = 0; iterate < max_iterations; iterate++) {
+    for (int iterate = 0; iterate < simu->max_iterations; iterate++) {
         // com_localize(compass, gps, odometry, &kalman_position, &Q);		///< Kalman call for
         // better position estimation from noised data
         com_localize(*simu->compass, *simu->gps, *simu->odometry, &simu->kalm_res, &Q);
@@ -182,12 +184,12 @@ int main() {
         // start_thread(&t_simu, NULL, update_simulation, simu);
         // end_thread(t_simu, NULL);
 
-        if(hach==max_hach){
-            hach=0;
+        if(simu->hach==simu->max_hach){
+            simu->hach=0;
             fprintf(f_tracking, "\n%d,%f,%f,%f", iterate, simu->kalm_res.x, simu->kalm_res.y,
                      simu->kalm_res.theta);
         }
-        hach++;
+        simu->hach++;
     }
     //###############################################
     //              show results                    #

@@ -10,10 +10,12 @@
 #define SIMULATOR_H_
 
 typedef struct simu_param {
+    int hach;
+    int max_hach;
+    int max_iterations;
+    Speed speed_out;
     Bool8 end_request;
     Speed speed_gui;
-    Speed speed_out;
-
     Position pos_sp;
     Position kalm_res;
     Position* p;
