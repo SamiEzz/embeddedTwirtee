@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import csv
 from math import pi
+from random import randint
 
 x = []
 y = []
@@ -25,16 +26,22 @@ with open('/home/samie/Documents/git/emebeddedTwirtee/bandMaster/output_txt/miss
         y_node.append(float(row[2]))
 
 plt.figure(1)
-plt.subplot(211)
-plt.plot(x,y,'--', label="Twirtee's Position",color="silver")
-plt.plot(x_node,y_node, "+",markersize=10,label="Mission's nodes")
+plt.title("Twirtee Simulation Tools\nIRT SAINT EXUPERY")
+plt.subplot(121)
+plt.plot(x,y,'--',color="silver", label="Twirtee's Position")
+plt.plot(x_node,y_node, "v",markersize=5,label="Mission's nodes")
 plt.axis('equal')
 
 plt.xlabel('x')
 plt.ylabel('y')
 
-plt.subplot(212)
+plt.subplot(122)
+plt.xlabel('iterations')
+plt.ylabel('Theta')
+
 plt.plot(iterations,theta, label="Theta angle")
-#plt.title("Twirtee Simulation Tools\nIRT SAINT EXUPERY")
 #plt.legend("IRT SAINT EXUPERY")
+numstr=str(randint(0,100))
+print("Saved file : ./output_txt/out"+numstr+".png")
+plt.savefig("./output_txt/out"+numstr+".png")
 plt.show()

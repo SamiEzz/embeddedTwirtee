@@ -35,10 +35,13 @@ typedef struct simu_param(){
 } simu_param;
 */
 
-void preMission(Path* p,float* offset){
+void preMission(Path* p,float** offset){
+    *offset[0]=p->dest[0]->x;
+    *offset[1]=p->dest[0]->y;
+    
     for(int t=0;t<p->size;t++){
-        p->dest[t]->x-=offset[0];
-        p->dest[t]->y-=offset[1];
+        p->dest[t]->x-=*offset[0];
+        p->dest[t]->y-=*offset[1];
     }    
 }
 void postMission(Path* p,float* offset){
@@ -70,7 +73,7 @@ int main() {
     simu->max_iterations = 50000;
     simu->max_hach=1;
     simu->hach=simu->max_hach-1;
-    float offsetPosition[2]={0,0};
+    float* offsetPosition[2];
     simu->p = (Position*)safe_alloc(sizeof(Position));
     simu->compass = (T_head*)safe_alloc(sizeof(T_head));
     simu->gps = (T_loc*)safe_alloc(sizeof(T_loc));
@@ -136,8 +139,8 @@ int main() {
         fprintf(f_path, "%d,%f,%f\n", mission_se->path->dest[i]->id,
                 mission_se->path->dest[i]->x, mission_se->path->dest[i]->y);
     }
-    offsetPosition[0]=mission_se->path->dest[0]->x;
-    offsetPosition[1]=mission_se->path->dest[0]->y;
+    *offsetPosition[0]=mission_se->path->dest[0]->x;
+    *offsetPosition[1]=mission_se->path->dest[0]->y;
     preMission(mission_se->path,offsetPosition);
 
 
@@ -171,12 +174,12 @@ int main() {
     
     // simu->pos_sp.x =  mission_se->path->dest[0]->x;
     // simu->pos_sp.y = mission_se->path->dest[0]->y;
-    simu->kalm_res.x = mission_se->path->dest[0]->x;
-    simu->kalm_res.y = mission_se->path->dest[0]->y;
+    // simu->kalm_res.x = mission_se->path->dest[0]->x;
+    // simu->kalm_res.y = mission_se->path->dest[0]->y;
     //
-    simu->p->x = mission_se->path->dest[0]->x/2;
-    simu->p->y = mission_se->path->dest[0]->y/2;
-    simu->p->theta =0;
+    // simu->p->x = mission_se->path->dest[0]->x+2;
+    // simu->p->y = mission_se->path->dest[0]->y+3;
+    // simu->p->theta =0;
 
     //
 
@@ -207,8 +210,8 @@ int main() {
         
         if(simu->hach==simu->max_hach){
             simu->hach=0;
-            fprintf(f_tracking, "%d,%f,%f,%f\n", iterate, simu->kalm_res.x+offsetPosition[0], 
-            simu->kalm_res.y+offsetPosition[1], simu->kalm_res.theta);
+            fprintf(f_tracking, "%d,%f,%f,%f\n", iterate, simu->kalm_res.x+*offsetPosition[0], 
+            simu->kalm_res.y+*offsetPosition[1], simu->kalm_res.theta);
         }
         simu->hach++;
     }
