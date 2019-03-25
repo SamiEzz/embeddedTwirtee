@@ -18,7 +18,9 @@
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
 
-char* out_tracking_file = "./output_txt/out_tracking.txt";
+char* out_tracking_file = "./output_txt/path.txt";
+char* out_mission_file = "./output_txt/mission.txt";
+
 
 /*
 typedef struct simu_param(){
@@ -33,6 +35,19 @@ typedef struct simu_param(){
 } simu_param;
 */
 
+void preMission(Path* p,float* offset){
+    for(int t=0;t<p->size;t++){
+        p->dest[t]->x-=offset[0];
+        p->dest[t]->y-=offset[1];
+    }    
+}
+void postMission(Path* p,float* offset){
+    for(int t=0;t<p->size;t++){
+        p->dest[t]->x+=offset[0];
+        p->dest[t]->y+=offset[1];
+    }    
+}
+
 int main() {
 
     //###############################################
@@ -40,6 +55,8 @@ int main() {
     //###############################################
 
     FILE* f_tracking = fopen(out_tracking_file, "w");
+    FILE* f_path = fopen(out_mission_file, "w");
+    
     if (f_tracking) {
         debug_msg("main.c : output tracking file created !");
     } else {
@@ -50,10 +67,10 @@ int main() {
     //###############################################
     // Simulation
     simu_param simu[1];
-    simu->max_iterations = 30000;
-    simu->hach=0;
-    simu->max_hach=100;
-
+    simu->max_iterations = 50000;
+    simu->max_hach=1;
+    simu->hach=simu->max_hach-1;
+    float offsetPosition[2]={0,0};
     simu->p = (Position*)safe_alloc(sizeof(Position));
     simu->compass = (T_head*)safe_alloc(sizeof(T_head));
     simu->gps = (T_loc*)safe_alloc(sizeof(T_loc));
@@ -111,10 +128,18 @@ int main() {
     end_thread(t_get_mission, NULL);
 
     // short path first thread
-    spf_thread(mission_se);
-    // start_thread(&t_spf, NULL, spf_thread, mission_se);
+    //spf_thread(mission_se);
+    start_thread(&t_spf, NULL, spf_thread, mission_se);
     // // wait for thread to execute
-    // end_thread(t_spf, NULL);
+    end_thread(t_spf, NULL);
+    for (int i = 0; i < mission_se->path->size; i++) {
+        fprintf(f_path, "%d,%f,%f\n", mission_se->path->dest[i]->id,
+                mission_se->path->dest[i]->x, mission_se->path->dest[i]->y);
+    }
+    offsetPosition[0]=mission_se->path->dest[0]->x;
+    offsetPosition[1]=mission_se->path->dest[0]->y;
+    preMission(mission_se->path,offsetPosition);
+
 
     debug_msg("main.c : Mission computed !");
     //simu->pos_sp.x = mission_se->path->dest[1]->x;
@@ -122,48 +147,43 @@ int main() {
     //simu->kalm_res.x = mission_se->path->dest[0]->x;
     //simu->kalm_res.y = mission_se->path->dest[0]->y;
     //
+    
+    
+    
     // mission_se->path->dest[0]->x=0;
     // mission_se->path->dest[0]->y=0;
 
-    // mission_se->path->dest[1]->x=100;
-    // mission_se->path->dest[1]->y=100;
+    // mission_se->path->dest[1]->x=10;
+    // mission_se->path->dest[1]->y=10;
     
     // mission_se->path->dest[2]->x=0;
-    // mission_se->path->dest[2]->y=100;
+    // mission_se->path->dest[2]->y=10;
     
-    // mission_se->path->dest[3]->x=100;
+    // mission_se->path->dest[3]->x=10;
     // mission_se->path->dest[3]->y=0;
     
-    // mission_se->path->dest[4]->x=50;
-    // mission_se->path->dest[4]->y=150;
+    // mission_se->path->dest[4]->x=5;
+    // mission_se->path->dest[4]->y=15;
     
     // mission_se->path->dest[5]->x=0;
     // mission_se->path->dest[5]->y=0;
     
     
-    simu->pos_sp.x =  mission_se->path->dest[0]->x;
-    simu->pos_sp.y = mission_se->path->dest[0]->y;
+    // simu->pos_sp.x =  mission_se->path->dest[0]->x;
+    // simu->pos_sp.y = mission_se->path->dest[0]->y;
     simu->kalm_res.x = mission_se->path->dest[0]->x;
     simu->kalm_res.y = mission_se->path->dest[0]->y;
     //
-    simu->p->x = mission_se->path->dest[0]->x;
-    simu->p->y = mission_se->path->dest[0]->y;
+    simu->p->x = mission_se->path->dest[0]->x/2;
+    simu->p->y = mission_se->path->dest[0]->y/2;
     simu->p->theta =0;
 
-    simu->p->x = mission_se->path->dest[0]->x;
-    simu->p->y = mission_se->path->dest[0]->y;
-
-    simu->p->x = mission_se->path->dest[0]->x;
-    simu->p->y = mission_se->path->dest[0]->y;
     //
 
     simu->odometry = (T_odo*)safe_alloc(sizeof(T_odo));
 
-    fprintf(f_tracking, "\nMission : id,x,y \n");
-    for (int i = 0; i < mission_se->path->size; i++) {
-        fprintf(f_tracking, "-> %d,%f,%f\n", mission_se->path->dest[i]->id,
-                mission_se->path->dest[i]->x, mission_se->path->dest[i]->y);
-    }
+    //fprintf(f_path, "\nMission : id,x,y \n");
+    
     // fprintf(f_tracking, "\niteration,x,y,theta");
     for (int iterate = 0; iterate < simu->max_iterations; iterate++) {
         // com_localize(compass, gps, odometry, &kalman_position, &Q);		///< Kalman call for
@@ -181,14 +201,14 @@ int main() {
         // biggest speed asserting s_out <= min(s_safety, s_arp)
         com_speed_selection(simu->speed_gui, s_rec, s_safety, s_arp, &simu->speed_out);
 
-        update_simulation(simu);
-        // start_thread(&t_simu, NULL, update_simulation, simu);
-        // end_thread(t_simu, NULL);
-
+        //update_simulation(simu);
+        start_thread(&t_simu, NULL, update_simulation, simu);
+        end_thread(t_simu, NULL);
+        
         if(simu->hach==simu->max_hach){
             simu->hach=0;
-            fprintf(f_tracking, "\n%d,%f,%f,%f", iterate, simu->kalm_res.x, simu->kalm_res.y,
-                     simu->kalm_res.theta);
+            fprintf(f_tracking, "%d,%f,%f,%f\n", iterate, simu->kalm_res.x+offsetPosition[0], 
+            simu->kalm_res.y+offsetPosition[1], simu->kalm_res.theta);
         }
         simu->hach++;
     }
@@ -200,7 +220,6 @@ int main() {
         printf("-> %d\n", mission_se->path->dest[i]->id);
     }
     debug_msg("Executed !");
-
     //###############################################
     //                  close                       #
     //###############################################
