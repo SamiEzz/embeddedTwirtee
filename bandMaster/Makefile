@@ -62,6 +62,8 @@ SOURCES +=./src/misc.c
 SOURCES +=./src/localization.c
 SOURCES +=./src/kalman.c
 SOURCES +=./src/speed_selection.c
+SOURCES +=./src/can.c
+
 
 
 

@@ -18,10 +18,10 @@ with open('/home/samie/Documents/git/emebeddedTwirtee/bandMaster/output_txt/path
         y.append(float(row[2]))
         theta.append(float(row[3]))
     for angle in range(len(theta)):
-        theta[angle]=theta[angle]*180.0/3.14
+        theta[angle]=theta[angle]*180.0/pi
 with open('/home/samie/Documents/git/emebeddedTwirtee/bandMaster/output_txt/mission.txt','r') as csvfile:
-    plots = csv.reader(csvfile, delimiter=',')
-    for row in plots:
+    plots2 = csv.reader(csvfile, delimiter=',')
+    for row in plots2:
         x_node.append(float(row[1]))
         y_node.append(float(row[2]))
 
@@ -41,7 +41,7 @@ plt.ylabel('Theta')
 
 plt.plot(iterations,theta, label="Theta angle")
 #plt.legend("IRT SAINT EXUPERY")
-numstr=str(randint(0,100))
+numstr=str(randint(0,10))
 print("Saved file : ./output_txt/out"+numstr+".png")
 plt.savefig("./output_txt/out"+numstr+".png")
 plt.show()

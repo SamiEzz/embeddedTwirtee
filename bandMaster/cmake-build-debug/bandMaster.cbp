@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="bandMaster"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="bandMaster">
+				<Option output="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/bandMaster" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/include"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 bandMaster"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="bandMaster/fast">
+				<Option output="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/bandMaster" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/include"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan"/>
+					<Add directory="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 bandMaster/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/compile/a.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/dwm_api/dwm_api.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh/lmh.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh/lmh.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh/lmh_spirx.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh/lmh_spirx.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh/lmh_spirx_drdy.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh/lmh_spirx_drdy.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh/lmh_uartrx.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/dwm_driver/lmh/lmh_uartrx.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/header.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/include/dwm1001_tlv.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/include/dwm_api.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/loc_thread.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal_fprint.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal_fprint.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal_gpio.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal_gpio.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal_interface.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal_spi.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal_spi.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal_uart.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/platform/rpi/hal/hal_uart.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/loc_api/twirtee.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/src/loc_thread.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/DWM_api/matiere_premiere/src/main.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/can.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/com.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/dijkstra.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/guidance_mgr.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/header.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/jsonApi.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/kalman.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/kanayama.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/asc2log.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/bcmserver.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/can-calc-bit-timing.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/canbusload.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/candump.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/canfdtest.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/cangen.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/cangw.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/canlogserver.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/canplayer.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/cansend.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/cansniffer.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/cantest.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can/bcm.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can/core.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can/dev.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can/error.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can/gw.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can/isotp.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can/netlink.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/linux/can/raw.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can/bcm.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can/error.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can/gw.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can/ioctl.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can/isotp.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can/netlink.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/include/socketcan/can/raw.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/isotpdump.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/isotprecv.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/isotpsend.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/isotpserver.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/isotpsniffer.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/isotptun.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/lib.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/lib.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/log2asc.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/log2long.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/slcan_attach.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/slcand.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/slcanpty.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/linux-can-utils/terminal.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/localization.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/mat.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/measurement_randomization.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/misc.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/mission_mgr.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/parametres.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/segment.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/simulator.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/speed_selection.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/spf_thread.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/threads_mgr.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/include/twirtee.h">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/main.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/can.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/dijkstra.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/guidance_mgr.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/jsonApi.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/kalman.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/kanayama.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/localization.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/mat.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/measurement_randomization.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/misc.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/mission_mgr.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/parametres.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/segment.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/simulator.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/speed_selection.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/spf_thread.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/tasks_Scheduler.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/src/threads_mgr.c">
+			<Option target="bandMaster"/>
+		</Unit>
+		<Unit filename="/home/samie/Documents/git/emebeddedTwirtee/bandMaster/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

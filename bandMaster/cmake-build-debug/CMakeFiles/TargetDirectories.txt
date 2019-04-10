@@ -1,0 +1,3 @@
+/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/CMakeFiles/bandMaster.dir
+/home/samie/Documents/git/emebeddedTwirtee/bandMaster/cmake-build-debug/CMakeFiles/edit_cache.dir
