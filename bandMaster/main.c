@@ -36,22 +36,6 @@ typedef struct simu_param(){
 } simu_param;
 */
 
-void preMission(Path* p,float x,float y){
-    debug_msg("main.c : preMission start");
-    x=p->dest[0]->x;
-    y=p->dest[0]->y; 
-    for(int t=0;t<p->size;t++){
-        p->dest[t]->x-=x;
-        p->dest[t]->y-=y;
-    }    
-}
-void postMission(Path* p,float* offset){
-    for(int t=0;t<p->size;t++){
-        p->dest[t]->x+=offset[0];
-        p->dest[t]->y+=offset[1];
-    }    
-}
-
 int main() {
 
     //###############################################
@@ -206,26 +190,26 @@ int main() {
     T_loc _mgps;
     T_odo _modo;
     for (int iterate = 0; iterate < simu->max_iterations; iterate++) {
-	_mcompass=*simu->compass;
-	_mgps=*simu->gps;
-	_modo=*simu->odometry;
-	debug_msg("main.c : iteration inside simulation");
+        _mcompass=*simu->compass;
+        _mgps=*simu->gps;
+        _modo=*simu->odometry;
+        debug_msg("main.c : iteration inside simulation");
         // com_localize(compass, gps, odometry, &kalman_position, &Q);		///< Kalman call for
         // better position estimation from noised data
         com_localize(_mcompass,_mgps,_modo, &simu->kalm_res, &Q);
-	debug_msg("main.c : com_localise done..");
+	    debug_msg("main.c : com_localise done..");
         // com_generation(kalman_position, &path, &position_sp); ///< defines SetPoint
         com_generation(simu->kalm_res, mission_se->path, &simu->pos_sp);
-	debug_msg("main.c :  com_generation done..");
+	    debug_msg("main.c :  com_generation done..");
         // printf("x:%f, y: %f\n",simu->pos_sp.x,simu->pos_sp.y);
         // com_tracking(kalman_position, position_sp, &Q, &s_gui); ///< Kanayama call to track the
         // defined SetPoint
         com_tracking(simu->kalm_res, simu->pos_sp, &Q, &simu->speed_gui);
-	debug_msg("main.c : com_tracking done.."),
+	    debug_msg("main.c : com_tracking done.."),
         // com_speed_selection(s_gui, s_rec, s_safety, s_arp, &s_out);	///< Shall select the
         // biggest speed asserting s_out <= min(s_safety, s_arp)
         com_speed_selection(simu->speed_gui, s_rec, s_safety, s_arp, &simu->speed_out);
-	debug_msg("main.c :  com_speed_select done");
+	    debug_msg("main.c :  com_speed_select done");
         //update_simulation(simu);
         start_thread(&t_simu, NULL, update_simulation, simu);
         end_thread(t_simu, NULL);

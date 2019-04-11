@@ -23,3 +23,19 @@ void debug_msg(char* msg) {
     } else {
     }
 }
+
+void preMission(Path* p,float x,float y){
+    debug_msg("main.c : preMission start");
+    x=p->dest[0]->x;
+    y=p->dest[0]->y; 
+    for(int t=0;t<p->size;t++){
+        p->dest[t]->x-=x;
+        p->dest[t]->y-=y;
+    }    
+}
+void postMission(Path* p,float* offset){
+    for(int t=0;t<p->size;t++){
+        p->dest[t]->x+=offset[0];
+        p->dest[t]->y+=offset[1];
+    }    
+}

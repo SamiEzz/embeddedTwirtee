@@ -47,6 +47,7 @@ RM=/bin/rm
 PROGRAM = ./bin/twirtee.bin
 
 SOURCES = main.c 
+SOURCES +=./src/misc.c
 SOURCES +=./src/kanayama.c
 SOURCES +=./src/guidance_mgr.c
 SOURCES +=./src/measurement_randomization.c
@@ -58,7 +59,6 @@ SOURCES +=./src/threads_mgr.c
 SOURCES +=./src/spf_thread.c
 SOURCES +=./src/dijkstra.c
 SOURCES +=./src/jsonApi.c
-SOURCES +=./src/misc.c
 SOURCES +=./src/localization.c
 SOURCES +=./src/kalman.c
 SOURCES +=./src/speed_selection.c

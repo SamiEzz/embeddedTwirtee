@@ -45,6 +45,14 @@
  *
  */
 
+// struct can_frame {
+// 	canid_t can_id;  /* 32 bit CAN_ID + EFF/RTR/ERR flags */
+// 	__u8    can_dlc; /* frame payload length in byte (0 .. CAN_MAX_DLEN) */
+// 	__u8    __pad;   /* padding */
+// 	__u8    __res0;  /* reserved / padding */
+// 	__u8    __res1;  /* reserved / padding */
+// 	__u8    data[CAN_MAX_DLEN] __attribute__((aligned(8)));
+// };
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -687,7 +695,7 @@ void* read_can(void* can)
 					printf("(%ld.%06ld) ", tv.tv_sec, tv.tv_usec);
 					printf("%*s ", max_devname_len, devname[idx]);
 					fprint_canframe(stdout, &frame, "\n", 0);
-                    fprint_canframe(stdout, &frame, "\n", 0);
+                    //fprint_canframe(stdout, &frame, "\n", 0);
                     
 					goto out_fflush; /* no other output to stdout */
 				}
@@ -746,9 +754,9 @@ void* read_can(void* can)
 				printf(" %s", (color && (color<3))?col_on[idx%MAXCOL]:"");
 				printf("%*s", max_devname_len, devname[idx]);
 				printf("%s  ", (color==1)?col_off:"");
+                fprint_long_canframe(stdout, &frame, NULL, view);
 
-				fprint_long_canframe(stdout, &frame, NULL, view);
-
+                
 				printf("%s", (color>1)?col_off:"");
 				printf("\n");
 			}
