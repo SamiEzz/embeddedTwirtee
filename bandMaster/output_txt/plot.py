@@ -10,7 +10,7 @@ iterations = []
 x_node=[]
 y_node=[]
 
-with open('/home/samie/Documents/git/emebeddedTwirtee/bandMaster/output_txt/path.txt','r') as csvfile:
+with open('./path.txt','r') as csvfile:
     plots = csv.reader(csvfile, delimiter=',')
     for row in plots:
         iterations.append(float(row[0]))
@@ -19,7 +19,7 @@ with open('/home/samie/Documents/git/emebeddedTwirtee/bandMaster/output_txt/path
         theta.append(float(row[3]))
     for angle in range(len(theta)):
         theta[angle]=theta[angle]*180.0/pi
-with open('/home/samie/Documents/git/emebeddedTwirtee/bandMaster/output_txt/mission.txt','r') as csvfile:
+with open('./mission.txt','r') as csvfile:
     plots2 = csv.reader(csvfile, delimiter=',')
     for row in plots2:
         x_node.append(float(row[1]))
