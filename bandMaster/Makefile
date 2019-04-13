@@ -29,7 +29,7 @@ DWM_PROGRAM		= $(PROJ_DIR)/../../../build/dwm_binary.o
 
 
 # DWM FLAGS
-# CFLAGS += -Wall 
+# CFLAGS += -Wall -std=c99
 
 # include dwm1001.mak :  include $(PROJ_DIR)/include/dwm1001.mak
 #include $(PROJ_DIR)/include/dwm1001.mak
@@ -74,13 +74,13 @@ OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
 #./build/dwm_api.o
 $(PROGRAM): $(OBJECTS) 
-	$(CC) -o $@ $(OBJECTS)  $(LIBS)
+	$(CC) -o $@ $(OBJECTS) $(LIBS) -std=c99
 	@echo $@ "build done"
 	mv ./src/*.o ./build/
 	mv *.o ./build/
 
 %.o: %.c
-	$(CC) $(CFLAGS) -g -c -o $@ $<
+	$(CC) $(CFLAGS) -g -c -o $@ $< -std=c99
 
 clean:
 	@echo "Cleaning"

@@ -2,7 +2,7 @@
 #define T_MISC_
 
 #include <pthread.h>
-#define debug 0
+#define debug 1
 
 
 void * safe_alloc(int size);

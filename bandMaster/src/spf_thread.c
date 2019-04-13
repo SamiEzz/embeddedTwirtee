@@ -71,7 +71,7 @@ void* spf_thread(void* mission_se) {
      *
      */
     initCarto(graphtest, data->base->_nd, data->occur->nodes);
-
+	debug_msg("spf_thread.c : Carto initiation");
     /* dijkstra()
      * this is an implementation of Dijkstra's algorithm to find the Shortest path
      * betwin "int src" and "int dest" which are the ids of nodes we want to go from
@@ -81,7 +81,7 @@ void* spf_thread(void* mission_se) {
     mission->path = safe_alloc(sizeof(Path));
     dijkstra(graphtest, src, dest, mission->path);
     //def_speed_()
-    
+    debug_msg("spf_thread.c : Dijkstra's algorithm finished"); 
     mission->path->def_max_speed=data->base->_c.vdef;
     mission->path->def_max_speed_up =data->base->_c.adef;
     for(int p=0;p<mission->path->size;p++){
