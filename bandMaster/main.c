@@ -35,13 +35,13 @@ typedef struct simu_param(){
 } simu_param;
 */
 
-void preMission(Path* p,float** offset){
-    *offset[0]=p->dest[0]->x;
-    *offset[1]=p->dest[0]->y;
-    
+void preMission(Path* p,float x,float y){
+    debug_msg("main.c : preMission start");
+    x=p->dest[0]->x;
+    y=p->dest[0]->y; 
     for(int t=0;t<p->size;t++){
-        p->dest[t]->x-=*offset[0];
-        p->dest[t]->y-=*offset[1];
+        p->dest[t]->x-=x;
+        p->dest[t]->y-=y;
     }    
 }
 void postMission(Path* p,float* offset){
@@ -139,13 +139,14 @@ int main() {
     start_thread(&t_spf, NULL, spf_thread, mission_se);
     // // wait for thread to execute
     end_thread(t_spf, NULL);
+    debug_msg("main.c : Out from spf_thread");
     for (int i = 0; i < mission_se->path->size; i++) {
         fprintf(f_path, "%d,%f,%f\n", mission_se->path->dest[i]->id,
                 mission_se->path->dest[i]->x, mission_se->path->dest[i]->y);
     }
-    *offsetPosition[0]=mission_se->path->dest[0]->x;
-    *offsetPosition[1]=mission_se->path->dest[0]->y;
-    preMission(mission_se->path,offsetPosition);
+    float _mx=mission_se->path->dest[0]->x;
+    float _my=mission_se->path->dest[0]->y;
+    preMission(mission_se->path,_mx, _my);
 
 
     debug_msg("main.c : Mission computed !");
@@ -192,6 +193,7 @@ int main() {
     //fprintf(f_path, "\nMission : id,x,y \n");
     
     // fprintf(f_tracking, "\niteration,x,y,theta");
+    debug_msg("main.c :  Starting Simulation loop");
     for (int iterate = 0; iterate < simu->max_iterations; iterate++) {
         // com_localize(compass, gps, odometry, &kalman_position, &Q);		///< Kalman call for
         // better position estimation from noised data
@@ -219,6 +221,7 @@ int main() {
         }
         simu->hach++;
     }
+    debug_msg("main.c :  End of simulaiton loop");
     //###############################################
     //              show results                    #
     //###############################################
