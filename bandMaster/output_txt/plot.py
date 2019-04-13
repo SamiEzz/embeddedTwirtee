@@ -27,7 +27,7 @@ with open('./mission.txt','r') as csvfile:
 
 plt.figure(1)
 plt.title("Twirtee Simulation Tools\nIRT SAINT EXUPERY")
-plt.subplot(121)
+plt.subplot(211)
 plt.plot(x,y,'--',color="silver", label="Twirtee's Position")
 plt.plot(x_node,y_node, "v",markersize=5,label="Mission's nodes")
 plt.axis('equal')
@@ -35,7 +35,7 @@ plt.axis('equal')
 plt.xlabel('x')
 plt.ylabel('y')
 
-plt.subplot(122)
+plt.subplot(212)
 plt.xlabel('iterations')
 plt.ylabel('Theta')
 
