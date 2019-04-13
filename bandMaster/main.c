@@ -194,31 +194,40 @@ int main() {
     
     // fprintf(f_tracking, "\niteration,x,y,theta");
     debug_msg("main.c :  Starting Simulation loop");
+    T_head _mcompass;
+    T_loc _mgps;
+    T_odo _modo;
     for (int iterate = 0; iterate < simu->max_iterations; iterate++) {
+	_mcompass=*simu->compass;
+	_mgps=*simu->gps;
+	_modo=*simu->odometry;
+	debug_msg("main.c : iteration inside simulation");
         // com_localize(compass, gps, odometry, &kalman_position, &Q);		///< Kalman call for
         // better position estimation from noised data
-        com_localize(*simu->compass, *simu->gps, *simu->odometry, &simu->kalm_res, &Q);
-
+        com_localize(_mcompass,_mgps,_modo, &simu->kalm_res, &Q);
+	debug_msg("main.c : com_localise done..");
         // com_generation(kalman_position, &path, &position_sp); ///< defines SetPoint
         com_generation(simu->kalm_res, mission_se->path, &simu->pos_sp);
+	debug_msg("main.c :  com_generation done..");
         // printf("x:%f, y: %f\n",simu->pos_sp.x,simu->pos_sp.y);
         // com_tracking(kalman_position, position_sp, &Q, &s_gui); ///< Kanayama call to track the
         // defined SetPoint
         com_tracking(simu->kalm_res, simu->pos_sp, &Q, &simu->speed_gui);
-
+	debug_msg("main.c : com_tracking done.."),
         // com_speed_selection(s_gui, s_rec, s_safety, s_arp, &s_out);	///< Shall select the
         // biggest speed asserting s_out <= min(s_safety, s_arp)
         com_speed_selection(simu->speed_gui, s_rec, s_safety, s_arp, &simu->speed_out);
-
+	debug_msg("main.c :  com_speed_select done");
         //update_simulation(simu);
         start_thread(&t_simu, NULL, update_simulation, simu);
         end_thread(t_simu, NULL);
-        
+        debug_msg("main.c : simulation thread done ..");
         if(simu->hach==simu->max_hach){
             simu->hach=0;
-            fprintf(f_tracking, "%d,%f,%f,%f\n", iterate, simu->kalm_res.x+*offsetPosition[0], 
-            simu->kalm_res.y+*offsetPosition[1], simu->kalm_res.theta);
+            fprintf(f_tracking, "%d,%f,%f,%f\n", iterate, simu->kalm_res.x+_mx, 
+            simu->kalm_res.y+_my, simu->kalm_res.theta);
         }
+	
         simu->hach++;
     }
     debug_msg("main.c :  End of simulaiton loop");
