@@ -96,6 +96,7 @@ int main() {
     //###############################################
     //          init variables                      #
     //###############################################
+    debug_msg("main.c : Variables initiation");
     // init mutex
     // Pos->mut = (pthread_mutex_t *)safe_alloc(sizeof(pthread_mutex_t));
 
@@ -104,6 +105,7 @@ int main() {
     //###############################################
     //          Create main auxilary variables      #
     //###############################################
+    debug_msg("main.c : Auxilary variables"); 
     int abort_mission = 0;
     double Pd[3][3] = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}};
     T_mat Q = {3, 3, _MAT_ Pd};       ///< Error matrix computed with Kalman filter
@@ -115,6 +117,7 @@ int main() {
     //###############################################
     //                 Create threads               #
     //###############################################
+    debug_msg("main.c : Creating threads");
     pthread_t t_simu;
     pthread_t t_localisation;
     pthread_t t_get_mission;
@@ -125,13 +128,14 @@ int main() {
     //###############################################
 
     // Simulation thread
-
+    debug_msg("main.c : Starting get_mission thread");
     start_thread(&t_get_mission, NULL, get_mission_thread, mission_se);
     // wait for thread to execute
     end_thread(t_get_mission, NULL);
 
     // short path first thread
     //spf_thread(mission_se);
+    debug_msg("main.c : Starting short path first thread");
     start_thread(&t_spf, NULL, spf_thread, mission_se);
     // // wait for thread to execute
     end_thread(t_spf, NULL);
