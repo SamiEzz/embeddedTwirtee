@@ -72,8 +72,15 @@
 
 #include <linux/can.h>
 #include <linux/can/raw.h>
+#include <pthread.h>
+
 #include "terminal.h"
+#include "../twirtee.h"
+#include "../misc.h"
+
 #include "lib.h"
+#include "read_can.h"
+
 
 #define MAXSOCK 16    /* max. number of CAN interfaces given on the cmdline */
 #define MAXIFNAMES 30 /* size of receive name index to omit ioctls */
@@ -210,12 +217,17 @@ int idx2dindex(int ifidx, int socket) {
 	return i;
 }
 
-void* read_can(void* can)
+void* read_can(void* buffer)
 {
     //char* can_name[]=;
+	debug_msg("read_can.c : casting and initialisation");
+    can_shared* can_buff = (can_shared*)buffer;
+    pthread_mutex_lock(&can_buff->mutex);
+    can_buff->available=0;
+    pthread_mutex_unlock(&can_buff->mutex);
     int argc=2;
-
-    char** argv=(char**)can;
+    char* can_name[]={"read_can", can_buff->can_name};
+    char** argv=can_name;
 	fd_set rdfs;
 	int s[MAXSOCK];
 	int bridge = 0;
@@ -246,12 +258,13 @@ void* read_can(void* can)
 	struct timeval tv, last_tv;
 	FILE *logfile = NULL;
 
-	signal(SIGTERM, sigterm);
-	signal(SIGHUP, sigterm);
-	signal(SIGINT, sigterm);
+	//signal(SIGTERM, sigterm);
+	//signal(SIGHUP, sigterm);
+	//signal(SIGINT, sigterm);
 
 	last_tv.tv_sec  = 0;
 	last_tv.tv_usec = 0;
+	debug_msg("read_can.c : while loop");
 
 	while ((opt = getopt(argc, argv, "t:ciaSs:b:B:u:ldLn:r:he?")) != -1) {
 		switch (opt) {
@@ -695,6 +708,7 @@ void* read_can(void* can)
 					printf("(%ld.%06ld) ", tv.tv_sec, tv.tv_usec);
 					printf("%*s ", max_devname_len, devname[idx]);
 					fprint_canframe(stdout, &frame, "\n", 0);
+                    fprintf(stdout,"\ndata[0]%.8X\n",frame.data[0]);
                     //fprint_canframe(stdout, &frame, "\n", 0);
                     
 					goto out_fflush; /* no other output to stdout */

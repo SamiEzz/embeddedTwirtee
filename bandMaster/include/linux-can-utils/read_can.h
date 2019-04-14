@@ -1,6 +1,6 @@
 
-#ifndef T_MISC_
-#define T_MISC_
+#ifndef T_READ_CAN
+#define T_READ_CAN_
 
 void print_usage(char *prg);
 void sigterm(int signo);

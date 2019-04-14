@@ -5,7 +5,7 @@
 #include "twirtee.h"
 
 
-#define debug 0
+#define debug 1
 
 
 void * safe_alloc(int size);
