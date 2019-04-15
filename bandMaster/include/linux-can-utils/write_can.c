@@ -111,7 +111,6 @@ void* write_can(void* can_buffer)
             //printf("write_can.c : Iteration in for loop\n");
             sprintf(payload,"%s%08x",id,can_buff->data[i]);
             // printf("hex to char : %s\n",payload);
-            
             //if (parse_canframe(can_buff->data[i], &frame)){
             
             if (parse_canframe(payload, &frame)){

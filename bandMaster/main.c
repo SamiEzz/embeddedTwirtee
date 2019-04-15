@@ -41,6 +41,7 @@ typedef struct simu_param(){
     T_odo *odometry;
 } simu_param;
 */
+
 unsigned int gen_can_message(unsigned int payload,int i){
     //strncpy(temp_data_buffer,&can_buff->data,can_buff->available*sizeof(char)*8);
     //strcat(can_buff->data,payload);
@@ -52,21 +53,9 @@ unsigned int gen_can_message(unsigned int payload,int i){
         3.14f,
         2.74f,
         1.609f,
-        4};
-    //ftoa(f_base[i],payload,3);
-    //payload = (unsigned char*)&f_base[i];
-    //char id[12]="137#";
+        4.520f,
+        845.1f};
     memcpy(&payload,f_base+i,4);
-    // strcat(id,payload);
-
-
-    // union {
-    //     float f_data;
-    //     unsigned char c_data[sizeof(float)]
-    // }cast;
-    // cast.f_data=f_base[i];
-    // payload=cast.c_data;
-    // printf("gen can : ret %x\n",payload);
     return payload;
 }
 
