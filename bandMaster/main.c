@@ -1,13 +1,14 @@
+#include "./include/linux-can-utils/read_can.h"
+#include "./include/misc.h"
+#include "./include/threads_mgr.h"
 #include "./include/guidance_mgr.h"
 #include "./include/simulator.h"
 #include "./include/speed_selection.h"
-#include "./include/threads_mgr.h"
 
 #include "./include/localization.h"
 #include "./include/mission_mgr.h"
 
 #include "./include/measurement_randomization.h"
-#include "./include/misc.h"
 #include "./include/spf_thread.h"
 
 #include <pthread.h>
@@ -122,10 +123,17 @@ int main() {
     pthread_t t_localisation;
     pthread_t t_get_mission;
     pthread_t t_spf;
-
+    pthread_t t_can_read;
     //###############################################
     //              Main routine                    #
     //###############################################
+    // CAN PROTOCOLE READ
+
+    char* can_name[]={"read_can", "can1"};
+    start_thread(&t_can_read, NULL, read_can, can_name);
+    // wait for thread to execute
+    end_thread(t_can_read, NULL);
+
 
     // Simulation thread
     debug_msg("main.c : Starting get_mission thread");

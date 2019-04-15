@@ -29,7 +29,7 @@ DWM_PROGRAM		= $(PROJ_DIR)/../../../build/dwm_binary.o
 
 
 # DWM FLAGS
-# CFLAGS += -Wall -std=c99
+# CFLAGS += -Wall 
 
 # include dwm1001.mak :  include $(PROJ_DIR)/include/dwm1001.mak
 #include $(PROJ_DIR)/include/dwm1001.mak
@@ -62,7 +62,8 @@ SOURCES +=./src/misc.c
 SOURCES +=./src/localization.c
 SOURCES +=./src/kalman.c
 SOURCES +=./src/speed_selection.c
-SOURCES +=./src/can.c
+#SOURCES +=./include/linux-can-utils/lib.c
+#SOURCES +=./include/linux-can-utils/read_can.c
 
 
 
@@ -70,21 +71,28 @@ SOURCES +=./src/can.c
 
 
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
+OBJECTS+=./build/lib_can.o
+OBJECTS+=./build/read_can.o
+
 
 
 #./build/dwm_api.o
 $(PROGRAM): $(OBJECTS) 
-	$(CC) -o $@ $(OBJECTS) $(LIBS) -std=c99
+	$(CC) -o  $@ $(OBJECTS)  $(LIBS)
 	@echo $@ "build done"
 	mv ./src/*.o ./build/
 	mv *.o ./build/
 
-%.o: %.c
-	$(CC) $(CFLAGS) -g -c -o $@ $< -std=c99
+%.o: %.c can_thread
+	$(CC) $(CFLAGS) -g -c -o $@ $<
+
+can_thread :  
+	gcc -g -c ./include/linux-can-utils/lib.c -o ./build/lib_can.o
+	gcc -g -c ./include/linux-can-utils/read_can.c ./build/lib_can.o  -o ./build/read_can.o
 
 clean:
 	@echo "Cleaning"
 	$(RM) -f $(PROGRAM)
-	$(RM) ./src/*.o
 	$(RM) ./build/*.o
+	$(RM) ./src/*.o
 	
