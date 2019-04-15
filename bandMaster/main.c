@@ -46,11 +46,17 @@ unsigned int gen_can_message(unsigned int payload,int i){
     //strcat(can_buff->data,payload);
     char base[5][13]={"00112233","12345678","ABCDEF","DEADBEEF","99999999"};
     // payload = base[i];
-    float f_base[]={9.81f,1.6184f,3.14f,2.74f,1.609f};
+    float f_base[]={
+        9.81f,
+        1.6184f,
+        3.14f,
+        2.74f,
+        1.609f,
+        4};
     //ftoa(f_base[i],payload,3);
     //payload = (unsigned char*)&f_base[i];
     //char id[12]="137#";
-    memcpy(&payload,&f_base[i],4);
+    memcpy(&payload,f_base+i,4);
     // strcat(id,payload);
 
 
@@ -60,7 +66,7 @@ unsigned int gen_can_message(unsigned int payload,int i){
     // }cast;
     // cast.f_data=f_base[i];
     // payload=cast.c_data;
-    
+    // printf("gen can : ret %x\n",payload);
     return payload;
 }
 
@@ -86,10 +92,6 @@ int main() {
     //###############################################
     // CAN PROTOCOLE READ
 
-    union {
-        float f_data;
-        unsigned int i_data[4];
-    }caster;
     // char* can_name[]={"read_can", "can1"};
     // start_thread(&t_can_read, NULL, read_can, can_name);
     // // wait for thread to execute
@@ -100,28 +102,35 @@ int main() {
     start_thread(&t_can_write, NULL, write_can, can_buff);
     // wait for thread to execute
     char k;
-    unsigned int test_payload;
     int i = 0;
-    caster.f_data=3.14f;
-    memcpy (&test_payload, &caster.f_data, 4);  
-    //test_payload = (unsigned int) caster.f_data;
-    printf("casted float : %08x %f\n",test_payload,caster.f_data);
+    // union {
+    //     float f_data;
+    //     unsigned int i_data[4];
+    // }caster;
+    // unsigned int test_payload;
+    // caster.f_data=3.14f;
+    // memcpy (&test_payload, &caster.f_data, 4);  
+    // //test_payload = (unsigned int) caster.f_data;
+    // printf("casted float : %08x %f\n",test_payload,caster.f_data);
     
 
     while(true){
+        unsigned int test_payload;
         pthread_mutex_lock(&can_buff->mutex);
         test_payload=gen_can_message(test_payload,can_buff->available);
-        //printf("can_gen [%d] : %s\n",can_buff->available,test_payload);
+
         //printf("Enter message to send : ");
         //fgets(can_buff->data[can_buff->available],12,stdin);
         //printf("\n");
-        memcpy(&test_payload,&can_buff->data[can_buff->available],4);
+        
+        memcpy((can_buff->data+can_buff->available),&test_payload,4);
+        printf("Hex value : %x\n",test_payload);
         // strncpy(can_buff->data[can_buff->available],test_payload,_CAN_MSG_LEN*sizeof(char));
         
-        printf("Payload : %x\n",can_buff->data[can_buff->available]);
+        // printf("Float in hex : %x\n",can_buff->data[can_buff->available]);
         can_buff->available++;
         pthread_mutex_unlock(&can_buff->mutex);
-        my_delay(2);
+        my_delay(1);
         // else{
         //     printf("Eror adding payload to buffer, return : %d\n",add_to_can_buffer(payload,can_buff));
         // }
