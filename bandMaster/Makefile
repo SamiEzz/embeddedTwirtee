@@ -76,6 +76,7 @@ OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
 OBJECTS+=./build/read_can.o
 OBJECTS+=./build/write_can.o
+OBJECTS+=./build/lib_can.o
 
 
 #./build/dwm_api.o
