@@ -60,6 +60,16 @@
 
 
 #include "lib.h"
+#include "write_can.h"
+#include "../twirtee.h"
+
+char* concat_id_data(char* id,char* data){
+	char* return_can_fram;
+
+
+
+	return return_can_fram;
+}
 
 void* write_can(void* can_buffer)
 {
@@ -70,10 +80,10 @@ void* write_can(void* can_buffer)
     // int available;
     // pthread_mutex_t mutex;
     // }
-    (can_shared* )can_buff = (can_shared* )can_buffer;
+    (can_shared*)can_buff = (can_shared*)can_buffer;
     pthread_mutex_lock(&can_buff->mutex);
     can_buff->data=1000000000000000;
-//    *(can_buff->data+sizeof(int)*1)=[1111111111111111];
+	//*(can_buff->data+sizeof(int)*1)=[1111111111111111];
 
     can_buff->available=5;
     pthread_mutex_unlock(&can_buff->mutex);
@@ -87,7 +97,7 @@ void* write_can(void* can_buffer)
 
 	/* check command line options */
 	if (argc != 3) {
-		fprintf(stderr, "Usage: %s <device> <can_frame>.\n", argv[0]);
+		fprintf(stderr, "Usage: %s <device> <can_frame>.\n", "can1");
 		printf("Eror can write");;
 	}
 
