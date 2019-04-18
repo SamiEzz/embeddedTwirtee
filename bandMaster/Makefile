@@ -45,10 +45,7 @@ CC=gcc
 RM=/bin/rm
 
 PROGRAM = ./bin/twirtee.bin
-
-SOURCES = main.c 
-SOURCES +=./src/misc.c
-SOURCES +=./src/kanayama.c
+SOURCES =./src/kanayama.c
 SOURCES +=./src/guidance_mgr.c
 SOURCES +=./src/measurement_randomization.c
 SOURCES +=./src/segment.c
@@ -59,9 +56,14 @@ SOURCES +=./src/threads_mgr.c
 SOURCES +=./src/spf_thread.c
 SOURCES +=./src/dijkstra.c
 SOURCES +=./src/jsonApi.c
+SOURCES +=./src/misc.c
 SOURCES +=./src/localization.c
 SOURCES +=./src/kalman.c
 SOURCES +=./src/speed_selection.c
+
+
+SOURCES += main.c 
+
 #SOURCES +=./include/linux-can-utils/lib.c
 #SOURCES +=./include/linux-can-utils/read_can.c
 
@@ -71,9 +73,9 @@ SOURCES +=./src/speed_selection.c
 
 
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
-OBJECTS+=./build/lib_can.o
-OBJECTS+=./build/read_can.o
 
+OBJECTS+=./build/read_can.o
+OBJECTS+=./build/write_can.o
 
 
 #./build/dwm_api.o
@@ -84,11 +86,14 @@ $(PROGRAM): $(OBJECTS)
 	mv *.o ./build/
 
 %.o: %.c can_thread
-	$(CC) $(CFLAGS) -g -c -o $@ $<
+	$(CC) $(CFLAGS) -g -c -o $@ $< -std=c99
 
 can_thread :  
 	gcc -g -c ./include/linux-can-utils/lib.c -o ./build/lib_can.o
 	gcc -g -c ./include/linux-can-utils/read_can.c ./build/lib_can.o  -o ./build/read_can.o
+	gcc -g -c ./include/linux-can-utils/write_can.c ./build/lib_can.o  -o ./build/write_can.o
+	
+
 
 clean:
 	@echo "Cleaning"

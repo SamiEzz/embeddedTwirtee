@@ -1,13 +1,15 @@
+#include "./include/misc.h"
+#include "./include/linux-can-utils/read_can.h"
+#include "./include/linux-can-utils/write_can.h"
+#include "./include/threads_mgr.h"
 #include "./include/guidance_mgr.h"
 #include "./include/simulator.h"
 #include "./include/speed_selection.h"
-#include "./include/threads_mgr.h"
 
 #include "./include/localization.h"
 #include "./include/mission_mgr.h"
 
 #include "./include/measurement_randomization.h"
-#include "./include/misc.h"
 #include "./include/spf_thread.h"
 
 #include <pthread.h>
@@ -18,7 +20,9 @@
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
 
-char* out_tracking_file = "./output_txt/out_tracking.txt";
+char* out_tracking_file = "./output_txt/path.txt";
+char* out_mission_file = "./output_txt/mission.txt";
+
 
 /*
 typedef struct simu_param(){
@@ -40,6 +44,8 @@ int main() {
     //###############################################
 
     FILE* f_tracking = fopen(out_tracking_file, "w");
+    FILE* f_path = fopen(out_mission_file, "w");
+    
     if (f_tracking) {
         debug_msg("main.c : output tracking file created !");
     } else {
@@ -50,24 +56,19 @@ int main() {
     //###############################################
     // Simulation
     simu_param simu[1];
+    simu->max_iterations = 50000;
+    simu->max_hach=1;
+    simu->hach=simu->max_hach-1;
+    float* offsetPosition[2];
     simu->p = (Position*)safe_alloc(sizeof(Position));
     simu->compass = (T_head*)safe_alloc(sizeof(T_head));
     simu->gps = (T_loc*)safe_alloc(sizeof(T_loc));
     simu->odometry = (T_odo*)safe_alloc(sizeof(T_odo));
-    *simu->odometry = (T_odo){0.0, 0.0, 0.0f, 0.0f, 0, 0, INVALID_DATA};
+    *simu->odometry = (T_odo){0.0, 0.0, 0.0f, 0.0f, 0, 0, VALID_DATA};
     simu->end_request = 0;
     simu->speed_gui = (Speed){0.0f, 0.0f, VALID_DATA};
     simu->speed_out = (Speed){0.0f, 0.0f, VALID_DATA};
 
-    // 1995.581055,-199.699997
-    simu->pos_sp.x = 0;
-    simu->pos_sp.y = 0;
-    simu->kalm_res.x = 0;
-    simu->kalm_res.y = 0;
-    //
-    simu->p->x = 0;
-    simu->p->y = 0;
-    simu->p->theta = 0;
     //
     simu->odometry = (T_odo*)safe_alloc(sizeof(T_odo));
 
@@ -81,6 +82,7 @@ int main() {
     //###############################################
     //          init variables                      #
     //###############################################
+    debug_msg("main.c : Variables initiation");
     // init mutex
     // Pos->mut = (pthread_mutex_t *)safe_alloc(sizeof(pthread_mutex_t));
 
@@ -89,6 +91,7 @@ int main() {
     //###############################################
     //          Create main auxilary variables      #
     //###############################################
+    debug_msg("main.c : Auxilary variables"); 
     int abort_mission = 0;
     double Pd[3][3] = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}};
     T_mat Q = {3, 3, _MAT_ Pd};       ///< Error matrix computed with Kalman filter
@@ -100,74 +103,129 @@ int main() {
     //###############################################
     //                 Create threads               #
     //###############################################
+    debug_msg("main.c : Creating threads");
     pthread_t t_simu;
     pthread_t t_localisation;
     pthread_t t_get_mission;
     pthread_t t_spf;
-
+    pthread_t t_can_read;
+    pthread_t t_can_write;
+    
     //###############################################
     //              Main routine                    #
     //###############################################
+    // CAN PROTOCOLE READ
+
+    char* can_name[]={"read_can", "can1"};
+    start_thread(&t_can_read, NULL, read_can, can_name);
+    // wait for thread to execute
+    end_thread(t_can_read, NULL);
+    
 
     // Simulation thread
-
+    debug_msg("main.c : Starting get_mission thread");
     start_thread(&t_get_mission, NULL, get_mission_thread, mission_se);
     // wait for thread to execute
     end_thread(t_get_mission, NULL);
 
     // short path first thread
-    // spf_thread(mission_se);
+    //spf_thread(mission_se);
+    debug_msg("main.c : Starting short path first thread");
     start_thread(&t_spf, NULL, spf_thread, mission_se);
-    // wait for thread to execute
+    // // wait for thread to execute
     end_thread(t_spf, NULL);
+    debug_msg("main.c : Out from spf_thread");
+    for (int i = 0; i < mission_se->path->size; i++) {
+        fprintf(f_path, "%d,%f,%f\n", mission_se->path->dest[i]->id,
+                mission_se->path->dest[i]->x, mission_se->path->dest[i]->y);
+    }
+    float _mx=mission_se->path->dest[0]->x;
+    float _my=mission_se->path->dest[0]->y;
+    preMission(mission_se->path,_mx, _my);
 
+
+    debug_msg("main.c : Mission computed !");
     //simu->pos_sp.x = mission_se->path->dest[1]->x;
     //simu->pos_sp.y = mission_se->path->dest[1]->y;
     //simu->kalm_res.x = mission_se->path->dest[0]->x;
     //simu->kalm_res.y = mission_se->path->dest[0]->y;
     //
-    mission_se->path->dest[0]->x=0;
-    mission_se->path->dest[0]->y=0;
-    mission_se->path->dest[1]->x=100;
-    mission_se->path->dest[1]->y=100;
     
-    simu->p->x = mission_se->path->dest[0]->x;
-    simu->p->y = mission_se->path->dest[0]->y;
+    
+    
+    // mission_se->path->dest[0]->x=0;
+    // mission_se->path->dest[0]->y=0;
+
+    // mission_se->path->dest[1]->x=10;
+    // mission_se->path->dest[1]->y=10;
+    
+    // mission_se->path->dest[2]->x=0;
+    // mission_se->path->dest[2]->y=10;
+    
+    // mission_se->path->dest[3]->x=10;
+    // mission_se->path->dest[3]->y=0;
+    
+    // mission_se->path->dest[4]->x=5;
+    // mission_se->path->dest[4]->y=15;
+    
+    // mission_se->path->dest[5]->x=0;
+    // mission_se->path->dest[5]->y=0;
+    
+    
+    // simu->pos_sp.x =  mission_se->path->dest[0]->x;
+    // simu->pos_sp.y = mission_se->path->dest[0]->y;
+    // simu->kalm_res.x = mission_se->path->dest[0]->x;
+    // simu->kalm_res.y = mission_se->path->dest[0]->y;
+    //
+    // simu->p->x = mission_se->path->dest[0]->x+2;
+    // simu->p->y = mission_se->path->dest[0]->y+3;
+    // simu->p->theta =0;
+
     //
 
     simu->odometry = (T_odo*)safe_alloc(sizeof(T_odo));
-    int max_iterations = 1000;
 
-    // fprintf(f_tracking, "\nMission : id,x,y \n");
-    // for (int i = 0; i < mission_se->path->size; i++) {
-    //     fprintf(f_tracking, "-> %d,%f,%f\n", mission_se->path->dest[i]->id,
-    //             mission_se->path->dest[i]->x, mission_se->path->dest[i]->y);
-    // }
+    //fprintf(f_path, "\nMission : id,x,y \n");
+    
     // fprintf(f_tracking, "\niteration,x,y,theta");
-    for (int iterate = 0; iterate < max_iterations; iterate++) {
+    debug_msg("main.c :  Starting Simulation loop");
+    T_head _mcompass;
+    T_loc _mgps;
+    T_odo _modo;
+    for (int iterate = 0; iterate < simu->max_iterations; iterate++) {
+        _mcompass=*simu->compass;
+        _mgps=*simu->gps;
+        _modo=*simu->odometry;
+        debug_msg("main.c : iteration inside simulation");
         // com_localize(compass, gps, odometry, &kalman_position, &Q);		///< Kalman call for
         // better position estimation from noised data
-        com_localize(*simu->compass, *simu->gps, *simu->odometry, &simu->kalm_res, &Q);
-
+        com_localize(_mcompass,_mgps,_modo, &simu->kalm_res, &Q);
+	    debug_msg("main.c : com_localise done..");
         // com_generation(kalman_position, &path, &position_sp); ///< defines SetPoint
         com_generation(simu->kalm_res, mission_se->path, &simu->pos_sp);
+	    debug_msg("main.c :  com_generation done..");
         // printf("x:%f, y: %f\n",simu->pos_sp.x,simu->pos_sp.y);
         // com_tracking(kalman_position, position_sp, &Q, &s_gui); ///< Kanayama call to track the
         // defined SetPoint
         com_tracking(simu->kalm_res, simu->pos_sp, &Q, &simu->speed_gui);
-
+	    debug_msg("main.c : com_tracking done.."),
         // com_speed_selection(s_gui, s_rec, s_safety, s_arp, &s_out);	///< Shall select the
         // biggest speed asserting s_out <= min(s_safety, s_arp)
         com_speed_selection(simu->speed_gui, s_rec, s_safety, s_arp, &simu->speed_out);
-
-        update_simulation(simu);
-        // start_thread(&t_simu, NULL, update_simulation, simu);
-        // end_thread(t_simu, NULL);
-
-
-        // fprintf(f_tracking, "\n%d,%f,%f,%f", iterate, simu->kalm_res.x, simu->kalm_res.y,
-        //         simu->kalm_res.theta);
+	    debug_msg("main.c :  com_speed_select done");
+        //update_simulation(simu);
+        start_thread(&t_simu, NULL, update_simulation, simu);
+        end_thread(t_simu, NULL);
+        debug_msg("main.c : simulation thread done ..");
+        if(simu->hach==simu->max_hach){
+            simu->hach=0;
+            fprintf(f_tracking, "%d,%f,%f,%f\n", iterate, simu->kalm_res.x+_mx, 
+            simu->kalm_res.y+_my, simu->kalm_res.theta);
+        }
+	
+        simu->hach++;
     }
+    debug_msg("main.c :  End of simulaiton loop");
     //###############################################
     //              show results                    #
     //###############################################
@@ -176,7 +234,6 @@ int main() {
         printf("-> %d\n", mission_se->path->dest[i]->id);
     }
     debug_msg("Executed !");
-
     //###############################################
     //                  close                       #
     //###############################################
