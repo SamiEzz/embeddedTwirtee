@@ -239,7 +239,7 @@ typedef struct {
 typedef struct can_shared{
     char* can_name;
     int id;
-	char data[100][12];
+	unsigned int data[100];
     int available;
     pthread_mutex_t mutex;
 }can_shared;

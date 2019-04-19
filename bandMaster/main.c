@@ -12,6 +12,7 @@
 #include "./include/measurement_randomization.h"
 #include "./include/spf_thread.h"
 #include "./include/twirtee.h"
+#include <math.h>
 
 #include <pthread.h>
 #include <stdio.h>
@@ -40,11 +41,26 @@ typedef struct simu_param(){
     T_odo *odometry;
 } simu_param;
 */
-char* gen_can_message(char* payload,int i){
+unsigned int gen_can_message(unsigned int payload,int i){
     //strncpy(temp_data_buffer,&can_buff->data,can_buff->available*sizeof(char)*8);
     //strcat(can_buff->data,payload);
-    char base[5][13]={"00112233","DEADBEEF","ABCDEF","DEADBEEF","99999999"};
-    payload = base[i];
+    char base[5][13]={"00112233","12345678","ABCDEF","DEADBEEF","99999999"};
+    // payload = base[i];
+    float f_base[]={9.81f,1.6184f,3.14f,2.74f,1.609f};
+    //ftoa(f_base[i],payload,3);
+    //payload = (unsigned char*)&f_base[i];
+    //char id[12]="137#";
+    memcpy(&payload,&f_base[i],4);
+    // strcat(id,payload);
+
+
+    // union {
+    //     float f_data;
+    //     unsigned char c_data[sizeof(float)]
+    // }cast;
+    // cast.f_data=f_base[i];
+    // payload=cast.c_data;
+    
     return payload;
 }
 
@@ -72,7 +88,7 @@ int main() {
 
     union {
         float f_data;
-        unsigned char c_data[8];
+        unsigned int i_data[4];
     }caster;
     // char* can_name[]={"read_can", "can1"};
     // start_thread(&t_can_read, NULL, read_can, can_name);
@@ -84,17 +100,13 @@ int main() {
     start_thread(&t_can_write, NULL, write_can, can_buff);
     // wait for thread to execute
     char k;
-    char* test_payload="";
+    unsigned int test_payload;
     int i = 0;
-    caster.f_data=3.14;
-    test_payload=caster.c_data;
-    printf("casted float : %s\n",test_payload);
-
-    pthread_mutex_lock(&can_buff->mutex);
-    test_payload=gen_can_message(test_payload,can_buff->available);
-    strncpy(can_buff->data[can_buff->available],test_payload,_CAN_MSG_LEN*sizeof(char));
-    can_buff->available++;
-    pthread_mutex_unlock(&can_buff->mutex);
+    caster.f_data=3.14f;
+    memcpy (&test_payload, &caster.f_data, 4);  
+    //test_payload = (unsigned int) caster.f_data;
+    printf("casted float : %08x %f\n",test_payload,caster.f_data);
+    
 
     while(true){
         pthread_mutex_lock(&can_buff->mutex);
@@ -103,12 +115,13 @@ int main() {
         //printf("Enter message to send : ");
         //fgets(can_buff->data[can_buff->available],12,stdin);
         //printf("\n");
-        strncpy(can_buff->data[can_buff->available],test_payload,_CAN_MSG_LEN*sizeof(char));
+        memcpy(&test_payload,&can_buff->data[can_buff->available],4);
+        // strncpy(can_buff->data[can_buff->available],test_payload,_CAN_MSG_LEN*sizeof(char));
         
+        printf("Payload : %x\n",can_buff->data[can_buff->available]);
         can_buff->available++;
-        printf("Payload : %s\n",can_buff->data[can_buff->available]);
         pthread_mutex_unlock(&can_buff->mutex);
-        delay(2000);
+        my_delay(2);
         // else{
         //     printf("Eror adding payload to buffer, return : %d\n",add_to_can_buffer(payload,can_buff));
         // }

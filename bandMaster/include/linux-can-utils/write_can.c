@@ -53,7 +53,6 @@
 
 #include <net/if.h>
 #include <sys/ioctl.h>
-
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
@@ -104,18 +103,21 @@ void* write_can(void* can_buffer)
         struct can_frame frame;
         struct ifreq ifr;
 
-
+        char payload[12];
         /* parse CAN frame */
         for(int i=0;i<can_buff->available;i++)
         {
+            char id[]="137#";
             //printf("write_can.c : Iteration in for loop\n");
+            sprintf(payload,"%x",can_buff->data[i]);
+            strcat(id,payload);
+            memcpy(payload,id,4);
 
             printf("write_can.c : buffer[%d] : %s\n",i,can_buff->data[i]);
             //if (parse_canframe(can_buff->data[i], &frame)){
-            char payload[12]="137#";
-            strcat(payload,can_buff->data[i]);
+            
             if (parse_canframe(payload, &frame)){
-                printf("write_can.c : Eror can write %s\n",payload);
+                printf("write_can.c : Eror can write %x\n",payload);
             }
 
             /* open socket */
