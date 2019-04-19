@@ -22,6 +22,7 @@
 
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
+#define _CAN_MSG_LEN 8
 
 char* out_tracking_file = "./output_txt/path.txt";
 char* out_mission_file = "./output_txt/mission.txt";
@@ -39,11 +40,12 @@ typedef struct simu_param(){
     T_odo *odometry;
 } simu_param;
 */
-
-int add_to_can_buffer(char* payload,can_shared* can_buff){
+char* gen_can_message(char* payload,int i){
     //strncpy(temp_data_buffer,&can_buff->data,can_buff->available*sizeof(char)*8);
     //strcat(can_buff->data,payload);
-    return 0;
+    char base[5][13]={"00112233","DEADBEEF","ABCDEF","DEADBEEF","99999999"};
+    payload = base[i];
+    return payload;
 }
 
 int main() {
@@ -51,7 +53,7 @@ int main() {
     //###############################################
     //                 output File                  #
     //###############################################
-
+    
     //###############################################
     //                 Create threads               #
     //###############################################
@@ -68,21 +70,45 @@ int main() {
     //###############################################
     // CAN PROTOCOLE READ
 
+    union {
+        float f_data;
+        unsigned char c_data[8];
+    }caster;
     // char* can_name[]={"read_can", "can1"};
     // start_thread(&t_can_read, NULL, read_can, can_name);
     // // wait for thread to execute
     // end_thread(t_can_read, NULL);
     
     can_shared* can_buff = safe_alloc(sizeof(can_shared));
-    
+    can_buff->available=0;
     start_thread(&t_can_write, NULL, write_can, can_buff);
     // wait for thread to execute
+    char k;
+    char* test_payload="";
+    int i = 0;
+    caster.f_data=3.14;
+    test_payload=caster.c_data;
+    printf("casted float : %s\n",test_payload);
+
+    pthread_mutex_lock(&can_buff->mutex);
+    test_payload=gen_can_message(test_payload,can_buff->available);
+    strncpy(can_buff->data[can_buff->available],test_payload,_CAN_MSG_LEN*sizeof(char));
+    can_buff->available++;
+    pthread_mutex_unlock(&can_buff->mutex);
+
     while(true){
-
-        //char payloads[100][8];
-        scanf("Write can message %s\n",can_buff->data[can_buff->available]);
+        pthread_mutex_lock(&can_buff->mutex);
+        test_payload=gen_can_message(test_payload,can_buff->available);
+        //printf("can_gen [%d] : %s\n",can_buff->available,test_payload);
+        //printf("Enter message to send : ");
+        //fgets(can_buff->data[can_buff->available],12,stdin);
+        //printf("\n");
+        strncpy(can_buff->data[can_buff->available],test_payload,_CAN_MSG_LEN*sizeof(char));
+        
+        can_buff->available++;
         printf("Payload : %s\n",can_buff->data[can_buff->available]);
-
+        pthread_mutex_unlock(&can_buff->mutex);
+        delay(2000);
         // else{
         //     printf("Eror adding payload to buffer, return : %d\n",add_to_can_buffer(payload,can_buff));
         // }

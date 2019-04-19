@@ -85,81 +85,79 @@ void delay(int number_of_seconds)
   
 void* write_can(void* can_buffer)
 {
-    char* can_id="137#";
-    char* payload_pipe[8];
-    
-    can_shared* can_buff = (can_shared* )can_buffer;
-    pthread_mutex_lock(&can_buff->mutex);
-
-    
-    //    *(can_buff->data+sizeof(int)*1)=[1111111111111111];
-
-    can_buff->available=5;
-
-
-
-	int s; /* can raw socket */ 
-	int nbytes;
-	struct sockaddr_can addr;
-	struct can_frame frame;
-	struct ifreq ifr;
-
-
-	/* parse CAN frame */
-    for(int i=0;i<can_buff->available;i++)
+    while(true)
     {
-		
-		if (parse_canframe(can_buff->data[i], &frame)){
-            fprintf(stderr, "\nWrong CAN-frame format!\n\n");
-            fprintf(stderr, "Try: <can_id>#{R|data}\n");
-            fprintf(stderr, "can_id can have 3 (SFF) or 8 (EFF) hex chars\n");
-            fprintf(stderr, "data has 0 to 8 hex-values that can (optionally)");
-            fprintf(stderr, " be seperated by '.'\n\n");
-            fprintf(stderr, "e.g. 5A1#11.2233.44556677.88 / 123#DEADBEEF / ");
-            fprintf(stderr, "5AA# /\n     1F334455#1122334455667788 / 123#R ");
-            fprintf(stderr, "for remote transmission request.\n\n");
-            printf("Eror can write");;
+        //printf("write_can.c : another iteration in while loop\n");
+        char* can_id="137#";
+        char* payload_pipe[8];
+        
+        can_shared* can_buff = (can_shared* )can_buffer;
+        pthread_mutex_lock(&can_buff->mutex);
+
+
+        //    *(can_buff->data+sizeof(int)*1)=[1111111111111111];
+
+
+        int s; /* can raw socket */ 
+        int nbytes;
+        struct sockaddr_can addr;
+        struct can_frame frame;
+        struct ifreq ifr;
+
+
+        /* parse CAN frame */
+        for(int i=0;i<can_buff->available;i++)
+        {
+            //printf("write_can.c : Iteration in for loop\n");
+
+            printf("write_can.c : buffer[%d] : %s\n",i,can_buff->data[i]);
+            //if (parse_canframe(can_buff->data[i], &frame)){
+            char payload[12]="137#";
+            strcat(payload,can_buff->data[i]);
+            if (parse_canframe(payload, &frame)){
+                printf("write_can.c : Eror can write %s\n",payload);
+            }
+
+            /* open socket */
+            if ((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
+                perror("socket");
+                printf("write_can.c : Eror can write N2\n");;
+            }
+
+            addr.can_family = AF_CAN;
+
+            strcpy(ifr.ifr_name, "can1");
+            if (ioctl(s, SIOCGIFINDEX, &ifr) < 0) {
+                perror("SIOCGIFINDEX");
+                printf("write_can.c : Eror can write N3\n");;
+            }
+            addr.can_ifindex = ifr.ifr_ifindex;
+
+            /* disable default receive filter on this RAW socket */
+            /* This is obsolete as we do not read from the socket at all, but for */
+            /* this reason we can remove the receive list in the Kernel to save a */
+            /* little (really a very little!) CPU usage.                          */
+            setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+
+            if (bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+                perror("bind");
+                printf("write_can.c : Eror can write N4\n");;
+            }
+
+            /* send frame */
+
+            if ((nbytes = write(s, &frame, sizeof(frame))) != sizeof(frame)) {
+                perror("write");
+                printf("write_can.c : Eror can write N5\n" );;
+            }
+
+            //fprint_long_canframe(stdout, &frame, "\n", 0);
+
+            close(s);
         }
-
-        /* open socket */
-        if ((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
-            perror("socket");
-            printf("Eror can write");;
-        }
-
-        addr.can_family = AF_CAN;
-
-        strcpy(ifr.ifr_name, "can1");
-        if (ioctl(s, SIOCGIFINDEX, &ifr) < 0) {
-            perror("SIOCGIFINDEX");
-            printf("Eror can write");;
-        }
-        addr.can_ifindex = ifr.ifr_ifindex;
-
-        /* disable default receive filter on this RAW socket */
-        /* This is obsolete as we do not read from the socket at all, but for */
-        /* this reason we can remove the receive list in the Kernel to save a */
-        /* little (really a very little!) CPU usage.                          */
-        setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
-
-        if (bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
-            perror("bind");
-            printf("Eror can write");;
-        }
-
-        /* send frame */
-
-        if ((nbytes = write(s, &frame, sizeof(frame))) != sizeof(frame)) {
-            perror("write");
-            printf("Eror can write");;
-        }
-
-        //fprint_long_canframe(stdout, &frame, "\n", 0);
-
-        close(s);
+        can_buff->available=0;
+        pthread_mutex_unlock(&can_buff->mutex);
+        delay(5000);
+        //return 0;
     }
-	can_buff->available=0;
-	pthread_mutex_unlock(&can_buff->mutex);
-	delay(10000);
-	//return 0;
 }
