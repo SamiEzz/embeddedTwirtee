@@ -105,55 +105,62 @@ void* write_can(void* can_buffer)
 
         char payload[12];
         /* parse CAN frame */
+        printf("|---------------|\n");
         for(int i=0;i<can_buff->available;i++)
         {
             char id[]="137#";
+            float temp_float=0.1f;
             //printf("write_can.c : Iteration in for loop\n");
+            memcpy(&temp_float,&can_buff->data[i],4);
             sprintf(payload,"%s%08x",id,can_buff->data[i]);
+            printf("Float\t: %0.8f\nCAN\t: %s\n",temp_float,payload);
+            //-----------------------------------------------------------------------------------------------------------------------------
             // printf("hex to char : %s\n",payload);
             //if (parse_canframe(can_buff->data[i], &frame)){
             
-            if (parse_canframe(payload, &frame)){
-                printf("write_can.c : Eror can write %x\n",payload);
-            }
+            // if (parse_canframe(payload, &frame)){
+            //     printf("write_can.c : Eror can write %x\n",payload);
+            // }
 
-            /* open socket */
-            if ((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
-                perror("socket");
-                printf("write_can.c : Eror can write N2\n");;
-            }
+            // /* open socket */
+            // if ((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
+            //     perror("socket");
+            //     printf("write_can.c : Eror can write N2\n");;
+            // }
 
-            addr.can_family = AF_CAN;
+            // addr.can_family = AF_CAN;
 
-            strcpy(ifr.ifr_name, "can1");
-            if (ioctl(s, SIOCGIFINDEX, &ifr) < 0) {
-                perror("SIOCGIFINDEX");
-                printf("write_can.c : Eror can write N3\n");;
-            }
-            addr.can_ifindex = ifr.ifr_ifindex;
+            // strcpy(ifr.ifr_name, "can1");
+            // if (ioctl(s, SIOCGIFINDEX, &ifr) < 0) {
+            //     perror("SIOCGIFINDEX");
+            //     printf("write_can.c : Eror can write N3\n");;
+            // }
+            // addr.can_ifindex = ifr.ifr_ifindex;
 
-            /* disable default receive filter on this RAW socket */
-            /* This is obsolete as we do not read from the socket at all, but for */
-            /* this reason we can remove the receive list in the Kernel to save a */
-            /* little (really a very little!) CPU usage.                          */
-            setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+            // /* disable default receive filter on this RAW socket */
+            // /* This is obsolete as we do not read from the socket at all, but for */
+            // /* this reason we can remove the receive list in the Kernel to save a */
+            // /* little (really a very little!) CPU usage.                          */
+            // setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
 
-            if (bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
-                perror("bind");
-                printf("write_can.c : Eror can write N4\n");;
-            }
+            // if (bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+            //     perror("bind");
+            //     printf("write_can.c : Eror can write N4\n");;
+            // }
 
-            /* send frame */
+            // /* send frame */
 
-            if ((nbytes = write(s, &frame, sizeof(frame))) != sizeof(frame)) {
-                perror("write");
-                printf("write_can.c : Eror can write N5\n" );;
-            }
+            // if ((nbytes = write(s, &frame, sizeof(frame))) != sizeof(frame)) {
+            //     perror("write");
+            //     printf("write_can.c : Eror can write N5\n" );;
+            // }
+            //-----------------------------------------------------------------------------------------------------------------------------
 
             //fprint_long_canframe(stdout, &frame, "\n", 0);
 
             close(s);
         }
+        printf("|---------------|\n");
         can_buff->available=0;
         pthread_mutex_unlock(&can_buff->mutex);
         delay(5000);
