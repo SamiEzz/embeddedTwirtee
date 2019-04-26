@@ -82,6 +82,14 @@ void delay(int number_of_seconds)
         ; 
 } 
   
+char* float_can(float f_in,int id){
+    char* value[12];
+    unsigned int payload;
+    memcpy(&payload,&f_in,4);
+    sprintf(value,"%d#%08x",id,payload);
+    printf("CAN SEND : %s \t %f\n",value,f_in);
+    return value;
+}
 void* write_can(void* can_buffer)
 {
     while(true)
@@ -106,14 +114,17 @@ void* write_can(void* can_buffer)
         char payload[12];
         /* parse CAN frame */
         printf("|---------------|\n");
+        float temp_float[]={0.1f,0.2f,0.3f,0.4f,0.5f};
         for(int i=0;i<can_buff->available;i++)
         {
             char id[]="137#";
-            float temp_float=0.1f;
             //printf("write_can.c : Iteration in for loop\n");
-            memcpy(&temp_float,&can_buff->data[i],4);
-            sprintf(payload,"%s%08x",id,can_buff->data[i]);
-            printf("Float\t: %0.8f\nCAN\t: %s\n",temp_float,payload);
+            //memcpy(&temp_float,&can_buff->data[i],4);
+            //sprintf(payload,"%s%08x",id,can_buff->data[i]);
+            //printf("Float\t: %0.8f\tCAN\t: %s\n",temp_float,payload);
+            char* float_test;
+            float_test = float_can(temp_float[i],137);
+
             //-----------------------------------------------------------------------------------------------------------------------------
             // printf("hex to char : %s\n",payload);
             //if (parse_canframe(can_buff->data[i], &frame)){

@@ -42,6 +42,8 @@ typedef struct simu_param(){
 } simu_param;
 */
 
+
+
 unsigned int gen_can_message(unsigned int payload,int i){
     //strncpy(temp_data_buffer,&can_buff->data,can_buff->available*sizeof(char)*8);
     //strcat(can_buff->data,payload);
@@ -55,6 +57,7 @@ unsigned int gen_can_message(unsigned int payload,int i){
         1.609f,
         4.520f,
         845.1f};
+    
     memcpy(&payload,f_base+i,4);
     return payload;
 }
