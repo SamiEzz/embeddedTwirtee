@@ -62,6 +62,7 @@
 #include "lib.h"
 #include "../twirtee.h"
 
+
 // typedef struct can_shared{
 // char* can_name;
 // int id;
@@ -69,19 +70,50 @@
 // int available;
 // pthread_mutex_t mutex;
 // }
+
+
+enum data_name {
+	e_urgent_stop,
+	e_theta,
+	e_angular_speed_left,
+	e_angular_speed_right,
+	
+};
+
+void assign_id(int e_name,char* id){
+	//char* id="000#";
+	switch(e_name){
+		case e_urgent_stop: 
+			id="001#";break;
+		case e_theta: 
+			id="010#";break;
+		case e_angular_speed_left: 
+			id="011#";break;
+		case e_angular_speed_right: 
+			id="012#";break;
+		default : 
+			printf("write_can.c : error assigning id");
+	}
+
+}
+
 void delay(int number_of_seconds) 
 { 
-    // Converting time into milli_seconds 
     int milli_seconds = 1000 * number_of_seconds; 
-  
     // Stroing start time 
     clock_t start_time = clock(); 
-  
-    // looping till required time is not acheived 
     while (clock() < start_time + milli_seconds) 
         ; 
 } 
   
+void float_can(char* value,float f_in,int id){
+    unsigned int payload;
+    memcpy(&payload,&f_in,4);
+    sprintf(value,"%d#%08x",id,payload);
+    printf("CAN SEND : %s \t %f\n",value,f_in);
+}
+
+
 void* write_can(void* can_buffer)
 {
     while(true)

@@ -238,7 +238,7 @@ typedef struct {
 } mission_mtx;
 typedef struct can_shared{
     char* can_name;
-    int id;
+    unsigned int id[100];
 	unsigned int data[100];
     int available;
     pthread_mutex_t mutex;

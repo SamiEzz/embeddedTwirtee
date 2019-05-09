@@ -54,6 +54,7 @@
 // 	__u8    data[CAN_MAX_DLEN] __attribute__((aligned(8)));
 // };
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -216,17 +217,14 @@ int idx2dindex(int ifidx, int socket) {
 
 	return i;
 }
-
-void* read_can(void* buffer)
+void* read_can(void* _can_shared)
 {
     //char* can_name[]=;
 	debug_msg("read_can.c : casting and initialisation");
-    can_shared* can_buff = (can_shared*)buffer;
-    pthread_mutex_lock(&can_buff->mutex);
-    can_buff->available=0;
-    pthread_mutex_unlock(&can_buff->mutex);
+    
     int argc=2;
-    char* can_name[]={"read_can", can_buff->can_name};
+//    char* can_name[]={"read_can", can_buff->can_name};
+    char* can_name[]={"read_can", "can1"};
     char** argv=can_name;
 	fd_set rdfs;
 	int s[MAXSOCK];
@@ -769,8 +767,15 @@ void* read_can(void* buffer)
 				printf("%*s", max_devname_len, devname[idx]);
 				printf("%s  ", (color==1)?col_off:"");
                 fprint_long_canframe(stdout, &frame, NULL, view);
+//-----------------------------------------------------------------------------
+				struct can_shared* can_buff = (can_shared*) _can_shared;
+				pthread_mutex_lock(&can_buff->mutex);
+				can_buff->available++;
+				can_buff->data[can_buff->available] = (unsigned int)frame.data;
+				can_buff->id[can_buff->available]  = frame.can_id;
+				pthread_mutex_unlock(&can_buff->mutex);
+//-----------------------------------------------------------------------------
 
-                
 				printf("%s", (color>1)?col_off:"");
 				printf("\n");
 			}
