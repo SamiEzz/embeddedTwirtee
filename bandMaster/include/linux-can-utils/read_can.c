@@ -766,14 +766,17 @@ void* read_can(void* _can_shared)
 				printf(" %s", (color && (color<3))?col_on[idx%MAXCOL]:"");
 				printf("%*s", max_devname_len, devname[idx]);
 				printf("%s  ", (color==1)?col_off:"");
-                fprint_long_canframe(stdout, &frame, NULL, view);
+                printf("\nLong frame :");
+				fprint_long_canframe(stdout, &frame, NULL, view);
 //-----------------------------------------------------------------------------
+				pthread_mutex_lock(&((can_shared*)_can_shared)->mutex);
 				struct can_shared* can_buff = (can_shared*) _can_shared;
-				pthread_mutex_lock(&can_buff->mutex);
-				can_buff->available++;
-				can_buff->data[can_buff->available] = (unsigned int)frame.data;
+
+				sprint_long_canframe(can_buff->data[can_buff->available],&frame,view);
 				can_buff->id[can_buff->available]  = frame.can_id;
+				can_buff->available++;
 				pthread_mutex_unlock(&can_buff->mutex);
+
 //-----------------------------------------------------------------------------
 
 				printf("%s", (color>1)?col_off:"");

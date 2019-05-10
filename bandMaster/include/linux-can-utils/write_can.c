@@ -139,17 +139,17 @@ void* write_can(void* can_buffer)
         /* parse CAN frame */
         for(int i=0;i<can_buff->available;i++)
         {
-            char id[]="137#";
+            char* id="137#0000000000000000";
             //printf("write_can.c : Iteration in for loop\n");
-            sprintf(payload,"%x",can_buff->data[i]);
+            sprintf(payload,"%hhn",can_buff->data[i]);
             strcat(id,payload);
-            memcpy(payload,id,4);
+            //memcpy(payload,id,4);
 
             printf("write_can.c : buffer[%d] : %s\n",i,can_buff->data[i]);
             //if (parse_canframe(can_buff->data[i], &frame)){
             
             if (parse_canframe(payload, &frame)){
-                printf("write_can.c : Eror can write %x\n",payload);
+                printf("write_can.c : Eror can write %s\n",payload);
             }
 
             /* open socket */

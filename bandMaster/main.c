@@ -89,26 +89,30 @@ int main() {
     int i = 0;
 
         
-    while(true){ // send data over can loop
+    while(!true){ // send data over can loop
         pthread_mutex_lock(&can_buff->mutex);
         gen_can_message(test_payload,can_buff->available);
         memcpy(&test_payload,&can_buff->data[can_buff->available],4);
-        printf("Payload : %x\n",can_buff->data[can_buff->available]);
+        printf("Payload : %hhn\n",can_buff->data[can_buff->available]);
         can_buff->available++;
         pthread_mutex_unlock(&can_buff->mutex);
         my_delay(2);
     }
     start_thread(&t_can_read, NULL, read_can, can_buff);
     while(true){
+        printf("main.c : inside loop");
         pthread_mutex_lock(&can_buff->mutex);
         if(can_buff->available>0){
-            for(int i=0;i<can_buff->available;i++){
-                printf("id \t message \n");
-                printf("%d \t %d \t ",can_buff->id[i],can_buff->data[i]);
-                printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            for(int i=0;i<=can_buff->available;i++){
+                printf("\nid \t message \n");
+                printf("%s \t ",can_buff->data[i]);
+                //printf("\n\n\n");
             }
+            can_buff->available=0;
         }
         pthread_mutex_unlock(&can_buff->mutex);
+        my_delay(2);    
+
     }
     
     end_thread(t_can_read, NULL);
