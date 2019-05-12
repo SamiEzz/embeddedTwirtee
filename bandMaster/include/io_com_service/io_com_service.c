@@ -28,7 +28,7 @@ void com_init_config(uint16* available,char* JSON_STRING,jsmntok_t* t,int max){
     
 }
 void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
-    char* tempchar;
+    char tempchar[12];
     can->can_name=malloc(4);
     uint8 error=3; // nomrbe d'élements dans l'objet json
     for (int i = 1; i < max; i++) {
@@ -59,7 +59,7 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
 }
 
 void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
-    char* tempchar;
+    char tempchar[12];
     uint8 error=4;
     int i=1;
     for (i; i < max; i++) {
@@ -212,10 +212,13 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
     else{
         printf("Json file parsed : %d tokens\n",r);
     }
-	
-    can_init_config(&cfg->can,JSON_STRING,t,r);
-    uart_init_config(&cfg->uart,JSON_STRING,t,r);
+    printf("io_com_service : com_init_config()\n");
     com_init_config(&cfg->available,JSON_STRING,t,r);
+    printf("io_com_service : can_init_config()\n");
+    can_init_config(&cfg->can,JSON_STRING,t,r);
+    printf("io_com_service : uart_init_config()\n");
+    uart_init_config(&cfg->uart,JSON_STRING,t,r);
+    
     
     can_database_init(cfg,JSON_STRING,t,r);
     return 0;
@@ -223,8 +226,8 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
 
 int main(){
     COM_CONFIG cfg;
-    //char* jsonConfigFileName="./io_service_config.json";
-    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    char* jsonConfigFileName="./io_service_config.json";
+    //char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(&cfg,jsonConfigFileName)==0){        
         printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
