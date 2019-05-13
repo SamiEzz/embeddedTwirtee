@@ -65,7 +65,8 @@ int main() {
     pthread_t t_spf;
     pthread_t t_can_read;
     pthread_t t_can_write;
-    
+
+     
     //###############################################
     //              Main routine                    #
     //###############################################
@@ -81,8 +82,10 @@ int main() {
     // end_thread(t_can_read, NULL);
     
     can_shared* can_buff = safe_alloc(sizeof(can_shared));
+    pthread_mutex_init(&can_buff->mutex,NULL);
     can_buff->available=0;
-    start_thread(&t_can_write, NULL, write_can, can_buff);
+    
+    //start_thread(&t_can_write, NULL, write_can, can_buff);
     // wait for thread to execute
     char k;
     char test_payload[12];
@@ -93,7 +96,7 @@ int main() {
         pthread_mutex_lock(&can_buff->mutex);
         gen_can_message(test_payload,can_buff->available);
         memcpy(&test_payload,&can_buff->data[can_buff->available],4);
-        printf("Payload : %hhn\n",can_buff->data[can_buff->available]);
+        printf("Payload : %s\n",can_buff->data[can_buff->available]);
         can_buff->available++;
         pthread_mutex_unlock(&can_buff->mutex);
         my_delay(2);
@@ -102,22 +105,29 @@ int main() {
     while(true){
         printf("main.c : inside loop");
         pthread_mutex_lock(&can_buff->mutex);
-        if(can_buff->available>0){
-            for(int i=0;i<=can_buff->available;i++){
+        printf("\nmain.c : available (%d)\n",can_buff->available);
+
+	if(can_buff->available>0){
+
+            for(int i=0;i<can_buff->available;i++){
+		
                 printf("\nid \t message \n");
-                printf("%s \t ",can_buff->data[i]);
+                printf("%s \n",can_buff->data[i]);
                 //printf("\n\n\n");
             }
-            can_buff->available=0;
+        can_buff->available=0;    
         }
+	
+	
+
         pthread_mutex_unlock(&can_buff->mutex);
-        my_delay(2);    
+        my_delay(1);    
 
     }
     
     end_thread(t_can_read, NULL);
     
-    end_thread(t_can_write, NULL);
+    //end_thread(t_can_write, NULL);
     
     
     // Simulation thread

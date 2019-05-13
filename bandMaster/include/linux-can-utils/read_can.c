@@ -45,16 +45,6 @@
  *
  */
 
-// struct can_frame {
-// 	canid_t can_id;  /* 32 bit CAN_ID + EFF/RTR/ERR flags */
-// 	__u8    can_dlc; /* frame payload length in byte (0 .. CAN_MAX_DLEN) */
-// 	__u8    __pad;   /* padding */
-// 	__u8    __res0;  /* reserved / padding */
-// 	__u8    __res1;  /* reserved / padding */
-// 	__u8    data[CAN_MAX_DLEN] __attribute__((aligned(8)));
-// };
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -64,6 +54,7 @@
 #include <libgen.h>
 #include <time.h>
 
+#include <pthread.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -73,15 +64,13 @@
 
 #include <linux/can.h>
 #include <linux/can/raw.h>
-#include <pthread.h>
 
 #include "terminal.h"
+#include "lib.h"
+
+#include "read_can.h"
 #include "../twirtee.h"
 #include "../misc.h"
-
-#include "lib.h"
-#include "read_can.h"
-
 
 #define MAXSOCK 16    /* max. number of CAN interfaces given on the cmdline */
 #define MAXIFNAMES 30 /* size of receive name index to omit ioctls */
@@ -119,10 +108,14 @@ extern int optind, opterr, optopt;
 
 static volatile int running = 1;
 
-void return_print(int ret){
-    printf("%d\n",ret);
-    
-}
+void _delay(int number_of_seconds) 
+{ 
+    int milli_seconds = 1000 * number_of_seconds; 
+    // Stroing start time 
+    clock_t start_time = clock(); 
+    while (clock() < start_time + milli_seconds) 
+        ; 
+} 
 
 void print_usage(char *prg)
 {
@@ -217,15 +210,14 @@ int idx2dindex(int ifidx, int socket) {
 
 	return i;
 }
-void* read_can(void* _can_shared)
-{
-    //char* can_name[]=;
-	debug_msg("read_can.c : casting and initialisation");
-    
-    int argc=2;
-//    char* can_name[]={"read_can", can_buff->can_name};
-    char* can_name[]={"read_can", "can1"};
-    char** argv=can_name;
+
+//int main(int argc, char **argv)
+
+int read_can(void* _can_shared){
+	
+	int argc=2;
+	char* can_name[]={"read_can.c","can1"};
+	char** argv=can_name;
 	fd_set rdfs;
 	int s[MAXSOCK];
 	int bridge = 0;
@@ -256,13 +248,12 @@ void* read_can(void* _can_shared)
 	struct timeval tv, last_tv;
 	FILE *logfile = NULL;
 
-	//signal(SIGTERM, sigterm);
-	//signal(SIGHUP, sigterm);
-	//signal(SIGINT, sigterm);
+	signal(SIGTERM, sigterm);
+	signal(SIGHUP, sigterm);
+	signal(SIGINT, sigterm);
 
 	last_tv.tv_sec  = 0;
 	last_tv.tv_usec = 0;
-	debug_msg("read_can.c : while loop");
 
 	while ((opt = getopt(argc, argv, "t:ciaSs:b:B:u:ldLn:r:he?")) != -1) {
 		switch (opt) {
@@ -308,12 +299,12 @@ void* read_can(void* _can_shared)
 		case 'B':
 			if (strlen(optarg) >= IFNAMSIZ) {
 				fprintf(stderr, "Name of CAN device '%s' is too long!\n\n", optarg);
-				return_print(1);
+				return 1;
 			} else {
 				bridge = socket(PF_CAN, SOCK_RAW, CAN_RAW);
 				if (bridge < 0) {
 					perror("bridge socket");
-					return_print(1);
+					return 1;
 				}
 				addr.can_family = AF_CAN;
 				strcpy(ifr.ifr_name, optarg);
@@ -323,7 +314,7 @@ void* read_can(void* _can_shared)
 		
 				if (!addr.can_ifindex) {
 					perror("invalid bridge interface");
-					return_print(1);
+					return 1;
 				}
 
 				/* disable default receive filter on this write-only RAW socket */
@@ -338,7 +329,7 @@ void* read_can(void* _can_shared)
 
 				if (bind(bridge, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
 					perror("bridge bind");
-					return_print(1);
+					return 1;
 				}
 			}
 			break;
@@ -404,7 +395,7 @@ void* read_can(void* _can_shared)
 
 	if (currmax > MAXSOCK) {
 		fprintf(stderr, "More than %d CAN devices given on commandline!\n", MAXSOCK);
-		return_print(1);
+		return 1;
 	}
 
 	for (i=0; i < currmax; i++) {
@@ -419,19 +410,19 @@ void* read_can(void* _can_shared)
 		s[i] = socket(PF_CAN, SOCK_RAW, CAN_RAW);
 		if (s[i] < 0) {
 			perror("socket");
-			return_print(1);
+			return 1;
 		}
 
 		cmdlinename[i] = ptr; /* save pointer to cmdline name of this socket */
 
 		if (nptr)
-			nbytes = nptr - ptr;  /* interface name is up the first ',' */
+			nbytes = nptr - ptr;  /* interface name is up the first ',' r*/
 		else
 			nbytes = strlen(ptr); /* no ',' found => no filter definitions */
 
 		if (nbytes >= IFNAMSIZ) {
 			fprintf(stderr, "name of CAN device '%s' is too long!\n", ptr);
-			return_print(1);
+			return 1;
 		}
 
 		if (nbytes > max_devname_len)
@@ -471,7 +462,7 @@ void* read_can(void* _can_shared)
 			rfilter = malloc(sizeof(struct can_filter) * numfilter);
 			if (!rfilter) {
 				fprintf(stderr, "Failed to create filter space!\n");
-				return_print(1);
+				return 1;
 			}
 
 			numfilter = 0;
@@ -495,7 +486,7 @@ void* read_can(void* _can_shared)
 					numfilter++;
 				} else if (sscanf(ptr, "#%x", &err_mask) != 1) { 
 					fprintf(stderr, "Error in filter option parsing: '%s'\n", ptr);
-					return_print(1);
+					return 1;
 				}
 			}
 
@@ -525,13 +516,13 @@ void* read_can(void* _can_shared)
 				if (setsockopt(s[i], SOL_SOCKET, SO_RCVBUF,
 					       &rcvbuf_size, sizeof(rcvbuf_size)) < 0) {
 					perror("setsockopt SO_RCVBUF");
-					return_print(1);
+					return 1;
 				}
 
 				if (getsockopt(s[i], SOL_SOCKET, SO_RCVBUF,
 					       &curr_rcvbuf_size, &curr_rcvbuf_size_len) < 0) {
 					perror("getsockopt SO_RCVBUF");
-					return_print(1);
+					return 1;
 				}
 
 				/* Only print a warning the first time we detect the adjustment */
@@ -549,7 +540,7 @@ void* read_can(void* _can_shared)
 			if (setsockopt(s[i], SOL_SOCKET, SO_TIMESTAMP,
 				       &timestamp_on, sizeof(timestamp_on)) < 0) {
 				perror("setsockopt SO_TIMESTAMP");
-				return_print(1);
+				return 1;
 			}
 		}
 
@@ -560,13 +551,13 @@ void* read_can(void* _can_shared)
 			if (setsockopt(s[i], SOL_SOCKET, SO_RXQ_OVFL,
 				       &dropmonitor_on, sizeof(dropmonitor_on)) < 0) {
 				perror("setsockopt SO_RXQ_OVFL not supported by your Linux Kernel");
-				return_print(1);
+				return 1;
 			}
 		}
 
 		if (bind(s[i], (struct sockaddr *)&addr, sizeof(addr)) < 0) {
 			perror("bind");
-			return_print(1);
+			return 1;
 		}
 	}
 
@@ -577,7 +568,7 @@ void* read_can(void* _can_shared)
 
 		if (time(&currtime) == (time_t)-1) {
 			perror("time");
-			return_print(1);
+			return 1;
 		}
 
 		localtime_r(&currtime, &now);
@@ -598,7 +589,7 @@ void* read_can(void* _can_shared)
 		logfile = fopen(fname, "w");
 		if (!logfile) {
 			perror("logfile");
-			return_print(1);
+			return 1;
 		}
 	}
 
@@ -608,7 +599,6 @@ void* read_can(void* _can_shared)
 	msg.msg_iov = &iov;
 	msg.msg_iovlen = 1;
 	msg.msg_control = &ctrlmsg;
-
 	while (running) {
 
 		FD_ZERO(&rdfs);
@@ -636,12 +626,12 @@ void* read_can(void* _can_shared)
 				nbytes = recvmsg(s[i], &msg, 0);
 				if (nbytes < 0) {
 					perror("read");
-					return_print(1);
+					return 1;
 				}
 
 				if (nbytes < sizeof(struct can_frame)) {
 					fprintf(stderr, "read: incomplete CAN frame\n");
-					return_print(1);
+					return 1;
 				}
 
 				if (count && (--count == 0))
@@ -654,10 +644,10 @@ void* read_can(void* _can_shared)
 					nbytes = write(bridge, &frame, sizeof(struct can_frame));
 					if (nbytes < 0) {
 						perror("bridge write");
-						return_print(1);
+						return 1;
 					} else if (nbytes < sizeof(struct can_frame)) {
 						fprintf(stderr,"bridge write: incomplete CAN frame\n");
-						return_print(1);
+						return 1;
 					}
 				}
 		    
@@ -703,12 +693,9 @@ void* read_can(void* _can_shared)
 
 				if (logfrmt) {
 					/* print CAN frame in log file style to stdout */
-					printf("(%ld.%06ld) ", tv.tv_sec, tv.tv_usec);
-					printf("%*s ", max_devname_len, devname[idx]);
-					fprint_canframe(stdout, &frame, "\n", 0);
-                    fprintf(stdout,"\ndata[0]%.8X\n",frame.data[0]);
-                    //fprint_canframe(stdout, &frame, "\n", 0);
-                    
+					//printf("(%ld.%06ld) ", tv.tv_sec, tv.tv_usec);
+					//printf("%*s ", max_devname_len, devname[idx]);
+					//fprint_canframe(stdout, &frame, "\n", 0);
 					goto out_fflush; /* no other output to stdout */
 				}
 
@@ -720,7 +707,7 @@ void* read_can(void* _can_shared)
 					goto out_fflush; /* no other output to stdout */
 				}
 		      
-				printf(" %s", (color>2)?col_on[idx%MAXCOL]:"");
+				//printf(" %s", (color>2)?col_on[idx%MAXCOL]:"");
 
 				switch (timestamp) {
 
@@ -762,25 +749,25 @@ void* read_can(void* _can_shared)
 				default: /* no timestamp output */
 					break;
 				}
+//-------------------------------------------------------------------------------------------------------------------------
+                                pthread_mutex_lock(&((can_shared*)_can_shared)->mutex);
+                                struct can_shared* can_buff = (can_shared*) _can_shared;
+                                sprint_canframe(can_buff->data[can_buff->available],&frame,view);
+//                              memcpy(&can_buff->data[can_buff->available],&frame.data,sizeof(frame.data));
+                                can_buff->id[can_buff->available]  = frame.can_id;
+//                              printf("read_can.c : available (%d)",can_buff->available);
+                                can_buff->available++;
+                                pthread_mutex_unlock(&can_buff->mutex);
+//				_delay(100);
+//-------------------------------------------------------------------------------------------------------------------------
+				//printf(" %s", (color && (color<3))?col_on[idx%MAXCOL]:"");
+				//printf("%*s", max_devname_len, devname[idx]);
+				//printf("%s  ", (color==1)?col_off:"");
 
-				printf(" %s", (color && (color<3))?col_on[idx%MAXCOL]:"");
-				printf("%*s", max_devname_len, devname[idx]);
-				printf("%s  ", (color==1)?col_off:"");
-                printf("\nLong frame :");
-				fprint_long_canframe(stdout, &frame, NULL, view);
-//-----------------------------------------------------------------------------
-				pthread_mutex_lock(&((can_shared*)_can_shared)->mutex);
-				struct can_shared* can_buff = (can_shared*) _can_shared;
+				//fprint_long_canframe(stdout, &frame, NULL, view);
 
-				sprint_long_canframe(can_buff->data[can_buff->available],&frame,view);
-				can_buff->id[can_buff->available]  = frame.can_id;
-				can_buff->available++;
-				pthread_mutex_unlock(&can_buff->mutex);
-
-//-----------------------------------------------------------------------------
-
-				printf("%s", (color>1)?col_off:"");
-				printf("\n");
+				//printf("%s", (color>1)?col_off:"");
+				//printf("\n");
 			}
 
 		out_fflush:

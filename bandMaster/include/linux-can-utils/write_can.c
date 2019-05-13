@@ -141,7 +141,7 @@ void* write_can(void* can_buffer)
         {
             char* id="137#0000000000000000";
             //printf("write_can.c : Iteration in for loop\n");
-            sprintf(payload,"%hhn",can_buff->data[i]);
+            sprintf(payload,"%s",can_buff->data[i]);
             strcat(id,payload);
             //memcpy(payload,id,4);
 
