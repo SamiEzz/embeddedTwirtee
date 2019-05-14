@@ -77,23 +77,24 @@ int main() {
         float f_data;
         unsigned int i_data[4];
     }caster;
-    // char* can_name[]={"read_can", "can1"};
-    // start_thread(&t_can_read, NULL, read_can, can_name);
+    //char* can_name[]={"read_can", "can1"};
+    
     // // wait for thread to execute
     // end_thread(t_can_read, NULL);
     
     can_shared* can_buff = safe_alloc(sizeof(can_shared));
     pthread_mutex_init(&can_buff->mutex,NULL);
     can_buff->available=0;
-    
-    start_thread(&t_can_write, NULL, write_can, can_buff);
+    start_thread(&t_can_read, NULL, read_can, can_buff);
+
+    //start_thread(&t_can_write, NULL, write_can, can_buff);
     // wait for thread to execute
     char k;
     char test_payload[12];
     int i = 0;
 
         
-    while(true){ // send data over can loop
+    while(!true){ // send data over can loop
         pthread_mutex_lock(&can_buff->mutex);
         gen_can_message(can_buff->data[can_buff->available],can_buff->available);
         //memcpy(&test_payload,&can_buff->data[can_buff->available],4);
@@ -102,13 +103,13 @@ int main() {
         pthread_mutex_unlock(&can_buff->mutex);
         my_delay(2);
     }
-    start_thread(&t_can_read, NULL, read_can, can_buff);
-    while(!true){
+    
+    while(true){
         printf("main.c : inside loop");
         pthread_mutex_lock(&can_buff->mutex);
         printf("\nmain.c : available (%d)\n",can_buff->available);
 
-	if(can_buff->available>0){
+	if(can_buff->available>10){
 
             for(int i=0;i<can_buff->available;i++){
 		
