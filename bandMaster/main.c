@@ -46,7 +46,8 @@ void gen_can_message(char* output,int i){
     char base[5][13]={"00112233","12345678","ABCDEF","DEADBEEF","99999999"};
     float f_base[]={9.81f,1.6184f,3.14f,2.74f,1.609f};
     memcpy(&payload,&f_base[i],4);
-    sprintf(output,"137#%08x",payload);
+    sprintf(output,"137#%s",base[i]);
+    
 }
 
 int main() {
@@ -85,24 +86,24 @@ int main() {
     pthread_mutex_init(&can_buff->mutex,NULL);
     can_buff->available=0;
     
-    //start_thread(&t_can_write, NULL, write_can, can_buff);
+    start_thread(&t_can_write, NULL, write_can, can_buff);
     // wait for thread to execute
     char k;
     char test_payload[12];
     int i = 0;
 
         
-    while(!true){ // send data over can loop
+    while(true){ // send data over can loop
         pthread_mutex_lock(&can_buff->mutex);
-        gen_can_message(test_payload,can_buff->available);
-        memcpy(&test_payload,&can_buff->data[can_buff->available],4);
+        gen_can_message(can_buff->data[can_buff->available],can_buff->available);
+        //memcpy(&test_payload,&can_buff->data[can_buff->available],4);
         printf("Payload : %s\n",can_buff->data[can_buff->available]);
         can_buff->available++;
         pthread_mutex_unlock(&can_buff->mutex);
         my_delay(2);
     }
     start_thread(&t_can_read, NULL, read_can, can_buff);
-    while(true){
+    while(!true){
         printf("main.c : inside loop");
         pthread_mutex_lock(&can_buff->mutex);
         printf("\nmain.c : available (%d)\n",can_buff->available);
@@ -127,7 +128,7 @@ int main() {
     
     end_thread(t_can_read, NULL);
     
-    //end_thread(t_can_write, NULL);
+    end_thread(t_can_write, NULL);
     
     
     // Simulation thread
