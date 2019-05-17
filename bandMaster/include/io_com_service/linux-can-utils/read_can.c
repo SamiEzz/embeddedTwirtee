@@ -69,8 +69,8 @@
 #include "lib.h"
 
 #include "read_can.h"
-#include "../twirtee.h"
-#include "../misc.h"
+#include "../../twirtee.h"
+#include "../../misc.h"
 
 #define MAXSOCK 16    /* max. number of CAN interfaces given on the cmdline */
 #define MAXIFNAMES 30 /* size of receive name index to omit ioctls */

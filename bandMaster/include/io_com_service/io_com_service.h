@@ -15,6 +15,18 @@
 
 #define MAX_VAR_TO_COM 99
 
+// _____________________________________
+// json to struct char*
+char* j_speed_left 	= "speed_lef";
+char* j_speed_right	= "speed_right";
+char* j_theta		= "theta";
+char* j_battery		= "batterie";
+
+
+
+
+
+
 typedef struct io_data_base {
 	uint16 var_id;
 	char* data;
@@ -72,26 +84,6 @@ typedef struct COM_CONFIG{
 	wifi_config wifi;
 } COM_CONFIG;
 
-uint8 init_io_service(COM_CONFIG* cfg,char* filename){ // 
-	/***
-	 * 
-	 * 
-	 * int_config[0]: CAN enabled ? 0 or 1
-	 * int_config[1]: UART enabled ? 0 or 1
-	 * int_config[2]: WIFI enabled ? 0 or 1
-	 * 
-	 * 
-	 * */
-	cfg->available=0;
-	cgf->can.enabled = int_config[0];
-	cgf->uart.enabled = int_config[1];
-	cgf->wifi.enabled = int_config[2];
-
-	if(cgf->can.enabled==1){
-		init_can_bus(char* can_name);
-	}
-	
-}
 
 
 

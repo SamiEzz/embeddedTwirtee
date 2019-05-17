@@ -60,7 +60,7 @@
 
 
 #include "lib.h"
-#include "../twirtee.h"
+#include "../../twirtee.h"
 
 
 // typedef struct can_shared{
