@@ -19,7 +19,7 @@ INTERFACE_NUMBER = 0
 PRINT_LVL = 0
 
 # PROJ_DIR += ./DWM_api/loc_api
-DWM_PROJ_DIR 	= ./include/DWM_api/loc_api
+DWM_PROJ_DIR 	= ./io_com_service/include/DWM_api/loc_api
 
 # DWM_SOURCES
 DWM_SOURCES 	= $(PROJ_DIR)/src/loc_thread.c
@@ -86,14 +86,17 @@ $(PROGRAM): $(OBJECTS)
 	mv ./src/*.o ./build/
 	mv *.o ./build/
 
-%.o: %.c can_thread
+%.o: %.c can_thread io_service
 	$(CC) $(CFLAGS) -g -c -o $@ $< -std=c99
 
 can_thread :  
-	gcc -g -c ./include/linux-can-utils/lib.c -o ./build/lib_can.o
-	gcc -g -c ./include/linux-can-utils/read_can.c ./build/lib_can.o  -o ./build/read_can.o
-	gcc -g -c ./include/linux-can-utils/write_can.c ./build/lib_can.o  -o ./build/write_can.o
-	
+	gcc -g -c ./include/io_com_service/linux-can-utils/lib.c -o ./build/lib_can.o
+	gcc -g -c ./include/io_com_service/linux-can-utils/read_can.c ./build/lib_can.o  -o ./build/read_can.o
+	gcc -g -c ./include/io_com_service/linux-can-utils/write_can.c ./build/lib_can.o  -o ./build/write_can.o
+
+io_service :
+	gcc -g -c ./include/io_com_service/io_com_service.c -o ./build/io_com_service.o
+
 
 
 clean:

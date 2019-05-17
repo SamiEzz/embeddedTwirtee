@@ -1,6 +1,6 @@
 #include "./include/misc.h"
-#include "./include/linux-can-utils/read_can.h"
-#include "./include/linux-can-utils/write_can.h"
+#include "./include/io_com_service/linux-can-utils/read_can.h"
+#include "./include/io_com_service/linux-can-utils/write_can.h"
 #include "./include/threads_mgr.h"
 #include "./include/guidance_mgr.h"
 #include "./include/simulator.h"
