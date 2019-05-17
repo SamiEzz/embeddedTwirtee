@@ -1,0 +1,98 @@
+/**
+******************************************************************************
+* @file		io_com_service.h
+* @author   [IRT] EZZEROUALI Sami
+* @brief	Input_Output communication service 
+*           This service provide a high access to all communication medium 
+*           To configure this service, please check the io_service_config.json file
+******************************************************************************
+*/
+
+#ifndef io_com_service
+#define io_com_service
+
+#include "../twirtee.h"
+
+#define MAX_VAR_TO_COM 99
+
+typedef struct io_data_base {
+	uint16 var_id;
+	char* data;
+	clock_t validity_time;
+	clock_t edition_time;
+	uint32 periode;
+	uint16 size;
+	pthread_mutex_t mutex;
+	uint8 remote_request;	// 0: no remote, 0!= : oui  
+							// et remote_request = taille de la valeur retourné 
+	uint8 trigger_type;		// 0: Time, 1: User, 2: Event 
+	uint8 validity[2];		// [0]: temporelle, [1]: fonctionnelle
+	uint8 medium;			// 0: CAN, 1: UART, 2: Wifi, 3: SPI….
+	uint8 disabled;			// 1 : do not exchange variable
+} io_data_base;
+
+typedef struct can_id_db{
+	uint16 available;
+	uint16 var_id;
+	char can_id[3];
+	char variable[12];
+} can_id_db;
+
+typedef struct can_config{
+	uint8 enabled;
+	char* can_name;
+	can_id_db id_data_base[MAX_VAR_TO_COM];
+} can_config;
+
+typedef struct uart_id_db{
+	uint16 available;
+	uint16 var_id;
+	char variable[12];
+} uart_id_db;
+
+typedef struct uart_config{
+	uint8 enabled;
+	uart_id_db uart_id_database[MAX_VAR_TO_COM];
+	char* COM;
+	long int speed;
+} uart_config;
+
+typedef struct wifi_config{
+	uint8 enabled;
+	char* SSID;
+	char* server;
+	uint16 port;
+} wifi_config;
+
+typedef struct COM_CONFIG{
+	io_data_base data_base[MAX_VAR_TO_COM];
+	uint16 available;
+	can_config can;
+	uart_config uart;
+	wifi_config wifi;
+} COM_CONFIG;
+
+uint8 init_io_service(COM_CONFIG* cfg,char* filename){ // 
+	/***
+	 * 
+	 * 
+	 * int_config[0]: CAN enabled ? 0 or 1
+	 * int_config[1]: UART enabled ? 0 or 1
+	 * int_config[2]: WIFI enabled ? 0 or 1
+	 * 
+	 * 
+	 * */
+	cfg->available=0;
+	cgf->can.enabled = int_config[0];
+	cgf->uart.enabled = int_config[1];
+	cgf->wifi.enabled = int_config[2];
+
+	if(cgf->can.enabled==1){
+		init_can_bus(char* can_name);
+	}
+	
+}
+
+
+
+#endif /* io_com_service */
