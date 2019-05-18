@@ -14,6 +14,7 @@
 #include "../twirtee.h"
 
 #define MAX_VAR_TO_COM 99
+#define MAX_JSON_TOKENS 500
 
 // _____________________________________
 // json to struct char*
@@ -44,7 +45,6 @@ typedef struct io_data_base {
 } io_data_base;
 
 typedef struct can_id_db{
-	uint16 available;
 	uint16 var_id;
 	char can_id[3];
 	char variable[12];
@@ -53,16 +53,17 @@ typedef struct can_id_db{
 typedef struct can_config{
 	uint8 enabled;
 	char* can_name;
+	uint16 available;
 	can_id_db id_data_base[MAX_VAR_TO_COM];
 } can_config;
 
 typedef struct uart_id_db{
-	uint16 available;
 	uint16 var_id;
 	char variable[12];
 } uart_id_db;
 
 typedef struct uart_config{
+	uint16 available;
 	uint8 enabled;
 	uart_id_db uart_id_database[MAX_VAR_TO_COM];
 	char* COM;
@@ -72,6 +73,7 @@ typedef struct uart_config{
 typedef struct wifi_config{
 	uint8 enabled;
 	char* SSID;
+	char* password;
 	char* server;
 	uint16 port;
 } wifi_config;

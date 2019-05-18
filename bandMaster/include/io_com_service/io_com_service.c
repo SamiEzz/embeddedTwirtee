@@ -4,8 +4,6 @@
 #include "io_com_service.h"
 #include "jsmn/jsmn.h"
 
-#define MAX_JSON_TOKENS 200
-
 int jsoncomp(const char* json, jsmntok_t* tok, const char* s) {
     if (tok->type == JSMN_STRING && (int)strlen(s) == tok->end - tok->start &&
         strncmp(json + tok->start, s, tok->end - tok->start) == 0) {
@@ -13,25 +11,90 @@ int jsoncomp(const char* json, jsmntok_t* tok, const char* s) {
     }
     return -1;
 }
+void com_init_config(uint16* available,char* JSON_STRING,jsmntok_t* t,int max){
+    //char* tempchar;
+    //can->can_name=malloc(sizeof(char)*10);
+    int error=1;
+    for (int i = 1; i < max; i++) {
+        
+        if (jsoncomp(JSON_STRING, &t[i], "io_data_base") == 0) {
+            *available=t[i+1].size;
+            error--;
+        } 
+    }
+    if(error!=0){
+        printf("\nio_com_service.c : Configuration io_data_base indisponible dans le fichier json\n");
+    }
+    
+}
 void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
-    printf("%d : max \n",max);
     char* tempchar;
+    can->can_name=malloc(sizeof(char)*10);
+    uint8 error=3; // nomrbe d'élements dans l'objet json
     for (int i = 1; i < max; i++) {
         //
         if (jsoncomp(JSON_STRING, &t[i], "can_enabled") == 0) {
             strncpy(tempchar, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start);
             can->enabled = atoi(tempchar);
+            error--;
             //free(&tempchar);
         }
         else if(jsoncomp(JSON_STRING,&t[i],"can_name")==0){
-            strncpy(tempchar,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start);
-            can->can_name=tempchar;
-            sprintf(can->can_name,"%c%c%c%c",tempchar[0],tempchar[1],tempchar[2],tempchar[3]);
+            strncpy(can->can_name,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start);
+            //can->can_name=tempchar;
+            //sprintf(can->can_name,"%c%c%c%c",tempchar[0],tempchar[1],tempchar[2],tempchar[3]);
+            error--;
             //printf("can_name : %s\n",can->can_name);
+        }   
+        else if (jsoncomp(JSON_STRING,&t[i],"can_id_db")==0)
+        {
+            /* code */
+            can->available=t[i+1].size;
+            error--;
         }
-
-        
+         
     }
+    if(error!=0){
+        printf("\nio_com_service.c : Configuration can indisponible dans le fichier json\n");
+    }
+    
+}
+
+void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
+    uart->COM=malloc(sizeof(char)*20);
+    char* tempchar;
+    uint8 error=4;
+    for (int i = 1; i < max; i++) {
+        //
+        if (jsoncomp(JSON_STRING, &t[i], "uart_enabled") == 0) {
+            strncpy(tempchar, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start);
+            uart->enabled = atoi(tempchar);
+            error--;
+            //free(&tempchar);
+        }
+        else if(jsoncomp(JSON_STRING,&t[i],"uart_COM")==0){
+            strncpy(uart->COM,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start);
+            //uart->COM=tempchar;
+            //sprintf(uart->COM,"%s",tempchar);
+            error--;
+        }    
+        else if(jsoncomp(JSON_STRING,&t[i],"uart_speed")==0){
+            strncpy(tempchar,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start);
+            uart->speed= atol(tempchar);;
+            //sprintf(uart->speed,"%ld",tempchar);
+            error--;
+        } 
+        else if (jsoncomp(JSON_STRING,&t[i],"uart_id_db")==0)
+        {
+            /* code */
+            uart->available=t[i+1].size;
+            error--;
+        }   
+    }
+    if(error!=0){
+        printf("\nio_com_service.c : Configuration uart indisponible dans le fichier json\n");
+    }
+    
 }
 void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ // 
 	/***
@@ -50,7 +113,6 @@ void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ //
     if (f) {
         fseek(f, 0, SEEK_END);
         length = ftell(f);
-        printf("length : %ld\n",length);
         fseek(f, 0, SEEK_SET);
         JSON_STRING = malloc(length*sizeof(char));
         if (JSON_STRING) {
@@ -80,18 +142,32 @@ void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ //
         }        
     }
     else{
-        printf("%d : Json file parsed\n",r);
+        printf("Json file parsed : %d tokens\n",r);
     }
 	
-    can_init_config(&cfg->can,JSON_STRING,t,MAX_JSON_TOKENS);
+    can_init_config(&cfg->can,JSON_STRING,t,r);
+    uart_init_config(&cfg->uart,JSON_STRING,t,r);
+    com_init_config(&cfg->available,JSON_STRING,t,r);
+    
 }
 
 int main(){
     COM_CONFIG cfg;
-    char* jsonConfigFileName="io_service_config.json";
-
+    //char* jsonConfigFileName="./io_service_config.json";
+    char* jsonConfigFileName="/home/lasagne/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     init_io_service(&cfg,jsonConfigFileName);
-    printf("can name : %s\n",cfg.can.can_name);
-    printf("can_config.enabled : %d\n",cfg.can.enabled);
 
+
+    printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
+    printf("can name : %s\n",cfg.can.can_name);
+    printf("can variables : %d\n",cfg.can.available);
+    
+    
+    printf("\nuart enabled : %d\n",cfg.uart.enabled);
+    printf("uart COM : %s\n",cfg.uart.COM);
+    printf("uart speed : %ld\n",cfg.uart.speed);
+    printf("uart available : %d\n",cfg.uart.available);
+    
+    printf("\nCOM available variables : %d\n",cfg.available);
+     
 }

@@ -16,6 +16,7 @@
         "wifi_config": {
           "enabled": 0,
           "SSID": "value",
+          "password": "value",
           "server": "value",
           "port": "value"
         },
@@ -25,8 +26,8 @@
         },
         "uart_config": {
           "uart_enabled": 1,
-          "COM": "/dev/ttyACM0",
-          "speed": 115200
+          "uart_COM": "/dev/ttyACM0",
+          "uart_speed": 115200
         },
         "can_id_db": [
           {
@@ -39,6 +40,22 @@
           },{
             "var_id": 2,
             "variable": "theta"
+          }
+        ],
+        "uart_id_db": [
+          {
+            "var_id": 3,
+            "variable": "x"
+          },
+          {
+            "var_id": 4,
+            "variable": "y"
+          },{
+            "var_id": 5,
+            "variable": "z"
+          },{
+            "var_id": 6,
+            "variable": "qf"
           }
         ],
         "io_data_base": [
@@ -72,10 +89,46 @@
             "medium":           0,
             "disabled":         0
           },
-
           {
-            "element1": "value",
-            "element2": "value"
+            "_comment":"position x",
+            "var_id":           3,
+            "validity_time":    100,
+            "period":           50,
+            "size":             8,
+            "trigger_type":     0,
+            "medium":           0,
+            "disabled":         0
+          },
+          {
+            "_comment":"position y",
+            "var_id":           4,
+            "validity_time":    100,
+            "period":           50,
+            "size":             8,
+            "trigger_type":     0,
+            "medium":           0,
+            "disabled":         0
+          },
+          {
+            "_comment":"position z",
+            "var_id":           5,
+            "validity_time":    100,
+            "period":           50,
+            "size":             8,
+            "trigger_type":     0,
+            "medium":           0,
+            "disabled":         0
+          },
+          {
+            "_comment":"position qf",
+            "var_id":           6,
+            "validity_time":    100,
+            "period":           50,
+            "size":             8,
+            "trigger_type":     0,
+            "medium":           0,
+            "disabled":         0
           }
+
         ]
 }
