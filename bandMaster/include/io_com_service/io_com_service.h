@@ -18,10 +18,19 @@
 
 // _____________________________________
 // json to struct char*
-char* j_speed_left 	= "speed_lef";
-char* j_speed_right	= "speed_right";
-char* j_theta		= "theta";
-char* j_battery		= "batterie";
+// char* j_speed_left 	= "speed_lef";
+// char* j_speed_right	= "speed_right";
+// char* j_theta		= "theta";
+
+// char* j_battery		= "batterie"; 
+int j_speed_left	= 0;
+int j_speed_right	= 1;
+int j_tetha			= 2;
+int position_x		= 3;
+int position_y		= 4;
+int position_z		= 5;
+int position_qf		= 6;
+
 
 
 

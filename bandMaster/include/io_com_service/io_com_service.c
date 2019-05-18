@@ -74,10 +74,9 @@ void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
         }
         else if(jsoncomp(JSON_STRING,&t[i],"uart_COM")==0){
             strncpy(uart->COM,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start);
-            //uart->COM=tempchar;
-            //sprintf(uart->COM,"%s",tempchar);
             error--;
         }    
+            
         else if(jsoncomp(JSON_STRING,&t[i],"uart_speed")==0){
             strncpy(tempchar,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start);
             uart->speed= atol(tempchar);;
@@ -96,7 +95,7 @@ void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
     }
     
 }
-void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ // 
+void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ 
 	/***
 	 * 
 	 * 
@@ -153,8 +152,8 @@ void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ //
 
 int main(){
     COM_CONFIG cfg;
-    //char* jsonConfigFileName="./io_service_config.json";
-    char* jsonConfigFileName="/home/lasagne/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    char* jsonConfigFileName="io_service_config.json";
+    //char* jsonConfigFileName="/home/lasagne/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     init_io_service(&cfg,jsonConfigFileName);
 
 
