@@ -141,6 +141,16 @@
       "trigger_type": 0,
       "medium": 0,
       "disabled": 0
+    },
+    {
+      "_comment": "odometrie",
+      "var_id": 8,
+      "validity_time": 100,
+      "period": 50,
+      "size": 8,
+      "trigger_type": 0,
+      "medium": 0,
+      "disabled": 0
     }
   ]
 }
