@@ -23,13 +23,15 @@
 // char* j_theta		= "theta";
 
 // char* j_battery		= "batterie"; 
-int j_speed_left	= 0;
-int j_speed_right	= 1;
-int j_tetha			= 2;
-int position_x		= 3;
-int position_y		= 4;
-int position_z		= 5;
-int position_qf		= 6;
+const uint8 j_speed_left		= 0;
+const uint8 j_speed_right		= 1;
+const uint8 j_tetha				= 2;
+const uint8 position_x			= 3;
+const uint8 position_y			= 4;
+const uint8 position_z			= 5;
+const uint8 position_qf			= 6;
+const uint8 batterie_state		= 7;
+const uint8 odometrie 			= 8;
 
 
 
@@ -53,17 +55,18 @@ typedef struct io_data_base {
 	uint8 disabled;			// 1 : do not exchange variable
 } io_data_base;
 
-typedef struct can_id_db{
-	uint16 var_id;
+typedef struct can_tram_db{
+	uint16 var_id[4];
+	uint8 available;
 	char can_id[3];
 	char variable[12];
-} can_id_db;
+} can_tram_db;
 
 typedef struct can_config{
 	uint8 enabled;
 	char* can_name;
 	uint16 available;
-	can_id_db id_data_base[MAX_VAR_TO_COM];
+	can_tram_db id_data_base[MAX_VAR_TO_COM];
 } can_config;
 
 typedef struct uart_id_db{
@@ -75,7 +78,7 @@ typedef struct uart_config{
 	uint16 available;
 	uint8 enabled;
 	uart_id_db uart_id_database[MAX_VAR_TO_COM];
-	char* COM;
+	char COM[12];
 	long int speed;
 } uart_config;
 

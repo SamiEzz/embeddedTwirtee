@@ -29,17 +29,21 @@
     "uart_COM": "/dev/ttyACM0",
     "uart_speed": 115200
   },
-  "can_id_db": [
+  "can_tram_id": [
     {
-      "var_id": 0,
-      "variable": "right_speed"
+      "var_id": [0,1],
+      "available":2,
+      "can_id": "FAB",
+      "variable": "right_speed,left_speed"
     },
     {
       "var_id": 1,
+      "can_id": "DEA",
       "variable": "left_speed"
     },
     {
       "var_id": 2,
+      "can_id": "C13",
       "variable": "theta"
     }
   ],

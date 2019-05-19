@@ -29,7 +29,7 @@ void com_init_config(uint16* available,char* JSON_STRING,jsmntok_t* t,int max){
 }
 void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
     char* tempchar;
-    can->can_name=malloc(sizeof(char)*10);
+    can->can_name=malloc(4);
     uint8 error=3; // nomrbe d'élements dans l'objet json
     for (int i = 1; i < max; i++) {
         //
@@ -40,13 +40,11 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
             //free(&tempchar);
         }
         else if(jsoncomp(JSON_STRING,&t[i],"can_name")==0){
-            strncpy(can->can_name,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start);
-            //can->can_name=tempchar;
-            //sprintf(can->can_name,"%c%c%c%c",tempchar[0],tempchar[1],tempchar[2],tempchar[3]);
+            strncpy(can->can_name,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start+2);
+            can->can_name[4]='\0';
             error--;
-            //printf("can_name : %s\n",can->can_name);
         }   
-        else if (jsoncomp(JSON_STRING,&t[i],"can_id_db")==0)
+        else if (jsoncomp(JSON_STRING,&t[i],"can_tram_db")==0)
         {
             /* code */
             can->available=t[i+1].size;
@@ -61,7 +59,6 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
 }
 
 void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
-    uart->COM=malloc(sizeof(char)*20);
     char* tempchar;
     uint8 error=4;
     int i=1;
@@ -74,7 +71,8 @@ void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
             //free(&tempchar);
         }
         else if(jsoncomp(JSON_STRING,&t[i],"uart_COM")==0){
-            strncpy(uart->COM,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start);
+            strncpy(uart->COM,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start+1);
+            uart->COM[sizeof(uart->COM)]='\n';
             error--;
         }    
             
@@ -96,10 +94,74 @@ void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
     }
     
 }
-can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
+void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
     
     can_config* pcan=&cfg->can;
-    pcan->id_data_base->variable;
+
+    //pcan->id_data_base->variable=malloc(sizeof(char)*20);
+
+    
+    uint8 error=2*pcan->available;
+    int i=0;
+    for (i; i < max; i++) {
+        //printf("\n i=%d\n",i);
+
+        char* string="can_id_db";
+        if (jsoncomp(JSON_STRING, &t[i], string) == 0) {
+            char tempjson[t[i+1].end-t[i+1].start-2];
+            strncpy(tempjson, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start);
+            
+            int r;
+            jsmn_parser p;
+            jsmntok_t t[pcan->available*10];
+            jsmn_init(&p);
+            r = jsmn_parse(&p,tempjson,t[i+1].end-t[i+1].start,t,MAX_JSON_TOKENS);
+            if(r<0){
+                printf("can_database_init parse json failed r=%d\n",r);
+            }
+            char* tempchar;
+            int index=0;
+            for(int k=0;k<r;k++){
+                //printf("\nk=%d\n",k);
+                if (jsoncomp(tempjson, &t[k], "var_id") == 0){
+            
+                    // char tempjson_2[t[k+1].end-t[k+1].start-2];
+                    // int r_2;
+                    // jsmn_parser p_2;
+                    // jsmntok_t t_2[pcan->available*10];
+                    // jsmn_init(&p_2);
+                    // r_2 = jsmn_parse(&p_2,tempjson_2,t_2[i+1].end-t_2[i+1].start,t_2,MAX_JSON_TOKENS);
+                    // if(r_2<0){
+                    //     printf("can_database_init parse json failed r=%d\n",r_2);
+                    // }
+                    char* tempchar_2;
+                    int index_2=0;
+
+                    for(int j=0;j<pcan->id_data_base[index_2].available;j++){
+                        strncpy(tempchar_2, tempjson + t[k+j].start, t[k+j].end-t[k+j].start);
+                        pcan->id_data_base[index_2].var_id[j]=atoi(tempchar_2);
+                        
+                    }
+                    // strncpy(tempchar, tempjson + t[k+1].start, t[k+1].end-t[k+1].start);
+                    // pcan->id_data_base[index].var_id=atoi(tempchar);
+                    // error--;
+                }
+                if (jsoncomp(tempjson, &t[k], "can_id") == 0){
+                    strncpy(pcan->id_data_base[index].can_id, tempjson + t[k+1].start, t[k+1].end-t[k+1].start);
+                    //printf("\ncan_id=%s\n",pcan->id_data_base[index].can_id);
+                    index++;
+                    error--;
+                }
+                
+
+            }
+            //free(&tempchar);
+        }
+    }
+    if(error!=0){
+        printf("\n%d : io_com_service.c : Configuration can_id_db indisponible dans le fichier json\n",error);
+    }
+    
 }
 void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ 
 	/***
@@ -120,7 +182,7 @@ void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
         length = ftell(f);
         //printf("length : %ld\n",length);
         fseek(f, 0, SEEK_SET);
-        JSON_STRING = malloc(length*2);
+        JSON_STRING = malloc(length+1);
         if (JSON_STRING) {
             fread(JSON_STRING, 1, length, f);
         }
@@ -155,7 +217,7 @@ void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
     uart_init_config(&cfg->uart,JSON_STRING,t,r);
     com_init_config(&cfg->available,JSON_STRING,t,r);
     
-    can_database_init(&cfg,JSON_STRING,t,r);
+    can_database_init(cfg,JSON_STRING,t,r);
 }
 
 int main(){
@@ -168,7 +230,9 @@ int main(){
     printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
     printf("can name : %s\n",cfg.can.can_name);
     printf("can variables : %d\n",cfg.can.available);
-    
+    for(int i=0;i<cfg.can.available;i++){
+        printf("can ids : %s\n",cfg.can.id_data_base[i].can_id);
+    }
     
     printf("\nuart enabled : %d\n",cfg.uart.enabled);
     printf("uart COM : %s\n",cfg.uart.COM);
@@ -177,4 +241,4 @@ int main(){
     
     printf("\nCOM available variables : %d\n",cfg.available);
      
-}
+}   
