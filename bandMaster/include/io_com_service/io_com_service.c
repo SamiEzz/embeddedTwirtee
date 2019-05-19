@@ -64,7 +64,8 @@ void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
     uart->COM=malloc(sizeof(char)*20);
     char* tempchar;
     uint8 error=4;
-    for (int i = 1; i < max; i++) {
+    int i=1;
+    for (i; i < max; i++) {
         //
         if (jsoncomp(JSON_STRING, &t[i], "uart_enabled") == 0) {
             strncpy(tempchar, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start);
@@ -95,6 +96,11 @@ void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
     }
     
 }
+can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
+    
+    can_config* pcan=&cfg->can;
+    pcan->id_data_base->variable;
+}
 void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ 
 	/***
 	 * 
@@ -105,15 +111,16 @@ void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
 	 * 
 	 * 
 	 * */
-    char* JSON_STRING = NULL;
-    long length;
+    long length=0;
+    char* JSON_STRING;
 
     FILE* f = fopen(jsonConfigFileName, "r");
     if (f) {
         fseek(f, 0, SEEK_END);
         length = ftell(f);
+        //printf("length : %ld\n",length);
         fseek(f, 0, SEEK_SET);
-        JSON_STRING = malloc(length*sizeof(char));
+        JSON_STRING = malloc(length*2);
         if (JSON_STRING) {
             fread(JSON_STRING, 1, length, f);
         }
@@ -148,12 +155,13 @@ void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
     uart_init_config(&cfg->uart,JSON_STRING,t,r);
     com_init_config(&cfg->available,JSON_STRING,t,r);
     
+    can_database_init(&cfg,JSON_STRING,t,r);
 }
 
 int main(){
     COM_CONFIG cfg;
-    char* jsonConfigFileName="io_service_config.json";
-    //char* jsonConfigFileName="/home/lasagne/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    //char* jsonConfigFileName="io_service_config.json";
+    char* jsonConfigFileName="/home/lasagne/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     init_io_service(&cfg,jsonConfigFileName);
 
 
