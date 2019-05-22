@@ -22,7 +22,8 @@
   },
   "can_config": {
     "can_enabled": 1,
-    "can_name": "can2"
+    "can_name": "can2",
+    "can_speed": 500000
   },
   "uart_config": {
     "uart_enabled": 1,
@@ -31,20 +32,27 @@
   },
   "can_tram_id": [
     {
-      "var_id": [0,1],
-      "available":2,
-      "can_id": "FAB",
-      "variable": "right_speed,left_speed"
+      "var_id": [0,1,137],
+      "offsets":[0,16],
+      "can_id": "100",
+      "variable": "right_speed left_speed"
     },
     {
-      "var_id": 1,
-      "can_id": "DEA",
-      "variable": "left_speed"
+      "var_id": [10,3],
+      "offsets":[0,16],
+      "can_id": "99",
+      "variable": "right_speed left_speed"
     },
     {
-      "var_id": 2,
-      "can_id": "C13",
-      "variable": "theta"
+      "var_id": [5,4],
+      "offsets":[0,16],
+      "can_id": "101",
+      "variable": "theta batterie"
+    },
+    {
+      "var_id"    : [2,6],
+      "offsets":[0,16],
+      "can_id": "102"
     }
   ],
   "uart_id_db": [
@@ -71,7 +79,7 @@
       "var_id": 0,
       "validity_time": 100,
       "period": 50,
-      "size": 8,
+      "size": 16,
       "trigger_type": 0,
       "medium": 0,
       "disabled": 0
@@ -81,7 +89,7 @@
       "var_id": 1,
       "validity_time": 100,
       "period": 50,
-      "size": 8,
+      "size": 16,
       "trigger_type": 0,
       "medium": 0,
       "disabled": 0
@@ -147,8 +155,18 @@
       "disabled": 0
     },
     {
-      "_comment": "odometrie",
+      "_comment": "odometrie_left",
       "var_id": 8,
+      "validity_time": 100,
+      "period": 50,
+      "size": 8,
+      "trigger_type": 0,
+      "medium": 0,
+      "disabled": 0
+    },
+    {
+      "_comment": "odometrie_right",
+      "var_id": 9,
       "validity_time": 100,
       "period": 50,
       "size": 8,

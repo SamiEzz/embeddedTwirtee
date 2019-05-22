@@ -44,7 +44,7 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
             can->can_name[4]='\0';
             error--;
         }   
-        else if (jsoncomp(JSON_STRING,&t[i],"can_tram_db")==0)
+        else if (jsoncomp(JSON_STRING,&t[i],"can_tram_id")==0)
         {
             /* code */
             can->available=t[i+1].size;
@@ -53,7 +53,7 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
          
     }
     if(error!=0){
-        printf("\nio_com_service.c : Configuration can indisponible dans le fichier json\n");
+        printf("\n%d :io_com_service.c : Configuration can indisponible dans le fichier json\n",error);
     }
     
 }
@@ -72,7 +72,7 @@ void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
         }
         else if(jsoncomp(JSON_STRING,&t[i],"uart_COM")==0){
             strncpy(uart->COM,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start+1);
-            uart->COM[sizeof(uart->COM)]='\n';
+            uart->COM[sizeof(uart->COM)]='\0';
             error--;
         }    
             
@@ -100,70 +100,69 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
 
     //pcan->id_data_base->variable=malloc(sizeof(char)*20);
 
-    
-    uint8 error=2*pcan->available;
+    uint8 error=0;
     int i=0;
-    for (i; i < max; i++) {
+    int index=0;
+    for (i=0; i < max; i++) {
         //printf("\n i=%d\n",i);
-
-        char* string="can_id_db";
-        if (jsoncomp(JSON_STRING, &t[i], string) == 0) {
-            char tempjson[t[i+1].end-t[i+1].start-2];
-            strncpy(tempjson, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start);
-            
-            int r;
-            jsmn_parser p;
-            jsmntok_t t[pcan->available*10];
-            jsmn_init(&p);
-            r = jsmn_parse(&p,tempjson,t[i+1].end-t[i+1].start,t,MAX_JSON_TOKENS);
-            if(r<0){
-                printf("can_database_init parse json failed r=%d\n",r);
-            }
+        if (jsoncomp(JSON_STRING, &t[i], "can_tram_id") == 0) {
+            pcan->available=t[i+1].size;
+            //error=pcan->available;
+            // int json_size = t[i+1].end-t[i+1].start;
+            // char tempjson[json_size];
+            // strncpy(tempjson, JSON_STRING + t[i+1].start, json_size);
+            // tempjson[json_size]='\0';
+            // printf("%s",tempjson);
+            // int r;
+            // jsmn_parser p;
+            // jsmntok_t t[pcan->available*15];
+            // jsmn_init(&p);
+            // r = jsmn_parse(&p,tempjson,t[i+1].end-t[i+1].start,t,MAX_JSON_TOKENS);
+            // if(r<0){
+            //     printf("can_database_init parse json failed r=%d\n",r);
+            // }
             char* tempchar;
-            int index=0;
-            for(int k=0;k<r;k++){
-                //printf("\nk=%d\n",k);
-                if (jsoncomp(tempjson, &t[k], "var_id") == 0){
-            
-                    // char tempjson_2[t[k+1].end-t[k+1].start-2];
-                    // int r_2;
-                    // jsmn_parser p_2;
-                    // jsmntok_t t_2[pcan->available*10];
-                    // jsmn_init(&p_2);
-                    // r_2 = jsmn_parse(&p_2,tempjson_2,t_2[i+1].end-t_2[i+1].start,t_2,MAX_JSON_TOKENS);
-                    // if(r_2<0){
-                    //     printf("can_database_init parse json failed r=%d\n",r_2);
-                    // }
-                    char* tempchar_2;
+            int k=0;
+            int K=100;
+            for(k=i;k<K;k++){
+                if (jsoncomp(JSON_STRING, &t[k], "var_id") == 0){
+                    char* tempchar_2=malloc(32);
                     int index_2=0;
+                    pcan->id_data_base[index_2].available=t[k+1].size;
 
-                    for(int j=0;j<pcan->id_data_base[index_2].available;j++){
-                        strncpy(tempchar_2, tempjson + t[k+j].start, t[k+j].end-t[k+j].start);
+                    for(int j=0;j<t[k+1].size;j++){
+                        //printf("\nk : %d, j : %d\n",k,j);
+                        strncpy(tempchar_2, JSON_STRING + t[k+j+2].start, 4);
                         pcan->id_data_base[index_2].var_id[j]=atoi(tempchar_2);
-                        
+                        //tempchar_2[sizeof(tempchar)]='\0';
+                        printf("id[%d] : %d \n",j,pcan->id_data_base[index_2].var_id[j]);
+                    
+                        // strncpy(tempchar_2, tempjson + t[k+1+j].start, t[k+1+j].end-t[k+1+j].start);
+                        // pcan->id_data_base[index_2].var_id[j]=atoi(tempchar_2);
+                        //printf("\n%d id[%d]",pcan->id_data_base[index_2].var_id[j],index_2);
                     }
+                    printf(",\n");
+                    index_2++;
                     // strncpy(tempchar, tempjson + t[k+1].start, t[k+1].end-t[k+1].start);
                     // pcan->id_data_base[index].var_id=atoi(tempchar);
                     // error--;
                 }
-                if (jsoncomp(tempjson, &t[k], "can_id") == 0){
-                    strncpy(pcan->id_data_base[index].can_id, tempjson + t[k+1].start, t[k+1].end-t[k+1].start);
-                    //printf("\ncan_id=%s\n",pcan->id_data_base[index].can_id);
+                else if (jsoncomp(JSON_STRING, &t[k], "can_id") == 0){
+                    strncpy(pcan->id_data_base[index].can_id, JSON_STRING + t[k+1].start, t[k+1].end-t[k+1].start);
+                    //printf("\n%d : can_id=%s\n",index,pcan->id_data_base[index].can_id);
                     index++;
-                    error--;
+                    //error--;
                 }
-                
-
             }
             //free(&tempchar);
         }
     }
     if(error!=0){
-        printf("\n%d : io_com_service.c : Configuration can_id_db indisponible dans le fichier json\n",error);
+        printf("\n%d : io_com_service.c : Configuration can_tram_id indisponible dans le fichier json\n",error);
     }
     
 }
-void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ 
+sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){ 
 	/***
 	 * 
 	 * 
@@ -191,6 +190,7 @@ void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
 
     } else {
         printf("io.c : Couldn't open json file. \n");
+        return -1;
     }
     int r;
     //char* s = "{'sami':3,'rick':2,'morty':1}";
@@ -218,27 +218,32 @@ void init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
     com_init_config(&cfg->available,JSON_STRING,t,r);
     
     can_database_init(cfg,JSON_STRING,t,r);
+    return 0;
 }
 
 int main(){
     COM_CONFIG cfg;
-    //char* jsonConfigFileName="io_service_config.json";
-    char* jsonConfigFileName="/home/lasagne/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
-    init_io_service(&cfg,jsonConfigFileName);
+    //char* jsonConfigFileName="./io_service_config.json";
+    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
+    if(init_io_service(&cfg,jsonConfigFileName)==0){        
+        printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
+        
+        printf("can variables : %d\n",cfg.can.available);
+        printf("can ids : {");
+        for(int i=0;i<cfg.can.available;i++){
+            printf("%s,\t",cfg.can.id_data_base[i].can_id);
+        }
+        printf("}\n");
+        
+        printf("\nuart enabled : %d\n",cfg.uart.enabled);
+        printf("uart COM : %s\n",cfg.uart.COM);
+        printf("uart speed : %ld\n",cfg.uart.speed);
+        printf("uart available : %d\n",cfg.uart.available);
+        
+        printf("\nCOM available variables : %d\n",cfg.available);
+    };
 
 
-    printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
-    printf("can name : %s\n",cfg.can.can_name);
-    printf("can variables : %d\n",cfg.can.available);
-    for(int i=0;i<cfg.can.available;i++){
-        printf("can ids : %s\n",cfg.can.id_data_base[i].can_id);
-    }
-    
-    printf("\nuart enabled : %d\n",cfg.uart.enabled);
-    printf("uart COM : %s\n",cfg.uart.COM);
-    printf("uart speed : %ld\n",cfg.uart.speed);
-    printf("uart available : %d\n",cfg.uart.available);
-    
-    printf("\nCOM available variables : %d\n",cfg.available);
      
 }   
