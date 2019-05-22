@@ -8,7 +8,7 @@
             "name": "(gdb) json config",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/home/lasagne/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io",
+            "program": "/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

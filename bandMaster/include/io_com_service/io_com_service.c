@@ -225,11 +225,11 @@ int main(){
         printf("can variables : %d\n",cfg.can.available);
         printf("can ids : Var_id[]");
         for(int i=0;i<cfg.can.available;i++){
-            printf("\n%s\t: ",cfg.can.id_data_base[i].can_id);
+            printf("\n%s\t",cfg.can.id_data_base[i].can_id);
             for(int j=0;j<cfg.can.id_data_base[i].available;j++){
-                printf("%d \t",cfg.can.id_data_base[i].var_id[j]);
+                printf("%d\t",cfg.can.id_data_base[i].var_id[j]);
             }
-            printf("\n");
+            printf("\nOffsets");
             for(int l=0;l<cfg.can.id_data_base[i].available;l++){
                 printf("\t%d ",cfg.can.id_data_base[i].offsets[l]);
             }
