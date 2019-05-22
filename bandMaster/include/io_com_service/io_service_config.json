@@ -32,27 +32,28 @@
   },
   "can_tram_id": [
     {
-      "var_id": [0,1,137],
-      "offsets":[0,16],
       "can_id": "100",
+      "var_id": [0,1,137],
+      "offsets":[10,16,20],
       "variable": "right_speed left_speed"
     },
     {
-      "var_id": [10,3],
-      "offsets":[0,16],
-      "can_id": "99",
+      "can_id": "1A1",
+      "var_id": [10,6,3],
+      "offsets":[0,16,32],
       "variable": "right_speed left_speed"
     },
     {
-      "var_id": [5,4],
-      "offsets":[0,16],
-      "can_id": "101",
-      "variable": "theta batterie"
+      "can_id": "137",
+      "var_id": [10,6,3],
+      "offsets":[0,16,32],
+      "variable": "right_speed left_speed"
     },
     {
-      "var_id"    : [2,6],
-      "offsets":[0,16],
-      "can_id": "102"
+      "can_id": "DEA",
+      "var_id": [10,6,3],
+      "offsets":[0,16,32],
+      "variable": "right_speed left_speed"
     }
   ],
   "uart_id_db": [

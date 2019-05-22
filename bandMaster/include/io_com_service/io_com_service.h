@@ -56,9 +56,10 @@ typedef struct io_data_base {
 } io_data_base;
 
 typedef struct can_tram_db{
-	uint16 var_id[4];
+	uint16 var_id[10];
+	uint8  offsets[10]; 
 	uint8 available;
-	char can_id[3];
+	char can_id[4];
 	char variable[12];
 } can_tram_db;
 
