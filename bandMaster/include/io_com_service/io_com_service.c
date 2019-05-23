@@ -94,6 +94,67 @@ void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
     }
     
 }
+void io_db_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
+    // looking for json extrems
+    uint16 start_tok=0,end_tok=0;
+    for(int i=0;i<max;i++){
+        if (jsoncomp(JSON_STRING, &t[i], "io_data_base") == 0){
+            start_tok=i;
+        }
+        else if(jsoncomp(JSON_STRING, &t[i], "last_variable") == 0){
+            end_tok=i+2;
+        }
+    }
+
+    char tempchar[]="10";
+    uint8 index=0;
+    for(int k=start_tok;k<end_tok;k++){
+        if (jsoncomp(JSON_STRING, &t[k], "var_id") == 0){
+            strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start+1);
+            cfg->data_base[index].var_id=atoi(tempchar);
+            //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
+            //index++;
+        }
+        else if (jsoncomp(JSON_STRING, &t[k], "validity_time") == 0){
+            strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start);
+            cfg->data_base[index].validity_time=atoi(tempchar);
+            //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
+            //index++;
+        }
+        else if (jsoncomp(JSON_STRING, &t[k], "period") == 0){
+            strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start+1);
+            cfg->data_base[index].periode=atoi(tempchar);
+            //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
+            //index++;
+        }
+        else if (jsoncomp(JSON_STRING, &t[k], "size") == 0){
+            strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start+1);
+            cfg->data_base[index].size=atoi(tempchar);
+            //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
+            //index++;
+        }
+        else if (jsoncomp(JSON_STRING, &t[k], "trigger_type") == 0){
+            strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start+1);
+            cfg->data_base[index].trigger_type=atoi(tempchar);
+            //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
+            //index++;
+        }
+        else if (jsoncomp(JSON_STRING, &t[k], "medium") == 0){
+            strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start+1);
+            cfg->data_base[index].medium=atoi(tempchar);
+            //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
+            //index++;
+        }
+        else if (jsoncomp(JSON_STRING, &t[k], "disabled") == 0){
+            strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start);
+            cfg->data_base[index].disabled=atoi(tempchar);
+            //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
+            index++;
+        }
+
+    }
+    //free(tempchar);
+}
 void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
     
     can_config* pcan=&cfg->can;
@@ -208,32 +269,42 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
     can_init_config(&cfg->can,JSON_STRING,t,r);
     //printf("io_com_service : uart_init_config()\n");
     uart_init_config(&cfg->uart,JSON_STRING,t,r);
-    
-    
+
+    //printf("io_com_service : io_db_init()\n");
+    io_db_init(cfg,JSON_STRING,t,r);
+    //printf("io_com_service : can_database_init()\n");    
     can_database_init(cfg,JSON_STRING,t,r);
+
     return 0;
 }
 
 void print_conf(COM_CONFIG cfg){
+    printf("uart enabled : %d\n",cfg.uart.enabled);
+    printf("uart COM : %s\n",cfg.uart.COM);
+    printf("uart speed : %ld\n",cfg.uart.speed);
+    printf("uart available : %d\n",cfg.uart.available);
     printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
-    printf("can variables : %d\n",cfg.can.available);
-    printf("can ids : Var_id[]");
+    printf("\ncan variables : %d\n",cfg.can.available);
+    printf("can id");
     for(int i=0;i<cfg.can.available;i++){
-        printf("\n%s\t",cfg.can.id_data_base[i].can_id);
+        printf("\n%s\t\t",cfg.can.id_data_base[i].can_id);
         for(int j=0;j<cfg.can.id_data_base[i].available;j++){
             printf("%d\t",cfg.can.id_data_base[i].var_id[j]);
         }
-        printf("\nOffsets");
+        printf("\n----Offsets");
         for(int l=0;l<cfg.can.id_data_base[i].available;l++){
             printf("\t%d ",cfg.can.id_data_base[i].offsets[l]);
         }            
     }
-    printf("\n\nuart enabled : %d\n",cfg.uart.enabled);
-    printf("uart COM : %s\n",cfg.uart.COM);
-    printf("uart speed : %ld\n",cfg.uart.speed);
-    printf("uart available : %d\n",cfg.uart.available);
-    
-    printf("\nCOM available variables : %d\n",cfg.available);
+    printf("\n\nCOM available variables : %d\n",cfg.available);
+    for(int j=0;j<cfg.available;j++){
+        printf("varid[%d] \t\t-> %d",j,cfg.data_base[j].var_id);
+        printf("\n\tval_time \t: %ld",cfg.data_base[j].validity_time);
+        printf("\n\tperiod \t\t: %ld",cfg.data_base[j].periode);
+        printf("\n\tsize \t\t: %d bits",cfg.data_base[j].size);
+        printf("\n\ttrigger_type \t: %s",(cfg.data_base[j].trigger_type==0)?"Time":"Event");
+        printf("\n\tmedium \t\t: %s\n",(cfg.data_base[j].medium==0)?"CAN":"UART");
+    }
 }
 int main(){
     COM_CONFIG cfg;
