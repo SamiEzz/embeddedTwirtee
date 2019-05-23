@@ -214,37 +214,33 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
     return 0;
 }
 
+void print_conf(COM_CONFIG cfg){
+    printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
+    printf("can variables : %d\n",cfg.can.available);
+    printf("can ids : Var_id[]");
+    for(int i=0;i<cfg.can.available;i++){
+        printf("\n%s\t",cfg.can.id_data_base[i].can_id);
+        for(int j=0;j<cfg.can.id_data_base[i].available;j++){
+            printf("%d\t",cfg.can.id_data_base[i].var_id[j]);
+        }
+        printf("\nOffsets");
+        for(int l=0;l<cfg.can.id_data_base[i].available;l++){
+            printf("\t%d ",cfg.can.id_data_base[i].offsets[l]);
+        }            
+    }
+    printf("\n\nuart enabled : %d\n",cfg.uart.enabled);
+    printf("uart COM : %s\n",cfg.uart.COM);
+    printf("uart speed : %ld\n",cfg.uart.speed);
+    printf("uart available : %d\n",cfg.uart.available);
+    
+    printf("\nCOM available variables : %d\n",cfg.available);
+}
 int main(){
     COM_CONFIG cfg;
     //char* jsonConfigFileName="./io_service_config.json";
     char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(&cfg,jsonConfigFileName)==0){        
-        printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
-        
-        printf("can variables : %d\n",cfg.can.available);
-        printf("can ids : Var_id[]");
-        for(int i=0;i<cfg.can.available;i++){
-            printf("\n%s\t",cfg.can.id_data_base[i].can_id);
-            for(int j=0;j<cfg.can.id_data_base[i].available;j++){
-                printf("%d\t",cfg.can.id_data_base[i].var_id[j]);
-            }
-            printf("\nOffsets");
-            for(int l=0;l<cfg.can.id_data_base[i].available;l++){
-                printf("\t%d ",cfg.can.id_data_base[i].offsets[l]);
-            }
-            //printf("\n");
-            
-        }
-        
-        printf("\n\nuart enabled : %d\n",cfg.uart.enabled);
-        printf("uart COM : %s\n",cfg.uart.COM);
-        printf("uart speed : %ld\n",cfg.uart.speed);
-        printf("uart available : %d\n",cfg.uart.available);
-        
-        printf("\nCOM available variables : %d\n",cfg.available);
+        print_conf(cfg);
     };
-
-
-     
 }   
