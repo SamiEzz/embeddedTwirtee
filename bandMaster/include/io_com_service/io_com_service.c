@@ -28,20 +28,27 @@ void com_init_config(uint16* available,char* JSON_STRING,jsmntok_t* t,int max){
     
 }
 void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
-    char tempchar[12];
+    char tempchar[12];//="500000";
     can->can_name=malloc(4);
-    uint8 error=3; // nomrbe d'élements dans l'objet json
+    uint8 error=4; // nomrbe d'élements dans l'objet json
     for (int i = 1; i < max; i++) {
         //
         if (jsoncomp(JSON_STRING, &t[i], "can_enabled") == 0) {
-            strncpy(tempchar, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start);
+            strncpy(tempchar, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start+1);
             can->enabled = atoi(tempchar);
+            printf("can_enabled : %d\n",can->enabled);
             error--;
             //free(&tempchar);
         }
         else if(jsoncomp(JSON_STRING,&t[i],"can_name")==0){
-            strncpy(can->can_name,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start+2);
+            strncpy(can->can_name,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start+1);
             can->can_name[4]='\0';
+            error--;
+        }   
+
+        else if(jsoncomp(JSON_STRING,&t[i],"can_speed")==0){
+            strncpy(tempchar, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start+1);
+            can->speed = atoi(tempchar);
             error--;
         }   
         else if (jsoncomp(JSON_STRING,&t[i],"can_tram_id")==0)
@@ -59,14 +66,15 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
 }
 
 void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
-    char tempchar[12];
+    char tempchar[]="500000";
     uint8 error=4;
     int i=1;
     for (i; i < max; i++) {
         //
         if (jsoncomp(JSON_STRING, &t[i], "uart_enabled") == 0) {
-            strncpy(tempchar, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start);
-            uart->enabled = atoi(tempchar);
+            char c[2];
+            strncpy(c, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start+1);
+            uart->enabled = atoi(c);
             error--;
             //free(&tempchar);
         }
@@ -77,7 +85,7 @@ void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
         }    
             
         else if(jsoncomp(JSON_STRING,&t[i],"uart_speed")==0){
-            strncpy(tempchar,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start);
+            strncpy(tempchar,JSON_STRING+t[i+1].start, t[i+1].end-t[i+1].start+1);
             uart->speed= atol(tempchar);;
             //sprintf(uart->speed,"%ld",tempchar);
             error--;
@@ -171,7 +179,7 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
             int index_2=0;
             int index_3=0;
             
-            char* tempchar;
+            char tempchar[12];
             int k=0;
             int K=100;
             //int* p_var_id=pcan->id_data_base[index_2];
@@ -197,6 +205,12 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
                         //printf("index_3[%d] : %d \n",j,pcan->id_data_base[index_3].offsets[j]);
                     }
                     index_3++;
+                }
+                else if (jsoncomp(JSON_STRING, &t[k], "tram_period") == 0){
+                    strncpy(tempchar, JSON_STRING + t[k+1].start, t[k+1].end-t[k+1].start);
+                    pcan->id_data_base[index].period=atoi(tempchar);
+                    //printf("\nperiod :%d\n",pcan->id_data_base[index].period);
+                    //error--;
                 }
                 else if (jsoncomp(JSON_STRING, &t[k], "can_id") == 0){
                     strncpy(pcan->id_data_base[index].can_id, JSON_STRING + t[k+1].start, t[k+1].end-t[k+1].start);
@@ -275,19 +289,24 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
     //printf("io_com_service : can_database_init()\n");    
     can_database_init(cfg,JSON_STRING,t,r);
 
+
     return 0;
 }
 
 void print_conf(COM_CONFIG cfg){
-    printf("uart enabled : %d\n",cfg.uart.enabled);
+    printf("\nuart enabled : %d\n",cfg.uart.enabled);
     printf("uart COM : %s\n",cfg.uart.COM);
     printf("uart speed : %ld\n",cfg.uart.speed);
     printf("uart available : %d\n",cfg.uart.available);
     printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
+    printf("can_config.name : %s\n",cfg.can.can_name);
+    printf("can_config.speed : %ld\n",cfg.can.speed);
+}
+void print_db(COM_CONFIG cfg){
     printf("\ncan variables : %d\n",cfg.can.available);
     printf("can id");
     for(int i=0;i<cfg.can.available;i++){
-        printf("\n%s\t\t",cfg.can.id_data_base[i].can_id);
+        printf("\n%s | periode : %d\t\t",cfg.can.id_data_base[i].can_id,cfg.can.id_data_base[i].period);
         for(int j=0;j<cfg.can.id_data_base[i].available;j++){
             printf("%d\t",cfg.can.id_data_base[i].var_id[j]);
         }
@@ -306,12 +325,16 @@ void print_conf(COM_CONFIG cfg){
         printf("\n\tmedium \t\t: %s\n",(cfg.data_base[j].medium==0)?"CAN":"UART");
     }
 }
+
+
 int main(){
     COM_CONFIG cfg;
     //char* jsonConfigFileName="./io_service_config.json";
     char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(&cfg,jsonConfigFileName)==0){        
-        print_conf(cfg);
+        print_db(cfg);
+        //print_conf(cfg);
+
     };
 }   

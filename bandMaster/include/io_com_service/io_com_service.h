@@ -58,6 +58,8 @@ typedef struct io_data_base {
 typedef struct can_tram_db{
 	uint16 var_id[10];
 	uint8  offsets[10]; 
+	uint16 edition_time;
+	uint16 period; 
 	uint8 available;
 	char can_id[4];
 	char variable[12];
@@ -67,6 +69,7 @@ typedef struct can_config{
 	uint8 enabled;
 	char* can_name;
 	uint16 available;
+	uint32 speed;
 	can_tram_db id_data_base[MAX_VAR_TO_COM];
 } can_config;
 
