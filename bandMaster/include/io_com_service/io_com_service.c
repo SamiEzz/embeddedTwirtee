@@ -4,7 +4,11 @@
 #include <time.h>
 #include <pthread.h>
 
+//#include "../twirtee.h"
 #include "io_com_service.h"
+#include "./linux-can-utils/write_can.h"
+#include "./linux-can-utils/read_can.h"
+
 #include "jsmn/jsmn.h"
 
 int jsoncomp(const char* json, jsmntok_t* tok, const char* s) {
@@ -39,7 +43,7 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
         if (jsoncomp(JSON_STRING, &t[i], "can_enabled") == 0) {
             strncpy(tempchar, JSON_STRING + t[i+1].start, t[i+1].end-t[i+1].start+1);
             can->enabled = atoi(tempchar);
-            printf("can_enabled : %d\n",can->enabled);
+            //printf("can_enabled : %d\n",can->enabled);
             error--;
             //free(&tempchar);
         }
@@ -328,17 +332,7 @@ void print_db(COM_CONFIG cfg){
         printf("\n\tmedium \t\t: %s\n",(cfg.data_base[j].medium==0)?"CAN":"UART");
     }
 }
-void set_edition_time(clock_t* edition_time){
-    *edition_time=clock();
-}
-void check_availability(){
-
-}
-
-void io_com_engine(COM_CONFIG* cfg){
-
-}
-sint16 get_tram_byid(uint8 var_id,COM_CONFIG* cfg){
+sint16 get_element_byvarid(uint8 var_id,COM_CONFIG* cfg){
     for(sint16 i=0;i<cfg->available;i++){
         pthread_mutex_lock(&cfg->data_base[i].mutex);
         if(cfg->data_base[i].var_id==var_id){
@@ -348,25 +342,91 @@ sint16 get_tram_byid(uint8 var_id,COM_CONFIG* cfg){
     }
     return -1;
 }
-void write_io(uint8 var_id,char* data,COM_CONFIG* cfg){
-    
-    
-    sint16 index=get_tram_byid(var_id,cfg);
-    if(index==-1){
-        printf("\nio_com_service.c : var_id introuvable\n");
+
+uint8 check_time_val(clock_t period,clock_t edition_time){
+    if(period+edition_time<clock()){
+        return 1;
     }
-    set_edition_time(&cfg->data_base[index].edition_time);
+    return 0;
+}
+void io_can_concatenate(can_tram_db* c_tram){
+
+}
+/**
+ * @brief 
+ *  
+ * @param cfg 
+ */
+void io_can_write_engine(COM_CONFIG* cfg){
+    can_shared* can_buffer=malloc(sizeof(can_shared));
+    //sprintf(can_buffer->data[can_buffer->available],"%s",cfg);
+
+    // cfg.can.available
+    // cfg.can.id_data_base[1].available
+    // cfg.can.id_data_base[1].edition_time
+
+    for(int i=0;i<cfg->can.available;i++){
+        if(check_time_val(cfg->can.id_data_base[i].period,cfg->can.id_data_base[i].edition_time)==1){
+            io_can_concatenate(&cfg->can.id_data_base[i]);
+        }
+    }    
+    uint8 sendable_var;
+
 
 }
 
+
+void set_edition_time(clock_t* edition_time){
+    *edition_time=clock();
+}
+void check_availability(){
+
+}
+void float2char(char* in_char,float f_in){
+    unsigned int payload;
+    memcpy(&payload,&f_in,4);
+    sprintf(in_char,"%08x",payload);
+    //printf("CAN SEND : %s \t %f\n",test,f_in);
+}
+
+void io_can_write(uint8 var_id,char* data,COM_CONFIG* cfg){
+    sint16 index=get_element_byvarid(var_id,cfg);
+    if(index==-1){
+        printf("\nio_com_service.c : var_id introuvable\n");
+    }
+    pthread_mutex_lock(&cfg->data_base[index].mutex);
+    set_edition_time(&cfg->data_base[index].edition_time);
+    sprintf(cfg->data_base[index].data,"%s",data);
+    pthread_mutex_unlock(&cfg->data_base[index].mutex);
+
+    //char* value[4];
+    
+}
+
+// typedef struct can_shared{
+//     char* can_name;
+//     unsigned int id[100];
+//     unsigned char data[100][256];
+//     int available;
+//     pthread_mutex_t mutex;
+// }can_shared;
 int main(){
     COM_CONFIG cfg;
     //char* jsonConfigFileName="./io_service_config.json";
     char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(&cfg,jsonConfigFileName)==0){        
-        print_db(cfg);
-        print_conf(cfg);
+        //print_db(cfg);
+        //print_conf(cfg);
     };
-
-}   
+    //char value;
+    char value[16];
+    float2char(value,0.1);
+    printf("CAN SEND : %s \t %f\n",value,0.1);
+    float2char(value,0.2);
+    printf("CAN SEND : %s \t %f\n",value,0.2);
+    float2char(value,3.14);
+    printf("CAN SEND : %s \t %f\n",value,3.14);
+    
+    
+ }   

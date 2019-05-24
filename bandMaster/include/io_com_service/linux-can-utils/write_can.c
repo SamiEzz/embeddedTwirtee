@@ -107,7 +107,7 @@ void delay(int number_of_seconds)
 } 
   
 void float_can(char* value,float f_in,int id){
-    unsigned int payload;
+    uint32 payload;
     memcpy(&payload,&f_in,4);
     sprintf(value,"%d#%08x",id,payload);
     printf("CAN SEND : %s \t %f\n",value,f_in);
