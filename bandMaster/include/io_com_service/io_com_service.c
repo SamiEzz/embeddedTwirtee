@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+#include <pthread.h>
+
 #include "io_com_service.h"
 #include "jsmn/jsmn.h"
 
@@ -181,7 +184,7 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
             
             char tempchar[12];
             int k=0;
-            int K=100;
+            int K=pcan->available*30;
             //int* p_var_id=pcan->id_data_base[index_2];
             for(k=i;k<K;k++){
                 char* tempchar_2=malloc(32);
@@ -202,7 +205,7 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
                     for(int j=0;j<t[k+1].size;j++){
                         strncpy(tempchar_2, JSON_STRING + t[k+j+2].start, 4);
                         pcan->id_data_base[index_3].offsets[j]=atoi(tempchar_2);
-                        //printf("index_3[%d] : %d \n",j,pcan->id_data_base[index_3].offsets[j]);
+                        // printf("index_3[%d/%d] : %d \n",j,t[k+1].size,pcan->id_data_base[index_3].offsets[j]);
                     }
                     index_3++;
                 }
@@ -306,7 +309,7 @@ void print_db(COM_CONFIG cfg){
     printf("\ncan variables : %d\n",cfg.can.available);
     printf("can id");
     for(int i=0;i<cfg.can.available;i++){
-        printf("\n%s | periode : %d\t\t",cfg.can.id_data_base[i].can_id,cfg.can.id_data_base[i].period);
+        printf("\n%s \t\t",cfg.can.id_data_base[i].can_id/*,cfg.can.id_data_base[i].period*/);
         for(int j=0;j<cfg.can.id_data_base[i].available;j++){
             printf("%d\t",cfg.can.id_data_base[i].var_id[j]);
         }
@@ -325,7 +328,36 @@ void print_db(COM_CONFIG cfg){
         printf("\n\tmedium \t\t: %s\n",(cfg.data_base[j].medium==0)?"CAN":"UART");
     }
 }
+void set_edition_time(clock_t* edition_time){
+    *edition_time=clock();
+}
+void check_availability(){
 
+}
+
+void io_com_engine(COM_CONFIG* cfg){
+
+}
+sint16 get_tram_byid(uint8 var_id,COM_CONFIG* cfg){
+    for(sint16 i=0;i<cfg->available;i++){
+        pthread_mutex_lock(&cfg->data_base[i].mutex);
+        if(cfg->data_base[i].var_id==var_id){
+            return i;
+        }
+        pthread_mutex_unlock(&cfg->data_base[i].mutex);
+    }
+    return -1;
+}
+void write_io(uint8 var_id,char* data,COM_CONFIG* cfg){
+    
+    
+    sint16 index=get_tram_byid(var_id,cfg);
+    if(index==-1){
+        printf("\nio_com_service.c : var_id introuvable\n");
+    }
+    set_edition_time(&cfg->data_base[index].edition_time);
+
+}
 
 int main(){
     COM_CONFIG cfg;
@@ -334,7 +366,7 @@ int main(){
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(&cfg,jsonConfigFileName)==0){        
         print_db(cfg);
-        //print_conf(cfg);
-
+        print_conf(cfg);
     };
+
 }   

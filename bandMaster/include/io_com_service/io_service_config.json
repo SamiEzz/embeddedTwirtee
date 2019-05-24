@@ -2,15 +2,15 @@
   "can_tram_id": [
     {
       "can_id": "100",
-      "var_id": [0,1,137,2],
-      "offsets":[10,16,20,22],
+      "var_id": [0,1],
+      "offsets":[0,16],
       "tram_period":50,
       "variable": "right_speed left_speed"
     },
     {
-      "can_id": "1A1",
-      "var_id": [8,3,66],
-      "offsets":[0,8,32],
+      "can_id": "A00",
+      "var_id": [8,9],
+      "offsets":[0,8],
       "tram_period":50,
       "variable": "right_speed left_speed"
     },
