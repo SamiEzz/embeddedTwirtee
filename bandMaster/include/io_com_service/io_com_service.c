@@ -5,23 +5,85 @@
 #include <pthread.h>
 #include <math.h>
 //#include "../twirtee.h"
+#include "./jsmn/jsmn.h"
 #include "io_com_service.h"
 #include "./linux-can-utils/write_can.h"
 #include "./linux-can-utils/read_can.h"
 
-#include "jsmn/jsmn.h"
-int jsoncomp(const char* json, jsmntok_t* tok, const char* s) {
-    if (tok->type == JSMN_STRING && (int)strlen(s) == tok->end - tok->start &&
-        strncmp(json + tok->start, s, tok->end - tok->start) == 0) {
-        return 0;
-    }
-    return -1;
-}
+
+
+int main(){
+    COM_CONFIG cfg;
+    //char* jsonConfigFileName="./io_service_config.json";
+    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
+    if(init_io_service(&cfg,jsonConfigFileName)==0){        
+        //print_db(cfg);
+        print_conf(cfg);
+    };
+    // char value[16];
+    // float2char(value,0.1);
+    // printf("CAN SEND : %s \t %f\n",value,0.1);
+    
+    uint32 _32bits=0xDEADBEEF;
+    uint8 ret8;
+    uint16 ret16;
+    
+    char chardata[32]; //=malloc(32*sizeof(char));
+    printf("\nhex : %x\n",_32bits);
+    int k=0;
+
+    
+    // set_bit(&_32bits,0,1);
+    // set_bit(&_32bits,1,1);
+    // set_bit(&_32bits,2,1);
+    // set_bit(&_32bits,3,1);
+    // set_bit(&_32bits,7,1);
+    // print_bits(_32bits,32);
+    uint32tochar(chardata,_32bits);
+    printf("\ncharfromint : %s\n",chardata);
+    //memcpy((void*)b,((void*)&_32bits),32);
+    
+    get_uint8(_32bits,4,&ret8);
+    printf("\nret8 : %x\n",ret8);
+    
+    get_uint16(_32bits,0,&ret16);
+    printf("ret16 : %x\n",ret16);
+    
+ }
+/**
+ * @brief Set the bit number "offset" to the value "value"
+ * 
+ * @param f_out 
+ * @param offset 
+ * @param value 
+ */
+
 void get_bit(uint32 f_in,uint8 offset,uint8* ret){
     *ret = f_in>>offset&1;
 }
 
-void set_bit(uint32* f_out,uint8 offset,uint8 value){
+void set_bit_32(uint32* f_out,uint8 offset,uint8 value){
+    uint8 state;
+    get_bit(*f_out,offset,&state);
+    if(state==0 && value==1){
+        *f_out+=(uint32)pow(2,offset);// 2^offset;
+    }
+    else if(state==1 && value==0){
+        *f_out-=(uint32)pow(2,offset);
+    }
+}
+void set_bit_16(uint16* f_out,uint8 offset,uint8 value){
+    uint8 state;
+    get_bit(*f_out,offset,&state);
+    if(state==0 && value==1){
+        *f_out+=(uint32)pow(2,offset);// 2^offset;
+    }
+    else if(state==1 && value==0){
+        *f_out-=(uint32)pow(2,offset);
+    }
+}
+void set_bit_8(uint8* f_out,uint8 offset,uint8 value){
     uint8 state;
     get_bit(*f_out,offset,&state);
     if(state==0 && value==1){
@@ -33,31 +95,124 @@ void set_bit(uint32* f_out,uint8 offset,uint8 value){
 }
 void get_uint8(uint32 f_in,uint8 offset,uint8* ret){
     //*ret = f_in>>offset&1;
-    uint8 bit;
-    for(int i=offset;i<8;i++){
+
+    uint8 SIZE=8;
+    uint8 bit=0;
+    for(int i=0;i<SIZE;i++){
         get_bit(f_in,offset+i,&bit);
-        set_bit(ret,offset+i,bit);
+        set_bit_8(ret,i,bit);
     }
 }
 
 void get_uint16(uint32 f_in,uint8 offset,uint16* ret){
     //*ret = f_in>>offset&1;
+    uint8 SIZE=16;
     uint8 bit;
-    for(int i=0;i<16;i++){
+    for(int i=0;i<SIZE;i++){
         get_bit(f_in,offset+i,&bit);
-        set_bit(ret,offset+i,bit);
+        set_bit_16(ret,i,bit);
     }
 }
 
-void set_uint8(uint32* f_out,uint8 offset,uint8 value){
-
-}
 void print_bits(uint32 f_in,uint8 size){
     for(int _i=0;_i<size;_i++){
         uint8 ret;
         get_bit(f_in,_i,&ret);
         printf("%d,",ret);
     }
+}
+
+   
+
+
+
+
+sint16 get_element_byvarid(uint16 var_id,COM_CONFIG* cfg){
+    for(sint16 i=0;i<cfg->available;i++){
+        pthread_mutex_lock(&cfg->data_base[i].mutex);
+        if(cfg->data_base[i].var_id==var_id){
+            return i;
+        }
+        pthread_mutex_unlock(&cfg->data_base[i].mutex);
+    }
+    return -1;
+}
+
+uint8 check_time_val(can_tram_db* db_element){
+    if(db_element->period+db_element->edition_time<clock()){
+        return 1;
+    }
+    return 0;
+}
+void io_can_concatenate(can_tram_db* c_tram,COM_CONFIG* cfg){
+    uint8 indexs[c_tram->available];
+    c_tram->variable="01234567890";
+    for(int i=0;i<c_tram->available;i++){
+        indexs[i]=get_element_byvarid(c_tram->var_id[i],cfg);
+    }
+
+}
+/**
+ * @brief 
+ *  update can database
+ * @param cfg 
+ */
+void io_can_write_engine(COM_CONFIG* cfg){
+    can_shared* can_buffer=malloc(sizeof(can_shared));
+    //sprintf(can_buffer->data[can_buffer->available],"%s",cfg);
+
+    // cfg.can.available
+    // cfg.can.id_data_base[1].available
+    // cfg.can.id_data_base[1].edition_time
+
+    for(int i=0;i<cfg->can.available;i++){
+        if(check_time_val(&cfg->can.id_data_base[i])==1){
+            
+            io_can_concatenate(&cfg->can.id_data_base[i],cfg);
+        }
+    }    
+    uint8 sendable_var;
+
+
+}
+
+
+void set_edition_time(clock_t* edition_time){
+    *edition_time=clock();
+}
+void check_availability(io_data_base var){
+
+}
+void float2char(char* in_char,float f_in){
+    unsigned int payload;
+    memcpy(&payload,&f_in,4);
+    sprintf(in_char,"%08x",payload);
+    //printf("CAN SEND : %s \t %f\n",test,f_in);
+}
+void uint32tochar(char* out_char,uint32 in_int){
+    sprintf(out_char,"%x",in_int);
+}
+
+void io_write(uint8 var_id,char* data,COM_CONFIG* cfg){
+    sint16 index=get_element_byvarid(var_id,cfg);
+    if(index==-1){
+        printf("\nio_com_service.c : var_id introuvable\n");
+    }
+    pthread_mutex_lock(&cfg->data_base[index].mutex);
+    set_edition_time(&cfg->data_base[index].edition_time);
+    sprintf(cfg->data_base[index].data,"%s",data);
+    pthread_mutex_unlock(&cfg->data_base[index].mutex);
+
+    //char* value[4];
+    
+}
+
+int jsoncomp(const char* json, jsmntok_t* tok, const char* s) {
+    if (tok->type == JSMN_STRING && (int)strlen(s) == tok->end - tok->start &&
+        strncmp(json + tok->start, s, tok->end - tok->start) == 0) {
+        return 0;
+    }
+    return -1;
 }
 void com_init_config(uint16* available,char* JSON_STRING,jsmntok_t* t,int max){
     //char* tempchar;
@@ -302,7 +457,8 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
         fclose(f);
         //printf("io.c : open json file : %s\n",JSON_STRING);
 
-    } else {
+    } 
+    else {
         printf("io.c : Couldn't open json file. \n");
         return -1;
     }
@@ -375,129 +531,3 @@ void print_db(COM_CONFIG cfg){
         printf("\n\tmedium \t\t: %s\n",(cfg.data_base[j].medium==0)?"CAN":"UART");
     }
 }
-sint16 get_element_byvarid(uint16 var_id,COM_CONFIG* cfg){
-    for(sint16 i=0;i<cfg->available;i++){
-        pthread_mutex_lock(&cfg->data_base[i].mutex);
-        if(cfg->data_base[i].var_id==var_id){
-            return i;
-        }
-        pthread_mutex_unlock(&cfg->data_base[i].mutex);
-    }
-    return -1;
-}
-
-uint8 check_time_val(can_tram_db* db_element){
-    if(db_element->period+db_element->edition_time<clock()){
-        return 1;
-    }
-    return 0;
-}
-void io_can_concatenate(can_tram_db* c_tram,COM_CONFIG* cfg){
-    uint8 indexs[c_tram->available];
-    c_tram->variable="01234567890";
-    for(int i=0;i<c_tram->available;i++){
-        indexs[i]=get_element_byvarid(c_tram->var_id[i],cfg);
-    }
-
-}
-/**
- * @brief 
- *  update can database
- * @param cfg 
- */
-void io_can_write_engine(COM_CONFIG* cfg){
-    can_shared* can_buffer=malloc(sizeof(can_shared));
-    //sprintf(can_buffer->data[can_buffer->available],"%s",cfg);
-
-    // cfg.can.available
-    // cfg.can.id_data_base[1].available
-    // cfg.can.id_data_base[1].edition_time
-
-    for(int i=0;i<cfg->can.available;i++){
-        if(check_time_val(&cfg->can.id_data_base[i])==1){
-            
-            io_can_concatenate(&cfg->can.id_data_base[i],cfg);
-        }
-    }    
-    uint8 sendable_var;
-
-
-}
-
-
-void set_edition_time(clock_t* edition_time){
-    *edition_time=clock();
-}
-void check_availability(io_data_base var){
-
-}
-void float2char(char* in_char,float f_in){
-    unsigned int payload;
-    memcpy(&payload,&f_in,4);
-    sprintf(in_char,"%08x",payload);
-    //printf("CAN SEND : %s \t %f\n",test,f_in);
-}
-void uint32tochar(char* out_char,uint32 in_int){
-    sprintf(out_char,"%x",in_int);
-}
-
-void io_write(uint8 var_id,char* data,COM_CONFIG* cfg){
-    sint16 index=get_element_byvarid(var_id,cfg);
-    if(index==-1){
-        printf("\nio_com_service.c : var_id introuvable\n");
-    }
-    pthread_mutex_lock(&cfg->data_base[index].mutex);
-    set_edition_time(&cfg->data_base[index].edition_time);
-    sprintf(cfg->data_base[index].data,"%s",data);
-    pthread_mutex_unlock(&cfg->data_base[index].mutex);
-
-    //char* value[4];
-    
-}
-/**
- * @brief Set the bit number "offset" to the value "value"
- * 
- * @param f_out 
- * @param offset 
- * @param value 
- */
-
-int main(){
-    COM_CONFIG cfg;
-    //char* jsonConfigFileName="./io_service_config.json";
-    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
-    printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
-    if(init_io_service(&cfg,jsonConfigFileName)==0){        
-        //print_db(cfg);
-        print_conf(cfg);
-    };
-    // char value[16];
-    // float2char(value,0.1);
-    // printf("CAN SEND : %s \t %f\n",value,0.1);
-    
-    uint32 _32bits=0xDEADBEEF;
-    uint8 ret8;
-    uint16 ret16;
-    
-    char chardata[32]; //=malloc(32*sizeof(char));
-    printf("\nhex : %x\n",_32bits);
-    int k=0;
-
-    get_uint8(_32bits,0,&ret8);
-    printf("\nret8 : %x\n",ret8);
-    
-    get_uint16(_32bits,12,&ret16);
-    printf("\nret16 : %x\n",ret16);
-    
-    set_bit(&_32bits,0,1);
-    set_bit(&_32bits,1,1);
-    set_bit(&_32bits,2,1);
-    set_bit(&_32bits,3,1);
-    set_bit(&_32bits,7,1);
-    print_bits(_32bits,32);
-    uint32tochar(chardata,_32bits);
-    printf("\ncharfromint : %s\n",chardata);
-    //memcpy((void*)b,((void*)&_32bits),32);
-    
-    
- }   

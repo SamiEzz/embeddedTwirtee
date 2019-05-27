@@ -34,12 +34,6 @@ const uint8 io_batterie_state		= 7;
 const uint8 io_odometrie_left		= 8;
 const uint8 io_odometrie_right		= 9;
 
-
-
-
-
-
-
 typedef struct io_data_base {
 	uint16 var_id;
 	char* data;
@@ -110,5 +104,22 @@ typedef	struct can_bits{
 	uint8 b1:1;
 } can_bits;
 
+void get_bit(uint32 f_in,uint8 offset,uint8* ret);
+void set_bit_32(uint32* f_out,uint8 offset,uint8 value);
+void set_bit_16(uint16* f_out,uint8 offset,uint8 value);
+void set_bit_8(uint8* f_out,uint8 offset,uint8 value);
+void get_uint8(uint32 f_in,uint8 offset,uint8* ret);
+void get_uint16(uint32 f_in,uint8 offset,uint16* ret);
+void print_bits(uint32 f_in,uint8 size);
+
+int jsoncomp(const char* json, jsmntok_t* tok, const char* s) ;
+void com_init_config(uint16* available,char* JSON_STRING,jsmntok_t* t,int max);
+void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max);
+void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max);
+void io_db_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max);
+void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max);
+sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName);
+void print_conf(COM_CONFIG cfg);
+void print_db(COM_CONFIG cfg);
 
 #endif /* io_com_service */
