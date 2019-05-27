@@ -15,7 +15,7 @@
 int main(){
     COM_CONFIG cfg;
     //char* jsonConfigFileName="./io_service_config.json";
-    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    char jsonConfigFileName[]="/home/lasagne/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(&cfg,jsonConfigFileName)==0){        
         //print_db(cfg);
@@ -25,7 +25,7 @@ int main(){
     // float2char(value,0.1);
     // printf("CAN SEND : %s \t %f\n",value,0.1);
     
-    uint32 _32bits=0xDEADBEEF;
+    uint32 _32bits=0x0;
     uint8 ret8;
     uint16 ret16;
     
@@ -34,21 +34,27 @@ int main(){
     int k=0;
 
     
-    // set_bit(&_32bits,0,1);
-    // set_bit(&_32bits,1,1);
-    // set_bit(&_32bits,2,1);
-    // set_bit(&_32bits,3,1);
-    // set_bit(&_32bits,7,1);
+    set_bit_32(&_32bits,0,1);
+    set_bit_32(&_32bits,1,1);
+    set_bit_32(&_32bits,2,0);
+    set_bit_32(&_32bits,3,1);
+    set_bit_32(&_32bits,4,1);
+    set_bit_32(&_32bits,5,0);
+    set_bit_32(&_32bits,6,1);
+    set_bit_32(&_32bits,7,0);
+    
     // print_bits(_32bits,32);
     uint32tochar(chardata,_32bits);
     printf("\ncharfromint : %s\n",chardata);
     //memcpy((void*)b,((void*)&_32bits),32);
     
-    get_uint8(_32bits,4,&ret8);
+    get_uint8(_32bits,0,&ret8);
     printf("\nret8 : %x\n",ret8);
+    print_bits(ret8,8);
     
     get_uint16(_32bits,0,&ret16);
     printf("ret16 : %x\n",ret16);
+    print_bits(ret16,16);
     
  }
 /**
@@ -120,6 +126,7 @@ void print_bits(uint32 f_in,uint8 size){
         get_bit(f_in,_i,&ret);
         printf("%d,",ret);
     }
+    printf("\n");
 }
 
    
