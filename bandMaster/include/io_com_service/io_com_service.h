@@ -65,8 +65,8 @@ typedef struct can_tram_db{
 	clock_t edition_time;
 	clock_t period; 
 	uint8 available;
-	char can_id[4];
-	char variable[12];
+	char* can_id;
+	char* variable;
 } can_tram_db;
 
 typedef struct can_config{
@@ -79,7 +79,7 @@ typedef struct can_config{
 
 typedef struct uart_id_db{
 	uint16 var_id;
-	char variable[12];
+	char* variable;
 } uart_id_db;
 
 typedef struct uart_config{
@@ -106,7 +106,9 @@ typedef struct COM_CONFIG{
 	wifi_config wifi;
 } COM_CONFIG;
 
-
+typedef	struct can_bits{
+	uint8 b1:1;
+} can_bits;
 
 
 #endif /* io_com_service */
