@@ -8,9 +8,9 @@
       "variable": "right_speed left_speed"
     },
     {
-      "can_id": "A00",
+      "can_id": "200",
       "var_id": [8,9],
-      "offsets":[0,8],
+      "offsets":[0,24],
       "tram_period":50,
       "variable": "odo_left odo_right"
     }
@@ -56,6 +56,7 @@
       "validity_time": 100,
       "period": 50,
       "size": 16,
+      "type": 1,
       "trigger_type": 0,
       "medium": 0,
       "disabled": 0
@@ -66,6 +67,7 @@
       "validity_time": 100,
       "period": 50,
       "size": 16,
+      "type": 1,
       "trigger_type": 0,
       "medium": 0,
       "disabled": 0
@@ -76,6 +78,7 @@
       "validity_time": 100,
       "period": 50,
       "size": 8,
+      "type": 0,
       "trigger_type": 0,
       "medium": 0,
       "disabled": 0
@@ -86,6 +89,7 @@
       "validity_time": 100,
       "period": 50,
       "size": 8,
+      "type": 0,
       "trigger_type": 0,
       "medium": 1,
       "disabled": 0
@@ -96,6 +100,7 @@
       "validity_time": 100,
       "period": 50,
       "size": 8,
+      "type": 0,
       "trigger_type": 0,
       "medium": 1,
       "disabled": 0
@@ -106,6 +111,7 @@
       "validity_time": 100,
       "period": 50,
       "size": 8,
+      "type": 0,
       "trigger_type": 0,
       "medium": 1,
       "disabled": 0
@@ -116,6 +122,7 @@
       "validity_time": 100,
       "period": 50,
       "size": 8,
+      "type": 0,
       "trigger_type": 0,
       "medium": 1,
       "disabled": 0
@@ -126,6 +133,7 @@
       "validity_time": 100,
       "period": 50,
       "size": 8,
+      "type": 0,
       "trigger_type": 0,
       "medium": 0,
       "disabled": 0
@@ -136,16 +144,18 @@
       "validity_time": 100,
       "period": 50,
       "size": 8,
+      "type": 0,
       "trigger_type": 0,
       "medium": 0,
       "disabled": 0
     },
     {
       "_comment": "odometrie_right",
-      "var_id": 90,
+      "var_id": 9,
       "validity_time": 100,
       "period": 50,
       "size": 8,
+      "type": 0,
       "trigger_type": 0,
       "medium": 0,
       "disabled": 0
@@ -156,6 +166,7 @@
       "validity_time": 100,
       "period": 50,
       "size": 8,
+      "type": 0,
       "trigger_type": 1,
       "medium": 2,
       "disabled": 0,

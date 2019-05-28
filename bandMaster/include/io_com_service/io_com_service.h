@@ -37,10 +37,12 @@ const uint8 io_odometrie_right		= 9;
 typedef struct io_data_base {
 	uint16 var_id;
 	char* data;
+	uint32 xdata;
 	clock_t validity_time;
 	clock_t edition_time;
 	uint32 periode;
 	uint16 size;
+	uint8 type; // 0: int, 1: float
 	pthread_mutex_t mutex;
 	uint8 remote_request;	// 0: no remote, 0!= : oui  
 							// et remote_request = taille de la valeur retourné 
@@ -59,6 +61,8 @@ typedef struct can_tram_db{
 	clock_t edition_time;
 	clock_t period; 
 	uint8 available;
+	uint16 x_can_id;
+	uint32 x_can_frame;
 	char* can_id;
 	char* variable;
 } can_tram_db;
@@ -121,5 +125,6 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max);
 sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName);
 void print_conf(COM_CONFIG cfg);
 void print_db(COM_CONFIG cfg);
+void io_can_write_engine(COM_CONFIG* cfg);
 
 #endif /* io_com_service */

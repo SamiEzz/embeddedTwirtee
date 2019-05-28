@@ -15,46 +15,60 @@
 int main(){
     COM_CONFIG cfg;
     //char* jsonConfigFileName="./io_service_config.json";
-    char jsonConfigFileName[]="/home/lasagne/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(&cfg,jsonConfigFileName)==0){        
-        //print_db(cfg);
+        print_db(cfg);
         print_conf(cfg);
     };
     // char value[16];
     // float2char(value,0.1);
     // printf("CAN SEND : %s \t %f\n",value,0.1);
+    cfg.data_base[0].data="DEAD";
+    cfg.data_base[1].data="BEEF";
+    cfg.data_base[8].data="F0";
+    cfg.data_base[9].data="FF";
     
-    uint32 _32bits=0x0;
-    uint8 ret8;
-    uint16 ret16;
     
-    char chardata[32]; //=malloc(32*sizeof(char));
-    printf("\nhex : %x\n",_32bits);
-    int k=0;
+    io_can_write_engine(&cfg);
 
+    // uint32 _32bits=0x0;
+    // uint8 ret8;
+    // uint16 ret16;
     
-    set_bit_32(&_32bits,0,1);
-    set_bit_32(&_32bits,1,1);
-    set_bit_32(&_32bits,2,0);
-    set_bit_32(&_32bits,3,1);
-    set_bit_32(&_32bits,4,1);
-    set_bit_32(&_32bits,5,0);
-    set_bit_32(&_32bits,6,1);
-    set_bit_32(&_32bits,7,0);
+    // char chardata[32]; //=malloc(32*sizeof(char));
+    // printf("\nhex : %x\n",_32bits);
+    // int k=0;
+
+    // set_8bits(&_32bits,24,0xDE);
+    // printf("set8bits : %x\n",_32bits);
+    // set_8bits(&_32bits,16,0xAD);
+    // printf("set8bits : %x\n",_32bits);
+    // uint16 add=0xBEEF;
+    // set_16bits(&_32bits,0,add);
+    // printf("set16bits : %x\n",_32bits);
     
-    // print_bits(_32bits,32);
-    uint32tochar(chardata,_32bits);
-    printf("\ncharfromint : %s\n",chardata);
-    //memcpy((void*)b,((void*)&_32bits),32);
+    // set_bit_32(&_32bits,0,1);
+    // set_bit_32(&_32bits,1,1);
+    // set_bit_32(&_32bits,2,0);
+    // set_bit_32(&_32bits,3,1);
+    // set_bit_32(&_32bits,4,1);
+    // set_bit_32(&_32bits,5,0);
+    // set_bit_32(&_32bits,6,1);
+    // set_bit_32(&_32bits,7,0);
     
-    get_uint8(_32bits,0,&ret8);
-    printf("\nret8 : %x\n",ret8);
-    print_bits(ret8,8);
+    // // print_bits(_32bits,32);
+    // uint32tochar(chardata,_32bits);
+    // printf("\ncharfromint : %s\n",chardata);
+    // //memcpy((void*)b,((void*)&_32bits),32);
     
-    get_uint16(_32bits,0,&ret16);
-    printf("ret16 : %x\n",ret16);
-    print_bits(ret16,16);
+    // get_uint8(_32bits,0,&ret8);
+    // printf("\nret8 : %x\n",ret8);
+    // print_bits(ret8,8);
+    
+    // get_uint16(_32bits,0,&ret16);
+    // printf("ret16 : %x\n",ret16);
+    // print_bits(ret16,16);
     
  }
 /**
@@ -79,6 +93,35 @@ void set_bit_32(uint32* f_out,uint8 offset,uint8 value){
         *f_out-=(uint32)pow(2,offset);
     }
 }
+
+void set_8bits(uint32* f_out,uint8 offset,uint8 value){
+    uint8 SIZE=8;
+    uint8 bin_ret=0;
+    if(offset<=24){
+        for(int i=0;i<SIZE;i++){
+            get_bit(value,i,&bin_ret);
+            set_bit_32(f_out,offset+i,bin_ret);
+        }
+    }
+    else{
+        printf("\nio_com_service : set_8bits - offset:%d > 24\n",offset);
+    }
+}
+
+void set_16bits(uint32* f_out,uint8 offset,uint16 value){
+    uint8 SIZE=16;
+    uint8 bin_ret=0;
+    if(offset<=16){
+        for(int i=0;i<SIZE;i++){
+            get_bit(value,i,&bin_ret);
+            set_bit_32(f_out,offset+i,bin_ret);
+        }
+    }
+    else{
+        printf("\nio_com_service : set_16bits - offset:%d > 16\n",offset);
+    }
+}
+
 void set_bit_16(uint16* f_out,uint8 offset,uint8 value){
     uint8 state;
     get_bit(*f_out,offset,&state);
@@ -136,11 +179,11 @@ void print_bits(uint32 f_in,uint8 size){
 
 sint16 get_element_byvarid(uint16 var_id,COM_CONFIG* cfg){
     for(sint16 i=0;i<cfg->available;i++){
-        pthread_mutex_lock(&cfg->data_base[i].mutex);
+        //pthread_mutex_lock(&cfg->data_base[i].mutex);
         if(cfg->data_base[i].var_id==var_id){
             return i;
         }
-        pthread_mutex_unlock(&cfg->data_base[i].mutex);
+        //pthread_mutex_unlock(&cfg->data_base[i].mutex);
     }
     return -1;
 }
@@ -165,22 +208,52 @@ void io_can_concatenate(can_tram_db* c_tram,COM_CONFIG* cfg){
  * @param cfg 
  */
 void io_can_write_engine(COM_CONFIG* cfg){
-    can_shared* can_buffer=malloc(sizeof(can_shared));
+    //can_shared* can_buffer=malloc(sizeof(can_shared));
     //sprintf(can_buffer->data[can_buffer->available],"%s",cfg);
-
+    // can_buffer->available
+    // can_buffer->data
+    
     // cfg.can.available
     // cfg.can.id_data_base[1].available
     // cfg.can.id_data_base[1].edition_time
-
+    
     for(int i=0;i<cfg->can.available;i++){
-        if(check_time_val(&cfg->can.id_data_base[i])==1){
+        printf("\n can available : %d\n",cfg->can.available);
+        //uint8 size=(uint8)&cfg->can.id_data_base[i].available;
+        uint8 size=2;
+        
+        uint16 indexs[size];
+        printf("\n can tram vars : %d\n",size);
+        uint32 xcan_frame=0x0;
+        for(int j=0;j<size;j++){
+            indexs[j]=get_element_byvarid(*(&cfg->can.id_data_base[i].var_id[j]),cfg);
+            if(cfg->data_base[indexs[j]].size==16 && cfg->data_base[indexs[j]].type==0){
+                    // int type
+                uint16 payload=0x0;
+                payload=strtol(cfg->data_base[indexs[j]].data,NULL,16);
+                set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
+                //set_edition_time(cfg->can.id_data_base[i].edition_time);
+                printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
+            }
+            else if(cfg->data_base[indexs[j]].size==16 && cfg->data_base[indexs[j]].type==1){ // float type
+                uint16 payload=0x0;
+
+                payload=strtol(cfg->data_base[indexs[j]].data,NULL,16);
+                set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
+                //set_edition_time(cfg->can.id_data_base[i].edition_time);
+                printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
+            }
+            else if(cfg->data_base[indexs[j]].size==8){
+                uint8 payload=0x0;
+                payload=(uint8)strtol(cfg->data_base[indexs[j]].data,NULL,16);
+                set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
+                //set_edition_time(cfg->can.id_data_base[i].edition_time);
+                printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
+                //sprint()
+            }
             
-            io_can_concatenate(&cfg->can.id_data_base[i],cfg);
         }
     }    
-    uint8 sendable_var;
-
-
 }
 
 
@@ -351,6 +424,12 @@ void io_db_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
             //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
             //index++;
         }
+        else if (jsoncomp(JSON_STRING, &t[k], "type") == 0){
+            strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start+1);
+            cfg->data_base[index].type=atoi(tempchar);
+            //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
+            //index++;
+        }
         else if (jsoncomp(JSON_STRING, &t[k], "trigger_type") == 0){
             strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start+1);
             cfg->data_base[index].trigger_type=atoi(tempchar);
@@ -410,7 +489,7 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
                 else if (jsoncomp(JSON_STRING, &t[k], "offsets") == 0){
                     pcan->id_data_base[index_3].available=t[k+1].size;
                     for(int j=0;j<t[k+1].size;j++){
-                        strncpy(tempchar_2, JSON_STRING + t[k+j+2].start, 4);
+                        strncpy(tempchar_2, JSON_STRING + t[k+j+2].start, t[k+j+2].end-t[k+j+2].start+1);
                         pcan->id_data_base[index_3].offsets[j]=atoi(tempchar_2);
                         // printf("index_3[%d/%d] : %d \n",j,t[k+1].size,pcan->id_data_base[index_3].offsets[j]);
                     }
@@ -423,14 +502,15 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
                     //error--;
                 }
                 else if (jsoncomp(JSON_STRING, &t[k], "can_id") == 0){
-                    pcan->id_data_base[index].can_id=malloc(4);
-                    strncpy(pcan->id_data_base[index].can_id, JSON_STRING + t[k+1].start, t[k+1].end-t[k+1].start);
-                    //printf("\n%d : can_id=%s\n",index,pcan->id_data_base[index].can_id);
+                    pcan->id_data_base[index].can_id=malloc(sizeof(char)*3);
+                    char tempchar_5[3];
+                    strncpy(tempchar_5, JSON_STRING + t[k+1].start, t[k+1].end-t[k+1].start+1);
+                    pcan->id_data_base[index].x_can_id=atoi(tempchar_5);
+                    sprintf(pcan->id_data_base[index].can_id,"%d",pcan->id_data_base[index].x_can_id);
+                    
                     index++;
-                    //error--;
                 }
             }
-            //free(&tempchar);
         }
     }
     if(error!=0){
@@ -534,6 +614,7 @@ void print_db(COM_CONFIG cfg){
         printf("\n\tval_time \t: %ld",cfg.data_base[j].validity_time);
         printf("\n\tperiod \t\t: %ld",cfg.data_base[j].periode);
         printf("\n\tsize \t\t: %d bits",cfg.data_base[j].size);
+        printf("\n\ttype \t\t: %s ",(cfg.data_base[j].type==0)?"INT":"FLOAT");
         printf("\n\ttrigger_type \t: %s",(cfg.data_base[j].trigger_type==0)?"Time":"Event");
         printf("\n\tmedium \t\t: %s\n",(cfg.data_base[j].medium==0)?"CAN":"UART");
     }
