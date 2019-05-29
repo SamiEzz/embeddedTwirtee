@@ -18,19 +18,23 @@ int main(){
     char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(&cfg,jsonConfigFileName)==0){        
-        print_db(cfg);
+        //print_db(cfg);
         print_conf(cfg);
     };
     // char value[16];
     // float2char(value,0.1);
     // printf("CAN SEND : %s \t %f\n",value,0.1);
-    cfg.data_base[0].data="DEAD";
-    cfg.data_base[1].data="BEEF";
-    cfg.data_base[8].data="F0";
-    cfg.data_base[9].data="FF";
+    // cfg.data_base[0].data="DEAD";
+    // cfg.data_base[1].data="BEEF";
+    // cfg.data_base[8].data="F0";
+    // cfg.data_base[9].data="FF";
+    uint32 f_int=0x0;
+    f_int=float2uint32(3.14);
+    io_write(0,0xFFFF00DD,&cfg);
     
+
     
-    io_can_write_engine(&cfg);
+    //io_can_write_engine(&cfg);
 
     // uint32 _32bits=0x0;
     // uint8 ret8;
@@ -218,21 +222,21 @@ void io_can_write_engine(COM_CONFIG* cfg){
     // cfg.can.id_data_base[1].edition_time
     
     for(int i=0;i<cfg->can.available;i++){
-        printf("\n can available : %d\n",cfg->can.available);
-        //uint8 size=(uint8)&cfg->can.id_data_base[i].available;
-        uint8 size=2;
+        //printf("\n can available : %d\n",cfg->can.available);
+        uint8 size=(uint8)cfg->can.id_data_base[i].available;
+        //uint8 size=2;
         
         uint16 indexs[size];
-        printf("\n can tram vars : %d\n",size);
+        //printf("\n can tram vars : %d\n",size);
         uint32 xcan_frame=0x0;
         for(int j=0;j<size;j++){
             indexs[j]=get_element_byvarid(*(&cfg->can.id_data_base[i].var_id[j]),cfg);
-            if(cfg->data_base[indexs[j]].size==16 && cfg->data_base[indexs[j]].type==0){
-                    // int type
-                uint16 payload=0x0;
+            if(cfg->data_base[indexs[j]].size==32){ // INT
+                uint32 payload=0x0;
                 payload=strtol(cfg->data_base[indexs[j]].data,NULL,16);
                 set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
-                //set_edition_time(cfg->can.id_data_base[i].edition_time);
+                set_edition_time(&cfg->can.id_data_base[i].edition_time);
+                
                 printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
             }
             else if(cfg->data_base[indexs[j]].size==16 && cfg->data_base[indexs[j]].type==1){ // float type
@@ -240,18 +244,17 @@ void io_can_write_engine(COM_CONFIG* cfg){
 
                 payload=strtol(cfg->data_base[indexs[j]].data,NULL,16);
                 set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
-                //set_edition_time(cfg->can.id_data_base[i].edition_time);
+                set_edition_time(&cfg->can.id_data_base[i].edition_time);
                 printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
             }
             else if(cfg->data_base[indexs[j]].size==8){
                 uint8 payload=0x0;
                 payload=(uint8)strtol(cfg->data_base[indexs[j]].data,NULL,16);
                 set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
-                //set_edition_time(cfg->can.id_data_base[i].edition_time);
+                set_edition_time(&cfg->can.id_data_base[i].edition_time);
                 printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
                 //sprint()
             }
-            
         }
     }    
 }
@@ -272,16 +275,25 @@ void float2char(char* in_char,float f_in){
 void uint32tochar(char* out_char,uint32 in_int){
     sprintf(out_char,"%x",in_int);
 }
-
-void io_write(uint8 var_id,char* data,COM_CONFIG* cfg){
+uint32 float2uint32(float f_in){
+    uint32 ret=0;
+    memcpy(&ret,&f_in,4);
+    //printf("floathex : %08x\n",ret);
+    return ret;
+}
+void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
     sint16 index=get_element_byvarid(var_id,cfg);
     if(index==-1){
         printf("\nio_com_service.c : var_id introuvable\n");
-    }
-    pthread_mutex_lock(&cfg->data_base[index].mutex);
+    };
+
+    
+    //pthread_mutex_lock(&cfg->data_base[index].mutex);
     set_edition_time(&cfg->data_base[index].edition_time);
-    sprintf(cfg->data_base[index].data,"%s",data);
-    pthread_mutex_unlock(&cfg->data_base[index].mutex);
+    memcpy(&cfg->data_base[index].xdata,&data,cfg->data_base[index].size/8);
+    sprintf(&cfg->data_base[index].data,"%x",cfg->data_base[index].xdata);
+    printf("data : %s\n",&cfg->data_base[index].data);
+    //pthread_mutex_unlock(&cfg->data_base[index].mutex);
 
     //char* value[4];
     
@@ -455,9 +467,6 @@ void io_db_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
 void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
     
     can_config* pcan=&cfg->can;
-    
-    //pcan->id_data_base->variable=malloc(sizeof(char)*20);
-
     uint8 error=0;
     int i=0;
     int index=0;
@@ -586,14 +595,14 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
 }
 
 void print_conf(COM_CONFIG cfg){
-    printf("\nuart enabled : %d\n",cfg.uart.enabled);
-    printf("uart COM : %s\n",cfg.uart.COM);
-    printf("uart speed : %ld\n",cfg.uart.speed);
-    printf("uart available : %d\n",cfg.uart.available);
-    printf("\ncan_config.enabled : %d\n",cfg.can.enabled);
-    printf("can_config.name : %s\n",cfg.can.can_name);
-    printf("can_config.speed : %ld\n",cfg.can.speed);
-    printf("can_config.available : %d\n\n",cfg.can.available);
+    printf("\nuart enabled \t\t: %d\n",cfg.uart.enabled);
+    printf("uart COM \t\t: %s\n",cfg.uart.COM);
+    printf("uart speed \t\t: %ld\n",cfg.uart.speed);
+    printf("uart available \t\t: %d\n",cfg.uart.available);
+    printf("\ncan_config.enabled \t: %d\n",cfg.can.enabled);
+    printf("can_config.name \t: %s\n",cfg.can.can_name);
+    printf("can_config.speed \t: %ld\n",cfg.can.speed);
+    printf("can_config.available \t: %d\n\n",cfg.can.available);
 }
 void print_db(COM_CONFIG cfg){
     printf("\ncan variables : %d\n",cfg.can.available);

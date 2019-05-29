@@ -2,8 +2,8 @@
   "can_tram_id": [
     {
       "can_id": "100",
-      "var_id": [0,1],
-      "offsets":[0,16],
+      "var_id": [0],
+      "offsets":[0],
       "tram_period":50,
       "variable": "right_speed left_speed"
     },
@@ -55,7 +55,7 @@
       "var_id": 0,
       "validity_time": 100,
       "period": 50,
-      "size": 16,
+      "size": 32,
       "type": 1,
       "trigger_type": 0,
       "medium": 0,
@@ -66,7 +66,7 @@
       "var_id": 1,
       "validity_time": 100,
       "period": 50,
-      "size": 16,
+      "size": 32,
       "type": 1,
       "trigger_type": 0,
       "medium": 0,
