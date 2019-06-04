@@ -29,7 +29,7 @@ void io_service_thread(){
 
     //char* jsonConfigFileName="./io_service_config.json";
     //char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
-    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    char jsonConfigFileName[]="/home/pi/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
@@ -40,12 +40,13 @@ void io_service_thread(){
     io_simulation(cfg);
     can_shared pipeline_can;
     pipeline_can.available=0;
-    pthread_mutex_lock(&(pipeline_can.mutex));
+	pthread_mutex_init(&(pipeline_can.mutex),NULL);
+//    pthread_mutex_lock(&(pipeline_can.mutex));
     io_can_write_engine(cfg,&pipeline_can);
-    pthread_mutex_unlock(&(pipeline_can.mutex));
-    pthread_mutex_lock(&(pipeline_can.mutex));
+    //pthread_mutex_unlock(&(pipeline_can.mutex));
+    //pthread_mutex_lock(&(pipeline_can.mutex));
     write_can(&pipeline_can);
-    pthread_mutex_unlock(&(pipeline_can.mutex));
+    //pthread_mutex_unlock(&(pipeline_can.mutex));
 
 
 /*    
