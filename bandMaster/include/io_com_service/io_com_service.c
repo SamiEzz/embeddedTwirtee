@@ -13,9 +13,10 @@
 
 void io_simulation(COM_CONFIG* cfg){
     io_write(0,float2uint32(3.14),cfg);
-    // io_write(1,float2uint32(9.89),cfg);
-    // io_write(8,0x1995,cfg);
-    // io_write(9,0x0606,cfg);
+    io_write(1,float2uint32(9.89),cfg);
+    io_write(8,0x1995,cfg);
+    io_write(0,float2uint32(6.28),cfg);
+    io_write(9,0x0606,cfg);
     
     
 }

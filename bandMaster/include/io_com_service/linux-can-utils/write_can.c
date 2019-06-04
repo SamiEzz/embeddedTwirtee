@@ -94,8 +94,7 @@ void float_can(char* value,float f_in,int id){
 
 void* write_can(void* can_buffer)
 {
-    while(true)
-    {
+//    while(true)  {
         //printf("write_can.c : another iteration in while loop\n");
         char* can_id="137#";
         char* payload_pipe[8];
@@ -169,9 +168,9 @@ void* write_can(void* can_buffer)
         }
         can_buff->available=0;
         pthread_mutex_unlock(&can_buff->mutex);
-        //delay(1);
+        delay(10);
         //return 0;
-    }
+//    }
 }
 
 enum data_name {
