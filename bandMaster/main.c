@@ -73,10 +73,6 @@ int main() {
     //###############################################
     // CAN PROTOCOLE READ
 
-    union {
-        float f_data;
-        unsigned int i_data[4];
-    }caster;
     //char* can_name[]={"read_can", "can1"};
     
     // // wait for thread to execute
@@ -110,21 +106,15 @@ int main() {
         printf("\nmain.c : available (%d)\n",can_buff->available);
 
 	if(can_buff->available>10){
-
             for(int i=0;i<can_buff->available;i++){
-		
                 printf("\nid \t message \n");
                 printf("%s \n",can_buff->data[i]);
                 //printf("\n\n\n");
             }
         can_buff->available=0;    
         }
-	
-	
-
         pthread_mutex_unlock(&can_buff->mutex);
         my_delay(1);    
-
     }
     
     end_thread(t_can_read, NULL);

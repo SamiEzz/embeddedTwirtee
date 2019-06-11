@@ -217,6 +217,7 @@ typedef struct Mission {
 	UInt16 size;
 	int ind[MAX_CARTO_NODES];
 } Mission;
+
 typedef struct Cartography{
 	Float32 def_max_speed;
 	Float32 def_max_speed_up;

@@ -5,8 +5,16 @@
       "var_id": [0],
       "offsets":[0],
       "tram_period":50,
-      "variable": "right_speed left_speed"
+      "variable": "vitesse consigne"
     },
+    {
+      "can_id": "101",
+      "var_id": [1],
+      "offsets":[0],
+      "tram_period":50,
+      "variable": "vitesse angulaire omega"
+    },
+    
     {
       "can_id": "200",
       "var_id": [8,9],

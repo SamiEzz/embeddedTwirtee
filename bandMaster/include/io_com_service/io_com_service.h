@@ -12,6 +12,8 @@
 #define io_com_service
 
 #include "../twirtee.h"
+#include "./var_id.h"
+
 
 #define MAX_VAR_TO_COM 99
 #define MAX_JSON_TOKENS 500
@@ -22,17 +24,6 @@
 // char* j_speed_right	= "speed_right";
 // char* j_theta		= "theta";
 
-
-const uint8 io_speed_left			= 0;
-const uint8 io_speed_right			= 1;
-const uint8 io_tetha				= 2;
-const uint8 io_position_x			= 3;
-const uint8 io_position_y			= 4;
-const uint8 io_position_z			= 5;
-const uint8 io_position_qf			= 6;
-const uint8 io_batterie_state		= 7;
-const uint8 io_odometrie_left		= 8;
-const uint8 io_odometrie_right		= 9;
 
 typedef struct io_data_base {
 	uint16 var_id;

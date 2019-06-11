@@ -14,12 +14,15 @@
 
 int main(){
     COM_CONFIG cfg;
-    //char* jsonConfigFileName="./io_service_config.json";
-    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    COM_CONFIG* p_cfg;
+    p_cfg=&cfg;
+    char* jsonConfigFileName="./io_service_config.json";
+    //char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(&cfg,jsonConfigFileName)==0){        
         //print_db(cfg);
         print_conf(cfg);
+        printf("var_id : %d\n",io_odometrie_right);
     };
     // char value[16];
     // float2char(value,0.1);
@@ -30,7 +33,7 @@ int main(){
     // cfg.data_base[9].data="FF";
     uint32 f_int=0x0;
     f_int=float2uint32(3.14);
-    io_write(0,0xFFFF00DD,&cfg);
+    io_write(0,float2uint32(3.14),&cfg);
     
 
     
@@ -227,7 +230,7 @@ void io_can_write_engine(COM_CONFIG* cfg){
         //uint8 size=2;
         
         uint16 indexs[size];
-        //printf("\n can tram vars : %d\n",size);
+        
         uint32 xcan_frame=0x0;
         for(int j=0;j<size;j++){
             indexs[j]=get_element_byvarid(*(&cfg->can.id_data_base[i].var_id[j]),cfg);
@@ -257,6 +260,7 @@ void io_can_write_engine(COM_CONFIG* cfg){
             }
         }
     }    
+
 }
 
 
@@ -280,6 +284,11 @@ uint32 float2uint32(float f_in){
     memcpy(&ret,&f_in,4);
     //printf("floathex : %08x\n",ret);
     return ret;
+}
+void io_read(uint8 var_id,uint32* ret,COM_CONFIG* cfg){
+    sint16 index=get_element_byvarid(var_id,cfg);
+    memcpy(ret,&cfg->data_base[index].xdata,cfg->data_base[index].size/8);
+
 }
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
     sint16 index=get_element_byvarid(var_id,cfg);
@@ -351,13 +360,11 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
             /* code */
             can->available=t[i+1].size;
             error--;
-        }
-         
+        }         
     }
     if(error!=0){
         printf("\n%d :io_com_service.c : Configuration can indisponible dans le fichier json\n",error);
-    }
-    
+    }    
 }
 
 void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){
