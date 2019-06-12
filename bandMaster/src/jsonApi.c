@@ -1,6 +1,7 @@
 #include "../include/jsonApi.h"
 #include "../include/misc.h"
 
+
 char* stBeacons= "Beacons";
 char* stBeaconid= "Beaconid";
 char* stBeaconx= "Beaconx";
@@ -918,6 +919,7 @@ void jsmn_init(jsmn_parser* parser) {
     parser->toknext = 0;
     parser->toksuper = -1;
 }
+
 
 Node getnodebyid(jdata* data, int id) {
     return *(data->base->_nd + id);

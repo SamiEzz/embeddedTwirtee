@@ -191,7 +191,7 @@ void* write_can(void* can_buffer)
         }
         can_buff->available=0;
         pthread_mutex_unlock(&can_buff->mutex);
-        delay(5000);
+        delay(1000);
         //return 0;
     }
 }

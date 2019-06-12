@@ -152,7 +152,10 @@ int jsmn_parse(jsmn_parser* parser, const char* js, size_t len, jsmntok_t* token
 #ifdef __cplusplus
 }
 #endif
+#endif /* __JSMN_H_ */
 
+#ifndef JSON_API
+#define JSON_API
 //---------------------------------------------------
 
 // typedef enum Node_type {
@@ -282,4 +285,4 @@ int nextObjectTab(char* objectName, char* JSON_STRING, initParser IP);
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 
-#endif /* __JSMN_H_ */
+#endif // JSON API

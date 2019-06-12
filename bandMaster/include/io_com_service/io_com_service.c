@@ -5,77 +5,31 @@
 #include <pthread.h>
 #include <math.h>
 //#include "../twirtee.h"
-#include "./jsmn/jsmn.h"
+//#include "./jsmn/jsmn.h"
+#include "../jsonApi.h"
 #include "io_com_service.h"
 #include "./linux-can-utils/write_can.h"
 #include "./linux-can-utils/read_can.h"
 
 
 
-int main(){
-    COM_CONFIG cfg;
-    COM_CONFIG* p_cfg;
-    p_cfg=&cfg;
+void* io_service_thread(void* p_cfg){
+//    COM_CONFIG cfg;
+    COM_CONFIG* cfg;
+    cfg=(COM_CONFIG*) p_cfg;
     char* jsonConfigFileName="./io_service_config.json";
     //char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
-    if(init_io_service(&cfg,jsonConfigFileName)==0){        
+    if(init_io_service(cfg,jsonConfigFileName)==0){        
         //print_db(cfg);
-        print_conf(cfg);
-        printf("var_id : %d\n",io_odometrie_right);
+        print_conf(*cfg);
     };
-    // char value[16];
-    // float2char(value,0.1);
-    // printf("CAN SEND : %s \t %f\n",value,0.1);
-    // cfg.data_base[0].data="DEAD";
-    // cfg.data_base[1].data="BEEF";
-    // cfg.data_base[8].data="F0";
-    // cfg.data_base[9].data="FF";
+
     uint32 f_int=0x0;
     f_int=float2uint32(3.14);
-    io_write(0,float2uint32(3.14),&cfg);
+    io_write(0,float2uint32(3.14),cfg);
     
 
-    
-    //io_can_write_engine(&cfg);
-
-    // uint32 _32bits=0x0;
-    // uint8 ret8;
-    // uint16 ret16;
-    
-    // char chardata[32]; //=malloc(32*sizeof(char));
-    // printf("\nhex : %x\n",_32bits);
-    // int k=0;
-
-    // set_8bits(&_32bits,24,0xDE);
-    // printf("set8bits : %x\n",_32bits);
-    // set_8bits(&_32bits,16,0xAD);
-    // printf("set8bits : %x\n",_32bits);
-    // uint16 add=0xBEEF;
-    // set_16bits(&_32bits,0,add);
-    // printf("set16bits : %x\n",_32bits);
-    
-    // set_bit_32(&_32bits,0,1);
-    // set_bit_32(&_32bits,1,1);
-    // set_bit_32(&_32bits,2,0);
-    // set_bit_32(&_32bits,3,1);
-    // set_bit_32(&_32bits,4,1);
-    // set_bit_32(&_32bits,5,0);
-    // set_bit_32(&_32bits,6,1);
-    // set_bit_32(&_32bits,7,0);
-    
-    // // print_bits(_32bits,32);
-    // uint32tochar(chardata,_32bits);
-    // printf("\ncharfromint : %s\n",chardata);
-    // //memcpy((void*)b,((void*)&_32bits),32);
-    
-    // get_uint8(_32bits,0,&ret8);
-    // printf("\nret8 : %x\n",ret8);
-    // print_bits(ret8,8);
-    
-    // get_uint16(_32bits,0,&ret16);
-    // printf("ret16 : %x\n",ret16);
-    // print_bits(ret16,16);
     
  }
 /**
