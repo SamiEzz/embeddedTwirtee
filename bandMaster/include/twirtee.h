@@ -238,12 +238,14 @@ typedef struct {
     pthread_mutex_t mut;
     Path mission_var;
 } mission_mtx;
+
 typedef struct can_shared{
     char* can_name;
     unsigned int id[100];
-    unsigned char data[100][256];
+    unsigned char data[100][13];
     int available;
     pthread_mutex_t mutex;
 }can_shared;
+
 
 #endif /* TWIRTEE_H_ */

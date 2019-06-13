@@ -168,35 +168,59 @@ void io_can_concatenate(can_tram_db* c_tram,COM_CONFIG* cfg){
  *  update can database
  * @param cfg 
  */
-void io_can_write_engine(COM_CONFIG* cfg){
-    //can_shared* can_buffer=malloc(sizeof(can_shared));
-    //sprintf(can_buffer->data[can_buffer->available],"%s",cfg);
-    // can_buffer->available
-    // can_buffer->data
-    
-    // cfg.can.available
-    // cfg.can.id_data_base[1].available
-    // cfg.can.id_data_base[1].edition_time
-    
+tram* io_can_ret_tram(can_pipe pipeline,int rank){
+    tram* returned_tram=&(pipeline.tram);
+    for(int i=0;i<rank;i++){
+        returned_tram=returned_tram->next;
+    }
+    return returned_tram;
+}
+
+void io_can_pipeline_append(can_pipe* pipeline,char* payload){
+    pipeline->available++;
+    tram* last_tram=io_can_ret_tram(*pipeline,pipeline->available);
+    sprintf(last_tram->msg,"%s",payload);
+}
+
+void io_can_pipeline_pop(can_pipe* pipeline){
+    pipeline->available--;
+    pipeline->tram=*(pipeline->tram.next);
+}
+
+
+/**
+ * @brief 
+ * 
+ * @param cfg 
+ * @param pipeline 
+ */
+void io_can_write_engine(COM_CONFIG* cfg,can_pipe* pipeline){
+
+//    pipeline->available=0;
     for(int i=0;i<cfg->can.available;i++){
         //printf("\n can available : %d\n",cfg->can.available);
         uint8 size=(uint8)cfg->can.id_data_base[i].available;
         //uint8 size=2;
         
         uint16 indexs[size];
-        
+
         uint32 xcan_frame=0x0;
         for(int j=0;j<size;j++){
             indexs[j]=get_element_byvarid(*(&cfg->can.id_data_base[i].var_id[j]),cfg);
-            if(cfg->data_base[indexs[j]].size==32){ // INT
+            if(cfg->data_base[indexs[j]].size==32){ // long int
                 uint32 payload=0x0;
                 payload=strtol(cfg->data_base[indexs[j]].data,NULL,16);
                 set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
                 
+                char add_to_pipe[13];
+                sprintf(add_to_pipe,"%s#%x",cfg->can.id_data_base[i].can_id,xcan_frame);
                 printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
+                io_can_pipeline_append(pipeline,add_to_pipe);
+                printf("payload : %s \n",pipeline->tram.msg);
+                
             }
-            else if(cfg->data_base[indexs[j]].size==16 && cfg->data_base[indexs[j]].type==1){ // float type
+            else if(cfg->data_base[indexs[j]].size==32 && cfg->data_base[indexs[j]].type==1){ // float type
                 uint16 payload=0x0;
 
                 payload=strtol(cfg->data_base[indexs[j]].data,NULL,16);
