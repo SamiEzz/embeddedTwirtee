@@ -77,6 +77,8 @@ OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 OBJECTS+=./build/read_can.o
 OBJECTS+=./build/write_can.o
 OBJECTS+=./build/lib_can.o
+OBJECTS+=./build/io_com_service.o
+
 
 
 #./build/dwm_api.o
@@ -87,15 +89,15 @@ $(PROGRAM): $(OBJECTS)
 	mv *.o ./build/
 
 %.o: %.c can_thread io_service
-	$(CC) $(CFLAGS) -g -c -o $@ $< -std=c99
+	$(CC) $(CFLAGS) -g -c -o $@ $< -std=c99 
 
 can_thread :  
-	gcc -g -c ./include/io_com_service/linux-can-utils/lib.c -o ./build/lib_can.o
+	gcc -g -c ./include/io_com_service/linux-can-utils/lib.c -o ./build/lib_can.o -Wall
 	gcc -g -c ./include/io_com_service/linux-can-utils/read_can.c ./build/lib_can.o  -o ./build/read_can.o
 	gcc -g -c ./include/io_com_service/linux-can-utils/write_can.c ./build/lib_can.o  -o ./build/write_can.o
 
 io_service :
-	gcc -g -c ./include/io_com_service/io_com_service.c -o ./build/io_com_service.o
+	gcc -g -c ./include/io_com_service/io_com_service.c -o ./build/io_com_service.o -Wall
 
 
 

@@ -39,6 +39,10 @@ typedef struct simu_param(){
 */
 
 int main() {
+    
+    io_service_thread();
+}
+int main_old() {
 
     //###############################################
     //                 output File                  #

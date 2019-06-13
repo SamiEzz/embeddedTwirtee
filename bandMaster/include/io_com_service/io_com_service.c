@@ -13,10 +13,9 @@
 
 
 
-void* io_service_thread(void* p_cfg){
-//    COM_CONFIG cfg;
-    COM_CONFIG* cfg;
-    cfg=(COM_CONFIG*) p_cfg;
+void io_service_thread(){
+    COM_CONFIG vcfg;
+    COM_CONFIG* cfg=&vcfg;
     char* jsonConfigFileName="./io_service_config.json";
     //char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);

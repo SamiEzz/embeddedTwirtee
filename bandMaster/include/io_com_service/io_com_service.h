@@ -19,6 +19,19 @@
 #define MAX_VAR_TO_COM 99
 #define MAX_JSON_TOKENS 500
 
+#define io_vitesse_V  0
+#define io_omega_W        		 1
+#define io_tetha				 2
+#define io_position_x			 3
+#define io_position_y			 4
+#define io_position_z			 5
+#define io_position_qf			 6
+#define io_batterie_state		 7
+#define io_odometrie_left		 8
+#define io_odometrie_right		 9
+#define io_speed_left			 10
+#define io_speed_right			 11
+
 // _____________________________________
 // json to struct char*
 // char* j_speed_left 	= "speed_lef";
@@ -106,6 +119,7 @@ typedef struct can_pipe{
 	tram tram;
 	int available;
 }can_pipe;
+void io_service_thread();
 
 void get_bit(uint32 f_in,uint8 offset,uint8* ret);
 void set_bit_32(uint32* f_out,uint8 offset,uint8 value);
