@@ -11,24 +11,40 @@
 #include "./linux-can-utils/write_can.h"
 #include "./linux-can-utils/read_can.h"
 
+void io_simulation(COM_CONFIG* cfg){
+    io_write(0,float2uint32(3.14),cfg);
+    io_write(1,float2uint32(9.89),cfg);
+    io_write(1,float2uint32(1.609),cfg);
+    io_write(0,float2uint32(2.7),cfg);
+    
+    
+}
 
 
 void io_service_thread(){
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
-    char* jsonConfigFileName="./io_service_config.json";
-    //char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    
+
+
+    //char* jsonConfigFileName="./io_service_config.json";
+    char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
-        //print_db(cfg);
+        //print_db(*cfg);
         print_conf(*cfg);
     };
 
-    uint32 f_int=0x0;
-    f_int=float2uint32(3.14);
-    io_write(0,float2uint32(3.14),cfg);
+    io_simulation(cfg);
+    can_pipe pipeline_can;
+    pipeline_can.available=0;
     
-
+    
+    
+/*    
+    uint8 abort=0;
+    while(!abort){}
+ */
     
  }
 /**
@@ -212,11 +228,7 @@ void io_can_write_engine(COM_CONFIG* cfg,can_pipe* pipeline){
                 set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
                 
-                char add_to_pipe[13];
-                sprintf(add_to_pipe,"%s#%x",cfg->can.id_data_base[i].can_id,xcan_frame);
-                printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
-                io_can_pipeline_append(pipeline,add_to_pipe);
-                printf("payload : %s \n",pipeline->tram.msg);
+                
                 
             }
             else if(cfg->data_base[indexs[j]].size==32 && cfg->data_base[indexs[j]].type==1){ // float type
@@ -236,6 +248,11 @@ void io_can_write_engine(COM_CONFIG* cfg,can_pipe* pipeline){
                 //sprint()
             }
         }
+        char add_to_pipe[13];
+        sprintf(add_to_pipe,"%s#%x",cfg->can.id_data_base[i].can_id,xcan_frame);
+        printf("add to CAN pipeline: %s\n",add_to_pipe);
+        io_can_pipeline_append(pipeline,add_to_pipe);
+        printf("tram.msg : %s \n",pipeline->tram.msg);
     }    
 
 }
@@ -278,7 +295,7 @@ void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
     set_edition_time(&cfg->data_base[index].edition_time);
     memcpy(&cfg->data_base[index].xdata,&data,cfg->data_base[index].size/8);
     sprintf(&cfg->data_base[index].data,"%x",cfg->data_base[index].xdata);
-    printf("data : %s\n",&cfg->data_base[index].data);
+    printf("data[%d] : %s\n",var_id,&cfg->data_base[index].data);
     //pthread_mutex_unlock(&cfg->data_base[index].mutex);
 
     //char* value[4];
