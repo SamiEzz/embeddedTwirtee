@@ -11,12 +11,12 @@
 #include "./linux-can-utils/write_can.h"
 #include "./linux-can-utils/read_can.h"
 
-void io_simulation(COM_CONFIG* cfg){
-    io_write(0,float2uint32(3.14),cfg);
-    io_write(1,float2uint32(9.89),cfg);
-    io_write(8,0x1995,cfg);
-    io_write(0,float2uint32(6.28),cfg);
-    io_write(9,0x0606,cfg);
+void io_simulation(COM_CONFIG* cfg,int y){
+    io_write(0,float2uint32(y+3.14),cfg);
+    io_write(1,float2uint32(y+9.89),cfg);
+    io_write(8,y+0x1995,cfg);
+    io_write(9,0x0606+y,cfg);
+//    io_write(0,float2uint32(6.28),cfg);
     
     
 }
@@ -38,7 +38,7 @@ void io_service_thread(){
         //print_conf(*cfg);
     };
     for(int y=0;y<5;y++){
-        io_simulation(cfg);
+        io_simulation(cfg,y);
         can_shared pipeline_can;
         pipeline_can.available=0;
         pthread_mutex_init(&(pipeline_can.mutex),NULL);
