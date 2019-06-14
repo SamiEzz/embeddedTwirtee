@@ -226,15 +226,15 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
 
 //    pipeline->available=0;
     for(int i=0;i<cfg->can.available;i++){
-        printf("\n can available : %d\n",cfg->can.available);
+        //printf("\n can available : %d\n",cfg->can.available);
         uint8 size=(uint8)cfg->can.id_data_base[i].available;
         //uint8 size=2;
         
         uint16 indexs[size];
-        printf("i : %d\n",i);
+        //printf("i : %d\n",i);
         uint32 xcan_frame=0x0;
         for(int j=0;j<size;j++){
-            printf("j : %d\n",j);
+            //printf("j : %d\n",j);
             //printf("io_com_service.c : inside io_can_write_engine loop 2\n");
             io_data_base* p_base=cfg->data_base;
             
