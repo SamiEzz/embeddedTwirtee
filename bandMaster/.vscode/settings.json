@@ -5,6 +5,7 @@
         "jsmn.h": "c",
         "io_com_service.h": "c",
         "pthread.h": "c",
-        "twirtee.h": "c"
+        "twirtee.h": "c",
+        "time.h": "c"
     }
 }

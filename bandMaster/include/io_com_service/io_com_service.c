@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
@@ -44,6 +46,7 @@ void io_service_thread(){
         pthread_mutex_init(&(pipeline_can.mutex),NULL);
     //    pthread_mutex_lock(&(pipeline_can.mutex));
         io_can_write_engine(cfg,&pipeline_can);
+        delay(1000);
         //pthread_mutex_unlock(&(pipeline_can.mutex));
         //pthread_mutex_lock(&(pipeline_can.mutex));
         
