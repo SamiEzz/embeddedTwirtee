@@ -13,9 +13,9 @@
 
 void io_simulation(COM_CONFIG* cfg){
     io_write(0,float2uint32(3.14),cfg);
-    io_write(1,float2uint32(9.89),cfg);
-    io_write(8,0x1995,cfg);
-    io_write(9,0x0606,cfg);
+    // io_write(1,float2uint32(9.89),cfg);
+    // io_write(8,0x1995,cfg);
+    // io_write(9,0x0606,cfg);
     
     
 }
@@ -36,18 +36,18 @@ void io_service_thread(){
         //print_db(*cfg);
         //print_conf(*cfg);
     };
-
-    io_simulation(cfg);
-    can_shared pipeline_can;
-    pipeline_can.available=0;
-	pthread_mutex_init(&(pipeline_can.mutex),NULL);
-//    pthread_mutex_lock(&(pipeline_can.mutex));
-    io_can_write_engine(cfg,&pipeline_can);
+    for(int y=0;y<5;y++){
+        io_simulation(cfg);
+        can_shared pipeline_can;
+        pipeline_can.available=0;
+        pthread_mutex_init(&(pipeline_can.mutex),NULL);
+    //    pthread_mutex_lock(&(pipeline_can.mutex));
+        io_can_write_engine(cfg,&pipeline_can);
+        //pthread_mutex_unlock(&(pipeline_can.mutex));
+        //pthread_mutex_lock(&(pipeline_can.mutex));
+        write_can(&pipeline_can);
     //pthread_mutex_unlock(&(pipeline_can.mutex));
-    //pthread_mutex_lock(&(pipeline_can.mutex));
-    write_can(&pipeline_can);
-    //pthread_mutex_unlock(&(pipeline_can.mutex));
-
+    }
 
 /*    
     uint8 abort=0;
