@@ -264,12 +264,38 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
     write_can(pipeline);
 }
 
-void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
-    read_can(pipeline);
-    
-    for(int i=0;i<pipeline->available;i++){
-
+int get_tram_by_canid(char* canid,COM_CONFIG* cfg){
+    //int ret_id[10];
+    int index=0;
+    can_tram_db* db=cfg->can.id_data_base;
+    for(int i=0;i<cfg->can.available;i++){
+        char cur_id[4];
+        strcpy(cur_id,(db+i*sizeof(can_tram_db))->can_id);
+        if(strcmp(cur_id,canid)==0){
+            return i;
+        }
     }
+}
+
+void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
+    // read_can(pipeline);
+    // int ret_id[10];
+    // int ret_offsets[10];
+    // int index=0;
+    // int size=0;
+
+
+    // can_tram_db* db=cfg->can.id_data_base;
+
+    // for(int i=0;i<pipeline->available;i++){
+    //     canid=pipeline
+    //     char cur_id[4];
+    //     strcpy(cur_id,(db+i*sizeof(can_tram_db))->can_id);
+        
+    //     if(strcmp(cur_id,canid)==0){
+            
+    //     }
+    // }
 }
 
 
