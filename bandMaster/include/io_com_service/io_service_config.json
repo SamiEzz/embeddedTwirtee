@@ -18,7 +18,7 @@
     {
       "can_id": "200",
       "var_id": [8,9],
-      "offsets":[0,24],
+      "offsets":[0,16],
       "tram_period":50,
       "variable": "odo_left odo_right"
     }
@@ -49,7 +49,7 @@
   },
   "can_config": {
     "can_enabled": 1,
-    "can_name": "can2",
+    "can_name": "can1",
     "can_speed": 500000
   },
   "uart_config": {
@@ -151,7 +151,7 @@
       "var_id": 8,
       "validity_time": 100,
       "period": 50,
-      "size": 8,
+      "size": 16,
       "type": 0,
       "trigger_type": 0,
       "medium": 0,
@@ -162,7 +162,7 @@
       "var_id": 9,
       "validity_time": 100,
       "period": 50,
-      "size": 8,
+      "size": 16,
       "type": 0,
       "trigger_type": 0,
       "medium": 0,

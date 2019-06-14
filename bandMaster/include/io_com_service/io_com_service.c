@@ -14,8 +14,8 @@
 void io_simulation(COM_CONFIG* cfg){
     io_write(0,float2uint32(3.14),cfg);
     io_write(1,float2uint32(9.89),cfg);
-    io_write(2,0x00,cfg);
-    io_write(1,float2uint32(2.7),cfg);
+    io_write(8,0x1995,cfg);
+    io_write(9,0x0606,cfg);
     
     
 }
@@ -28,16 +28,19 @@ void io_service_thread(){
 
 
     //char* jsonConfigFileName="./io_service_config.json";
-    char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    //char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
         //print_db(*cfg);
-        print_conf(*cfg);
+        //print_conf(*cfg);
     };
 
     io_simulation(cfg);
-    can_pipe pipeline_can;
+    can_shared pipeline_can;
     pipeline_can.available=0;
+
     
     io_can_write_engine(cfg,&pipeline_can);
 
@@ -171,12 +174,12 @@ uint8 check_time_val(can_tram_db* db_element){
     }
     return 0;
 }
-void io_can_concatenate(can_tram_db* c_tram,COM_CONFIG* cfg){
-    uint8 indexs[c_tram->available];
-    c_tram->variable="01234567890";
-    for(int i=0;i<c_tram->available;i++){
-        indexs[i]=get_element_byvarid(c_tram->var_id[i],cfg);
-    }
+void io_can_concatenate(can_shared* c_tram,COM_CONFIG* cfg){
+    // uint8 indexs[c_tram->available];
+    // c_tram->variable="01234567890";
+    // for(int i=0;i<c_tram->available;i++){
+    //     indexs[i]=get_element_byvarid(c_tram->var_id[i],cfg);
+    // }
 
 }
 /**
@@ -184,26 +187,27 @@ void io_can_concatenate(can_tram_db* c_tram,COM_CONFIG* cfg){
  *  update can database
  * @param cfg 
  */
-tram* io_can_ret_tram(can_pipe pipeline,int rank){
-    tram* returned_tram=&(pipeline.tram);
-    for(int i=0;i<rank;i++){
-        returned_tram=returned_tram->next;
-    }
-    printf("\nio_com_service.c : io_can_ret_tram, rank : %d",rank);
-    return returned_tram;
+
+void io_can_pipeline_append(can_shared* pipeline,char* payload){
+    // printf("\nio_com_service.c : io_can_pipeline_append, payload : %s",payload);
+    // printf("\nio_com_service.c : io_can_pipeline_append, available : %d",pipeline->available);
+    // tram
+    // pipeline->(tram+sizeof(tram)*pipeline->available)->msg=payload;
+    // pipeline->available++;
+    // //sprintf(last_tram->msg,"%s",payload);
 }
 
-void io_can_pipeline_append(can_pipe* pipeline,char* payload){
-    printf("\nio_com_service.c : io_can_pipeline_append, payload : %s",payload);
-    printf("\nio_com_service.c : io_can_pipeline_append, available : %d",pipeline->available);
-    tram* last_tram=io_can_ret_tram(*pipeline,pipeline->available);
-    sprintf(last_tram->msg,"%08s",payload);
-    pipeline->available++;
-}
-
-void io_can_pipeline_pop(can_pipe* pipeline){
-    pipeline->available--;
-    pipeline->tram=*(pipeline->tram.next);
+void io_can_pipeline_pop(can_shared* pipeline,can_tram* ret){
+    // tram vret=pipeline->tram;
+    // if(pipeline->available>1){
+    //     //pipeline->available--;
+    //     ret = &vret;
+    //     sprintf(pipeline->tram.msg,"%s",pipeline->tram.next->msg);
+    //     pipeline->tram.next=pipeline->tram.next->next;
+    // }
+    // else if(pipeline->available=1){
+    //     ret=&(pipeline->tram);
+    // }
 }
 
 
@@ -213,7 +217,7 @@ void io_can_pipeline_pop(can_pipe* pipeline){
  * @param cfg 
  * @param pipeline 
  */
-void io_can_write_engine(COM_CONFIG* cfg,can_pipe* pipeline){
+void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
 
 //    pipeline->available=0;
     for(int i=0;i<cfg->can.available;i++){
@@ -227,43 +231,51 @@ void io_can_write_engine(COM_CONFIG* cfg,can_pipe* pipeline){
         for(int j=0;j<size;j++){
             printf("j : %d\n",j);
             printf("io_com_service.c : inside io_can_write_engine loop 2\n");
+            io_data_base* p_base=cfg->data_base;
+            
             indexs[j]=get_element_byvarid(*(&cfg->can.id_data_base[i].var_id[j]),cfg);
             if(cfg->data_base[indexs[j]].size==32&& cfg->data_base[indexs[j]].type==0){ // long int
                 printf("io_com_service.c : size 32 int\n");
-                xcan_frame=cfg->data_base[indexs[j]].xdata;
+                xcan_frame=(p_base+indexs[j]*sizeof(io_data_base))->xdata;
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
             }
             else if(cfg->data_base[indexs[j]].size==32 && cfg->data_base[indexs[j]].type==1){ // float type
-                xcan_frame=cfg->(data_base+indexs[j]).xcan_frame xdata;
+                //xcan_frame=(p_base+indexs[j])->xdata;
+                memcpy(&xcan_frame,&((p_base+indexs[j])->xdata),4);
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
-                printf("io_can_write_engine, data : %x \n",cfg->data_base[indexs[j]].xdata);
+                printf("io_can_write_engine, xdata : %x \n",(p_base+indexs[j])->xdata);
             }
             else if(cfg->data_base[indexs[j]].size==8){
                 
                 printf("io_com_service.c : size 8 int\n");
-                uint8 payload=0x0;
-                payload=(uint8)strtol(cfg->data_base[indexs[j]].data,NULL,16);
+                uint16 payload=0x0;
+                payload=(uint8)cfg->data_base[indexs[j]].xdata;
                 set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
-                printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
+                printf("data : %x - xcan_frame : %x\n",cfg->data_base[indexs[j]].xdata,xcan_frame);
                 //sprint()
             }
             else if(cfg->data_base[indexs[j]].size==16){
                 
                 printf("io_com_service.c : size 16 int\n");
-                uint8 payload=0x0;
-                payload=(uint8)strtol(cfg->data_base[indexs[j]].data,NULL,16);
-                set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
+                uint16 payload=0x0;
+                payload=(uint16)cfg->data_base[indexs[j]].xdata;
+                set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
-                printf("data : %s - xcan_frame : %x\n",cfg->data_base[indexs[j]].data,xcan_frame);
+                printf("xcan_frame : %x\n",xcan_frame);
                 //sprint()
             }
         }
-        char* add_to_pipe;
-        sprintf(add_to_pipe,"%s#%08x",cfg->can.id_data_base[i].can_id,xcan_frame);
-        printf("add to CAN pipeline: %s\n",add_to_pipe);
-        io_can_pipeline_append(pipeline,add_to_pipe);
-        printf("\ntram.msg : %s \n",pipeline->tram.msg);
+        
+        
+        sprintf(pipeline->data[pipeline->available],"%s#%08x",cfg->can.id_data_base[i].can_id,xcan_frame);
+        printf("add to pipeline: %s\n",pipeline->data[pipeline->available]);
+        pipeline->available++;
+        
+        //io_can_pipeline_append(pipeline,add_to_pipe);
+        //io_can_pipeline_pop(pipeline,&poped);
+        //printf("added to pipeline: %s\n",poped.msg);
+        //printf("\ntram.msg : %s \n",pipeline.data);
     }    
 
 }
@@ -304,12 +316,13 @@ void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
     
     //pthread_mutex_lock(&cfg->data_base[index].mutex);
     set_edition_time(&cfg->data_base[index].edition_time);
-    memcpy(&cfg->data_base[index].xdata,&data,cfg->data_base[index].size/8);
-    sprintf(&cfg->data_base[index].data,"%x",cfg->data_base[index].xdata);
-    printf("data[%d] : %s\n",var_id,&cfg->data_base[index].data);
-    //pthread_mutex_unlock(&cfg->data_base[index].mutex);
-
-    //char* value[4];
+    memcpy(&(cfg->data_base[index].xdata),&data,sizeof(uint32)+1);
+    //memcpy(&cfg->data_base[index].xdata,&data,cfg->data_base[index].size/8+1);
+    printf("data[%d] : %x\n",var_id,data);
+    printf("xdata[%d] : %x\n",var_id,cfg->data_base[index].xdata);
+    sprintf(&cfg->data_base[index].data,"%lx",data);
+    printf("&data[%d] : %s\n",var_id,cfg->data_base[index].data);
+    
     
 }
 
@@ -371,6 +384,12 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
     if(error!=0){
         printf("\n%d :io_com_service.c : Configuration can indisponible dans le fichier json\n",error);
     }    
+    //sudo /sbin/ip link set can1 up type can bitrate 500000
+    char command[]="sudo /sbin/ip link set can1 up type can bitrate 500000";
+    sprintf(command,"sudo /sbin/ip link set %s up type can bitrate %ld",can->can_name,can->speed);
+    system(command);
+    //printf("\n system(%s)\n",command);
+
 }
 
 void uart_init_config(uart_config* uart,char* JSON_STRING,jsmntok_t* t,int max){

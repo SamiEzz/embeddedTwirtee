@@ -60,6 +60,8 @@
 
 
 #include "lib.h"
+#include "write_can.h"
+
 #include "../../twirtee.h"
 
 

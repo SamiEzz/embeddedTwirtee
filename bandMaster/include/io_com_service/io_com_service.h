@@ -41,7 +41,7 @@
 
 typedef struct io_data_base {
 	uint16 var_id;
-	char* data;
+	char data[13];
 	uint32 xdata;
 	clock_t validity_time;
 	clock_t edition_time;
@@ -110,13 +110,22 @@ typedef struct COM_CONFIG{
 } COM_CONFIG;
 
 
-typedef struct tram{
-	char msg[12];
-	struct tram* next;
-}tram;
+typedef struct can_shared{
+    char* can_name;
+    unsigned int id[MAX_VAR_TO_COM];
+	uint32 xdata;
+    unsigned char data[MAX_VAR_TO_COM][13];
+    int available;
+    pthread_mutex_t mutex;
+}can_shared;
+
+typedef struct can_tram{
+	char msg[13];
+	//struct tram* next;
+}can_tram;
 
 typedef struct can_pipe{
-	tram tram;
+	can_tram* tram;
 	int available;
 }can_pipe;
 void io_service_thread();
@@ -132,7 +141,7 @@ void get_uint8(uint32 f_in,uint8 offset,uint8* ret);
 void get_uint16(uint32 f_in,uint8 offset,uint16* ret);
 void print_bits(uint32 f_in,uint8 size);
 
-void io_can_write_engine(COM_CONFIG* cfg,can_pipe* pipeline);
+void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline);
 void set_edition_time(clock_t* edition_time);
 void float2char(char* in_char,float f_in);
 void uint32tochar(char* out_char,uint32 in_int);
