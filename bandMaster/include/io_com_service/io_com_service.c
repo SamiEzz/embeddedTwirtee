@@ -40,11 +40,14 @@ void io_service_thread(){
     io_simulation(cfg);
     can_shared pipeline_can;
     pipeline_can.available=0;
-
-    
+    pthread_mutex_lock(&(pipeline_can.mutex));
     io_can_write_engine(cfg,&pipeline_can);
+    pthread_mutex_unlock(&(pipeline_can.mutex));
+    pthread_mutex_lock(&(pipeline_can.mutex));
+    write_can(&pipeline_can);
+    pthread_mutex_unlock(&(pipeline_can.mutex));
 
-    
+
 /*    
     uint8 abort=0;
     while(!abort){}
@@ -267,7 +270,7 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
             }
         }
         
-        
+
         sprintf(pipeline->data[pipeline->available],"%s#%08x",cfg->can.id_data_base[i].can_id,xcan_frame);
         printf("add to pipeline: %s\n",pipeline->data[pipeline->available]);
         pipeline->available++;
