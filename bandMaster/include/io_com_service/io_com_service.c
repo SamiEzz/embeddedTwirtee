@@ -235,12 +235,12 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
         uint32 xcan_frame=0x0;
         for(int j=0;j<size;j++){
             printf("j : %d\n",j);
-            printf("io_com_service.c : inside io_can_write_engine loop 2\n");
+            //printf("io_com_service.c : inside io_can_write_engine loop 2\n");
             io_data_base* p_base=cfg->data_base;
             
             indexs[j]=get_element_byvarid(*(&cfg->can.id_data_base[i].var_id[j]),cfg);
             if(cfg->data_base[indexs[j]].size==32&& cfg->data_base[indexs[j]].type==0){ // long int
-                printf("io_com_service.c : size 32 int\n");
+                //printf("io_com_service.c : size 32 int\n");
                 xcan_frame=(p_base+indexs[j]*sizeof(io_data_base))->xdata;
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
             }
@@ -248,26 +248,26 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 //xcan_frame=(p_base+indexs[j])->xdata;
                 memcpy(&xcan_frame,&((p_base+indexs[j])->xdata),4);
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
-                printf("io_can_write_engine, xdata : %x \n",(p_base+indexs[j])->xdata);
+                //printf("io_can_write_engine, xdata : %x \n",(p_base+indexs[j])->xdata);
             }
             else if(cfg->data_base[indexs[j]].size==8){
                 
-                printf("io_com_service.c : size 8 int\n");
+                //printf("io_com_service.c : size 8 int\n");
                 uint16 payload=0x0;
                 payload=(uint8)cfg->data_base[indexs[j]].xdata;
                 set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
-                printf("data : %x - xcan_frame : %x\n",cfg->data_base[indexs[j]].xdata,xcan_frame);
+                //printf("data : %x - xcan_frame : %x\n",cfg->data_base[indexs[j]].xdata,xcan_frame);
                 //sprint()
             }
             else if(cfg->data_base[indexs[j]].size==16){
                 
-                printf("io_com_service.c : size 16 int\n");
+                //printf("io_com_service.c : size 16 int\n");
                 uint16 payload=0x0;
                 payload=(uint16)cfg->data_base[indexs[j]].xdata;
                 set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
-                printf("xcan_frame : %x\n",xcan_frame);
+                //printf("xcan_frame : %x\n",xcan_frame);
                 //sprint()
             }
         }
@@ -323,10 +323,10 @@ void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
     set_edition_time(&cfg->data_base[index].edition_time);
     memcpy(&(cfg->data_base[index].xdata),&data,sizeof(uint32)+1);
     //memcpy(&cfg->data_base[index].xdata,&data,cfg->data_base[index].size/8+1);
-    printf("data[%d] : %x\n",var_id,data);
-    printf("xdata[%d] : %x\n",var_id,cfg->data_base[index].xdata);
     sprintf(&cfg->data_base[index].data,"%lx",data);
-    printf("&data[%d] : %s\n",var_id,cfg->data_base[index].data);
+    //printf("data[%d] : %x\n",var_id,data);
+    //printf("xdata[%d] : %x\n",var_id,cfg->data_base[index].xdata);
+    //printf("&data[%d] : %s\n",var_id,cfg->data_base[index].data);
     
     
 }
