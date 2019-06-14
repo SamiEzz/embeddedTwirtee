@@ -46,7 +46,7 @@ void io_service_thread(){
         io_can_write_engine(cfg,&pipeline_can);
         //pthread_mutex_unlock(&(pipeline_can.mutex));
         //pthread_mutex_lock(&(pipeline_can.mutex));
-        write_can(&pipeline_can);
+        
     //pthread_mutex_unlock(&(pipeline_can.mutex));
     }
 
@@ -282,7 +282,7 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
         //printf("added to pipeline: %s\n",poped.msg);
         //printf("\ntram.msg : %s \n",pipeline.data);
     }    
-
+    write_can(pipeline);
 }
 
 
