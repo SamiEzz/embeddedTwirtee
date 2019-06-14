@@ -119,15 +119,15 @@ typedef struct can_shared{
     pthread_mutex_t mutex;
 }can_shared;
 
-typedef struct can_tram{
-	char msg[13];
-	//struct tram* next;
-}can_tram;
+// typedef struct can_tram{
+// 	char msg[13];
+// 	//struct tram* next;
+// }can_tram;
 
-typedef struct can_pipe{
-	can_tram* tram;
-	int available;
-}can_pipe;
+// typedef struct can_pipe{
+// 	can_tram* tram;
+// 	int available;
+// }can_pipe;
 void io_service_thread();
 
 void get_bit(uint32 f_in,uint8 offset,uint8* ret);
@@ -142,6 +142,7 @@ void get_uint16(uint32 f_in,uint8 offset,uint16* ret);
 void print_bits(uint32 f_in,uint8 size);
 
 void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline);
+void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline);
 void set_edition_time(clock_t* edition_time);
 void float2char(char* in_char,float f_in);
 void uint32tochar(char* out_char,uint32 in_int);

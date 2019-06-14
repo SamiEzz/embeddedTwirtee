@@ -12,10 +12,10 @@
 #include "./linux-can-utils/read_can.h"
 
 void io_simulation(COM_CONFIG* cfg,int y){
-    io_write(0,float2uint32(y+3.14),cfg);
-    io_write(1,float2uint32(y+9.89),cfg);
+    io_write(0,y+float2uint32(3.14),cfg);
+    io_write(1,y+float2uint32(9.89),cfg);
     io_write(8,y+0x1995,cfg);
-    io_write(9,0x0606+y,cfg);
+    io_write(9,y+0x0606,cfg);
 //    io_write(0,float2uint32(6.28),cfg);
     
     
@@ -193,28 +193,6 @@ void io_can_concatenate(can_shared* c_tram,COM_CONFIG* cfg){
  * @param cfg 
  */
 
-void io_can_pipeline_append(can_shared* pipeline,char* payload){
-    // printf("\nio_com_service.c : io_can_pipeline_append, payload : %s",payload);
-    // printf("\nio_com_service.c : io_can_pipeline_append, available : %d",pipeline->available);
-    // tram
-    // pipeline->(tram+sizeof(tram)*pipeline->available)->msg=payload;
-    // pipeline->available++;
-    // //sprintf(last_tram->msg,"%s",payload);
-}
-
-void io_can_pipeline_pop(can_shared* pipeline,can_tram* ret){
-    // tram vret=pipeline->tram;
-    // if(pipeline->available>1){
-    //     //pipeline->available--;
-    //     ret = &vret;
-    //     sprintf(pipeline->tram.msg,"%s",pipeline->tram.next->msg);
-    //     pipeline->tram.next=pipeline->tram.next->next;
-    // }
-    // else if(pipeline->available=1){
-    //     ret=&(pipeline->tram);
-    // }
-}
-
 
 /**
  * @brief 
@@ -222,6 +200,7 @@ void io_can_pipeline_pop(can_shared* pipeline,can_tram* ret){
  * @param cfg 
  * @param pipeline 
  */
+
 void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
 
 //    pipeline->available=0;
@@ -250,16 +229,6 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
                 //printf("io_can_write_engine, xdata : %x \n",(p_base+indexs[j])->xdata);
             }
-            else if(cfg->data_base[indexs[j]].size==8){
-                
-                //printf("io_com_service.c : size 8 int\n");
-                uint16 payload=0x0;
-                payload=(uint8)cfg->data_base[indexs[j]].xdata;
-                set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
-                set_edition_time(&cfg->can.id_data_base[i].edition_time);
-                //printf("data : %x - xcan_frame : %x\n",cfg->data_base[indexs[j]].xdata,xcan_frame);
-                //sprint()
-            }
             else if(cfg->data_base[indexs[j]].size==16){
                 
                 //printf("io_com_service.c : size 16 int\n");
@@ -268,6 +237,16 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
                 set_edition_time(&cfg->can.id_data_base[i].edition_time);
                 //printf("xcan_frame : %x\n",xcan_frame);
+                //sprint()
+            }
+            else if(cfg->data_base[indexs[j]].size==8){
+                
+                //printf("io_com_service.c : size 8 int\n");
+                uint16 payload=0x0;
+                payload=(uint8)cfg->data_base[indexs[j]].xdata;
+                set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
+                set_edition_time(&cfg->can.id_data_base[i].edition_time);
+                //printf("data : %x - xcan_frame : %x\n",cfg->data_base[indexs[j]].xdata,xcan_frame);
                 //sprint()
             }
         }
@@ -283,6 +262,14 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
         //printf("\ntram.msg : %s \n",pipeline.data);
     }    
     write_can(pipeline);
+}
+
+void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
+    read_can(pipeline);
+    
+    for(int i=0;i<pipeline->available;i++){
+
+    }
 }
 
 
