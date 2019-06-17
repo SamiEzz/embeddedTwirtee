@@ -279,13 +279,25 @@ int get_tram_by_canid(char* canid,COM_CONFIG* cfg){
         }
     }
 }
-
+/**
+ * @brief 
+ *  Cette fonction va lire la liste des trams reçu sur le CAN,
+ *  + Repérer les variables de la tram par l'id de la tram
+ *  + affecter la variable dans la base de données de COM grace a l'id de la variable
+ *  + inscrire le temps de modification de la variable
+ * 
+ * @param cfg 
+ * @param pipeline 
+ */
 void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
-    // read_can(pipeline);
-    // int ret_id[10];
-    // int ret_offsets[10];
+    read_can(pipeline);
+
+    int var_ids[10];
+    int var_offsets[10];
+    uint32 var_values[10];
+    int size=0;
+    
     // int index=0;
-    // int size=0;
 
 
     // can_tram_db* db=cfg->can.id_data_base;
