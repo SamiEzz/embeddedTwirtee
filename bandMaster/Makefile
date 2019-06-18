@@ -89,17 +89,15 @@ $(PROGRAM): $(OBJECTS)
 	mv *.o ./build/
 
 %.o: %.c can_thread io_service
-	$(CC) $(CFLAGS) -g -c -o $@ $< -std=c99 
+	$(CC) $(CFLAGS) -g -c -o $@ $< 
 
 can_thread :  
-	gcc -g -c ./include/io_com_service/linux-can-utils/lib.c -o ./build/lib_can.o -Wall
-	gcc -g -c ./include/io_com_service/linux-can-utils/read_can.c ./build/lib_can.o  -o ./build/read_can.o
-	gcc -g -c ./include/io_com_service/linux-can-utils/write_can.c ./build/lib_can.o  -o ./build/write_can.o
+	gcc -g -c ./include/io_com_service/linux-can-utils/lib.c -o ./build/lib_can.o 
+	gcc -g -c ./include/io_com_service/linux-can-utils/read_can.c ./build/lib_can.o  -o ./build/read_can.o  -w
+	gcc -g -c ./include/io_com_service/linux-can-utils/write_can.c ./build/lib_can.o  -o ./build/write_can.o  -w
 
 io_service :
-	gcc -g -c ./include/io_com_service/io_com_service.c -o ./build/io_com_service.o -Wall
-
-
+	gcc -g -c ./include/io_com_service/io_com_service.c -o ./build/io_com_service.o -w
 
 clean:
 	@echo "Cleaning"

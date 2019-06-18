@@ -120,7 +120,7 @@ void set_bit_16(uint16* f_out,uint8 offset,uint8 value){
         *f_out-=(uint32)pow(2,offset);
     }
 }
-void set_bit_8(uint8* f_out,uint8 offset,uint8 value){
+void set_bit_8(uint32* f_out,uint8 offset,uint8 value){
     uint8 state;
     get_bit(*f_out,offset,&state);
     if(state==0 && value==1){
@@ -289,14 +289,51 @@ int get_tram_by_canid(char* canid,COM_CONFIG* cfg){
  * @param cfg 
  * @param pipeline 
  */
+
+
+void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
+    uint8 bit=0;
+    *result=0;
+    for(int i=offset;i<SIZE;i++){
+        get_bit(can_xdata,offset+i,&bit);
+        set_bit_8(result,i,bit);
+    }
+}
+
 void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     read_can(pipeline);
 
-    int var_ids[10];
+    uint8 tram_ids[cfg->can.available];
+    int var_id;
     int var_offsets[10];
     uint32 var_values[10];
     int size=0;
-    
+    for(int i=0;i<pipeline->available;i++){
+        uint8 index=0;
+        for(int j=0;j<cfg->can.available;j++){
+            char hex_id[4];
+            sprintf(hex_id,"%x",pipeline->id[i]);
+            if(strcmp(hex_id,cfg->can.id_data_base[j].can_id)){
+                tram_ids[index]=j;
+                index++;
+            }
+        }
+    }
+    for(int k=0;k<pipeline->available;k++){
+        if(cfg->can.id_data_base[tram_ids[k]].available=1){
+            var_id=get_element_byvarid(cfg->can.id_data_base[tram_ids[k]].var_id[0],cfg);
+            uint32 xcan_data=0;
+            xcan_data=strtol(pipeline->data[k],NULL,16);
+            read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
+        }
+        for(int l=0;l<cfg->can.id_data_base[tram_ids[k]].available;l++){
+            var_id=get_element_byvarid(cfg->can.id_data_base[tram_ids[k]].var_id[l],cfg);
+            uint32 xcan_data=0;
+            xcan_data=strtol(pipeline->data[k],NULL,16);
+            read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
+        }
+    }
+
     // int index=0;
 
 

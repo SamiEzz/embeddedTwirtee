@@ -134,19 +134,18 @@ void get_bit(uint32 f_in,uint8 offset,uint8* ret);
 void set_bit_32(uint32* f_out,uint8 offset,uint8 value);
 void set_8bits(uint32* f_out,uint8 offset,uint8 value);
 void set_16bits(uint32* f_out,uint8 offset,uint16 value);
-
 void set_bit_16(uint16* f_out,uint8 offset,uint8 value);
-void set_bit_8(uint8* f_out,uint8 offset,uint8 value);
+void set_bit_8(uint32* f_out,uint8 offset,uint8 value);
 void get_uint8(uint32 f_in,uint8 offset,uint8* ret);
 void get_uint16(uint32 f_in,uint8 offset,uint16* ret);
 void print_bits(uint32 f_in,uint8 size);
+void float2char(char* in_char,float f_in);
+void uint32tochar(char* out_char,uint32 in_int);
+uint32 float2uint32(float f_in);
 
 void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline);
 void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline);
 void set_edition_time(clock_t* edition_time);
-void float2char(char* in_char,float f_in);
-void uint32tochar(char* out_char,uint32 in_int);
-uint32 float2uint32(float f_in);
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg);
 
 int jsoncomp(const char* json, jsmntok_t* tok, const char* s) ;
