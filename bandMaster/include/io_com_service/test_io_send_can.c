@@ -12,11 +12,24 @@
 #include "io_com_service.h"
 #include "./linux-can-utils/write_can.h"
 #include "./linux-can-utils/read_can.h"
-#define SYSTEM_CMD_STOP 1
+
+void io_simulation(COM_CONFIG* cfg,int y){
+    io_write(0,y+float2uint32(3.14),cfg);
+    io_write(1,y+float2uint32(9.89),cfg);
+    io_write(8,y+0x1995,cfg);
+    io_write(9,y+0x0606,cfg);
+//    io_write(0,float2uint32(6.28),cfg);
+    
+    
+}
+
 
 void io_service_thread(){
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
+    
+
+
     //char* jsonConfigFileName="./io_service_config.json";
     //char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
@@ -24,22 +37,10 @@ void io_service_thread(){
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
         //print_db(*cfg);
-        print_conf(*cfg);
+        //print_conf(*cfg);
     };
-    can_shared can_pipeline;
-    can_pipeline.available=3;
-    can_pipeline.id[0]=100;
-    can_pipeline.id[1]=101;
-    can_pipeline.id[2]=200;
-    //can_pipeline.id[0]=0x200;
-    
-    sprintf(can_pipeline.data[0],"F00000AA");
-    sprintf(can_pipeline.data[1],"FF000001");
-    sprintf(can_pipeline.data[2],"FFAA000C");
-    //sprintf(can_pipeline.data[3],"00000000");
-    
-    io_can_read_engine(cfg,&can_pipeline);
-    /* CAN TEST WORKING
+
+    /* CAN TEST WORKING */
     for(int y=0;y<5;y++){
         io_simulation(cfg,y);
         can_shared pipeline_can;
@@ -48,7 +49,7 @@ void io_service_thread(){
         io_can_write_engine(cfg,&pipeline_can);
         delay(1000);
     }
-    */
+    /**/
  }
 /**
  * @brief Set the bit number "offset" to the value "value"
@@ -285,24 +286,22 @@ int get_tram_by_canid(char* canid,COM_CONFIG* cfg){
 void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
     uint8 bit=0;
     *result=0;
-    int i=offset;
-    for(i;i<offset+SIZE;i++){
-        get_bit(can_xdata,i,&bit);
-        set_bit_8(result,i-offset,bit);
+    for(int i=offset;i<SIZE;i++){
+        get_bit(can_xdata,offset+i,&bit);
+        set_bit_8(result,i,bit);
     }
 }
 
 void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
-    //read_can(pipeline);
+    read_can(pipeline);
 
     uint8 tram_ids[cfg->can.available];
     int var_id;
     int var_offsets[10];
     uint32 var_values[10];
-    uint8 index=0;
     int size=0;
     for(int i=0;i<pipeline->available;i++){
-        index=0;
+        uint8 index=0;
         for(int j=0;j<cfg->can.available;j++){
             char hex_id[4];
             sprintf(hex_id,"%x",pipeline->id[i]);
@@ -313,31 +312,21 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
         }
     }
     for(int k=0;k<pipeline->available;k++){
-        if(cfg->can.id_data_base[tram_ids[k]].available==1){
+        if(cfg->can.id_data_base[tram_ids[k]].available=1){
             var_id=get_element_byvarid(cfg->can.id_data_base[tram_ids[k]].var_id[0],cfg);
             uint32 xcan_data=0;
             xcan_data=strtol(pipeline->data[k],NULL,16);
             read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
-            uint32 balek[1];
-            io_read(var_id,balek,cfg);
         }
         else if(cfg->can.id_data_base[tram_ids[k]].available>1){
             for(int l=0;l<cfg->can.id_data_base[tram_ids[k]].available;l++){
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_ids[k]].var_id[l],cfg);
-                
                 uint32 xcan_data=0;
                 xcan_data=strtol(pipeline->data[k],NULL,16);
                 read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
-                uint32 balek[1];
-                io_read(var_id,balek,cfg);
-
             }
         }
-
     }
-    // for(int b=0;b<index;b++){
-    //     printf("var_changed : %d\n",tram_ids);
-    // }
 
     // int index=0;
 
@@ -381,10 +370,8 @@ uint32 float2uint32(float f_in){
     return ret;
 }
 void io_read(uint8 var_id,uint32* ret,COM_CONFIG* cfg){
-    *ret=0;
     sint16 index=get_element_byvarid(var_id,cfg);
     memcpy(ret,&cfg->data_base[index].xdata,cfg->data_base[index].size/8);
-    printf("io_read() : %x \n",*ret);
 
 }
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
@@ -466,11 +453,8 @@ void can_init_config(can_config* can,char* JSON_STRING,jsmntok_t* t,int max){
     }    
     //sudo /sbin/ip link set can1 up type can bitrate 500000
     char command[]="sudo /sbin/ip link set can1 up type can bitrate 500000";
-
     sprintf(command,"sudo /sbin/ip link set %s up type can bitrate %ld",can->can_name,can->speed);
-    if(SYSTEM_CMD_STOP!=1){
-        system(command);
-    }
+    system(command);
     //printf("\n system(%s)\n",command);
 
 }
