@@ -19,7 +19,7 @@
 #define MAX_VAR_TO_COM 99
 #define MAX_JSON_TOKENS 500
 
-#define io_vitesse_V  0
+#define io_vitesse_V 			 0
 #define io_omega_W        		 1
 #define io_tetha				 2
 #define io_position_x			 3
@@ -145,7 +145,7 @@ uint32 float2uint32(float f_in);
 
 void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline);
 void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline);
-void set_edition_time(clock_t* edition_time);
+void set_edition_time(uint8 var_id, COM_CONFIG* cfg);
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg);
 
 int jsoncomp(const char* json, jsmntok_t* tok, const char* s) ;
