@@ -32,6 +32,7 @@ void io_service_thread(){
 
     uint8 abort=0;
     pthread_t t_io_read_can;
+    
     start_thread(&t_io_read_can, NULL, read_can,&can_pipeline);
     // wait for thread to execute
     end_thread(t_io_read_can, NULL);
