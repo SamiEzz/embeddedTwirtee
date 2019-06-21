@@ -12,7 +12,7 @@
 #include "io_com_service.h"
 #include "./linux-can-utils/write_can.h"
 #include "./linux-can-utils/read_can.h"
-#define SYSTEM_CMD_STOP 1
+#define SYSTEM_CMD_STOP 0
 
 void io_service_thread(){
     COM_CONFIG vcfg;
@@ -27,16 +27,18 @@ void io_service_thread(){
         print_conf(*cfg);
     };
     can_shared can_pipeline;
-    can_pipeline.available=3;
-    can_pipeline.id[0]=100;
-    can_pipeline.id[1]=101;
-    can_pipeline.id[2]=200;
+    can_pipeline.available=0;
+    // can_pipeline.id[0]=100;
+    // can_pipeline.id[1]=101;
+    // can_pipeline.id[2]=200;
     
-    sprintf(can_pipeline.data[0],"F00000AA");
-    sprintf(can_pipeline.data[1],"FF000001");
-    sprintf(can_pipeline.data[2],"06061995");
-    
-    io_can_read_engine(cfg,&can_pipeline);
+    // sprintf(can_pipeline.data[0],"F00000AA");
+    // sprintf(can_pipeline.data[1],"FF000001");
+    // sprintf(can_pipeline.data[2],"06061995");
+    while(1){
+        delay(1);
+        io_can_read_engine(cfg,&can_pipeline);
+    }
     /* CAN TEST WORKING
     for(int y=0;y<5;y++){
         io_simulation(cfg,y);

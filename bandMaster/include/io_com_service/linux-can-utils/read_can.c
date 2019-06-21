@@ -769,8 +769,8 @@ int read_can(void* _can_shared){
 				//printf("%s", (color>1)?col_off:"");
 				//printf("\n");
 			}
-
-		out_fflush:
+			
+			out_fflush:
 			fflush(stdout);
 		}
 	}
