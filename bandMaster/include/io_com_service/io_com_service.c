@@ -393,7 +393,7 @@ void io_read(uint8 var_id,uint32* ret,COM_CONFIG* cfg){
     *ret=0;
     sint16 index=get_element_byvarid(var_id,cfg);
     memcpy(ret,&cfg->data_base[index].xdata,cfg->data_base[index].size/8);
-    printf("io_read() : %x \n",*ret);
+    printf("io_read(%d) : %x \n",index,*ret);
 
 }
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
