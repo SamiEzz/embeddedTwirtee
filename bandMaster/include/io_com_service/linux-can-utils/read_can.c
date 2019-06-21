@@ -758,7 +758,7 @@ int read_can(void* _can_shared){
 				for(int i=4;i<13;i++){
 					can_buff->data[can_buff->available][i-4]=can_buff->data[can_buff->available][i];
 				}
-				can_buff->data[can_buff->available][8]="\0";
+				can_buff->data[can_buff->available][8]='\0';
 //				memcpy(&can_buff->data[can_buff->available],&frame.data,sizeof(frame.data));
 				can_buff->id[can_buff->available]  = frame.can_id;
 				
