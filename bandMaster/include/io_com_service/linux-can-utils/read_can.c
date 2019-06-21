@@ -754,7 +754,7 @@ int read_can(void* _can_shared){
 				struct can_shared* can_buff = (can_shared*) _can_shared;
 				sprint_canframe(can_buff->data[can_buff->available],&frame,view);
 				for(int i=4;i<13;i++){
-					can_buff->data[can_buff->available][i-3]=can_buff->data[can_buff->available][i];
+					can_buff->data[can_buff->available][i-4]=can_buff->data[can_buff->available][i];
 				}
 				can_buff->data[can_buff->available][9]="\0";
 //				memcpy(&can_buff->data[can_buff->available],&frame.data,sizeof(frame.data));
