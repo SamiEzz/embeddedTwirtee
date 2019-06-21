@@ -753,6 +753,7 @@ int read_can(void* _can_shared){
 				pthread_mutex_lock(&((can_shared*)_can_shared)->mutex);
 				struct can_shared* can_buff = (can_shared*) _can_shared;
 				sprint_canframe(can_buff->data[can_buff->available],&frame,view);
+				printf("can_read.c - data[%d] : %s\n",can_buff->available,can_buff->data[can_buff->available]);
 //				memcpy(&can_buff->data[can_buff->available],&frame.data,sizeof(frame.data));
 				can_buff->id[can_buff->available]  = frame.can_id;
 				can_buff->available++;
@@ -769,7 +770,7 @@ int read_can(void* _can_shared){
 				//printf("%s", (color>1)?col_off:"");
 				//printf("\n");
 			}
-			
+
 			out_fflush:
 			fflush(stdout);
 		}
