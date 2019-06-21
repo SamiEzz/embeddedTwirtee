@@ -147,6 +147,7 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline);
 void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline);
 void set_edition_time(uint8 var_id, COM_CONFIG* cfg);
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg);
+void io_read(uint8 var_id,uint32* ret,COM_CONFIG* cfg);
 
 int jsoncomp(const char* json, jsmntok_t* tok, const char* s) ;
 void com_init_config(uint16* available,char* JSON_STRING,jsmntok_t* t,int max);

@@ -28,6 +28,8 @@ void io_service_thread(){
     };
     can_shared can_pipeline;
     can_pipeline.available=0;
+    //can_pipeline.id=calloc(MAX_VAR_TO_COM,sizeof(int));
+    
     // can_pipeline.id[0]=100;
     // can_pipeline.id[1]=101;
     // can_pipeline.id[2]=200;
@@ -35,8 +37,11 @@ void io_service_thread(){
     // sprintf(can_pipeline.data[0],"F00000AA");
     // sprintf(can_pipeline.data[1],"FF000001");
     // sprintf(can_pipeline.data[2],"06061995");
-    while(1){
-        delay(1);
+    uint8 abort=0;
+    while(!abort){
+        if(can_pipeline.available<1){
+            delay(2000);
+        }
         io_can_read_engine(cfg,&can_pipeline);
     }
     /* CAN TEST WORKING
@@ -301,6 +306,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     uint32 var_values[10];
     uint8 index=0;
     int size=0;
+    pthread_mutex_lock(&(pipeline->mutex));
     for(int i=0;i<pipeline->available;i++){
         index=0;
         for(int j=0;j<cfg->can.available;j++){
@@ -331,14 +337,13 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
                 // edition time
                 set_edition_time(var_id,cfg);
-                
                 uint32 balek[1];
                 io_read(var_id,balek,cfg);
-
             }
         }
 
     }
+    pthread_mutex_unlock(&(pipeline->mutex));
     // for(int b=0;b<index;b++){
     //     printf("var_changed : %d\n",tram_ids);
     // }
