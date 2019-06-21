@@ -29,33 +29,13 @@ void io_service_thread(){
     can_shared can_pipeline;
     can_pipeline.available=0;
     can_pipeline.p_cfg=cfg;
-    //can_pipeline.id=calloc(MAX_VAR_TO_COM,sizeof(int));
-    
-    // can_pipeline.id[0]=100;
-    // can_pipeline.id[1]=101;
-    // can_pipeline.id[2]=200;
-    
-    // sprintf(can_pipeline.data[0],"F00000AA");
-    // sprintf(can_pipeline.data[1],"FF000001");
-    // sprintf(can_pipeline.data[2],"06061995");
+
     uint8 abort=0;
-    while(!abort){
-        if(can_pipeline.available<1){
-            delay(2000);
-        }
-        io_can_read_engine(&can_pipeline);
-    }
-    /* CAN TEST WORKING
-    for(int y=0;y<5;y++){
-        io_simulation(cfg,y);
-        can_shared pipeline_can;
-        pipeline_can.available=0;
-        pthread_mutex_init(&(pipeline_can.mutex),NULL);
-        io_can_write_engine(cfg,&pipeline_can);
-        delay(1000);
-    }
-    */
- }
+    pthread_t t_io_read_can;
+    start_thread(&t_io_read_can, NULL, read_can,&can_pipeline);
+    // wait for thread to execute
+    end_thread(t_io_read_can, NULL);
+}
 /**
  * @brief Set the bit number "offset" to the value "value"
  * 

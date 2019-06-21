@@ -12,6 +12,7 @@
 #define io_com_service
 
 #include "../twirtee.h"
+#include "../threads_mgr.h"
 #include "./var_id.h"
 #include "../jsonApi.h"
 //#include "./jsmn/jsmn.h"
