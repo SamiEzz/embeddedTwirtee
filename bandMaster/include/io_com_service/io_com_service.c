@@ -304,7 +304,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     pthread_t t_io_read_can;
     start_thread(&t_io_read_can, NULL, read_can, pipeline);
     //read_can(pipeline);
-    end_thread(t_io_read_can, NULL);
+    
 
     uint8 tram_ids[cfg->can.available];
     int var_id;
@@ -351,6 +351,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
 
     }
     pipeline->available=0;
+    // /end_thread(t_io_read_can, NULL);
     // for(int b=0;b<index;b++){
     //     printf("var_changed : %d\n",tram_ids);
     // }
