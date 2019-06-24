@@ -76,16 +76,16 @@ void get_bit(uint32 f_in,uint8 offset,uint8* ret){
 }
 
 void set_bit_32(uint32* f_out,uint8 offset,uint8 value){
-    *f_out=SetBit(value,offset);
+    
     // uint8 state;
     // *f_out=0;
     // get_bit(*f_out,offset,&state);
-    // if(state==0 && value==1){
-    //     *f_out+=(uint32)pow(2,offset);// 2^offset;
-    // }
-    // else if(state==1 && value==0){
-    //     *f_out-=(uint32)pow(2,offset);
-    // }
+    if(BitVal(value,offset)==0 && value==1){
+        *f_out=SetBit(value,offset);// 2^offset;
+    }
+    else if(BitVal(value,offset)==1 && value==0){
+        *f_out=ClearBit(value,offset);
+    }
 }
 
 void set_8bits(uint32* f_out,uint8 offset,uint8 value){
