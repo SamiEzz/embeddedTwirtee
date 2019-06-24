@@ -304,6 +304,7 @@ void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
     int i=offset;
     for(i;i<offset+SIZE;i++){
         get_bit(can_xdata,i,&bit);
+        bit = BitVal(can_xdata,)
         set_bit_8(result,i-offset,bit);
     }
 }
@@ -329,6 +330,9 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 tram_ids[index]=j;
                 index++;
             }
+            else{
+                printf("io_com_service.c : /!\ id not found\n");
+            }
         }
     }
     for(int k=0;k<pipeline->available;k++){
@@ -336,6 +340,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
             var_id=get_element_byvarid(cfg->can.id_data_base[tram_ids[k]].var_id[0],cfg);
             uint32 xcan_data=0;
             xcan_data=strtol(pipeline->data[k],NULL,16);
+            
             read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
             uint32 balek[1];
             io_read(var_id,balek,cfg);
