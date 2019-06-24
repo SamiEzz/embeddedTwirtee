@@ -300,7 +300,10 @@ void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
 }
 
 void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
-    read_can(pipeline);
+    pthread_t t_io_read_can;
+    start_thread(&t_io_read_can, NULL, read_can, pipeline);
+    //read_can(pipeline);
+    end_thread(t_io_read_can, NULL);
 
     uint8 tram_ids[cfg->can.available];
     int var_id;
