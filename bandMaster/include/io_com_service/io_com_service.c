@@ -303,9 +303,16 @@ void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
     *result=0;
     int i=offset;
     for(i;i<offset+SIZE;i++){
-        get_bit(can_xdata,i,&bit);
-        bit = BitVal(can_xdata,)
-        set_bit_8(result,i-offset,bit);
+        //get_bit(can_xdata,i,&bit);
+        //set_bit_8(result,i-offset,bit);
+        bit = BitVal(can_xdata,i);
+        if(bit==1){
+            SetBit(*result,(i-offset));
+        }
+        else if(bit==0){
+            ClearBit(*result,(i-offset));
+        }
+        
     }
 }
 
