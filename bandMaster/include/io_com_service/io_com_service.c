@@ -37,12 +37,13 @@ void io_service_thread(){
     sprintf(can_pipeline.data[2],"06061995");
     uint32 balek;
     while(1){
-        delay(1);
+        delay(1000);
+        io_can_read_engine(cfg,&can_pipeline);
         io_read(0,&balek,cfg);
         io_read(1,&balek,cfg);
         io_read(8,&balek,cfg);
         io_read(9,&balek,cfg);
-        io_can_read_engine(cfg,&can_pipeline);
+        can_pipeline.available=0;
         
     }
 
