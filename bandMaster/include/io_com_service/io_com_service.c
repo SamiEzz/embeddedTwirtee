@@ -12,7 +12,7 @@
 #include "io_com_service.h"
 #include "./linux-can-utils/write_can.h"
 #include "./linux-can-utils/read_can.h"
-#define SYSTEM_CMD_STOP 0
+#define SYSTEM_CMD_STOP 1
 
 void io_service_thread(){
     COM_CONFIG vcfg;
@@ -27,16 +27,31 @@ void io_service_thread(){
         print_conf(*cfg);
     };
     can_shared can_pipeline;
-    can_pipeline.available=0;
-    can_pipeline.p_cfg=cfg;
-
-    uint8 abort=0;
-    pthread_t t_io_read_can;
+    can_pipeline.available=3;
+    can_pipeline.id[0]=100;
+    can_pipeline.id[1]=101;
+    can_pipeline.id[2]=200;
     
-    start_thread(&t_io_read_can, NULL, read_can,&can_pipeline);
-    // wait for thread to execute
-    end_thread(t_io_read_can, NULL);
-}
+    sprintf(can_pipeline.data[0],"F0000AA");
+    sprintf(can_pipeline.data[1],"F000001");
+    sprintf(can_pipeline.data[2],"06061995");
+    
+    while(1){
+        delay(1);
+        io_can_read_engine(cfg,&can_pipeline);
+    }
+
+    /* CAN TEST WORKING
+    for(int y=0;y<5;y++){
+        io_simulation(cfg,y);
+        can_shared pipeline_can;
+        pipeline_can.available=0;
+        pthread_mutex_init(&(pipeline_can.mutex),NULL);
+        io_can_write_engine(cfg,&pipeline_can);
+        delay(1000);
+    }
+    */
+ }
 /**
  * @brief Set the bit number "offset" to the value "value"
  * 
@@ -182,8 +197,8 @@ void io_can_concatenate(can_shared* c_tram,COM_CONFIG* cfg){
  * @param pipeline 
  */
 
-void io_can_write_engine(can_shared* pipeline){
-    COM_CONFIG* cfg=pipeline->p_cfg;
+void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
+
 //    pipeline->available=0;
     for(int i=0;i<cfg->can.available;i++){
         //printf("\n can available : %d\n",cfg->can.available);
@@ -279,16 +294,15 @@ void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
     }
 }
 
-void io_can_read_engine(can_shared* pipeline){
-    //read_can(pipeline);
-    COM_CONFIG* cfg=pipeline->p_cfg;
+void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
+    read_can(pipeline);
+
     uint8 tram_ids[cfg->can.available];
     int var_id;
     int var_offsets[10];
     uint32 var_values[10];
     uint8 index=0;
     int size=0;
-    pthread_mutex_lock(&(pipeline->mutex));
     for(int i=0;i<pipeline->available;i++){
         index=0;
         for(int j=0;j<cfg->can.available;j++){
@@ -319,13 +333,15 @@ void io_can_read_engine(can_shared* pipeline){
                 read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
                 // edition time
                 set_edition_time(var_id,cfg);
+                
                 uint32 balek[1];
                 io_read(var_id,balek,cfg);
+
             }
         }
 
     }
-    pthread_mutex_unlock(&(pipeline->mutex));
+    pipeline->available=0;
     // for(int b=0;b<index;b++){
     //     printf("var_changed : %d\n",tram_ids);
     // }
