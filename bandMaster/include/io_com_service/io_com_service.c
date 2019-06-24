@@ -341,7 +341,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 index++;
             }
             else{
-                printf("io_com_service.c : /!'\ id not found : %d \n",pipeline->id[i]);
+                printf("io_com_service.c : /!'\ id not found : %x \n",pipeline->id[i]);
             }
         }
     }
