@@ -65,21 +65,27 @@ void io_service_thread(){
  * @param offset 
  * @param value 
  */
+#define BitVal(data,y) ( (data>>y) & 1)      /** Return Data.Y value   **/
+#define SetBit(data,y)    data |= (1 << y)    /** Set Data.Y   to 1    **/
+#define ClearBit(data,y)  data &= ~(1 << y)   /** Clear Data.Y to 0    **/
+
 
 void get_bit(uint32 f_in,uint8 offset,uint8* ret){
-    *ret = f_in>>offset&1;
+    //*ret = f_in>>offset&1;
+    *ret=BitVal(f_in,offset);
 }
 
 void set_bit_32(uint32* f_out,uint8 offset,uint8 value){
-    uint8 state;
-    *f_out=0;
-    get_bit(*f_out,offset,&state);
-    if(state==0 && value==1){
-        *f_out+=(uint32)pow(2,offset);// 2^offset;
-    }
-    else if(state==1 && value==0){
-        *f_out-=(uint32)pow(2,offset);
-    }
+    *f_out=SetBit(value,offset);
+    // uint8 state;
+    // *f_out=0;
+    // get_bit(*f_out,offset,&state);
+    // if(state==0 && value==1){
+    //     *f_out+=(uint32)pow(2,offset);// 2^offset;
+    // }
+    // else if(state==1 && value==0){
+    //     *f_out-=(uint32)pow(2,offset);
+    // }
 }
 
 void set_8bits(uint32* f_out,uint8 offset,uint8 value){
