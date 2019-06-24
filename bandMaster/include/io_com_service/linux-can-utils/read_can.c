@@ -601,7 +601,7 @@ int read_can(void* _can_shared){
 	msg.msg_iov = &iov;
 	msg.msg_iovlen = 1;
 	msg.msg_control = &ctrlmsg;
-	while (running) {
+	while (_can_shared->available<1) {
 
 		FD_ZERO(&rdfs);
 		for (i=0; i<currmax; i++)
