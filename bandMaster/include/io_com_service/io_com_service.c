@@ -334,7 +334,10 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
             char hex_id[4];
             sprintf(hex_id,"%x",pipeline->id[i]);
             hex_id[3]='\0';
-            if(strcmp(hex_id,cfg->can.id_data_base[j].can_id)){
+            uint32 x_hex_id=strtol(pipeline->id[i],NULL,16);
+            uint32 new_x_hex_id=strtol(cfg->can.id_data_base[j].can_id,NULL,16);
+            
+            if(x_hex_id==new_x_hex_id){
                 tram_ids[index]=j;
                 index++;
             }
