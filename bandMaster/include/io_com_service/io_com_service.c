@@ -333,12 +333,13 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
         for(int j=0;j<cfg->can.available;j++){
             char hex_id[4];
             sprintf(hex_id,"%x",pipeline->id[i]);
+            hex_id[3]='\0';
             if(strcmp(hex_id,cfg->can.id_data_base[j].can_id)){
                 tram_ids[index]=j;
                 index++;
             }
             else{
-                printf("io_com_service.c : /!\ id not found\n");
+                printf("io_com_service.c : /!'\ id not found : %s \n",hex_id);
             }
         }
     }
