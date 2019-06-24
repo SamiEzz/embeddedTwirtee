@@ -602,7 +602,6 @@ int read_can(void* _can_shared){
 	msg.msg_iovlen = 1;
 	msg.msg_control = &ctrlmsg;
 	while (can_buff->available<1) {
-
 		FD_ZERO(&rdfs);
 		for (i=0; i<currmax; i++)
 			FD_SET(s[i], &rdfs);
