@@ -250,9 +250,9 @@ int read_can(void* _can_shared){
 	struct timeval tv, last_tv;
 	FILE *logfile = NULL;
 
-	//signal(SIGTERM, sigterm);
-	//signal(SIGHUP, sigterm);
-	//signal(SIGINT, sigterm);
+	signal(SIGTERM, sigterm);
+	signal(SIGHUP, sigterm);
+	signal(SIGINT, sigterm);
 
 	last_tv.tv_sec  = 0;
 	last_tv.tv_usec = 0;

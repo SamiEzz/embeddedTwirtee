@@ -38,11 +38,11 @@ void io_service_thread(){
     uint32 balek;
     while(1){
         delay(1);
-        io_can_read_engine(cfg,&can_pipeline);
         io_read(0,&balek,cfg);
         io_read(1,&balek,cfg);
         io_read(8,&balek,cfg);
         io_read(9,&balek,cfg);
+        io_can_read_engine(cfg,&can_pipeline);
         
     }
 
