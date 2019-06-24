@@ -72,6 +72,7 @@ void get_bit(uint32 f_in,uint8 offset,uint8* ret){
 
 void set_bit_32(uint32* f_out,uint8 offset,uint8 value){
     uint8 state;
+    *f_out=0;
     get_bit(*f_out,offset,&state);
     if(state==0 && value==1){
         *f_out+=(uint32)pow(2,offset);// 2^offset;
@@ -82,6 +83,7 @@ void set_bit_32(uint32* f_out,uint8 offset,uint8 value){
 }
 
 void set_8bits(uint32* f_out,uint8 offset,uint8 value){
+    *f_out=0;
     uint8 SIZE=8;
     uint8 bin_ret=0;
     if(offset<=24){
