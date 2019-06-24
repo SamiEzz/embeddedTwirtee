@@ -216,7 +216,7 @@ int idx2dindex(int ifidx, int socket) {
 //int main(int argc, char **argv)
 
 int read_can(void* _can_shared){
-	
+	struct can_shared* can_buff = (can_shared*) _can_shared;
 	int argc=2;
 	char* can_name[]={"read_can.c","can1"};
 	char** argv=can_name;
@@ -601,7 +601,7 @@ int read_can(void* _can_shared){
 	msg.msg_iov = &iov;
 	msg.msg_iovlen = 1;
 	msg.msg_control = &ctrlmsg;
-	while (_can_shared->available<1) {
+	while (can_buff->available<1) {
 
 		FD_ZERO(&rdfs);
 		for (i=0; i<currmax; i++)
@@ -754,7 +754,7 @@ int read_can(void* _can_shared){
 //-------------------------------------------------------------------------------------------------------------------------
 				
 				pthread_mutex_lock(&((can_shared*)_can_shared)->mutex);
-				struct can_shared* can_buff = (can_shared*) _can_shared;
+				
 				sprint_canframe(can_buff->data[can_buff->available],&frame,view);
 				for(int i=4;i<13;i++){
 					can_buff->data[can_buff->available][i-4]=can_buff->data[can_buff->available][i];
