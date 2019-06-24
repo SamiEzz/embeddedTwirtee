@@ -754,20 +754,21 @@ int read_can(void* _can_shared){
 				
 				pthread_mutex_lock(&((can_shared*)_can_shared)->mutex);
 				
+				//can_buff->data[can_buff->available][9]='\0';
+				//sprint_canframe(can_buff->data[can_buff->available],&frame,view);
+				//sprintf(can_buff->data[can_buff->available],"%x%x%x%x\0",frame.data[0],frame.data[1],frame.data[2],frame.data[3]);
 				sprint_canframe(can_buff->data[can_buff->available],&frame,view);
 				for(int i=4;i<13;i++){
 					can_buff->data[can_buff->available][i-4]=can_buff->data[can_buff->available][i];
 				}
 				can_buff->data[can_buff->available][8]='\0';
-//				memcpy(&can_buff->data[can_buff->available],&frame.data,sizeof(frame.data));
+
 				can_buff->id[can_buff->available]  = frame.can_id;
 				
-				printf("can_read.c - data[%d] : %s\n",can_buff->available,can_buff->data[can_buff->available]);
 				printf("can_read.c - id : %x data[%d] : %s\n",can_buff->id[can_buff->available],can_buff->available,can_buff->data[can_buff->available]);
 				can_buff->available++;
-				//io_can_read_engine(can_buff);
+
 				pthread_mutex_unlock(&can_buff->mutex);
-				_delay(1);
 			
 //-------------------------------------------------------------------------------------------------------------------------
 				//printf(" %s", (color && (color<3))?col_on[idx%MAXCOL]:"");
