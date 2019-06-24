@@ -766,7 +766,7 @@ int read_can(void* _can_shared){
 				printf("can_read.c - data[%d] : %s\n",can_buff->available,can_buff->data[can_buff->available]);
 				printf("can_read.c - id : %x data[%d] : %s\n",can_buff->id[can_buff->available],can_buff->available,can_buff->data[can_buff->available]);
 				can_buff->available++;
-				io_can_read_engine(can_buff);
+				//io_can_read_engine(can_buff);
 				pthread_mutex_unlock(&can_buff->mutex);
 				_delay(1);
 			
