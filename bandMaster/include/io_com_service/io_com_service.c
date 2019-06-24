@@ -331,18 +331,17 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     for(int i=0;i<pipeline->available;i++){
         index=0;
         for(int j=0;j<cfg->can.available;j++){
-            char hex_id[4];
-            sprintf(hex_id,"%x",pipeline->id[i]);
-            hex_id[3]='\0';
-            uint32 x_hex_id=strtol(pipeline->id[i],NULL,16);
-            uint32 new_x_hex_id=strtol(cfg->can.id_data_base[j].can_id,NULL,16);
+            //char hex_id[4];
+            //sprintf(hex_id,"%x",pipeline->id[i]);
+            //hex_id[3]='\0';
+            cfg->can.id_data_base[j].x_can_id=strtol(cfg->can.id_data_base[j].can_id,NULL,16);
             
-            if(x_hex_id==new_x_hex_id){
+            if(pipeline->id[i]==cfg->can.id_data_base[j].x_can_id){
                 tram_ids[index]=j;
                 index++;
             }
             else{
-                printf("io_com_service.c : /!'\ id not found : %s \n",hex_id);
+                printf("io_com_service.c : /!'\ id not found : %d \n",pipeline->id[i]);
             }
         }
     }
