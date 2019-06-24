@@ -113,7 +113,7 @@ typedef struct COM_CONFIG{
 
 typedef struct can_shared{
     char* can_name;
-    unsigned int id[MAX_VAR_TO_COM];
+    uint16 id[MAX_VAR_TO_COM];
 	uint32 xdata[MAX_VAR_TO_COM];
     unsigned char data[MAX_VAR_TO_COM][13];
     int available;
