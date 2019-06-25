@@ -757,13 +757,14 @@ int read_can(void* _can_shared){
 				//can_buff->data[can_buff->available][9]='\0';
 				//sprint_canframe(can_buff->data[can_buff->available],&frame,view);
 				//sprintf(can_buff->data[can_buff->available],"%x%x%x%x\0",frame.data[0],frame.data[1],frame.data[2],frame.data[3]);
+				
 				sprint_canframe(can_buff->data[can_buff->available],&frame,view);
 				for(int i=4;i<12;i++){
 					printf("%c",can_buff->data[can_buff->available][i]);
 					can_buff->data[can_buff->available][i-4]=can_buff->data[can_buff->available][i];
 				}
 				can_buff->data[can_buff->available][8]='\0';
-
+				can_buff->xdata[can_buff->available]=strtol(can_buff->data[can_buff->available],NULL,16);
 				can_buff->id[can_buff->available]  = frame.can_id;
 				
 				printf("can_read.c - id : %x data[%d] : %s\n",can_buff->id[can_buff->available],can_buff->available,can_buff->data[can_buff->available]);
