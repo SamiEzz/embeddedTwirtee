@@ -46,7 +46,7 @@ void io_service_thread(){
         delay(1000);
         io_can_read_engine(cfg,&can_pipeline);
         io_read(io_vitesse_V,&tempo_ret,cfg);
-        printf("varid[0] : %x\n",tempo_ret);
+        printf("varid[12] : %x\n",tempo_ret);
         io_read(io_omega_W,&tempo_ret,cfg);
         printf("varid[1] : %x\n",tempo_ret);
         io_read(io_odometrie_left,&tempo_ret,cfg);
@@ -353,13 +353,13 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
     can_shared* pipeline = &var_pipeline;
     pthread_mutex_unlock(&(in_pipeline->mutex));
 
-
     uint8 tram_index[cfg->can.available];
     
     int var_offsets[10];
     uint32 var_values[10];
     uint8 index=0;
     int size=0;
+
     /**
      * Cette boucle 'for' doit remplir un tableau d'entiers par les rangs des trams reçu sur le CAN
      * dans le tableau de trams (cfg->can.id_data_base[])
@@ -403,7 +403,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
                 //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
                 for(int l=0;l<cfg->can.id_data_base[tram_index[k]].available;l++){
                     var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[l],cfg);
-                    
+                    printf("========================== var_id : %d\n",var_id);
                     uint32 xcan_data=0;
                     xcan_data=pipeline->xdata[k];
                     // read data
