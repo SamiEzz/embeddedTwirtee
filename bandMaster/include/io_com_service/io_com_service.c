@@ -326,12 +326,14 @@ void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
     }
 }
 
-void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
+void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
     pthread_t t_io_read_can;
-    start_thread(&t_io_read_can, NULL, read_can, pipeline);
+    start_thread(&t_io_read_can, NULL, read_can, in_pipeline);
     //read_can(pipeline);
     
-
+    pthread_mutex_lock(&(in_pipeline->mutex));
+    can_shared pipeline = *in_pipeline;
+    pthread_mutex_unlock(&(in_pipeline->mutex));
     uint8 tram_index[cfg->can.available];
     int var_id;
     int var_offsets[10];
