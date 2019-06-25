@@ -759,6 +759,7 @@ int read_can(void* _can_shared){
 				//sprintf(can_buff->data[can_buff->available],"%x%x%x%x\0",frame.data[0],frame.data[1],frame.data[2],frame.data[3]);
 				sprint_canframe(can_buff->data[can_buff->available],&frame,view);
 				for(int i=4;i<13;i++){
+					printf("%c",can_buff->data[can_buff->available][i]);
 					can_buff->data[can_buff->available][i-4]=can_buff->data[can_buff->available][i];
 				}
 				can_buff->data[can_buff->available][8]='\0';
