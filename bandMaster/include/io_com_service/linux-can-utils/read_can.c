@@ -110,9 +110,9 @@ extern int optind, opterr, optopt;
 
 static volatile int running = 1;
 
-void _delay(int number_of_seconds) 
+void _delay(int number_of_m_seconds) 
 { 
-    int milli_seconds = 1000 * number_of_seconds; 
+    int milli_seconds = number_of_m_seconds; 
     // Stroing start time 
     clock_t start_time = clock(); 
     while (clock() < start_time + milli_seconds) 
@@ -773,7 +773,7 @@ int read_can(void* _can_shared){
 					can_buff->available=0;
 				}
 				pthread_mutex_unlock(&can_buff->mutex);
-			
+				_delay(10);
 //-------------------------------------------------------------------------------------------------------------------------
 				//printf(" %s", (color && (color<3))?col_on[idx%MAXCOL]:"");
 				//printf("%*s", max_devname_len, devname[idx]);
