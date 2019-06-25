@@ -45,10 +45,7 @@ void io_service_thread(){
     while(1){
         delay(1000);
         io_can_read_engine(cfg,&can_pipeline);
-        io_read(0,&tempo_ret,cfg);
-        io_read(1,&tempo_ret,cfg);
-        io_read(8,&tempo_ret,cfg);
-        io_read(9,&tempo_ret,cfg);
+        
         can_pipeline.available=0;
         
     }
