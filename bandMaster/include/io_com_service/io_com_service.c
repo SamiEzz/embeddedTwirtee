@@ -338,12 +338,12 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
         index=0;
         for(int j=0;j<cfg->can.available;j++){
             //cfg->can.id_data_base[j].x_can_id=strtol(cfg->can.id_data_base[j].can_id,NULL,16);
-            printf("CANID : %x\n",cfg->can.id_data_base[j].x_can_id);
+            //printf("CANID : %x\n",cfg->can.id_data_base[j].x_can_id);
 
 
             if(pipeline->id[i]==cfg->can.id_data_base[j].x_can_id){
                 tram_index[index]=j;
-                printf("io_com_service.c : id found : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
+                //printf("io_com_service.c : id found : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
                 index++;
             }
             else{
@@ -356,7 +356,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
         for(int trams=0;trams<cfg->can.available;trams++){
             
             if(cfg->can.id_data_base[tram_index[k]].available==1 && cfg->can.id_data_base[trams].x_can_id==pipeline->id[k]){
-                printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
+                //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
                 uint32 xcan_data=0;
                 xcan_data=strtol(pipeline->data[k],NULL,16);
@@ -366,7 +366,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 io_read(var_id,tempo_ret,cfg);
             }
             else if(cfg->can.id_data_base[tram_index[k]].available>1 && cfg->can.id_data_base[trams].x_can_id==pipeline->id[k]){
-                printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
+                //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
                 for(int l=0;l<cfg->can.id_data_base[tram_index[k]].available;l++){
                     var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[l],cfg);
                     
