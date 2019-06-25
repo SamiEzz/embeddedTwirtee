@@ -326,6 +326,23 @@ void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
     }
 }
 
+void io_can_read_engine_new(COM_CONFIG* cfg,can_shared* in_pipeline){
+    pthread_t t_io_read_can;
+    start_thread(&t_io_read_can, NULL, read_can, in_pipeline);
+    //read_can(pipeline);
+    
+    pthread_mutex_lock(&(in_pipeline->mutex));
+    can_shared var_pipeline = *in_pipeline;
+    can_shared* pipeline = &var_pipeline;
+    pthread_mutex_unlock(&(in_pipeline->mutex));
+    
+    uint16 var_ranks[MAX_VAR_TO_COM];
+
+    for(int i=0;i<pipeline->available;i++){
+
+    }
+}
+//#############################################################################################
 void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
     pthread_t t_io_read_can;
     start_thread(&t_io_read_can, NULL, read_can, in_pipeline);
@@ -336,7 +353,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
     can_shared* pipeline = &var_pipeline;
     pthread_mutex_unlock(&(in_pipeline->mutex));
 
-    
+
     uint8 tram_index[cfg->can.available];
     int var_id;
     int var_offsets[10];
@@ -357,6 +374,8 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
             if(pipeline->id[i]==cfg->can.id_data_base[j].x_can_id){
                 tram_index[index]=j;
                 //printf("io_com_service.c : id found : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
+                
+                
                 index++;
             }
             else{
@@ -368,6 +387,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
     for(int k=0;k<pipeline->available;k++){
         for(int trams=0;trams<cfg->can.available;trams++){
         if(cfg->can.id_data_base[trams].x_can_id==pipeline->id[k]){
+            printf("============== CHECK IN : %x/%x\n",cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
             if(cfg->can.id_data_base[tram_index[k]].available==1){
                 //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
@@ -399,25 +419,6 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
         }
     }
     pipeline->available=0;
-    // /end_thread(t_io_read_can, NULL);
-    // for(int b=0;b<index;b++){
-    //     printf("var_changed : %d\n",tram_index);
-    // }
-
-    // int index=0;
-
-
-    // can_tram_db* db=cfg->can.id_data_base;
-
-    // for(int i=0;i<pipeline->available;i++){
-    //     canid=pipeline
-    //     char cur_id[4];
-    //     strcpy(cur_id,(db+i*sizeof(can_tram_db))->can_id);
-        
-    //     if(strcmp(cur_id,canid)==0){
-            
-    //     }
-    // }
 }
 
 
