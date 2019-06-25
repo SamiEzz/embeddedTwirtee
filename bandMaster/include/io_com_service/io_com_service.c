@@ -300,7 +300,7 @@ void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
     uint8 bit=0;
     *result=0;
     int i=offset;
-    for(i;i<offset+SIZE+3;i++){
+    for(i;i<offset+SIZE;i++){
         //printf("read_from_cantram : i/size : %d/%d",i,SIZE);
         //get_bit(can_xdata,i,&bit);
         //set_bit_8(result,i-offset,bit);
