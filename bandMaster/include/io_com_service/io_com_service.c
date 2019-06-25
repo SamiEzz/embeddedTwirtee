@@ -45,6 +45,14 @@ void io_service_thread(){
     while(1){
         delay(1000);
         io_can_read_engine(cfg,&can_pipeline);
+        io_read(0,&tempo_ret,cfg);
+        printf("varid[0] : %x",tempo_ret);
+        io_read(1,&tempo_ret,cfg);
+        printf("varid[1] : %x",tempo_ret);
+        io_read(8,&tempo_ret,cfg);
+        printf("varid[8] : %x",tempo_ret);
+        io_read(9,&tempo_ret,cfg);
+        printf("varid[9] : %x",tempo_ret);
         
         can_pipeline.available=0;
         
@@ -354,8 +362,8 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
 
     for(int k=0;k<pipeline->available;k++){
         for(int trams=0;trams<cfg->can.available;trams++){
-            
-            if(cfg->can.id_data_base[tram_index[k]].available==1 && cfg->can.id_data_base[trams].x_can_id==pipeline->id[k]){
+        if(cfg->can.id_data_base[trams].x_can_id==pipeline->id[k]){
+            if(cfg->can.id_data_base[tram_index[k]].available==1){
                 //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
                 uint32 xcan_data=0;
@@ -365,7 +373,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 uint32 tempo_ret[1];
                 io_read(var_id,tempo_ret,cfg);
             }
-            else if(cfg->can.id_data_base[tram_index[k]].available>1 && cfg->can.id_data_base[trams].x_can_id==pipeline->id[k]){
+            else if(cfg->can.id_data_base[tram_index[k]].available>1){
                 //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
                 for(int l=0;l<cfg->can.id_data_base[tram_index[k]].available;l++){
                     var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[l],cfg);
@@ -381,6 +389,8 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
 
                 }
             }
+        }
+
         }
     }
     pipeline->available=0;
@@ -439,7 +449,7 @@ void io_read(uint8 var_id,uint32* ret,COM_CONFIG* cfg){
     *ret=0;
     sint16 index=get_element_byvarid(var_id,cfg);
     memcpy(ret,&(cfg->data_base[index].xdata),cfg->data_base[index].size/8);
-    printf("io_read(%d) : %x \n",index,cfg->data_base[index].xdata);
+    //printf("io_read(%d) : %x \n",index,cfg->data_base[index].xdata);
 
 }
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
