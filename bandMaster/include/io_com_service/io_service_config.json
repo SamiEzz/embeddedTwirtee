@@ -1,14 +1,14 @@
 { 
   "can_tram_id": [
     {
-      "can_id": "100",
+      "can_id": "50",
       "var_id": [12],
       "offsets":[0],
       "tram_period":50,
       "variable": "vitesse consigne"
     },
     {
-      "can_id": "101",
+      "can_id": "4E",
       "var_id": [1],
       "offsets":[0],
       "tram_period":50,
@@ -16,7 +16,7 @@
     },
     
     {
-      "can_id": "200",
+      "can_id": "55F",
       "var_id": [8,9],
       "offsets":[0,16],
       "tram_period":50,
@@ -170,13 +170,24 @@
     },
     {
       "_comment": "odometrie_right",
-      "var_id": 69,
+      "var_id": 10,
       "validity_time": 100,
       "period": 50,
       "size": 8,
       "type": 0,
       "trigger_type": 1,
       "medium": 2,
+      "disabled": 0,
+    },
+    {
+      "_comment": "io_speed_right",
+      "var_id": 11,
+      "validity_time": 100,
+      "period": 50,
+      "size": 16,
+      "type": 0,
+      "trigger_type": 0,
+      "medium": 0,
       "disabled": 0,
       "last_variable":"1"
     }

@@ -214,10 +214,10 @@ int idx2dindex(int ifidx, int socket) {
 }
 
 //int main(int argc, char **argv)
-
+volatile uint32 last_msg=0x0;
+volatile uint32 last_id=0x0;
 int read_can(void* _can_shared){
-	uint32 last_msg=0x0;
-	uint16 last_id=0x0;
+	
 	struct can_shared* can_buff = (can_shared*) _can_shared;
 	int argc=2;
 	char* can_name[]={"read_can.c","can1"};
@@ -603,7 +603,7 @@ int read_can(void* _can_shared){
 	msg.msg_iov = &iov;
 	msg.msg_iovlen = 1;
 	msg.msg_control = &ctrlmsg;
-	while (can_buff->available<1) {
+	while (1) {
 		FD_ZERO(&rdfs);
 		for (i=0; i<currmax; i++)
 			FD_SET(s[i], &rdfs);
@@ -754,9 +754,8 @@ int read_can(void* _can_shared){
 				}
 //-------------------------------------------------------------------------------------------------------------------------
 				
-	uint32 last_msg=0x0;
-	uint16 last_id=0x0;
-
+				
+				
 				pthread_mutex_lock(&((can_shared*)_can_shared)->mutex);
 				
 				//can_buff->data[can_buff->available][9]='\0';
@@ -769,26 +768,35 @@ int read_can(void* _can_shared){
 					can_buff->data[can_buff->available][i-4]=can_buff->data[can_buff->available][i];
 				}
 				can_buff->data[can_buff->available][8]='\0';
-
-				can_buff->xdata[can_buff->available]=strtoul(can_buff->data[can_buff->available],NULL,16);
-
 				can_buff->id[can_buff->available]  = frame.can_id;
-
-				if(can_buff->xdata[can_buff->available]==last_msg &&can_buff->id[can_buff->available]==last_id){
+				uint32 xdata = strtoul(can_buff->data[can_buff->available],NULL,16);
+				for(int z=0;z<=can_buff->available;z++){
+					printf("\nDATA ============= %s\n" ,can_buff->data[z]);
+				}
+				
+				printf("============ xdata/last : %x/%x \t id/last %x/%x",xdata,last_msg , can_buff->id[can_buff->available],last_id);
+				printf("\n========= available : %d\n",can_buff->available);
+				if(xdata==last_msg && can_buff->id[can_buff->available]==last_id){
+					
 					printf("same can message repeated\n");
 				}
 				else{
+					
+					can_buff->xdata[can_buff->available]=strtoul(can_buff->data[can_buff->available],NULL,16);
+					last_id=frame.can_id;
+					last_msg=can_buff->xdata[can_buff->available];
 					can_buff->available++;
-				}
-				last_id=can_buff->id[can_buff->available];
-				last_msg=can_buff->xdata[can_buff->available];
-				if(can_buff->available>MAX_VAR_TO_COM-2){
-					can_buff->available=0;
-				}
 
+					printf("\nnew value, available : %d\n",can_buff->available);
+				}
+				
+				
+				// if(can_buff->available>MAX_VAR_TO_COM-2){
+				// 	can_buff->available=0;
+				// }
 
 				//printf("id : %x data[%d] : %s/%x\n",can_buff->id[can_buff->available],can_buff->available,can_buff->data[can_buff->available],can_buff->xdata[can_buff->available]);
-				_delay(50);
+				_delay(100);
 				pthread_mutex_unlock(&can_buff->mutex);
 //-------------------------------------------------------------------------------------------------------------------------
 				//printf(" %s", (color && (color<3))?col_on[idx%MAXCOL]:"");

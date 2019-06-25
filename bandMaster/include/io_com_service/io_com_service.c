@@ -21,6 +21,8 @@
 #define SYSTEM_CMD_STOP 1
 
 void io_service_thread(){
+    pthread_t t_io_read_can;
+    
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
     //char* jsonConfigFileName="./io_service_config.json";
@@ -29,7 +31,7 @@ void io_service_thread(){
     
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
-        //print_db(*cfg);
+        print_db(*cfg);
         print_conf(*cfg);
     };
     can_shared can_pipeline;
@@ -42,9 +44,15 @@ void io_service_thread(){
     // sprintf(can_pipeline.data[1],"F000001");
     // sprintf(can_pipeline.data[2],"06061995");
     uint32 tempo_ret;
+    
+
+    start_thread(&t_io_read_can, NULL, read_can, &can_pipeline);
     while(1){
+        //if(available>)
         delay(1000);
         io_can_read_engine(cfg,&can_pipeline);
+
+
         io_read(io_vitesse_V,&tempo_ret,cfg);
         printf("varid[12] : %x\n",tempo_ret);
         io_read(io_omega_W,&tempo_ret,cfg);
@@ -54,10 +62,16 @@ void io_service_thread(){
         io_read(io_odometrie_right,&tempo_ret,cfg);
         printf("varid[9] : %x\n",tempo_ret);
         
-        can_pipeline.available=0;
+        if(can_pipeline.available<1){
+            //can_pipeline.available=0;
+        }
+        else{
+        }
+        //can_pipeline.available--;
         
     }
-
+    end_thread(t_io_read_can, NULL);
+    
     /* CAN TEST WORKING
     for(int y=0;y<5;y++){
         io_simulation(cfg,y);
@@ -343,15 +357,14 @@ void io_can_read_engine_new(COM_CONFIG* cfg,can_shared* in_pipeline){
     }
 }
 //#############################################################################################
-void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
-    pthread_t t_io_read_can;
-    start_thread(&t_io_read_can, NULL, read_can, in_pipeline);
+void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
+   
     //read_can(pipeline);
     
-    pthread_mutex_lock(&(in_pipeline->mutex));
-    can_shared var_pipeline = *in_pipeline;
-    can_shared* pipeline = &var_pipeline;
-    pthread_mutex_unlock(&(in_pipeline->mutex));
+    // pthread_mutex_lock(&(in_pipeline->mutex));
+    // can_shared var_pipeline = *in_pipeline;
+    // can_shared* pipeline = &var_pipeline;
+    // pthread_mutex_unlock(&(in_pipeline->mutex));
 
     uint8 tram_index[cfg->can.available];
     
@@ -422,10 +435,11 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
                 }
             }
         }
-        delay(100);
+        //delay(100);
         }
     }
     pipeline->available=0;
+    
 }
 
 
