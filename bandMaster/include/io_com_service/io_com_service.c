@@ -45,13 +45,13 @@ void io_service_thread(){
     while(1){
         delay(1000);
         io_can_read_engine(cfg,&can_pipeline);
-        io_read(0,&tempo_ret,cfg);
+        io_read(io_vitesse_V,&tempo_ret,cfg);
         printf("varid[0] : %x\n",tempo_ret);
-        io_read(1,&tempo_ret,cfg);
+        io_read(io_omega_W,&tempo_ret,cfg);
         printf("varid[1] : %x\n",tempo_ret);
-        io_read(8,&tempo_ret,cfg);
+        io_read(io_odometrie_left,&tempo_ret,cfg);
         printf("varid[8] : %x\n",tempo_ret);
-        io_read(9,&tempo_ret,cfg);
+        io_read(io_odometrie_right,&tempo_ret,cfg);
         printf("varid[9] : %x\n",tempo_ret);
         
         can_pipeline.available=0;
