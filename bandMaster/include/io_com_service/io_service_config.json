@@ -2,7 +2,7 @@
   "can_tram_id": [
     {
       "can_id": "100",
-      "var_id": [0],
+      "var_id": [12],
       "offsets":[0],
       "tram_period":50,
       "variable": "vitesse consigne"
@@ -60,7 +60,7 @@
   "io_data_base": [
     {
       "_comment": "consigne de vitesse V_droite",
-      "var_id": 0,
+      "var_id": 12,
       "validity_time": 100,
       "period": 50,
       "size": 32,

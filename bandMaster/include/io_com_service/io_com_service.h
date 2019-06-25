@@ -20,7 +20,7 @@
 #define MAX_VAR_TO_COM 99
 #define MAX_JSON_TOKENS 500
 
-#define io_vitesse_V 			 0
+#define io_vitesse_V 			 12
 #define io_omega_W        		 1
 #define io_tetha				 2
 #define io_position_x			 3
