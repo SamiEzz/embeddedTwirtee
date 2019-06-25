@@ -773,7 +773,7 @@ int read_can(void* _can_shared){
 					can_buff->available=0;
 				}
 				pthread_mutex_unlock(&can_buff->mutex);
-				_delay(10);
+				_delay(50);
 //-------------------------------------------------------------------------------------------------------------------------
 				//printf(" %s", (color && (color<3))?col_on[idx%MAXCOL]:"");
 				//printf("%*s", max_devname_len, devname[idx]);
