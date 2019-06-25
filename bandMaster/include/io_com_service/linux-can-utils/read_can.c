@@ -778,12 +778,12 @@ int read_can(void* _can_shared){
 					printf("smai can message\n");
 				}
 				else{
-					last_id=can_buff->id[can_buff->available];
-					last_msg=can_buff->xdata[can_buff->available];
 					can_buff->available++;
-					if(can_buff->available>95){
-						can_buff->available=0;
-					}
+				}
+				last_id=can_buff->id[can_buff->available];
+				last_msg=can_buff->xdata[can_buff->available];
+				if(can_buff->available>95){
+					can_buff->available=0;
 				}
 
 
