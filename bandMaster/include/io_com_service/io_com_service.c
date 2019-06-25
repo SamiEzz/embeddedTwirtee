@@ -422,7 +422,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
                 }
             }
         }
-
+        delay(100);
         }
     }
     pipeline->available=0;
