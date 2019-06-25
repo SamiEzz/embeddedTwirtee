@@ -387,7 +387,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
     for(int k=0;k<pipeline->available;k++){
         for(int trams=0;trams<cfg->can.available;trams++){
         if(cfg->can.id_data_base[tram_index[trams]].x_can_id==pipeline->id[k]){
-            printf("============== CHECK IN : %x/%x\n",cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
+            printf("============== CHECK IN : %x/%x\n",cfg->can.id_data_base[tram_index[trams]].x_can_id,pipeline->id[k]);
             if(cfg->can.id_data_base[tram_index[k]].available==1){
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
 
