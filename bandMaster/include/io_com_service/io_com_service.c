@@ -46,13 +46,13 @@ void io_service_thread(){
         delay(1000);
         io_can_read_engine(cfg,&can_pipeline);
         io_read(0,&tempo_ret,cfg);
-        printf("varid[0] : %x",tempo_ret);
+        printf("varid[0] : %x\n",tempo_ret);
         io_read(1,&tempo_ret,cfg);
-        printf("varid[1] : %x",tempo_ret);
+        printf("varid[1] : %x\n",tempo_ret);
         io_read(8,&tempo_ret,cfg);
-        printf("varid[8] : %x",tempo_ret);
+        printf("varid[8] : %x\n",tempo_ret);
         io_read(9,&tempo_ret,cfg);
-        printf("varid[9] : %x",tempo_ret);
+        printf("varid[9] : %x\n",tempo_ret);
         
         can_pipeline.available=0;
         
