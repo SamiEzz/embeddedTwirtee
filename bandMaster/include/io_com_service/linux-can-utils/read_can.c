@@ -769,7 +769,9 @@ int read_can(void* _can_shared){
 				
 				printf("id : %x data[%d] : %s/%x\n",can_buff->id[can_buff->available],can_buff->available,can_buff->data[can_buff->available],can_buff->xdata[can_buff->available]);
 				can_buff->available++;
-
+				if(can_buff->available>95){
+					can_buff->available=0;
+				}
 				pthread_mutex_unlock(&can_buff->mutex);
 			
 //-------------------------------------------------------------------------------------------------------------------------
