@@ -765,7 +765,7 @@ int read_can(void* _can_shared){
 				
 				sprint_canframe(can_buff->data[can_buff->available],&frame,view);
 				for(int i=4;i<12;i++){
-					printf("%c",can_buff->data[can_buff->available][i]);
+					//printf("%c",can_buff->data[can_buff->available][i]);
 					can_buff->data[can_buff->available][i-4]=can_buff->data[can_buff->available][i];
 				}
 				can_buff->data[can_buff->available][8]='\0';
@@ -775,14 +775,14 @@ int read_can(void* _can_shared){
 				can_buff->id[can_buff->available]  = frame.can_id;
 
 				if(can_buff->xdata[can_buff->available]==last_msg &&can_buff->id[can_buff->available]==last_id){
-					printf("smai can message\n");
+					printf("same can message repeated\n");
 				}
 				else{
 					can_buff->available++;
 				}
 				last_id=can_buff->id[can_buff->available];
 				last_msg=can_buff->xdata[can_buff->available];
-				if(can_buff->available>95){
+				if(can_buff->available>MAX_VAR_TO_COM-2){
 					can_buff->available=0;
 				}
 

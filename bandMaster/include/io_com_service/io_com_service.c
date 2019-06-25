@@ -335,6 +335,8 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* in_pipeline){
     can_shared var_pipeline = *in_pipeline;
     can_shared* pipeline = &var_pipeline;
     pthread_mutex_unlock(&(in_pipeline->mutex));
+
+    
     uint8 tram_index[cfg->can.available];
     int var_id;
     int var_offsets[10];
