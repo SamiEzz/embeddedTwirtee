@@ -359,7 +359,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
                 uint32 xcan_data=0;
-                xcan_data=strtol(pipeline->data[k],NULL,16);
+                xcan_data=pipeline->xdata[k];
                 
                 read_from_cantram(cfg->can.id_data_base[tram_index[k]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
                 uint32 tempo_ret[1];
@@ -371,7 +371,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                     var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[l],cfg);
                     
                     uint32 xcan_data=0;
-                    xcan_data=strtol(pipeline->data[k],NULL,16);
+                    xcan_data=pipeline->xdata[k];
                     // read data
                     read_from_cantram(cfg->can.id_data_base[tram_index[k]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
                     
