@@ -446,14 +446,12 @@ void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
     sint16 index=get_element_byvarid(var_id,cfg);
     if(index==-1){
         printf("\nio_com_service.c : var_id introuvable\n");
-    };
-
-    
-    //pthread_mutex_lock(&cfg->data_base[index].mutex);
-    set_edition_time(var_id,cfg);
-    memcpy(&(cfg->data_base[index].xdata),&data,8);
-    sprintf(cfg->data_base[index].data,"%x",data);
-
+    } 
+    else{
+        set_edition_time(var_id,cfg);
+        memcpy(&(cfg->data_base[index].xdata),&data,9);
+        sprintf(cfg->data_base[index].data,"%x",data);
+    }
     //memcpy(&cfg->data_base[index].xdata,&data,cfg->data_base[index].size/8+1);
     //printf("data[%d] : %x\n",var_id,data);
     //printf("xdata[%d] : %x\n",var_id,cfg->data_base[index].xdata);
