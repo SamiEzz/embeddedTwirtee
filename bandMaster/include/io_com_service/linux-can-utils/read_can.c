@@ -767,7 +767,7 @@ int read_can(void* _can_shared){
 				can_buff->xdata[can_buff->available]=strtol(can_buff->data[can_buff->available],NULL,16);
 				can_buff->id[can_buff->available]  = frame.can_id;
 				
-				printf("can_read.c - id : %x data[%d] : %s\n",can_buff->id[can_buff->available],can_buff->available,can_buff->data[can_buff->available]);
+				printf("id : %x data[%d] : %s/%x\n",can_buff->id[can_buff->available],can_buff->available,can_buff->data[can_buff->available],can_buff->xdata[can_buff->available]);
 				can_buff->available++;
 
 				pthread_mutex_unlock(&can_buff->mutex);
