@@ -54,13 +54,13 @@ void io_service_thread(){
 
 
         io_read(io_vitesse_V,&tempo_ret,cfg);
-        printf("varid[12] : %x\n",tempo_ret);
+        //printf("varid[12] : %x\n",tempo_ret);
         io_read(io_omega_W,&tempo_ret,cfg);
-        printf("varid[1] : %x\n",tempo_ret);
+        //printf("varid[1] : %x\n",tempo_ret);
         io_read(io_odometrie_left,&tempo_ret,cfg);
-        printf("varid[8] : %x\n",tempo_ret);
+        //printf("varid[8] : %x\n",tempo_ret);
         io_read(io_odometrie_right,&tempo_ret,cfg);
-        printf("varid[9] : %x\n",tempo_ret);
+        //printf("varid[9] : %x\n",tempo_ret);
         
         if(can_pipeline.available<1){
             //can_pipeline.available=0;
@@ -476,7 +476,7 @@ void io_read(uint8 var_id,uint32* ret,COM_CONFIG* cfg){
     *ret=0;
     sint16 index=get_element_byvarid(var_id,cfg);
     memcpy(ret,&(cfg->data_base[index].xdata),cfg->data_base[index].size/8);
-    //printf("io_read(%d) : %x \n",index,cfg->data_base[index].xdata);
+    printf("io_read(%d) : %x \n",index,cfg->data_base[index].xdata);
 
 }
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
