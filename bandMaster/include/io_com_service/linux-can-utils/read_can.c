@@ -770,7 +770,7 @@ int read_can(void* _can_shared){
 					printf("\nID#DATA %x#%s\n" ,can_buff->id[z],can_buff->data[z]);
 				}
 				
-				printf("\n============ xdata/last : %x/%x \t id/last %x/%x",xdata,last_msg , can_buff->id[can_buff->available],last_id);
+				//printf("\n============ xdata/last : %x/%x \t id/last %x/%x",xdata,last_msg , can_buff->id[can_buff->available],last_id);
 				//printf("\n========= available : %d\n",can_buff->available);
 				if((xdata==last_msg) && (can_buff->id[can_buff->available]==last_id)){
 					printf("\nsame can message repeated\n");
