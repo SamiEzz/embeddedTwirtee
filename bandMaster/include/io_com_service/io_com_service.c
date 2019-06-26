@@ -399,10 +399,10 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     
     for(int k=0;k<pipeline->available;k++){
         for(int trams=0;trams<index;trams++){
-        int var_id=-1;
+        int var_id=0;
         if(cfg->can.id_data_base[tram_index[trams]].x_can_id==pipeline->id[k]){
             printf("============== CHECK IN : %x/%x\n",cfg->can.id_data_base[tram_index[trams]].x_can_id,pipeline->id[k]);
-            if(cfg->can.id_data_base[tram_index[k]].available==1){
+            if(cfg->can.id_data_base[tram_index[trams]].available==1){
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
                 if(var_id!=-1){
 
@@ -415,21 +415,21 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 }
             }
                 
-            else if(cfg->can.id_data_base[tram_index[k]].available>1){
+            else if(cfg->can.id_data_base[tram_index[trams]].available>1){
                 //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
-                for(int l=0;l<cfg->can.id_data_base[tram_index[k]].available;l++){
-                    var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[l],cfg);
+                for(int l=0;l<cfg->can.id_data_base[tram_index[trams]].available;l++){
+                    var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[trams]].var_id[l],cfg);
                     if(var_id!=-1){
 
                         printf("========================== var_id : %d\n",var_id);
                         uint32 xcan_data=0;
                         xcan_data=pipeline->xdata[k];
                         // read data
-                        read_from_cantram(cfg->can.id_data_base[tram_index[k]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
+                        read_from_cantram(cfg->can.id_data_base[tram_index[trams]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
                         
                         
                         uint32 tempo_ret[1];
-                        io_read(cfg->can.id_data_base[tram_index[k]].var_id[l],tempo_ret,cfg);
+                        io_read(cfg->can.id_data_base[tram_index[trams]].var_id[l],tempo_ret,cfg);
                     }    
 
                 }
@@ -476,7 +476,7 @@ void io_read(uint8 var_id,uint32* ret,COM_CONFIG* cfg){
     *ret=0;
     sint16 index=get_element_byvarid(var_id,cfg);
     memcpy(ret,&(cfg->data_base[index].xdata),cfg->data_base[index].size/8);
-    printf("io_read(%d) : %x \n",index,cfg->data_base[index].xdata);
+    printf("io_read(%d) : %x \n",var_id,cfg->data_base[index].xdata);
 
 }
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
