@@ -343,12 +343,10 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     //     }
     // }
 }
-void set_edition_time(uint8 var_id, COM_CONFIG* cfg){
-    int index = get_element_byvarid(var_id,cfg);
-    cfg->data_base[index].validity[0]=1;
-    cfg->data_base[index].validity[1]=1;
-    
-    cfg->data_base[index].edition_time=clock();
+
+
+void set_edition_time(clock_t* edition_time){
+    *edition_time=clock();
 }
 void check_availability(io_data_base var){
 
@@ -384,7 +382,7 @@ void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
 
     
     //pthread_mutex_lock(&cfg->data_base[index].mutex);
-    set_edition_time(var_id,cfg);
+    set_edition_time(&cfg->data_base[index].edition_time);
     memcpy(&(cfg->data_base[index].xdata),&data,sizeof(uint32)+1);
     //memcpy(&cfg->data_base[index].xdata,&data,cfg->data_base[index].size/8+1);
     sprintf(cfg->data_base[index].data,"%lx",data);

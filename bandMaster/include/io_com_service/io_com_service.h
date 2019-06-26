@@ -147,7 +147,7 @@ uint32 float2uint32(float f_in);
 
 void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline);
 void io_can_read_engine(COM_CONFIG* cfg, can_shared* pipeline);
-void set_edition_time(uint8 var_id, COM_CONFIG* cfg);
+void set_edition_time(clock_t* edition_time);
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg);
 void io_read(uint8 var_id,uint32* ret,COM_CONFIG* cfg);
 
