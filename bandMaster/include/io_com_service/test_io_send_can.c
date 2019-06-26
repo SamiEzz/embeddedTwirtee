@@ -344,9 +344,12 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     // }
 }
 
-
-void set_edition_time(clock_t* edition_time){
-    *edition_time=clock();
+void set_edition_time(uint8 var_id, COM_CONFIG* cfg){
+    int index = get_element_byvarid(var_id,cfg);
+    cfg->data_base[index].validity[0]=1;
+    cfg->data_base[index].validity[1]=1;
+    
+    cfg->data_base[index].edition_time=clock();
 }
 void check_availability(io_data_base var){
 
