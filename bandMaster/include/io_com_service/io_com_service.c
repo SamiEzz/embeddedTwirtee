@@ -14,10 +14,10 @@
 #include "./linux-can-utils/read_can.h"
 
 void io_simulation(COM_CONFIG* cfg,int y){
-    io_write(0,y,cfg);
-    io_write(1,y+float2uint32(9.89),cfg);
-    io_write(8,y+0x1995,cfg);
-    io_write(9,y+0x0606,cfg);
+    io_write(io_vitesse_V,y,cfg);
+    io_write(io_omega_W,y+float2uint32(9.89),cfg);
+    io_write(io_odometrie_left,y+0x1995,cfg);
+    io_write(io_odometrie_left,y+0x0606,cfg);
 //    io_write(0,float2uint32(6.28),cfg);
     
     
