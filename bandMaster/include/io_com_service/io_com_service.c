@@ -24,7 +24,7 @@ void io_simulation(COM_CONFIG* cfg,int y){
 }
 
 
-void io_service_thread(){
+void io_service_main(){
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
     
