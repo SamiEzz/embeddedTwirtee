@@ -69,7 +69,9 @@ void io_service_thread(){
         //printf("varid[8] : %x\n",tempo_ret);
         io_read(io_odometrie_right,&tempo_ret,cfg);
         //printf("varid[9] : %x\n",tempo_ret);
-        
+        for(int z=0;z<=can_pipeline.available;z++){
+            printf("\nID#DATA %x#%s\n" ,can_pipeline.id[z],can_pipeline.data[z]);
+        }
         if(can_pipeline.available<1){
             can_pipeline.available=0;
         }
