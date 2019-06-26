@@ -261,7 +261,7 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
             if(cfg->data_base[indexs[j]].size==32&& cfg->data_base[indexs[j]].type==0){ // long int
                 //printf("io_com_service.c : size 32 int\n");
                 xcan_frame=(p_base+indexs[j]*sizeof(io_data_base))->xdata;
-                set_edition_time(indexs[j],cfg);
+                set_edition_time(cfg->data_base[indexs[j]].edition_time);
             }
             else if(cfg->data_base[indexs[j]].size==32 && cfg->data_base[indexs[j]].type==1){ // float type
                 //xcan_frame=(p_base+indexs[j])->xdata;
@@ -436,8 +436,11 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     
 }
 
+void set_edition_time(clock_t* edition_time){
+    *edition_time=clock();
+}
 
-void set_edition_time(uint8 var_id, COM_CONFIG* cfg){
+void set_edition_time_sof(uint8 var_id, COM_CONFIG* cfg){
     int index = get_element_byvarid(var_id,cfg);
     cfg->data_base[index].validity[0]=1;
     cfg->data_base[index].validity[1]=1;
