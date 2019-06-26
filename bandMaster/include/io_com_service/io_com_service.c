@@ -412,7 +412,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                     xcan_data=pipeline->xdata[k];
                     read_from_cantram(cfg->can.id_data_base[tram_index[trams]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
                     uint32 tempo_ret[1];
-                    io_read(cfg->can.id_data_base[tram_index[k]].var_id[0],tempo_ret,cfg);
+                    //io_read(cfg->can.id_data_base[tram_index[k]].var_id[0],tempo_ret,cfg);
                 }
             }
                 
@@ -431,7 +431,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
                         
                         
                         uint32 tempo_ret[1];
-                        io_read(cfg->can.id_data_base[tram_index[trams]].var_id[l],tempo_ret,cfg);
+                        //io_read(cfg->can.id_data_base[tram_index[trams]].var_id[l],tempo_ret,cfg);
                     }    
 
                 }
