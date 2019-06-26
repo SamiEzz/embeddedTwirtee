@@ -20,7 +20,7 @@
 
 #define SYSTEM_CMD_STOP 1
 
-void io_service_thread(){
+void io_service_main(){
     pthread_t t_io_read_can;
     
     COM_CONFIG vcfg;
@@ -266,7 +266,7 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
             else if(cfg->data_base[indexs[j]].size==32 && cfg->data_base[indexs[j]].type==1){ // float type
                 //xcan_frame=(p_base+indexs[j])->xdata;
                 memcpy(&xcan_frame,&((p_base+indexs[j])->xdata),4);
-                set_edition_time(indexs[j],cfg);
+                set_edition_time(cfg->data_base[indexs[j]].edition_time);
                 //printf("io_can_write_engine, xdata : %x \n",(p_base+indexs[j])->xdata);
             }
             else if(cfg->data_base[indexs[j]].size==16){
@@ -275,7 +275,7 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 uint16 payload=0x0;
                 payload=(uint16)cfg->data_base[indexs[j]].xdata;
                 set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
-                set_edition_time(indexs[j],cfg);
+                set_edition_time(cfg->data_base[indexs[j]].edition_time);
                 //printf("xcan_frame : %x\n",xcan_frame);
                 //sprint()
             }
@@ -285,7 +285,7 @@ void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
                 uint16 payload=0x0;
                 payload=(uint8)cfg->data_base[indexs[j]].xdata;
                 set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
-                set_edition_time(indexs[j],cfg);
+                set_edition_time(cfg->data_base[indexs[j]].edition_time);
                 //printf("data : %x - xcan_frame : %x\n",cfg->data_base[indexs[j]].xdata,xcan_frame);
                 //sprint()
             }
@@ -482,7 +482,7 @@ void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
         printf("\nio_com_service.c : var_id introuvable\n");
     } 
     else{
-        set_edition_time(var_id,cfg);
+        set_edition_time(cfg->data_base[index].edition_time);
         memcpy(&(cfg->data_base[index].xdata),&data,9);
         sprintf(cfg->data_base[index].data,"%x",data);
     }
