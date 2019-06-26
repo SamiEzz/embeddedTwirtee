@@ -130,7 +130,7 @@ typedef struct can_shared{
 // 	can_tram* tram;
 // 	int available;
 // }can_pipe;
-void io_service_thread();
+void io_service_main();
 
 void get_bit(uint32 f_in,uint8 offset,uint8* ret);
 void set_bit_32(uint32* f_out,uint8 offset,uint8 value);

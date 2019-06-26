@@ -40,7 +40,7 @@ typedef struct simu_param(){
 
 int main() {
     
-    io_service_thread();
+    io_service_main();
 }
 int main_old() {
 

@@ -21,17 +21,23 @@
 #define SYSTEM_CMD_STOP 1
 
 void io_service_thread(){
+    pthread_t t_io_read_can;
+    
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
+    //&(cfg->can)=malloc(sizeof(can_config));
     //char* jsonConfigFileName="./io_service_config.json";
     //char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     char jsonConfigFileName[]="/home/pi/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
-        //print_db(*cfg);
+        print_db(*cfg);
         print_conf(*cfg);
-    };
+    }
+    else{
+        return;
+    }
     can_shared can_pipeline;
     can_pipeline.available=0;
     // can_pipeline.id[0]=0x100;
@@ -41,23 +47,41 @@ void io_service_thread(){
     // sprintf(can_pipeline.data[0],"F0000AA");
     // sprintf(can_pipeline.data[1],"F000001");
     // sprintf(can_pipeline.data[2],"06061995");
+    // can_pipeline.xdata[0]=strtoul(can_pipeline.data[0],NULL,16);
+    // can_pipeline.xdata[1]=strtoul(can_pipeline.data[1],NULL,16);
+    // can_pipeline.xdata[2]=strtoul(can_pipeline.data[2],NULL,16);
+
     uint32 tempo_ret;
+    
+
+    start_thread(&t_io_read_can, NULL, read_can, &can_pipeline);
     while(1){
+        //if(available>)
         delay(1000);
         io_can_read_engine(cfg,&can_pipeline);
-        io_read(0,&tempo_ret,cfg);
-        printf("varid[0] : %x\n",tempo_ret);
-        io_read(1,&tempo_ret,cfg);
-        printf("varid[1] : %x\n",tempo_ret);
-        io_read(8,&tempo_ret,cfg);
-        printf("varid[8] : %x\n",tempo_ret);
-        io_read(9,&tempo_ret,cfg);
-        printf("varid[9] : %x\n",tempo_ret);
-        
-        can_pipeline.available=0;
+
+
+        io_read(io_vitesse_V,&tempo_ret,cfg);
+        //printf("varid[12] : %x\n",tempo_ret);
+        io_read(io_omega_W,&tempo_ret,cfg);
+        //printf("varid[1] : %x\n",tempo_ret);
+        io_read(io_odometrie_left,&tempo_ret,cfg);
+        //printf("varid[8] : %x\n",tempo_ret);
+        io_read(io_odometrie_right,&tempo_ret,cfg);
+        //printf("varid[9] : %x\n",tempo_ret);
+        for(int z=0;z<=can_pipeline.available;z++){
+            printf("\n[%d]ID#DATA[%d] %x#%s\n" ,can_pipeline.available,z,can_pipeline.id[z],can_pipeline.data[z]);
+        }
+        if(can_pipeline.available<1){
+            can_pipeline.available=0;
+        }
+        else{
+            can_pipeline.available=0;
+        }
         
     }
-
+    end_thread(t_io_read_can, NULL);
+    
     /* CAN TEST WORKING
     for(int y=0;y<5;y++){
         io_simulation(cfg,y);
@@ -326,93 +350,90 @@ void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
     }
 }
 
-void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
+void io_can_read_engine_new(COM_CONFIG* cfg,can_shared* in_pipeline){
     pthread_t t_io_read_can;
-    start_thread(&t_io_read_can, NULL, read_can, pipeline);
+    start_thread(&t_io_read_can, NULL, read_can, in_pipeline);
     //read_can(pipeline);
     
+    pthread_mutex_lock(&(in_pipeline->mutex));
+    can_shared var_pipeline = *in_pipeline;
+    can_shared* pipeline = &var_pipeline;
+    pthread_mutex_unlock(&(in_pipeline->mutex));
+    
+    uint16 var_ranks[MAX_VAR_TO_COM];
+
+    for(int i=0;i<pipeline->available;i++){
+
+    }
+}
+//#############################################################################################
+void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
+   
+    //read_can(pipeline);
+    
+    // pthread_mutex_lock(&(in_pipeline->mutex));
+    // can_shared var_pipeline = *in_pipeline;
+    // can_shared* pipeline = &var_pipeline;
+    // pthread_mutex_unlock(&(in_pipeline->mutex));
 
     uint8 tram_index[cfg->can.available];
-    int var_id;
+    
     int var_offsets[10];
     uint32 var_values[10];
     uint8 index=0;
     int size=0;
+
     /**
      * Cette boucle 'for' doit remplir un tableau d'entiers par les rangs des trams reçu sur le CAN
      * dans le tableau de trams (cfg->can.id_data_base[])
      */
+    index=0;
     for(int i=0;i<pipeline->available;i++){
-        index=0;
         for(int j=0;j<cfg->can.available;j++){
-            //cfg->can.id_data_base[j].x_can_id=strtol(cfg->can.id_data_base[j].can_id,NULL,16);
-            //printf("CANID : %x\n",cfg->can.id_data_base[j].x_can_id);
-
-
             if(pipeline->id[i]==cfg->can.id_data_base[j].x_can_id){
                 tram_index[index]=j;
-                //printf("io_com_service.c : id found : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
                 index++;
+                j=cfg->can.available;
             }
             else{
                 //printf("io_com_service.c id not match : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
             }
         }
     }
-
+    
     for(int k=0;k<pipeline->available;k++){
-        for(int trams=0;trams<cfg->can.available;trams++){
-        if(cfg->can.id_data_base[trams].x_can_id==pipeline->id[k]){
-            if(cfg->can.id_data_base[tram_index[k]].available==1){
-                //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
+        for(int trams=0;trams<index;trams++){
+        int var_id=0;
+        
+        if(cfg->can.id_data_base[tram_index[trams]].x_can_id==pipeline->id[k]){
+            if(cfg->can.id_data_base[tram_index[trams]].available==1){
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
-                uint32 xcan_data=0;
-                xcan_data=pipeline->xdata[k];
-                
-                read_from_cantram(cfg->can.id_data_base[tram_index[k]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
-                uint32 tempo_ret[1];
-                io_read(var_id,tempo_ret,cfg);
-            }
-            else if(cfg->can.id_data_base[tram_index[k]].available>1){
-                //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
-                for(int l=0;l<cfg->can.id_data_base[tram_index[k]].available;l++){
-                    var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[l],cfg);
-                    
+                if(var_id!=-1){
                     uint32 xcan_data=0;
                     xcan_data=pipeline->xdata[k];
-                    // read data
-                    read_from_cantram(cfg->can.id_data_base[tram_index[k]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
-                    
-                    
+                    read_from_cantram(cfg->can.id_data_base[tram_index[trams]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
                     uint32 tempo_ret[1];
-                    io_read(var_id,tempo_ret,cfg);
+                }
+            }
+                
+            else if(cfg->can.id_data_base[tram_index[trams]].available>1){
+                for(int l=0;l<cfg->can.id_data_base[tram_index[trams]].available;l++){
+                    var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[trams]].var_id[l],cfg);
+                    if(var_id!=-1){
+                        uint32 xcan_data=0;
+                        xcan_data=pipeline->xdata[k];
+                        // read data
+                        read_from_cantram(cfg->can.id_data_base[tram_index[trams]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
+                    }    
 
                 }
             }
         }
-
+        //delay(100);
         }
     }
-    pipeline->available=0;
-    // /end_thread(t_io_read_can, NULL);
-    // for(int b=0;b<index;b++){
-    //     printf("var_changed : %d\n",tram_index);
-    // }
-
-    // int index=0;
-
-
-    // can_tram_db* db=cfg->can.id_data_base;
-
-    // for(int i=0;i<pipeline->available;i++){
-    //     canid=pipeline
-    //     char cur_id[4];
-    //     strcpy(cur_id,(db+i*sizeof(can_tram_db))->can_id);
-        
-    //     if(strcmp(cur_id,canid)==0){
-            
-    //     }
-    // }
+    //pipeline->available=0;
+    
 }
 
 
@@ -449,7 +470,7 @@ void io_read(uint8 var_id,uint32* ret,COM_CONFIG* cfg){
     *ret=0;
     sint16 index=get_element_byvarid(var_id,cfg);
     memcpy(ret,&(cfg->data_base[index].xdata),cfg->data_base[index].size/8);
-    //printf("io_read(%d) : %x \n",index,cfg->data_base[index].xdata);
+    printf("io_read(%d) : %x \n",var_id,cfg->data_base[index].xdata);
 
 }
 void io_write(uint8 var_id,uint32 data,COM_CONFIG* cfg){
@@ -702,7 +723,7 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
         }
     }
     if(error!=0){
-        printf("\n%d : io_com_service.c : Configuration can_tram_id indisponible dans le fichier json\n",error);
+        fprintf(stderr, "\n%d : io_com_service.c : Configuration can_tram_id indisponible dans le fichier json\n",error);
     }
     
 }
@@ -716,7 +737,7 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
 	 * 
 	 * 
 	 * */
-    cfg->data_base=malloc(sizeof(io_data_base)*MAX_VAR_TO_COM);
+    //cfg->data_base=malloc(sizeof(io_data_base)*MAX_VAR_TO_COM);
     long length=0;
     char* JSON_STRING;
 
@@ -735,7 +756,7 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
 
     } 
     else {
-        printf("io.c : Couldn't open json file. \n");
+        fprintf(stderr, "io.c : Couldn't open json file. \n");
         return -1;
     }
     int r;
