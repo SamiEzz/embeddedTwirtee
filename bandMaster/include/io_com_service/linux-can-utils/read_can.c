@@ -781,7 +781,7 @@ int read_can(void* _can_shared){
 					last_msg=can_buff->xdata[can_buff->available];
 					can_buff->available++;
 
-					printf("\nnew value, available : %d\n",can_buff->available);
+					//printf("\nnew value, available : %d\n",can_buff->available);
 				}
 				
 				
