@@ -758,10 +758,6 @@ int read_can(void* _can_shared){
 				
 				pthread_mutex_lock(&((can_shared*)_can_shared)->mutex);
 				
-				//can_buff->data[can_buff->available][9]='\0';
-				//sprint_canframe(can_buff->data[can_buff->available],&frame,view);
-				//sprintf(can_buff->data[can_buff->available],"%x%x%x%x\0",frame.data[0],frame.data[1],frame.data[2],frame.data[3]);
-				
 				sprint_canframe(can_buff->data[can_buff->available],&frame,view);
 				for(int i=4;i<12;i++){
 					//printf("%c",can_buff->data[can_buff->available][i]);
@@ -771,11 +767,11 @@ int read_can(void* _can_shared){
 				can_buff->id[can_buff->available]  = frame.can_id;
 				uint32 xdata = strtoul(can_buff->data[can_buff->available],NULL,16);
 				for(int z=0;z<=can_buff->available;z++){
-					printf("\nID#DATA %x#%s\n" ,frame.can_id,can_buff->data[z]);
+					printf("\nID#DATA %x#%s\n" ,can_buff->id[z],can_buff->data[z]);
 				}
 				
 				//printf("============ xdata/last : %x/%x \t id/last %x/%x",xdata,last_msg , can_buff->id[can_buff->available],last_id);
-				printf("\n========= available : %d\n",can_buff->available);
+				//printf("\n========= available : %d\n",can_buff->available);
 				if(xdata==last_msg && can_buff->id[can_buff->available]==last_id){
 					
 					printf("same can message repeated\n");
