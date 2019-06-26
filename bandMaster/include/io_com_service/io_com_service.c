@@ -35,18 +35,18 @@ void io_service_thread(){
         print_conf(*cfg);
     };
     can_shared can_pipeline;
-    can_pipeline.available=0;
-    // can_pipeline.id[0]=0x100;
-    // can_pipeline.id[1]=0x101;
-    // can_pipeline.id[2]=0x200;
+    can_pipeline.available=3;
+    can_pipeline.id[0]=0x100;
+    can_pipeline.id[1]=0x101;
+    can_pipeline.id[2]=0x200;
     
-    // sprintf(can_pipeline.data[0],"F0000AA");
-    // sprintf(can_pipeline.data[1],"F000001");
-    // sprintf(can_pipeline.data[2],"06061995");
+    sprintf(can_pipeline.data[0],"F0000AA");
+    sprintf(can_pipeline.data[1],"F000001");
+    sprintf(can_pipeline.data[2],"06061995");
     uint32 tempo_ret;
     
 
-    start_thread(&t_io_read_can, NULL, read_can, &can_pipeline);
+    //start_thread(&t_io_read_can, NULL, read_can, &can_pipeline);
     while(1){
         //if(available>)
         delay(1000);
@@ -63,14 +63,14 @@ void io_service_thread(){
         //printf("varid[9] : %x\n",tempo_ret);
         
         if(can_pipeline.available<1){
-            //can_pipeline.available=0;
+            can_pipeline.available=0;
         }
         else{
+            can_pipeline.available--;
         }
-        //can_pipeline.available--;
         
     }
-    end_thread(t_io_read_can, NULL);
+    //end_thread(t_io_read_can, NULL);
     
     /* CAN TEST WORKING
     for(int y=0;y<5;y++){
@@ -402,8 +402,8 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
         int var_id=0;
         if(cfg->can.id_data_base[tram_index[trams]].x_can_id==pipeline->id[k]){
             if(cfg->can.id_data_base[tram_index[trams]].available==1){
-                printf(" varid : %d | CHECK IN : %x/%x\n",var_id,cfg->can.id_data_base[tram_index[trams]].x_can_id,pipeline->id[k]);
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
+                printf(" varid : %d | CHECK IN : %x/%x\n",var_id,cfg->can.id_data_base[tram_index[trams]].x_can_id,pipeline->id[k]);
                 
                 if(var_id!=-1){
 
