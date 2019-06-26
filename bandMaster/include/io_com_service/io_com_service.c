@@ -39,17 +39,17 @@ void io_service_thread(){
         return;
     }
     can_shared can_pipeline;
-    can_pipeline.available=3;
-    can_pipeline.id[0]=0x100;
-    can_pipeline.id[1]=0x101;
-    can_pipeline.id[2]=0x200;
+    can_pipeline.available=0;
+    // can_pipeline.id[0]=0x100;
+    // can_pipeline.id[1]=0x101;
+    // can_pipeline.id[2]=0x200;
     
-    sprintf(can_pipeline.data[0],"F0000AA");
-    sprintf(can_pipeline.data[1],"F000001");
-    sprintf(can_pipeline.data[2],"06061995");
-    can_pipeline.xdata[0]=strtoul(can_pipeline.data[0],NULL,16);
-    can_pipeline.xdata[1]=strtoul(can_pipeline.data[1],NULL,16);
-    can_pipeline.xdata[2]=strtoul(can_pipeline.data[2],NULL,16);
+    // sprintf(can_pipeline.data[0],"F0000AA");
+    // sprintf(can_pipeline.data[1],"F000001");
+    // sprintf(can_pipeline.data[2],"06061995");
+    // can_pipeline.xdata[0]=strtoul(can_pipeline.data[0],NULL,16);
+    // can_pipeline.xdata[1]=strtoul(can_pipeline.data[1],NULL,16);
+    // can_pipeline.xdata[2]=strtoul(can_pipeline.data[2],NULL,16);
 
     uint32 tempo_ret;
     

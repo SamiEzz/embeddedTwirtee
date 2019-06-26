@@ -790,7 +790,7 @@ int read_can(void* _can_shared){
 				// }
 
 				//printf("id : %x data[%d] : %s/%x\n",can_buff->id[can_buff->available],can_buff->available,can_buff->data[can_buff->available],can_buff->xdata[can_buff->available]);
-				_delay(100);
+				_delay(10);
 				pthread_mutex_unlock(&can_buff->mutex);
 //-------------------------------------------------------------------------------------------------------------------------
 				//printf(" %s", (color && (color<3))?col_on[idx%MAXCOL]:"");
