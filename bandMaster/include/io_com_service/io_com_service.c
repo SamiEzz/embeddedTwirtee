@@ -32,7 +32,7 @@ void io_service_main(){
 
     //char* jsonConfigFileName="./io_service_config.json";
     //char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
-    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    char jsonConfigFileName[]="/home/pi/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
