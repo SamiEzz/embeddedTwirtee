@@ -388,18 +388,13 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     index=0;
     for(int i=0;i<pipeline->available;i++){
         for(int j=0;j<cfg->can.available;j++){
-            //cfg->can.id_data_base[j].x_can_id=strtol(cfg->can.id_data_base[j].can_id,NULL,16);
-            //printf("CANID : %x\n",cfg->can.id_data_base[j].x_can_id);
-
-
             if(pipeline->id[i]==cfg->can.id_data_base[j].x_can_id){
                 tram_index[index]=j;
-                printf("io_com_service.c : id found : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
-                               
                 index++;
+                j=cfg->can.available;
             }
             else{
-                printf("io_com_service.c id not match : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
+                //printf("io_com_service.c id not match : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
             }
         }
     }
@@ -411,35 +406,22 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
         if(cfg->can.id_data_base[tram_index[trams]].x_can_id==pipeline->id[k]){
             if(cfg->can.id_data_base[tram_index[trams]].available==1){
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
-                printf(" varid : %d | CHECK IN : %x/%x\n",var_id,cfg->can.id_data_base[tram_index[trams]].x_can_id,pipeline->id[k]);
-                
                 if(var_id!=-1){
-
-                    printf("========================== var_id : %d\n",var_id);
                     uint32 xcan_data=0;
                     xcan_data=pipeline->xdata[k];
                     read_from_cantram(cfg->can.id_data_base[tram_index[trams]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
                     uint32 tempo_ret[1];
-                    //io_read(cfg->can.id_data_base[tram_index[k]].var_id[0],tempo_ret,cfg);
                 }
             }
                 
             else if(cfg->can.id_data_base[tram_index[trams]].available>1){
-                //printf("%d,%d check in : %x/%x \n",k,trams,cfg->can.id_data_base[trams].x_can_id,pipeline->id[k]);
                 for(int l=0;l<cfg->can.id_data_base[tram_index[trams]].available;l++){
                     var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[trams]].var_id[l],cfg);
                     if(var_id!=-1){
-                        printf(" varid : %d | CHECK IN : %x/%x\n",var_id,cfg->can.id_data_base[tram_index[trams]].x_can_id,pipeline->id[k]);
-                
-                        printf("========================== var_id : %d\n",var_id);
                         uint32 xcan_data=0;
                         xcan_data=pipeline->xdata[k];
                         // read data
                         read_from_cantram(cfg->can.id_data_base[tram_index[trams]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
-                        
-                        
-                        uint32 tempo_ret[1];
-                        //io_read(cfg->can.id_data_base[tram_index[trams]].var_id[l],tempo_ret,cfg);
                     }    
 
                 }
