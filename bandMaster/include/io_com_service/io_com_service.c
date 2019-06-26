@@ -76,7 +76,7 @@ void io_service_thread(){
             can_pipeline.available=0;
         }
         else{
-            can_pipeline.available--;
+            can_pipeline.available=0;
         }
         
     }
