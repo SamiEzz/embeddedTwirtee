@@ -54,7 +54,7 @@ void io_service_thread(){
     uint32 tempo_ret;
     
 
-    //start_thread(&t_io_read_can, NULL, read_can, &can_pipeline);
+    start_thread(&t_io_read_can, NULL, read_can, &can_pipeline);
     while(1){
         //if(available>)
         delay(1000);
@@ -78,7 +78,7 @@ void io_service_thread(){
         }
         
     }
-    //end_thread(t_io_read_can, NULL);
+    end_thread(t_io_read_can, NULL);
     
     /* CAN TEST WORKING
     for(int y=0;y<5;y++){
