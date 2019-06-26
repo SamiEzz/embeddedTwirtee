@@ -14,17 +14,17 @@
 #include "./linux-can-utils/read_can.h"
 
 void io_simulation(COM_CONFIG* cfg,int y){
-    io_write(0,y+float2uint32(3.14),cfg);
-    io_write(1,y+float2uint32(9.89),cfg);
-    io_write(8,y+0x1995,cfg);
-    io_write(9,y+0x0606,cfg);
+    io_write(io_vitesse_V,y,cfg);
+    io_write(io_omega_W,y+float2uint32(9.89),cfg);
+    io_write(io_odometrie_left,y+0x1995,cfg);
+    io_write(io_odometrie_right,y+0x0606,cfg);
 //    io_write(0,float2uint32(6.28),cfg);
     
     
 }
 
 
-void io_service_thread(){
+void io_service_main(){
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
     
@@ -32,7 +32,7 @@ void io_service_thread(){
 
     //char* jsonConfigFileName="./io_service_config.json";
     //char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
-    char jsonConfigFileName[]="/home/samie/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
+    char jsonConfigFileName[]="/home/pi/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
@@ -41,7 +41,7 @@ void io_service_thread(){
     };
 
     /* CAN TEST WORKING */
-    for(int y=0;y<5;y++){
+    for(int y=0;y<200;y++){
         io_simulation(cfg,y);
         can_shared pipeline_can;
         pipeline_can.available=0;
@@ -344,12 +344,9 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     // }
 }
 
-void set_edition_time(uint8 var_id, COM_CONFIG* cfg){
-    int index = get_element_byvarid(var_id,cfg);
-    cfg->data_base[index].validity[0]=1;
-    cfg->data_base[index].validity[1]=1;
-    
-    cfg->data_base[index].edition_time=clock();
+
+void set_edition_time(clock_t* edition_time){
+    *edition_time=clock();
 }
 void check_availability(io_data_base var){
 
@@ -639,7 +636,7 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
 	 * 
 	 * 
 	 * */
-    cfg->data_base=malloc(sizeof(io_data_base)*MAX_VAR_TO_COM);
+    //cfg->data_base=malloc(sizeof(io_data_base)*MAX_VAR_TO_COM);
     long length=0;
     char* JSON_STRING;
 
