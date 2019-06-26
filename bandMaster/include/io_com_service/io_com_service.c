@@ -41,7 +41,7 @@ void io_service_main(){
     };
 
     /* CAN TEST WORKING */
-    for(int y=0;y<5;y++){
+    for(int y=0;y<200;y++){
         io_simulation(cfg,y);
         can_shared pipeline_can;
         pipeline_can.available=0;
