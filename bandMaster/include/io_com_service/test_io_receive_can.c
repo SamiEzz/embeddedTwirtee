@@ -1,3 +1,11 @@
+//////////////////////////////////////////////////////////
+//                                                      //
+//      (c)         : EZZEROUALI Sami 2018              //
+//      Tutor       : JENN Eric                         //
+//      Project     : CAPHCA                            //
+//      Program     : can receive data                  //
+//                                                      //
+//////////////////////////////////////////////////////////
 #include <stdio.h>
 #include <stdlib.h>
 
