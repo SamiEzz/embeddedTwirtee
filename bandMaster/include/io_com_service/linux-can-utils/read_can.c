@@ -772,11 +772,7 @@ int read_can(void* _can_shared){
 				
 				//printf("============ xdata/last : %x/%x \t id/last %x/%x",xdata,last_msg , can_buff->id[can_buff->available],last_id);
 				//printf("\n========= available : %d\n",can_buff->available);
-				if(xdata==last_msg && can_buff->id[can_buff->available]==last_id){
-					
-					printf("same can message repeated\n");
-				}
-				else{
+				if(xdata!=last_msg && can_buff->id[can_buff->available]!=last_id){
 					
 					can_buff->xdata[can_buff->available]=strtoul(can_buff->data[can_buff->available],NULL,16);
 					last_id=frame.can_id;
@@ -784,6 +780,10 @@ int read_can(void* _can_shared){
 					can_buff->available++;
 
 					printf("\nnew value, available : %d\n",can_buff->available);
+				}
+				else{
+					
+					printf("same can message repeated\n");
 				}
 				
 				
