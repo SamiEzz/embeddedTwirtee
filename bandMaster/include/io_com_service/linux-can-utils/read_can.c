@@ -771,10 +771,10 @@ int read_can(void* _can_shared){
 				can_buff->id[can_buff->available]  = frame.can_id;
 				uint32 xdata = strtoul(can_buff->data[can_buff->available],NULL,16);
 				for(int z=0;z<=can_buff->available;z++){
-					printf("\nDATA ============= %s\n" ,can_buff->data[z]);
+					//printf("\nDATA ============= %s\n" ,can_buff->data[z]);
 				}
 				
-				printf("============ xdata/last : %x/%x \t id/last %x/%x",xdata,last_msg , can_buff->id[can_buff->available],last_id);
+				//printf("============ xdata/last : %x/%x \t id/last %x/%x",xdata,last_msg , can_buff->id[can_buff->available],last_id);
 				printf("\n========= available : %d\n",can_buff->available);
 				if(xdata==last_msg && can_buff->id[can_buff->available]==last_id){
 					
