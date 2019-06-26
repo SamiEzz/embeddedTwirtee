@@ -51,7 +51,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/twirtee.bin",
+            "program": "/home/samie/Documents/git/embeddedTwirtee/bandMaster/bin/twirtee.bin",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

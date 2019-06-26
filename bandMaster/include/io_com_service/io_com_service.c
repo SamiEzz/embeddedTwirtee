@@ -25,6 +25,7 @@ void io_service_thread(){
     
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
+    //&(cfg->can)=malloc(sizeof(can_config));
     //char* jsonConfigFileName="./io_service_config.json";
     //char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     char jsonConfigFileName[]="/home/pi/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
@@ -33,7 +34,10 @@ void io_service_thread(){
     if(init_io_service(cfg,jsonConfigFileName)==0){        
         print_db(*cfg);
         print_conf(*cfg);
-    };
+    }
+    else{
+        return;
+    }
     can_shared can_pipeline;
     can_pipeline.available=3;
     can_pipeline.id[0]=0x100;
@@ -43,6 +47,10 @@ void io_service_thread(){
     sprintf(can_pipeline.data[0],"F0000AA");
     sprintf(can_pipeline.data[1],"F000001");
     sprintf(can_pipeline.data[2],"06061995");
+    can_pipeline.xdata[0]=strtoul(can_pipeline.data[0],NULL,16);
+    can_pipeline.xdata[1]=strtoul(can_pipeline.data[1],NULL,16);
+    can_pipeline.xdata[2]=strtoul(can_pipeline.data[2],NULL,16);
+
     uint32 tempo_ret;
     
 
@@ -377,8 +385,8 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
      * Cette boucle 'for' doit remplir un tableau d'entiers par les rangs des trams reçu sur le CAN
      * dans le tableau de trams (cfg->can.id_data_base[])
      */
+    index=0;
     for(int i=0;i<pipeline->available;i++){
-        index=0;
         for(int j=0;j<cfg->can.available;j++){
             //cfg->can.id_data_base[j].x_can_id=strtol(cfg->can.id_data_base[j].can_id,NULL,16);
             //printf("CANID : %x\n",cfg->can.id_data_base[j].x_can_id);
@@ -386,13 +394,12 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
 
             if(pipeline->id[i]==cfg->can.id_data_base[j].x_can_id){
                 tram_index[index]=j;
-                //printf("io_com_service.c : id found : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
-                
-                
+                printf("io_com_service.c : id found : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
+                               
                 index++;
             }
             else{
-                //printf("io_com_service.c id not match : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
+                printf("io_com_service.c id not match : %x/%x \n",pipeline->id[i],cfg->can.id_data_base[j].x_can_id);
             }
         }
     }
@@ -400,6 +407,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
     for(int k=0;k<pipeline->available;k++){
         for(int trams=0;trams<index;trams++){
         int var_id=0;
+        
         if(cfg->can.id_data_base[tram_index[trams]].x_can_id==pipeline->id[k]){
             if(cfg->can.id_data_base[tram_index[trams]].available==1){
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
@@ -731,7 +739,7 @@ void can_database_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
         }
     }
     if(error!=0){
-        printf("\n%d : io_com_service.c : Configuration can_tram_id indisponible dans le fichier json\n",error);
+        fprintf(stderr, "\n%d : io_com_service.c : Configuration can_tram_id indisponible dans le fichier json\n",error);
     }
     
 }
@@ -745,7 +753,7 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
 	 * 
 	 * 
 	 * */
-    cfg->data_base=malloc(sizeof(io_data_base)*MAX_VAR_TO_COM);
+    //cfg->data_base=malloc(sizeof(io_data_base)*MAX_VAR_TO_COM);
     long length=0;
     char* JSON_STRING;
 
@@ -764,7 +772,7 @@ sint8 init_io_service(COM_CONFIG* cfg,char* jsonConfigFileName){
 
     } 
     else {
-        printf("io.c : Couldn't open json file. \n");
+        fprintf(stderr, "io.c : Couldn't open json file. \n");
         return -1;
     }
     int r;

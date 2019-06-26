@@ -103,7 +103,7 @@ typedef struct wifi_config{
 } wifi_config;
 
 typedef struct COM_CONFIG{
-	io_data_base* data_base;
+	io_data_base data_base[MAX_VAR_TO_COM];
 	uint16 available;
 	can_config can;
 	uart_config uart;
