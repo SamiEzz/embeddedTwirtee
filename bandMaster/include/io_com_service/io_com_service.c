@@ -432,7 +432,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
         //delay(100);
         }
     }
-    pipeline->available=0;
+    //pipeline->available=0;
     
 }
 
