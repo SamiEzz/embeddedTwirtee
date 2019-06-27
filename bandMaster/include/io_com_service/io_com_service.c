@@ -54,7 +54,7 @@ void io_service_main(){
         can_shared pipeline_can;
         pipeline_can.available=0;
         pthread_mutex_init(&(pipeline_can.mutex),NULL);
-        io_can_write_engine(cfg,&pipeline_can);
+        io_can_write_engine(&pipeline_can);
         delay(1000);
     }
     /**/
@@ -204,8 +204,8 @@ void io_can_concatenate(can_shared* c_tram,COM_CONFIG* cfg){
  * @param pipeline 
  */
 
-void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
-
+void io_can_write_engine(can_shared* pipeline){
+    COM_CONFIG* cfg  = pipeline->p_cfg;
 //    pipeline->available=0;
     for(int i=0;i<cfg->can.available;i++){
         //printf("\n can available : %d\n",cfg->can.available);
@@ -300,9 +300,11 @@ void read_from_cantram(uint8 offset,uint8 SIZE,uint32 can_xdata,uint32* result){
     }
 }
 
-void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
+void io_can_read_engine(can_shared* pipeline){
+    
+    COM_CONFIG* cfg = pipeline->p_cfg; 
     read_can(pipeline);
-
+    
     uint8 tram_ids[cfg->can.available];
     int var_id;
     int var_offsets[10];
