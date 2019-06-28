@@ -839,7 +839,7 @@ void print_db(COM_CONFIG cfg){
         printf("\n\tsize \t\t: %d bits",cfg.data_base[j].size);
         printf("\n\ttype \t\t: %s ",(cfg.data_base[j].type==0)?"INT":"FLOAT");
         printf("\n\ttrigger_type \t: %s",(cfg.data_base[j].trigger_type==0)?"Time":"Event");
-        printf("\n\tdirection \t: %s\n",(cfg.data_base[j].medium==0)?"Send":"Receive");
+        printf("\n\tdirection \t: %s",(cfg.data_base[j].medium==0)?"Send":"Receive");
         printf("\n\tmedium \t\t: %s\n",(cfg.data_base[j].medium==0)?"CAN":"UART");
     }
 }
