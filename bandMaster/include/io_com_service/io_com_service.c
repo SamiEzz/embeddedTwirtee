@@ -310,34 +310,35 @@ void io_can_read_engine(can_shared* pipeline){
     int var_offsets[10];
     uint32 var_values[10];
     int size=0;
-    for(int i=0;i<pipeline->available;i++){
-        uint8 index=0;
-        for(int j=0;j<cfg->can.available;j++){
-            char hex_id[4];
-            sprintf(hex_id,"%x",pipeline->id[i]);
-            if(strcmp(hex_id,cfg->can.id_data_base[j].can_id)){
-                tram_ids[index]=j;
-                index++;
+    if(pipeline->available>0){
+        for(int i=0;i<pipeline->available;i++){
+            uint8 index=0;
+            for(int j=0;j<cfg->can.available;j++){
+                char hex_id[4];
+                sprintf(hex_id,"%x",pipeline->id[i]);
+                if(strcmp(hex_id,cfg->can.id_data_base[j].can_id)){
+                    tram_ids[index]=j;
+                    index++;
+                }
             }
         }
-    }
-    for(int k=0;k<pipeline->available;k++){
-        if(cfg->can.id_data_base[tram_ids[k]].available=1){
-            var_id=get_element_byvarid(cfg->can.id_data_base[tram_ids[k]].var_id[0],cfg);
-            uint32 xcan_data=0;
-            xcan_data=strtol(pipeline->data[k],NULL,16);
-            read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
-        }
-        else if(cfg->can.id_data_base[tram_ids[k]].available>1){
-            for(int l=0;l<cfg->can.id_data_base[tram_ids[k]].available;l++){
-                var_id=get_element_byvarid(cfg->can.id_data_base[tram_ids[k]].var_id[l],cfg);
+        for(int k=0;k<pipeline->available;k++){
+            if(cfg->can.id_data_base[tram_ids[k]].available=1){
+                var_id=get_element_byvarid(cfg->can.id_data_base[tram_ids[k]].var_id[0],cfg);
                 uint32 xcan_data=0;
                 xcan_data=strtol(pipeline->data[k],NULL,16);
-                read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
+                read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
+            }
+            else if(cfg->can.id_data_base[tram_ids[k]].available>1){
+                for(int l=0;l<cfg->can.id_data_base[tram_ids[k]].available;l++){
+                    var_id=get_element_byvarid(cfg->can.id_data_base[tram_ids[k]].var_id[l],cfg);
+                    uint32 xcan_data=0;
+                    xcan_data=strtol(pipeline->data[k],NULL,16);
+                    read_from_cantram(cfg->can.id_data_base[tram_ids[k]].offsets[l],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
+                }
             }
         }
     }
-
     // int index=0;
 
 
