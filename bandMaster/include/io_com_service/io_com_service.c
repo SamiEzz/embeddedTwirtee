@@ -415,7 +415,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
         if(cfg->can.id_data_base[tram_index[trams]].x_can_id==pipeline->id[k]){
             if(cfg->can.id_data_base[tram_index[trams]].available==1){
                 var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[k]].var_id[0],cfg);
-                if(var_id!=-1){
+                if(var_id!=-1 && cfg->data_base[var_id].send_receive==1){
                     uint32 xcan_data=0;
                     xcan_data=pipeline->xdata[k];
                     read_from_cantram(cfg->can.id_data_base[tram_index[trams]].offsets[0],cfg->data_base[var_id].size,xcan_data,&(cfg->data_base[var_id].xdata));
@@ -426,7 +426,7 @@ void io_can_read_engine(COM_CONFIG* cfg,can_shared* pipeline){
             else if(cfg->can.id_data_base[tram_index[trams]].available>1){
                 for(int l=0;l<cfg->can.id_data_base[tram_index[trams]].available;l++){
                     var_id=get_element_byvarid(cfg->can.id_data_base[tram_index[trams]].var_id[l],cfg);
-                    if(var_id!=-1){
+                    if(var_id!=-1 && cfg->data_base[var_id].send_receive==1){
                         uint32 xcan_data=0;
                         xcan_data=pipeline->xdata[k];
                         // read data
@@ -448,7 +448,6 @@ void set_edition_time(uint8 var_id, COM_CONFIG* cfg){
     int index = get_element_byvarid(var_id,cfg);
     cfg->data_base[index].validity[0]=1;
     cfg->data_base[index].validity[1]=1;
-    
     cfg->data_base[index].edition_time=clock();
 }
 
