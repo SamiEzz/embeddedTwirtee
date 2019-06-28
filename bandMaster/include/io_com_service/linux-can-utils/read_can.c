@@ -757,14 +757,16 @@ int read_can(void* _can_shared){
 				
 				
 				pthread_mutex_lock(&((can_shared*)_can_shared)->mutex);
-				
-				sprint_canframe(can_buff->data[can_buff->available],&frame,view);
+				char tempo_data[13];
+				uint16 tempo_id;
+
+				sprint_canframe(tempo_data,&frame,view);
 				for(int i=4;i<12;i++){
 					//printf("%c",can_buff->data[can_buff->available][i]);
-					can_buff->data[can_buff->available][i-4]=can_buff->data[can_buff->available][i];
+					tempo_data[i-4]=tempo_data[i];
 				}
-				can_buff->data[can_buff->available][8]='\0';
-				can_buff->id[can_buff->available]  = frame.can_id;
+				tempo_data[8]='\0';
+				tempo_id=frame.can_id;
 				uint32 xdata = strtoul(can_buff->data[can_buff->available],NULL,16);
 				
 				
@@ -776,7 +778,9 @@ int read_can(void* _can_shared){
 				}
 				else{
 					
-					can_buff->xdata[can_buff->available]=strtoul(can_buff->data[can_buff->available],NULL,16);
+					can_buff->xdata[can_buff->available]= xdata;
+					can_buff->id[can_buff->available]  = frame.can_id;
+					sprintf(can_buff->data[can_buff->available],"%s" ,tempo_data);
 					last_id=frame.can_id;
 					last_msg=can_buff->xdata[can_buff->available];
 					can_buff->available++;
