@@ -36,8 +36,7 @@ void io_simulation(COM_CONFIG* cfg,int y){
     
     
 }
-void io_service_main(){
-    pthread_t t_io_read_can;
+void io_service_main(){pthread_t t_io_read_can;
     pthread_t t_io_write_can;
 
     COM_CONFIG vcfg;
@@ -80,7 +79,6 @@ void io_service_main(){
         for(int j=0;j<cfg->available;j++){
             io_read(cfg->data_base[j].var_id,&tempo_ret,cfg);
             
-        }
         }
         can_read_pipeline.available=0;        
     }
