@@ -30,6 +30,8 @@
 
 void io_service_main(){
     pthread_t t_io_read_can;
+    pthread_t t_io_write_can;
+    
     
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
@@ -49,7 +51,7 @@ void io_service_main(){
     can_shared can_read_pipeline;
     can_shared can_write_pipeline;
     start_thread(&t_io_read_can, NULL, read_can, &can_read_pipeline);
-
+    start_thread(&t_io_write_can,NULL,io_can_write_engine,&can_write_pipeline);
     
     can_read_pipeline.available=0;
     uint32 tempo_ret;
@@ -103,22 +105,21 @@ void io_service_main(){
  }
 
 void io_can_update_to_send(COM_CONFIG* cfg){
-    uint16 count=0;
-    uint16 ranks[cfg->available];
-    for(int i=0;i<cfg->available;i++){
-
-        long int delta_time=clock()-cfg->data_base[i].edition_time-cfg->data_base[i].validity_time;
-        if(delta_time<0){
-            cfg->data_base[i].validity[0]=0;
+    //uint16 count=0;
+    //uint16 ranks[cfg->available];
+ 
+    while(1){
+        for(int i=0;i<cfg->available;i++){
+            long int delta_time=clock()-cfg->data_base[i].edition_time-cfg->data_base[i].validity_time/(CLOCKS_PER_SEC*1000);
+            if(delta_time<0){
+                cfg->data_base[i].validity[0]=0;
+            }
+            else{
+                cfg->data_base[i].validity[0]=1;
+                //ranks[count]=i;
+                //count++;
+            }
         }
-        else{
-            cfg->data_base[i].validity[0]=1;
-            ranks[count]=i;
-            count++;
-        }
-    }
-    for(int j=0;j<count;j++){
-
     }
 }
 
@@ -265,8 +266,8 @@ void io_can_concatenate(can_shared* c_tram,COM_CONFIG* cfg){
  * @param pipeline 
  */
 
-void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
-
+void io_can_write_engine(COM_CONFIG* _cfg,can_shared* pipeline){
+    COM_CONFIG* cfg=pipeline->p_cfg;
 //    pipeline->available=0;
     for(int i=0;i<cfg->can.available;i++){
         //printf("\n can available : %d\n",cfg->can.available);
