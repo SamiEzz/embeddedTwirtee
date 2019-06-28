@@ -266,7 +266,7 @@ void io_can_concatenate(can_shared* c_tram,COM_CONFIG* cfg){
  * @param pipeline 
  */
 
-void io_can_write_engine(COM_CONFIG* _cfg,can_shared* pipeline){
+void io_can_write_engine(can_shared* pipeline){
     COM_CONFIG* cfg=pipeline->p_cfg;
 //    pipeline->available=0;
     for(int i=0;i<cfg->can.available;i++){
