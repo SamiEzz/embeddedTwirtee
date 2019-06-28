@@ -60,40 +60,21 @@ void io_service_main(){pthread_t t_io_read_can;
     
 
     start_thread(&t_io_read_can, NULL, read_can, &can_read_pipeline);
-
     start_thread(&t_io_write_can, NULL, io_can_write_engine, &can_write_pipeline);
+
     while(1){
         //if(available>)
         delay(1000);
         io_can_read_engine(cfg,&can_read_pipeline);
 
 
-        // io_read(io_vitesse_V,&tempo_ret,cfg);
-        // //printf("varid[12] : %x\n",tempo_ret);
-        // io_read(io_omega_W,&tempo_ret,cfg);
-        // //printf("varid[1] : %x\n",tempo_ret);
-        // io_read(io_odometrie_left,&tempo_ret,cfg);
-        // //printf("varid[8] : %x\n",tempo_ret);
-        // io_read(io_odometrie_right,&tempo_ret,cfg);
         for(int j=0;j<cfg->available;j++){
             io_read(cfg->data_base[j].var_id,&tempo_ret,cfg);
         }
-        can_read_pipeline.available=0;
-        
-        
+        can_read_pipeline.available=0;        
     }
     end_thread(t_io_read_can, NULL);
     
-    /* CAN TEST WORKING
-    for(int y=0;y<5;y++){
-        io_simulation(cfg,y);
-        can_shared pipeline_can;
-        pipeline_can.available=0;
-        pthread_mutex_init(&(pipeline_can.mutex),NULL);
-        io_can_write_engine(cfg,&pipeline_can);
-        delay(1000);
-    }
-    */
  }
 /**
  * @brief Set the bit number "offset" to the value "value"
@@ -263,55 +244,80 @@ void io_can_write_engine(can_shared* pipeline){
                     io_data_base* p_base=cfg->data_base;
                     
                     indexs[j]=get_element_byvarid(*(&cfg->can.id_data_base[i].var_id[j]),cfg);
-                    if(cfg->data_base[indexs[j]].size==32&& cfg->data_base[indexs[j]].type==0){ // long int
-                        //printf("io_com_service.c : size 32 int\n");
-                        xcan_frame=(p_base+indexs[j]*sizeof(io_data_base))->xdata;
-                        set_edition_time(indexs[j],cfg);
+                    // check if sendable ?
+                    if(p_base[indexs[j]].send_receive==0){
+                        if(cfg->data_base[indexs[j]].size==32&& cfg->data_base[indexs[j]].type==0){ // long int
+                            //printf("io_com_service.c : size 32 int\n");
+                            xcan_frame=(p_base+indexs[j]*sizeof(io_data_base))->xdata;
+                            set_edition_time(indexs[j],cfg);
+                        }
+                        else if(cfg->data_base[indexs[j]].size==32 && cfg->data_base[indexs[j]].type==1){ // float type
+                            //xcan_frame=(p_base+indexs[j])->xdata;
+                            memcpy(&xcan_frame,&((p_base+indexs[j])->xdata),4);
+                            set_edition_time(indexs[j],cfg);
+                            //printf("io_can_write_engine, xdata : %x \n",(p_base+indexs[j])->xdata);
+                        }
+                        else if(cfg->data_base[indexs[j]].size==16){
+                            
+                            //printf("io_com_service.c : size 16 int\n");
+                            uint16 payload=0x0;
+                            payload=(uint16)cfg->data_base[indexs[j]].xdata;
+                            set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
+                            set_edition_time(indexs[j],cfg);
+                            //printf("xcan_frame : %x\n",xcan_frame);
+                            //sprint()
+                        }
+                        else if(cfg->data_base[indexs[j]].size==8){
+                            
+                            //printf("io_com_service.c : size 8 int\n");
+                            uint16 payload=0x0;
+                            payload=(uint8)cfg->data_base[indexs[j]].xdata;
+                            set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
+                            set_edition_time(indexs[j],cfg);
+                            //printf("data : %x - xcan_frame : %x\n",cfg->data_base[indexs[j]].xdata,xcan_frame);
+                            //sprint()
+                        }
                     }
-                    else if(cfg->data_base[indexs[j]].size==32 && cfg->data_base[indexs[j]].type==1){ // float type
-                        //xcan_frame=(p_base+indexs[j])->xdata;
-                        memcpy(&xcan_frame,&((p_base+indexs[j])->xdata),4);
-                        set_edition_time(indexs[j],cfg);
-                        //printf("io_can_write_engine, xdata : %x \n",(p_base+indexs[j])->xdata);
-                    }
-                    else if(cfg->data_base[indexs[j]].size==16){
-                        
-                        //printf("io_com_service.c : size 16 int\n");
-                        uint16 payload=0x0;
-                        payload=(uint16)cfg->data_base[indexs[j]].xdata;
-                        set_16bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
-                        set_edition_time(indexs[j],cfg);
-                        //printf("xcan_frame : %x\n",xcan_frame);
-                        //sprint()
-                    }
-                    else if(cfg->data_base[indexs[j]].size==8){
-                        
-                        //printf("io_com_service.c : size 8 int\n");
-                        uint16 payload=0x0;
-                        payload=(uint8)cfg->data_base[indexs[j]].xdata;
-                        set_8bits(&xcan_frame,cfg->can.id_data_base[i].offsets[j],payload);
-                        set_edition_time(indexs[j],cfg);
-                        //printf("data : %x - xcan_frame : %x\n",cfg->data_base[indexs[j]].xdata,xcan_frame);
-                        //sprint()
-                    }
-                }
-                
+                    
 
-                sprintf(pipeline->data[pipeline->available],"%s#%08x",cfg->can.id_data_base[i].can_id,xcan_frame);
-                printf("add to pipeline: %s\n",pipeline->data[pipeline->available]);
-                pipeline->available++;
-                
-                //io_can_pipeline_append(pipeline,add_to_pipe);
-                //io_can_pipeline_pop(pipeline,&poped);
-                //printf("added to pipeline: %s\n",poped.msg);
-                //printf("\ntram.msg : %s \n",pipeline.data);
-            }    
-        write_can(pipeline);
-        sleep(30);
+                    sprintf(pipeline->data[pipeline->available],"%s#%08x",cfg->can.id_data_base[i].can_id,xcan_frame);
+                    printf("add to pipeline: %s\n",pipeline->data[pipeline->available]);
+                    pipeline->available++;
+                    
+                    //io_can_pipeline_append(pipeline,add_to_pipe);
+                    //io_can_pipeline_pop(pipeline,&poped);
+                    //printf("added to pipeline: %s\n",poped.msg);
+                    //printf("\ntram.msg : %s \n",pipeline.data);
+                }    
+            if(pipeline->available>0){
+                write_can(pipeline);
+            }
+            sleep(10);
+            }
         }
     //}
     
 }
+
+void io_can_update_to_send(COM_CONFIG* cfg){
+    //uint16 count=0;
+    //uint16 ranks[cfg->available];
+ 
+    while(1){
+        for(int i=0;i<cfg->available;i++){
+            long int delta_time=clock()-cfg->data_base[i].edition_time-cfg->data_base[i].validity_time*CLOCKS_PER_SEC/1000;
+            if(delta_time<0){
+                cfg->data_base[i].validity[0]=0;
+                printf("\nT validity[%d] : %d",i,cfg->data_base[i].validity[0]);
+            }
+            else{
+                cfg->data_base[i].validity[0]=1;
+                printf("\nT validity[%d] : %d",i,cfg->data_base[i].validity[0]);
+            }
+        }
+    }
+}
+
 
 int get_tram_by_canid(char* canid,COM_CONFIG* cfg){
     //int ret_id[10];
