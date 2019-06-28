@@ -28,9 +28,9 @@
 
 #define SYSTEM_CMD_STOP 1
 
-void io_service_main(){
-    pthread_t t_io_read_can;
-    
+void io_service_main(){pthread_t t_io_read_can;
+    pthread_t t_io_write_can;
+
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
     //&(cfg->can)=malloc(sizeof(can_config));
@@ -48,14 +48,20 @@ void io_service_main(){
     }
     can_shared can_read_pipeline;
     can_shared can_write_pipeline;
-    start_thread(&t_io_read_can, NULL, read_can, &can_read_pipeline);
-
     
     can_read_pipeline.available=0;
-    uint32 tempo_ret;
-    
+    can_read_pipeline.p_cfg=cfg;
+
+    can_write_pipeline.available=0;
+    can_write_pipeline.p_cfg=cfg;
     
 
+    uint32 tempo_ret;
+    
+
+    start_thread(&t_io_read_can, NULL, read_can, &can_read_pipeline);
+
+    start_thread(&t_io_write_can, NULL, io_can_write_engine, &can_write_pipeline);
     while(1){
         //if(available>)
         delay(1000);
@@ -69,12 +75,6 @@ void io_service_main(){
         io_read(io_odometrie_left,&tempo_ret,cfg);
         //printf("varid[8] : %x\n",tempo_ret);
         io_read(io_odometrie_right,&tempo_ret,cfg);
-        io_read(io_position_x,&tempo_ret,cfg);
-        io_read(io_position_y,&tempo_ret,cfg);
-        io_read(io_position_z,&tempo_ret,cfg);
-        io_read(io_position_qf,&tempo_ret,cfg);
-        
-        
         //printf("varid[9] : %x\n",tempo_ret);
         // for(int z=0;z<can_pipeline.available;z++){
         //     printf("\n[%d]ID#DATA[%d] %x#%s\n" ,can_pipeline.available,z,can_pipeline.id[z],can_pipeline.data[z]);
@@ -248,8 +248,8 @@ void io_can_concatenate(can_shared* c_tram,COM_CONFIG* cfg){
  * @param pipeline 
  */
 
-void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
-
+void io_can_write_engine(can_shared* pipeline){
+    COM_CONFIG* cfg=pipeline->p_cfg;
 //    pipeline->available=0;
     for(int i=0;i<cfg->can.available;i++){
         //printf("\n can available : %d\n",cfg->can.available);

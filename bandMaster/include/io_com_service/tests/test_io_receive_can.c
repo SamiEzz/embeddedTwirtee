@@ -30,7 +30,8 @@
 
 void io_service_thread(){
     pthread_t t_io_read_can;
-    
+    pthread_t t_io_write_can;
+
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
     //&(cfg->can)=malloc(sizeof(can_config));
@@ -46,27 +47,26 @@ void io_service_thread(){
     else{
         return;
     }
-    can_shared can_pipeline;
-    can_pipeline.available=0;
-    // can_pipeline.id[0]=0x100;
-    // can_pipeline.id[1]=0x101;
-    // can_pipeline.id[2]=0x200;
+    can_shared can_read_pipeline;
+    can_shared can_write_pipeline;
     
-    // sprintf(can_pipeline.data[0],"F0000AA");
-    // sprintf(can_pipeline.data[1],"F000001");
-    // sprintf(can_pipeline.data[2],"06061995");
-    // can_pipeline.xdata[0]=strtoul(can_pipeline.data[0],NULL,16);
-    // can_pipeline.xdata[1]=strtoul(can_pipeline.data[1],NULL,16);
-    // can_pipeline.xdata[2]=strtoul(can_pipeline.data[2],NULL,16);
+    can_read_pipeline.available=0;
+    can_read_pipeline.p_cfg=cfg;
+
+    can_write_pipeline.available=0;
+    can_write_pipeline.p_cfg=cfg;
+    
 
     uint32 tempo_ret;
     
 
-    start_thread(&t_io_read_can, NULL, read_can, &can_pipeline);
+    start_thread(&t_io_read_can, NULL, read_can, &can_read_pipeline);
+
+    start_thread(&t_io_write_can, NULL, io_can_write_engine, &can_write_pipeline);
     while(1){
         //if(available>)
         delay(1000);
-        io_can_read_engine(cfg,&can_pipeline);
+        io_can_read_engine(cfg,&can_read_pipeline);
 
 
         io_read(io_vitesse_V,&tempo_ret,cfg);
@@ -80,26 +80,17 @@ void io_service_thread(){
         // for(int z=0;z<can_pipeline.available;z++){
         //     printf("\n[%d]ID#DATA[%d] %x#%s\n" ,can_pipeline.available,z,can_pipeline.id[z],can_pipeline.data[z]);
         // }
-        if(can_pipeline.available<1){
-            can_pipeline.available=0;
+        if(can_read_pipeline.available<1){
+            can_read_pipeline.available=0;
         }
         else{
-            can_pipeline.available=0;
+            can_read_pipeline.available=0;
         }
         
     }
     end_thread(t_io_read_can, NULL);
     
-    /* CAN TEST WORKING
-    for(int y=0;y<5;y++){
-        io_simulation(cfg,y);
-        can_shared pipeline_can;
-        pipeline_can.available=0;
-        pthread_mutex_init(&(pipeline_can.mutex),NULL);
-        io_can_write_engine(cfg,&pipeline_can);
-        delay(1000);
-    }
-    */
+
  }
 /**
  * @brief Set the bit number "offset" to the value "value"
@@ -249,8 +240,8 @@ void io_can_concatenate(can_shared* c_tram,COM_CONFIG* cfg){
  * @param pipeline 
  */
 
-void io_can_write_engine(COM_CONFIG* cfg,can_shared* pipeline){
-
+void io_can_write_engine(can_shared* pipeline){
+    COM_CONFIG* cfg=pipeline->p_cfg;
 //    pipeline->available=0;
     for(int i=0;i<cfg->can.available;i++){
         //printf("\n can available : %d\n",cfg->can.available);
