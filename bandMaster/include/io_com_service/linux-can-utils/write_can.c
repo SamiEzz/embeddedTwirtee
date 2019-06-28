@@ -180,20 +180,3 @@ enum data_name {
 	e_angular_speed_right,
 	
 };
-
-void assign_id(int e_name,char* id){
-	//char* id="000#";
-	switch(e_name){
-		case e_urgent_stop: 
-			id="001#";break;
-		case e_theta: 
-			id="010#";break;
-		case e_angular_speed_left: 
-			id="011#";break;
-		case e_angular_speed_right: 
-			id="012#";break;
-		default : 
-			printf("write_can.c : error assigning id");
-	}
-
-}
