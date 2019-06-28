@@ -27,42 +27,65 @@
 
 
 #define SYSTEM_CMD_STOP 1
-
 void io_simulation(COM_CONFIG* cfg,int y){
-    io_write(io_vitesse_V,y+0x1995,cfg);
+    io_write(io_vitesse_V,y,cfg);
     io_write(io_omega_W,y+float2uint32(9.89),cfg);
+    io_write(io_odometrie_left,y+0x1995,cfg);
+    io_write(io_odometrie_right,y+0x0606,cfg);
+//    io_write(0,float2uint32(6.28),cfg);
     
     
 }
-
-
 void io_service_main(){
+    pthread_t t_io_read_can;
+    pthread_t t_io_write_can;
+
     COM_CONFIG vcfg;
     COM_CONFIG* cfg=&vcfg;
-    
-
-
+    //&(cfg->can)=malloc(sizeof(can_config));
     //char* jsonConfigFileName="./io_service_config.json";
     //char jsonConfigFileName[]="/mnt/d/CODE/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     char jsonConfigFileName[]="/home/pi/Documents/git/embeddedTwirtee/bandMaster/include/io_com_service/io_service_config.json";
     
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
-        //print_db(*cfg);
-        //print_conf(*cfg);
-    };
-
-    /* CAN TEST WORKING */
-    for(int y=0;y<200;y++){
-        io_simulation(cfg,y);
-        can_shared pipeline_can;
-        pipeline_can.available=0;
-        pipeline_can.p_cfg=cfg;
-        io_can_write_engine(&pipeline_can);
-        
-        delay(1000);
+        print_db(*cfg);
+        print_conf(*cfg);
     }
-    /**/
+    else{
+        return;
+    }
+    can_shared can_read_pipeline;
+    can_shared can_write_pipeline;
+    
+    can_read_pipeline.available=0;
+    can_read_pipeline.p_cfg=cfg;
+
+    can_write_pipeline.available=0;
+    can_write_pipeline.p_cfg=cfg;
+    
+
+    uint32 tempo_ret;
+    
+
+    start_thread(&t_io_read_can, NULL, read_can, &can_read_pipeline);
+    start_thread(&t_io_write_can, NULL, io_can_write_engine, &can_write_pipeline);
+
+    while(1){
+        //if(available>)
+        delay(1000);
+        io_can_read_engine(cfg,&can_read_pipeline);
+
+
+        for(int j=0;j<cfg->available;j++){
+            io_read(cfg->data_base[j].var_id,&tempo_ret,cfg);
+            
+        }
+        }
+        can_read_pipeline.available=0;        
+    }
+    end_thread(t_io_read_can, NULL);
+    
  }
 /**
  * @brief Set the bit number "offset" to the value "value"
