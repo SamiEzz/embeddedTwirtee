@@ -762,9 +762,9 @@ int read_can(void* _can_shared){
 
 				sprint_canframe(tempo_data,&frame,view);
 				for(int i=4;i<12;i++){
-					//printf("%c",can_buff->data[can_buff->available][i]);
 					tempo_data[i-4]=tempo_data[i];
 				}
+				printf("\n tempodata %s",tempo_data);
 				tempo_data[8]='\0';
 				tempo_id=frame.can_id;
 				uint32 xdata = strtoul(can_buff->data[can_buff->available],NULL,16);
