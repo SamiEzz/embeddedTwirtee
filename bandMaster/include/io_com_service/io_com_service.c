@@ -28,7 +28,7 @@
 
 #define SYSTEM_CMD_STOP 1
 
-void io_service_thread(){
+void io_service_main(){
     pthread_t t_io_read_can;
     
     COM_CONFIG vcfg;
