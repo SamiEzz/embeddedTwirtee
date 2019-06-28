@@ -21,6 +21,14 @@
       "offsets":[0,16],
       "tram_period":50,
       "variable": "odo_left odo_right"
+    },
+    
+    {
+      "can_id": "300",
+      "var_id": [3,4,5,6],
+      "offsets":[0,8,16,24],
+      "tram_period":50,
+      "variable": "position"
     }
   ],
   "uart_id_db": [
@@ -177,7 +185,7 @@
       "type": 0,
       "trigger_type": 1,
       "medium": 2,
-      "disabled": 0,
+      "disabled": 0
     },
     {
       "_comment": "io_speed_right",

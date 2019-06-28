@@ -76,6 +76,12 @@ void io_service_main(){
         io_read(io_odometrie_left,&tempo_ret,cfg);
         //printf("varid[8] : %x\n",tempo_ret);
         io_read(io_odometrie_right,&tempo_ret,cfg);
+        io_read(io_position_x,&tempo_ret,cfg);
+        io_read(io_position_y,&tempo_ret,cfg);
+        io_read(io_position_z,&tempo_ret,cfg);
+        io_read(io_position_qf,&tempo_ret,cfg);
+        
+        
         //printf("varid[9] : %x\n",tempo_ret);
         // for(int z=0;z<can_pipeline.available;z++){
         //     printf("\n[%d]ID#DATA[%d] %x#%s\n" ,can_pipeline.available,z,can_pipeline.id[z],can_pipeline.data[z]);
