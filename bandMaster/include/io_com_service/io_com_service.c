@@ -70,7 +70,7 @@ void io_service_main(){pthread_t t_io_read_can;
 
         for(int j=0;j<cfg->available;j++){
             io_read(cfg->data_base[j].var_id,&tempo_ret,cfg);
-            io_write(12,0xDEADBEEF,cfg);
+            io_write(io_omega_W,0xDEADBEEF,cfg);
         }
         can_read_pipeline.available=0;        
     }
