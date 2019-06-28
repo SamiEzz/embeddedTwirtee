@@ -44,8 +44,8 @@ void io_service_main(){
     
     printf("io service initiation \njsonConfigFileName : %s\n",jsonConfigFileName);
     if(init_io_service(cfg,jsonConfigFileName)==0){        
-        //print_db(*cfg);
-        //print_conf(*cfg);
+        print_db(*cfg);
+        print_conf(*cfg);
     };
 
     /* CAN TEST WORKING */
