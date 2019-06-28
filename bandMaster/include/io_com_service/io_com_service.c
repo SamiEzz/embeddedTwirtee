@@ -46,27 +46,20 @@ void io_service_main(){
     else{
         return;
     }
-    can_shared can_pipeline;
-    can_pipeline.available=0;
-    // can_pipeline.id[0]=0x100;
-    // can_pipeline.id[1]=0x101;
-    // can_pipeline.id[2]=0x200;
-    
-    // sprintf(can_pipeline.data[0],"F0000AA");
-    // sprintf(can_pipeline.data[1],"F000001");
-    // sprintf(can_pipeline.data[2],"06061995");
-    // can_pipeline.xdata[0]=strtoul(can_pipeline.data[0],NULL,16);
-    // can_pipeline.xdata[1]=strtoul(can_pipeline.data[1],NULL,16);
-    // can_pipeline.xdata[2]=strtoul(can_pipeline.data[2],NULL,16);
+    can_shared can_read_pipeline;
+    can_shared can_write_pipeline;
+    start_thread(&t_io_read_can, NULL, read_can, &can_read_pipeline);
 
+    
+    can_read_pipeline.available=0;
     uint32 tempo_ret;
     
+    
 
-    start_thread(&t_io_read_can, NULL, read_can, &can_pipeline);
     while(1){
         //if(available>)
-        //delay(1000);
-        io_can_read_engine(cfg,&can_pipeline);
+        delay(1000);
+        io_can_read_engine(cfg,&can_read_pipeline);
 
 
         io_read(io_vitesse_V,&tempo_ret,cfg);
@@ -86,11 +79,11 @@ void io_service_main(){
         // for(int z=0;z<can_pipeline.available;z++){
         //     printf("\n[%d]ID#DATA[%d] %x#%s\n" ,can_pipeline.available,z,can_pipeline.id[z],can_pipeline.data[z]);
         // }
-        if(can_pipeline.available<1){
-            can_pipeline.available=0;
+        if(can_read_pipeline.available<1){
+            can_read_pipeline.available=0;
         }
         else{
-            can_pipeline.available=0;
+            can_read_pipeline.available=0;
         }
         
     }
@@ -668,6 +661,12 @@ void io_db_init(COM_CONFIG* cfg,char* JSON_STRING, jsmntok_t* t,int max){
             //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
             //index++;
         }
+        else if (jsoncomp(JSON_STRING, &t[k], "send0_recerive1") == 0){
+            strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start+1);
+            cfg->data_base[index].send_receive=atoi(tempchar);
+            //printf("varid[%d] : %d\n",index,cfg->data_base[index].var_id);
+            //index++;
+        }
         else if (jsoncomp(JSON_STRING, &t[k], "disabled") == 0){
             strncpy(tempchar,JSON_STRING+t[k+1].start,t[k+1].end-t[k+1].start);
             cfg->data_base[index].disabled=atoi(tempchar);
@@ -840,6 +839,7 @@ void print_db(COM_CONFIG cfg){
         printf("\n\tsize \t\t: %d bits",cfg.data_base[j].size);
         printf("\n\ttype \t\t: %s ",(cfg.data_base[j].type==0)?"INT":"FLOAT");
         printf("\n\ttrigger_type \t: %s",(cfg.data_base[j].trigger_type==0)?"Time":"Event");
+        printf("\n\tdirection \t\t: %s\n",(cfg.data_base[j].medium==0)?"Send":"Receive");
         printf("\n\tmedium \t\t: %s\n",(cfg.data_base[j].medium==0)?"CAN":"UART");
     }
 }

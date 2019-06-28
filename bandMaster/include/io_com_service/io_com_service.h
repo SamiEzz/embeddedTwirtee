@@ -57,7 +57,8 @@ typedef struct io_data_base {
 	// [0]: temporelle, [1]: fonctionnelle
 	uint8 validity[2];		
 	// 0: CAN, 1: UART, 2: Wifi, 3: SPI….
-	uint8 medium;			
+	uint8 medium;		
+	uint8 send_receive;	
 	uint8 disabled;			// 1 : do not exchange variable
 } io_data_base;
 
