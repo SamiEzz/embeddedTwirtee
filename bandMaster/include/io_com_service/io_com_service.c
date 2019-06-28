@@ -70,7 +70,7 @@ void io_service_main(){pthread_t t_io_read_can;
 
         for(int j=0;j<cfg->available;j++){
             io_read(cfg->data_base[j].var_id,&tempo_ret,cfg);
-            io_write(io_omega_W,0xDEADBEEF,cfg);
+            
         }
         can_read_pipeline.available=0;        
     }
@@ -278,13 +278,13 @@ void io_can_write_engine(can_shared* pipeline){
                             //printf("data : %x - xcan_frame : %x\n",cfg->data_base[indexs[j]].xdata,xcan_frame);
                             //sprint()
                         }
-                    }
-                    
-
                     sprintf(pipeline->data[pipeline->available],"%s#%08x",cfg->can.id_data_base[i].can_id,xcan_frame);
                     printf("add to pipeline: %s\n",pipeline->data[pipeline->available]);
                     pipeline->available++;
                     
+                    }
+                    
+
                     //io_can_pipeline_append(pipeline,add_to_pipe);
                     //io_can_pipeline_pop(pipeline,&poped);
                     //printf("added to pipeline: %s\n",poped.msg);
@@ -293,8 +293,8 @@ void io_can_write_engine(can_shared* pipeline){
             if(pipeline->available>0){
                 write_can(pipeline);
             }
-            sleep(10);
             }
+        sleep(10);
         }
     //}
     
