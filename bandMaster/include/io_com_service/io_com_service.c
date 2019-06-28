@@ -65,7 +65,7 @@ void io_service_main(){
     start_thread(&t_io_read_can, NULL, read_can, &can_pipeline);
     while(1){
         //if(available>)
-        delay(1000);
+        //delay(1000);
         io_can_read_engine(cfg,&can_pipeline);
 
 
