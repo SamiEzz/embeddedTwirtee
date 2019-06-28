@@ -764,17 +764,16 @@ int read_can(void* _can_shared){
 				for(int i=4;i<12;i++){
 					tempo_data[i-4]=tempo_data[i];
 				}
-				printf("\n tempodata %s",tempo_data);
+				//printf("\n tempodata %s",tempo_data);
 				tempo_data[8]='\0';
 				tempo_id=frame.can_id;
-				uint32 xdata = strtoul(can_buff->data[can_buff->available],NULL,16);
+				uint32 xdata = strtoul(tempo_data,NULL,16);
 				
 				
-				printf("\n============ xdata/last : %x/%x \t id/last %x/%x",xdata,last_msg , can_buff->id[can_buff->available],last_id);
+				//printf("\n============ xdata/last : %x/%x \t id/last %x/%x",xdata,last_msg , can_buff->id[can_buff->available],last_id);
 				//printf("\n========= available : %d\n",can_buff->available);
 				if((xdata==last_msg) && (tempo_id==last_id)){
 					printf("\nsame can message repeated\n");
-					
 				}
 				else{
 					
