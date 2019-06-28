@@ -307,6 +307,7 @@ void io_can_write_engine(can_shared* pipeline){
                 //printf("\ntram.msg : %s \n",pipeline.data);
             }    
         write_can(pipeline);
+        sleep(30);
         }
     //}
     
