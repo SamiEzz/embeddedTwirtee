@@ -27,6 +27,7 @@
 
 
 #define SYSTEM_CMD_STOP 1
+
 void io_simulation(COM_CONFIG* cfg,int y){
     io_write(io_vitesse_V,y,cfg);
     io_write(io_omega_W,y+float2uint32(9.89),cfg);
@@ -36,7 +37,8 @@ void io_simulation(COM_CONFIG* cfg,int y){
     
     
 }
-void io_service_main(){pthread_t t_io_read_can;
+void io_service_main(){
+    pthread_t t_io_read_can;
     pthread_t t_io_write_can;
 
     COM_CONFIG vcfg;

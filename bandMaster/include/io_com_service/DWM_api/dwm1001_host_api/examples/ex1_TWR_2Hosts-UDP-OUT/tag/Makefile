@@ -31,17 +31,14 @@ INTERFACE_NUMBER = 0
 #  1:    fprintf (log.txt)       
 #  2:    printf (terminal)  
 #  3:    printf + fprintf    
-PRINT_LVL = 0
+PRINT_LVL = 3
 
 
-DWM_PROJ_DIR = ./loc_api
-DWM_PROGRAM = $(DWM_PROJ_DIR)/../../../../build/dwm_api.o
-DWM_SOURCES =   ./src/main.c 
-DWM_SOURCES +=  ./src/loc_thread.c
+PROGRAM = tag_cfg
+SOURCES = tag_cfg.c udp/udp-client.c
 
+PROJ_DIR += ../../..
 
-CFLAGS += -Wall 
+#CFLAGS += -Wall
 
-
-
-include $(DWM_PROJ_DIR)/include/dwm1001.mak
+include $(PROJ_DIR)/include/dwm1001.mak

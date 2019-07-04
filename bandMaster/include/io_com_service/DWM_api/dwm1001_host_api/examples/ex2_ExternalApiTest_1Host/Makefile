@@ -7,7 +7,7 @@
 #
 # All rights reserved.
 #
-
+ 
 ####################################################
 #  Configurations
 
@@ -22,7 +22,7 @@ TARGET = 0
 #  0: USE_UART  
 #  1: USE_SPI    
 #  2: USE_SPI_DRDY
-INTERFACE_NUMBER = 0
+INTERFACE_NUMBER = 2
 
 ####################################################
 #  PRINT_LVL 
@@ -31,17 +31,19 @@ INTERFACE_NUMBER = 0
 #  1:    fprintf (log.txt)       
 #  2:    printf (terminal)  
 #  3:    printf + fprintf    
-PRINT_LVL = 0
+PRINT_LVL = 3
 
 
-DWM_PROJ_DIR = ./loc_api
-DWM_PROGRAM = $(DWM_PROJ_DIR)/../../../../build/dwm_api.o
-DWM_SOURCES =   ./src/main.c 
-DWM_SOURCES +=  ./src/loc_thread.c
+PROGRAM = ext_api_fulltest
+SOURCES = ext_api_fulltest.c
 
 
-CFLAGS += -Wall 
+INCLUDES += ../test_util/test_util.h
+SOURCES += ../test_util/test_util.c
+LOGFILES += test_report.txt
 
+PROJ_DIR += ../..
 
+CFLAGS += -Wall
 
-include $(DWM_PROJ_DIR)/include/dwm1001.mak
+include $(PROJ_DIR)/include/dwm1001.mak

@@ -8,7 +8,7 @@
 //////////////////////////////////////////////////////////
 
 
-#include "dwm_api.h"
+#include "./include/dwm_api.h"
 #include "hal.h"
 
 #include <stdlib.h>

@@ -19,12 +19,20 @@
 
 #include "../loc_api/loc_thread.h"
 
+// typedef struct T_loc {
+// 	double x;
+// 	double y;
+// 	double z;
+// 	double qf;
+// 	bool val;
+// } T_loc;
+
 
 
 //static T_loc * position;
 int main(){
-   /*
-   position->x=-1;
+   T_loc p;
+   T_loc* position=&p;
    //---------- Creation des threads
    pthread_t t_localisation;
    if(pthread_create(&t_localisation, NULL, loc_thread, (void *)position) == -1) {
@@ -55,6 +63,6 @@ int main(){
    
 
    printf("fin du main\n");
-   */
+   
    return 0;
 }
