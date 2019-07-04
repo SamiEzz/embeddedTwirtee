@@ -6,6 +6,9 @@
         "io_com_service.h": "c",
         "pthread.h": "c",
         "twirtee.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "loc_thread.h": "c",
+        "stdio.h": "c",
+        "dwm_api.h": "c"
     }
 }

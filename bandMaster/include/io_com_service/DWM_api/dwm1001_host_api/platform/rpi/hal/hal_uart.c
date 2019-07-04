@@ -33,6 +33,16 @@ static void (*rx_cb)(int status) = NULL;
  *
  * @return Error code
  */
+void read_uart_port(char* port){
+   FILE* uart_file;
+   uart_file=fopen("uart_port.txt","r");
+   if(uart_file== NULL){
+      return;
+   }
+   else{
+      sprintf(port,"%s",uart_file);
+   }
+}
 int HAL_UART_Init(void)
 {
    if(uart_initialized)
@@ -43,7 +53,7 @@ int HAL_UART_Init(void)
 	HAL_Print("\tUART: Init start.\n");
 
    // SETUP UART
-   uart0_filestream = open("/dev/serial0", O_RDWR | O_NOCTTY | O_NDELAY);		//Open in non blocking read/write mode
+   uart0_filestream = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY);		//Open in non blocking read/write mode
 
    // open() return the new file descriptor, or -1 if an error occurred.
    // More detail in  http://man7.org/linux/man-pages/man2/open.2.html

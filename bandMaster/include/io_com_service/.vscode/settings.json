@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "jsmn.h": "c"
+        "jsmn.h": "c",
+        "hal.h": "c",
+        "dwm_api.h": "c",
+        "dwm1001_tlv.h": "c"
     }
 }

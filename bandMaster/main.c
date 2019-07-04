@@ -12,6 +12,7 @@
 #include "./include/io_com_service/io_com_service.h"
 #include "./include/io_com_service/linux-can-utils/read_can.h"
 #include "./include/io_com_service/linux-can-utils/write_can.h"
+#include "./include/io_com_service/DWM_api/matiere_premiere/loc_api/loc_thread.h"
 
 #include <pthread.h>
 #include <stdio.h>
@@ -40,7 +41,41 @@ typedef struct simu_param(){
 
 int main() {
     
-    io_service_main();
+   T_loc p;
+   T_loc* position=&p;
+   //---------- Creation des threads
+   pthread_t t_localisation;
+   if(pthread_create(&t_localisation, NULL, loc_thread, (void *)position) == -1) {
+      perror("pthread_create");
+      return EXIT_FAILURE;
+   }  
+   
+   printf("- x : %f\n",position->x);
+   printf("- y : %f\n",position->y);
+   printf("- z : %f\n",position->z);
+   printf("- qf : %f\n",position->qf);
+
+   // wait for thread to execute 
+   //void ** returned_path;
+
+   if (pthread_join(t_localisation, (void *)position)) {
+      perror("pthread_join");
+      return EXIT_FAILURE;
+   }
+   // end of thread
+
+   
+   printf("- x : %f\n",position->x);
+   printf("- y : %f\n",position->y);
+   printf("- z : %f\n",position->z);
+   printf("- qf : %f\n",position->qf);
+       
+   
+
+   printf("fin du main\n");
+   
+   return 0;
+//    io_service_main();
 }
 int main_old() {
 
@@ -122,7 +157,7 @@ int main_old() {
     //###############################################
     // CAN PROTOCOLE READ
 
-    char* can_name[]={"read_can", "can1"};
+    //char* can_name[]={"read_can", "can1"};
     //start_thread(&t_can_read, NULL, read_can, can_name);
     // wait for thread to execute
     //end_thread(t_can_read, NULL);
