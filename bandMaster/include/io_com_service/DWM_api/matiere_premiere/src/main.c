@@ -31,34 +31,40 @@
 
 //static T_loc * position;
 int main(){
-   T_loc p;
-   T_loc* position=&p;
-   //---------- Creation des threads
-   pthread_t t_localisation;
-   if(pthread_create(&t_localisation, NULL, loc_thread, (void *)position) == -1) {
-      perror("pthread_create");
-      return EXIT_FAILURE;
-   }  
+   //printf("init loc thread");
+   dwm_pos_t p;
+    p.x=6;
+    p.y=6;
+    p.z=1995;
    
-   printf("- x : %f\n",position->x);
-   printf("- y : %f\n",position->y);
-   printf("- z : %f\n",position->z);
-   printf("- qf : %f\n",position->qf);
+   dwm_pos_t* position=&p;
+   //---------- Creation des threads
+   // pthread_t t_localisation;
+   // if(pthread_create(&t_localisation, NULL, loc_thread, (void *)position) == -1) {
+   //    perror("pthread_create");
+   //    return EXIT_FAILURE;
+   // }  
+   
+   loc_thread(position);
+   printf("- x : %d\n",position->x);
+   printf("- y : %d\n",position->y);
+   printf("- z : %d\n",position->z);
+   printf("- qf : %d\n",position->qf);
 
    // wait for thread to execute 
    //void ** returned_path;
 
-   if (pthread_join(t_localisation, (void *)position)) {
-      perror("pthread_join");
-      return EXIT_FAILURE;
-   }
+   // if (pthread_join(t_localisation, (void *)position)) {
+   //    perror("pthread_join");
+   //    return EXIT_FAILURE;
+   // }
    // end of thread
 
    
-   printf("- x : %f\n",position->x);
-   printf("- y : %f\n",position->y);
-   printf("- z : %f\n",position->z);
-   printf("- qf : %f\n",position->qf);
+   printf("- x : %d\n",position->x);
+   printf("- y : %d\n",position->y);
+   printf("- z : %d\n",position->z);
+   printf("- qf : %d\n",position->qf);
        
    
 

@@ -26,4 +26,4 @@ typedef struct T_loc {
 	bool val;
 } T_loc;
 
-void *loc_thread(void *_position);
+void loc_thread(dwm_pos_t* position);

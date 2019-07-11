@@ -35,7 +35,7 @@ PRINT_LVL = 0
 
 
 DWM_PROJ_DIR = ./loc_api
-DWM_PROGRAM = $(DWM_PROJ_DIR)/../../../../build/dwm_api.o
+DWM_PROGRAM = $(DWM_PROJ_DIR)/../../../../../build/dwm_api.o
 DWM_SOURCES =   ./src/main.c 
 DWM_SOURCES +=  ./src/loc_thread.c
 
