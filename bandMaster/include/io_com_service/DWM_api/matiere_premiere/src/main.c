@@ -31,14 +31,13 @@
 
 //static T_loc * position;
 int main(){
-   //printf("init loc thread");
    dwm_pos_t p;
     p.x=6;
     p.y=6;
     p.z=1995;
    
    dwm_pos_t* position=&p;
-   //---------- Creation des threads
+   
    printf("- x : %d\n",position->x);
    printf("- y : %d\n",position->y);
    printf("- z : %d\n",position->z);
@@ -49,17 +48,6 @@ int main(){
       return EXIT_FAILURE;
    }  
    
-   //loc_thread(position);
-
-   // wait for thread to execute 
-   //void ** returned_path;
-
-   // if (pthread_join(t_localisation, (void *)position)) {
-   //    perror("pthread_join");
-   //    return EXIT_FAILURE;
-   // }
-   // end of thread
-
    while(1){   
    printf("- x : %d\n",position->x);
    printf("- y : %d\n",position->y);
