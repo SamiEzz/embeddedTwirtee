@@ -62,16 +62,16 @@ void loc_thread(dwm_pos_t* position){
    dwm_loc_data_t loc;
    dwm_pos_t pos;
    loc.p_pos = position;
-   if(1)
+   while(1)
    {
       HAL_Print("Wait %d ms...\n", wait_period);
       HAL_Delay(wait_period);
 
       HAL_Print("dwm_loc_get(&loc):\n");
-      printf("\n is ok : %d\n",RV_OK==dwm_loc_get(&loc) );
+
       if(dwm_loc_get(&loc) == RV_OK)
       {
-         printf("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,
+         HAL_Print("\t[%d,%d,%d,%u]\n", loc.p_pos->x, loc.p_pos->y, loc.p_pos->z,
                loc.p_pos->qf);
         HAL_Print("WAS THE TAG UP THER\n\n\n");
 
@@ -81,7 +81,7 @@ void loc_thread(dwm_pos_t* position){
             HAL_Print("0x%llx", loc.anchors.dist.addr[i]);
             if (i < loc.anchors.an_pos.cnt)
             {
-               printf("[%d,%d,%d,%u]", loc.anchors.an_pos.pos[i].x,
+               HAL_Print("[%d,%d,%d,%u]", loc.anchors.an_pos.pos[i].x,
                      loc.anchors.an_pos.pos[i].y,
                      loc.anchors.an_pos.pos[i].z,
                      loc.anchors.an_pos.pos[i].qf);
@@ -91,6 +91,6 @@ void loc_thread(dwm_pos_t* position){
       }
    }
 
-//   return 0;
+   return 0;
 }
 

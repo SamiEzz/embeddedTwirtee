@@ -39,17 +39,17 @@ int main(){
    
    dwm_pos_t* position=&p;
    //---------- Creation des threads
-   // pthread_t t_localisation;
-   // if(pthread_create(&t_localisation, NULL, loc_thread, (void *)position) == -1) {
-   //    perror("pthread_create");
-   //    return EXIT_FAILURE;
-   // }  
-   
-   loc_thread(position);
    printf("- x : %d\n",position->x);
    printf("- y : %d\n",position->y);
    printf("- z : %d\n",position->z);
    printf("- qf : %d\n",position->qf);
+   pthread_t t_localisation;
+   if(pthread_create(&t_localisation, NULL, loc_thread, (void *)position) == -1) {
+      perror("pthread_create");
+      return EXIT_FAILURE;
+   }  
+   
+   //loc_thread(position);
 
    // wait for thread to execute 
    //void ** returned_path;
@@ -60,12 +60,13 @@ int main(){
    // }
    // end of thread
 
-   
+   while(1){   
    printf("- x : %d\n",position->x);
    printf("- y : %d\n",position->y);
    printf("- z : %d\n",position->z);
    printf("- qf : %d\n",position->qf);
-       
+   HAL_Delay(1000);    
+   }
    
 
    printf("fin du main\n");
