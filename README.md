@@ -1,4 +1,5 @@
 
+
 # Emebedded Twirtee
 # 1. Conversion cartographie
 ## 1.1 Outils à installer :
@@ -47,10 +48,11 @@ Cf. main.c
 #### ajouter les overlays
  sudo nano /boot/config.txt
 #### Add these 3 lines to the end of file:
- * tparam=spi=on
+* tparam=spi=on
 * dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
 * dtoverlay=spi-bcm2835-overlay
----  sudo reboot
+.
+reboot
 #### Allumer l'interface CAN
 sudo /sbin/ip link set can0 up type can bitrate 500000
 https://www.youtube.com/watch?v=ZmGDCIQdqTw
@@ -58,9 +60,6 @@ https://www.youtube.com/watch?v=ZmGDCIQdqTw
 ## 4.2 Utilisation
 Cf. l'exemple donnée dans le fichier main_can.c .
 Et dans le fichier "./include/io_com_service/io_com_service.c"
-
-# 5. Simulation
-## 5.1 Utilisation
 
 # Reférences :
 * https://pypi.org/project/dxfgrabber/
