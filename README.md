@@ -30,11 +30,11 @@ La fonction "loc_thread()" est résponsable de renvoyer la position du robot en 
 * pthread_create(&t_localisation, NULL, loc_thread, (void *)position)
 
 la valeurs de position sera automatiquement et periodiquement stocké sur l'adresse de la variable position.
-_
-_
+-
+- 
 # 4. Service COM
 
 
 Reférences :
-https://pypi.org/project/dxfgrabber/
-https://www.decawave.com/wp-content/uploads/2019/01/DWM1001-API-Guide-2.2.pdf
+* https://pypi.org/project/dxfgrabber/
+* https://www.decawave.com/wp-content/uploads/2019/01/DWM1001-API-Guide-2.2.pdf
